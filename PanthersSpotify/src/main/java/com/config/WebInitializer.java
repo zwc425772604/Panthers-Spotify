@@ -1,4 +1,4 @@
-package com.outbottle.config;
+package com.config;
 
 import javax.servlet.ServletContext;  
 import javax.servlet.ServletException;  

@@ -10,7 +10,7 @@ import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;  
   
 @Configuration
-@ComponentScan("com.outbottle")
+@ComponentScan("com")
 @EnableWebMvc   
 public class Config extends WebMvcConfigurerAdapter {  
       

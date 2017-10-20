@@ -16,11 +16,31 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class DefaultController {
-   
+    
    @RequestMapping(value = "/", method = RequestMethod.GET)
    public String index(ModelMap map) {
-       map.put("msg", "Hello Springsdsdsas 4 Web MVC!");
+       map.put("msg", "Hello Spring 4 Web MVC!");
        return "index";
    }
+   @RequestMapping(value = "/adminlogin", method = RequestMethod.GET)
+   public String adminLogin(ModelMap map) {
+       map.put("msg", "Hello Weichao 4 Web MVC!");
+       return "adminlogin";
+   }
+   
+   @RequestMapping(value = "/adminlogin", method = RequestMethod.POST)
+   public String submitAdminLogin(ModelMap map) {
+       map.put("adminmessage", "Login Credentials");
+     
+            return "adminmessage";
+   }
+   
+   @RequestMapping(value = "/userlogin", method = RequestMethod.POST)
+   public String checkUserLogin(ModelMap map) {
+       map.put("msg", "Hello Weichao");
+            
+            return "index";
+   }
+    
     
 }

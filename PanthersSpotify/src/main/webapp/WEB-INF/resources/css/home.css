@@ -1,0 +1,70 @@
+/* General Style */
+body {
+    background-color: #343a40;
+    font-size: 0.9vw;
+    overflow:hidden;
+    background-image: url("https://wallpapercave.com/wp/P3EtD4C.jpg");
+    -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+}
+a:link, a:visited, a:hover, a:active {
+    color: white;
+}
+
+/* Main Page Banner Image*/
+#bannerimage{
+
+    /*height: 15vh;*/
+    height: 18vh;
+    background-position: center;
+    -webkit-background-size: cover;
+       -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+
+}
+form
+{
+  margin-top: 3%;
+}
+.formButton
+{
+     margin:auto;display:block;
+     border-radius: 10px;
+      color:white;
+}
+#facebookButton
+{
+
+   background-color:#006bb3;
+}
+#facebookButton:hover
+{
+  transform: scale(1.2, 1.2); /** default is 1, scale it to 1.5 */
+   opacity: 1;
+   background-color:#006bb3;
+}
+#loginButton
+{
+  width: 90px;
+  background-color:#00cc00;
+}
+#loginButton:hover
+{
+  transform: scale(1.2, 1.2); /** default is 1, scale it to 1.5 */
+  opacity: 1;
+  background-color:#00cc00;
+}
+input {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 1px solid #555;
+    outline: none;
+}
+input:focus{
+   background-color: lightblue;
+}

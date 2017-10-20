@@ -1,0 +1,457 @@
+/* General Style */
+body {
+    background-color: #343a40;
+    font-size: 0.9vw;
+    overflow:hidden;
+}
+a:link, a:visited, a:hover, a:active {
+    color: white;
+}
+
+.line{
+    height: 0.8vh;;
+    border-bottom: 1px solid grey;
+    width: 93.5%;
+}
+
+.scrollbar
+{
+	margin-left: 30px;
+	float: left;
+	height: 300px;
+	width: 65px;
+	background: #F5F5F5;
+	overflow-y: scroll;
+	margin-bottom: 25px;
+}
+
+#style-1::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px #343a40;
+	border-radius: 10px;
+	background-color: #343a40;
+}
+
+#style-1::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #343a40;
+}
+
+#style-1::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px #343a40;
+	background-color: #555;
+}
+
+/* Left Sidebar Section */
+#left-sidebar{
+    background-color: #2E2E2E;
+    height: 91vh;
+    width: 15%;
+    padding-top: 5px;
+    padding-left: 10px;
+    position: fixed;
+}
+
+#extra-padding{
+    /*Set extra padding for the space between each subsection*/
+    padding-bottom: 4vh;
+}
+
+.color-nav{
+    /*Set style for the button links in the sidebar*/
+    color: lightgrey!important;
+    font-weight: 400;
+    font-size: 0.9vw;
+    border-left: 3px solid transparent;
+}
+
+a.color-nav:hover{
+    color: white !important;
+}
+
+a.color-nav:focus{
+    border-left: 3px solid lightgreen;
+    color: white !important;
+}
+
+p.color-nav-header{
+    color: white;
+    padding: 0.5rem 1rem;
+    font-weight: 200;
+    font-size: 0.8vw;
+    margin:0;
+}
+
+p.color-nav-header:hover{
+    text-decoration: none;
+}
+
+/* Main Page */
+.main-page{
+    margin-left: 15%;
+    width: 70.1%;
+    position: relative;
+}
+
+.scrolled-main{
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 91vh;
+}
+
+/* Main Page Top Tool: search, upgrade, login, etc */
+#top-tool{
+    height: 5vh;
+    background-color: #2E2E2E;
+    width:100%;
+    margin: 0;
+}
+
+#top-tool-page-change{
+    margin-left:0.5vw;
+}
+.top-tool-page-button{
+    background-color:transparent;
+    border:0;
+}
+
+.fa-angle-left{
+    color:darkgrey!important;
+    margin: 5% 0.5vw 0.35vw 0.5vw;
+}
+
+.fa-angle-left:hover{
+    color:white !important;
+}
+
+.fa-angle-right{
+    color:darkgrey !important;
+    margin: 1% 0.5vw 0.35vw 0.5vw;
+}
+
+.fa-angle-right:hover{
+    color:white !important;
+}
+
+#top-tool-search{
+    margin-top:0.35%;
+    margin-left: 7%;
+    position: relative;
+    height: 3.8vh;
+}
+
+.stylish-input-group .input-group-addon{
+    background: white !important;
+}
+
+.stylish-input-group .form-control{
+	border-right:0;
+	box-shadow:0 0 0;
+	border-color:#ccc;
+}
+
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+
+#top-tool-upgrade-and-user{
+    margin-left: 25%;
+    position: relative;
+    margin-top: 0%;
+    width: 30.25%;
+}
+
+#top-tool-upgrade{
+    background-color: #2e2e2e !important;
+    border: 1.8px solid white;
+    border-radius: 5%;
+    width: 6.5vw;
+    margin-right:3.5vw;
+    height: 3.5vh;
+    padding-top: 0.5vh;
+    font-weight: medium;
+    font-family: sans-serif;
+}
+
+#top-tool-upgrade:hover{
+    color: white !important;
+    font-weight: bolder;
+    height: 3.8vh;
+    width: 6.8vw;
+    padding-top: 0.75vh;
+    margin-right: 3.4vw;
+    margin-left: -0.2vw;
+}
+
+#top-tool-profile{
+    background-color: #2e2e2e !important;
+    height: 5vh !important;
+}
+
+#top-tool-profile:hover{
+    color: white !important;
+}
+
+#dropdown-item{
+    background-color:#2e2e2e !important;
+    color: white;
+}
+
+#dropdown-item:hover{
+    color:white !important;
+    text-decoration: none;
+    background-color: dimgrey !important;
+
+}
+
+#dropdown-img{
+    width: 25px !important;
+    height:25px !important;
+    margin-top: -0.5vh;
+    margin-right: 0.5vh;
+}
+/* Main Page Banner Image*/
+#bannerimage{
+    height: 27vh;
+    background-position: center;
+}
+
+/* Main Page NavBar */
+#bootstrap-overrides-navbar{
+    width: 100%;
+}
+
+#navbar-ul{
+    justify-content: space-around;
+    width: 100%;
+    margin: 0.5%;
+    margin-top: 2%;
+}
+
+#navbar-ul li a{
+    color: lightgrey;
+    padding: 0%;
+    border-bottom: 2px solid transparent;
+}
+
+#navbar-ul li a:hover{
+    color: white;
+}
+
+#navbar-ul li a:focus{
+    border-bottom: 2px solid lightgreen;
+    color:white;
+}
+
+/*Main Page Suggestion Boxes*/
+.suggestion-container{
+    margin-left:5%;
+    margin-bottom:3.5%;
+    margin-top:2%;
+    color:white;
+}
+
+.suggestion-container-top{
+    display:flex ;
+}
+
+.suggestion-topic{
+    font-weight: bold;
+    width:20%;
+}
+
+.suggestion-top-page-button{
+    margin-left: 68%;
+    background-color:transparent;
+    border:0;
+}
+
+.suggestion-top-page-button-right{
+    background-color:transparent;
+    border:0;
+}
+.suggestion-boxes{
+    margin: 0.9%;
+    margin-left: 1.5%;
+    margin-top: 2%;
+}
+
+.suggestion-boxes-description{
+    padding-top: 0.5vw;
+}
+
+.medium-boxes{
+    margin: 0.5%;
+    margin-left: 1.2%;
+    margin-top: 2%;
+    margin-right: 5.56%;
+}
+
+.image-over-by-text{
+    position: relative;
+    filter: brightness(50%);
+}
+.text-over-image{
+   position: absolute;
+   top: 4vh;
+   left: 3.9vw;
+   width: auto;
+   font-size: 1.5vw;
+   text-align: center;
+}
+
+.text-over-image-desp{
+    text-align: center;
+    margin: 1vh 0 0 2vw;
+}
+
+/* Right Most Column*/
+#right-col{
+    position: fixed;
+    width:15%;
+    margin-left: 85%;
+    height: 91vh;
+    background-color: #2E2E2E;
+    color: white;
+}
+
+.right-col-top{
+    margin: 0.75vw 0 0.1vw 1vw;
+}
+
+#right-col-topic{
+    font-size: 0.9vw;
+    font-weight: bold;
+}
+
+.right-col-section{
+    margin-left: 1vw;
+    margin-top: 3%;
+    height:auto;
+}
+
+.right-col-image{
+    margin: 1.5vw 0 1.5vw 0.5vw;
+    width: 1.5vw;
+    height: 1.5vw;
+}
+
+.right-col-desp{
+    margin: 0.5vw 1.5vw 0.5vw 1vw;
+}
+.right-col-friends-name{
+    font-weight: bold;
+    font-size: 0.8vw;
+}
+
+.right-col-song-name{
+    font-size: 0.7vw;
+}
+
+.right-col-singer{
+    font-size: 0.7vw;
+}
+
+.right-col-button{
+    background-color: #2e2e2e !important;
+    border: 3px solid white;
+    margin: 2vw 0vw 1vw 18% ;
+    border: 2px solid white !important;
+    border-radius: 5%;
+}
+
+/* Footer Section*/
+footer{
+    width: 100%;
+    background-color: #4E4E4E;
+    height: 9vh;
+    overflow: auto;
+    overflow-x: hidden;
+    white-space: nowrap;
+}
+
+#playbar-save-anchor-tag
+{
+  font-size:24px;
+   margin-left: 10%;
+}
+#playbar-artist-info
+{
+  top: 10px; left: 3%;
+}
+ul#playbar-right-icons li {
+    display:inline;
+    margin-left: 7%;
+    font-size: 24px;
+}
+
+#playbar-center
+{
+    top: 10px;
+}
+ul#playbar-center-icons li {
+    display:inline;
+    margin-left: 7%;
+    font-size: 24px;
+}
+
+ul.left_sizebar li
+{
+  display:inline;
+  margin-left: 7%;
+  font-size: 16px;
+}
+#playbar-right
+{
+  top: 10px;
+  right: 3%;
+}
+.unstyle-buttons
+{
+  border: none;
+ padding: 0;
+ background: none;
+}
+.unstyle-buttons:hover
+{
+  background-color: gray;
+}
+
+.user-dropdown-button a
+{
+  color:blue;
+}
+#progressBar
+{
+  width: 300px;
+}
+
+/*  Playbar style */
+.ui-widget-content
+{
+  background-color: #c2d6d6;
+}
+/* green */
+.ui-slider-range
+{
+  background-color: #b3ff99;
+}
+.ui-widget-content
+{
+  background-color: #c2d6d6;
+}
+.ui-slider-range
+{
+  background-color: #b3ff99;
+}
+.bar {
+  width: 60%;
+  height: 5px;
+  position: relative;
+  background: #1d2e38;
+  border-radius: 40px;
+}

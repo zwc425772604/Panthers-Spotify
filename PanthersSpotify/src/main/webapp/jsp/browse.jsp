@@ -47,12 +47,12 @@ $(document).ready(function(){
 </nav>
 
 <div id= "middle-container">
-  <div id = "overview_container" w3-include-html="overview.html"></div>
-  <div id = "charts_container" w3-include-html="charts.html"></div>
-  <div id = "genre_container" w3-include-html="genre.html"></div>
-  <div id = "new_releases_container" w3-include-html="NewsRelease.html"></div>
-  <div id = "discover_container" w3-include-html="discover.html"></div>
-  <div id = "concerts_container" w3-include-html="charts.html"></div>
+  <div id = "overview_container" w3-include-html="jsp/overview.jsp"></div>
+  <div id = "charts_container" w3-include-html="jsp/charts.jsp"></div>
+  <div id = "genre_container" w3-include-html="jsp/genre.jsp"></div>
+  <div id = "new_releases_container" w3-include-html="jsp/NewsRelease.jsp"></div>
+  <div id = "discover_container" w3-include-html="jsp/discover.jsp"></div>
+  <div id = "concerts_container" w3-include-html="jsp/charts.jsp"></div>
   <!-- <div id = "middle-content"></div> -->
 </div>
 

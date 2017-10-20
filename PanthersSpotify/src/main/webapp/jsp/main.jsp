@@ -30,7 +30,7 @@
    $(document).ready(function(){
      //hide all other containers in <div id= 'middle-content'> beside except overview_container
      //$("#overview_container").siblings().hide();
-     //$("#main-changing-content").load("${cp}/jsp/browse.jsp");
+     $("#main-changing-content").load("jsp/browse.jsp");
      
      
 //     window.open("browse.jsp","_blank");
@@ -41,23 +41,23 @@
      //compare the string
      if (nav_name.localeCompare('browse') == 0)
      {
-       $("#main-changing-content").load("browse.jsp");
+       $("#main-changing-content").load("jsp/browse.jsp");
      }
      else if (nav_name.localeCompare('albums') == 0)
      {
-        $("#main-changing-content").load("./album.jsp");
+        $("#main-changing-content").load("jsp/album.jsp");
      }
      else if (nav_name.localeCompare('artists') == 0)
      {
-        $("#main-changing-content").load("artist.jsp");
+        $("#main-changing-content").load("jsp/artist.jsp");
      }
      else if (nav_name.localeCompare('songs') == 0)
      {
-        $("#main-changing-content").load("songs.jsp");
+        $("#main-changing-content").load("jsp/songs.jsp");
      }
      else
      {
-        $("#main-changing-content").load("overview.jsp");
+        $("#main-changing-content").load("jsp/overview.jsp");
      }
    }
    </script>
@@ -159,7 +159,7 @@
               </div>
             <!--Banner Image-->
           <div id = "main-changing-content">
-              <%@ include file="browse.jsp" %>
+             
           </div> <!-- closed tag for scrolled-main -->
       </div>
         </main>

@@ -37,9 +37,9 @@ public class DefaultController {
    
    @RequestMapping(value = "/userlogin", method = RequestMethod.POST)
    public String checkUserLogin(ModelMap map) {
-       map.put("msg", "Hello Weichao");
+       map.put("username", "zhao");
             
-            return "index";
+            return "main";
    }
     
     

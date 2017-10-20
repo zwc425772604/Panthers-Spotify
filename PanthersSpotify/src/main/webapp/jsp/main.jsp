@@ -152,7 +152,7 @@
                         <a href="#" class="w3-bar-item w3-button" id="dropdown-item">Account</a>
                         <a href="#" class="w3-bar-item w3-button" id="dropdown-item">Upgrade Your Account</a>
                         <a href="#" class="w3-bar-item w3-button" id="dropdown-item">Settings</a>
-                        <a href="#" class="w3-bar-item w3-button" id="dropdown-item">Log Out</a>
+                        <a href="home" class="w3-bar-item w3-button" id="dropdown-item">Log Out</a>
                       </div>
                   </div>
                 </div>

@@ -1,3 +1,8 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
+
+<%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,15 +10,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="custom.css">
+  <link rel="stylesheet" href="${cp}/resources/css/custom.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="js/main.js"></script>
+  <script src="${cp}/resources/js/main.js"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="${cp}/resources/css/home.css">
   <script>
     function user_login()
     {
@@ -30,11 +35,16 @@
       </div>
       <div class="col-sm-4 col-md-4">
           <div id="bannerimage" style="background-image: url(https://pro.keepvid.com/images/en/spotify/spotify-logo2.jpg); no repeat"></div>
-
+          <br>
+          <center>
+            <div id ="message">
+              <p style="color:buttonface; font-size: 2em;">${signUpMessage} </p>
+            </div>
+          </center>
           <div id = "loginForm">
-            <br>
+            
 
-            <form class="w3-container" action="javascript:user_login()">
+            <form:form class="w3-container" method="POST" action="userSignUp">
               <div class="w3-section">
                 <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Username or email" name="usrname" id = "username_login" required>
                 <p style="color:red"></p>
@@ -45,8 +55,10 @@
 
                 <button class="btn formButton" id ="loginButton" type="submit">Sign Up</button>
               </div>
-            </form>
+            </form:form>
           </div>
+          
+       
 
           <center>
             <p style="color: white;"> Already have an account? <a href= "home.html" style="color: green;"> Log in </a> </p>

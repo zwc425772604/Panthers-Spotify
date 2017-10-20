@@ -37,7 +37,7 @@
             <br>
             <p style="text-align:center; color: gray;font-size:1.5em;"> OR </p>
 
-                <form:form class="w3-container" method="POST" action="userlogin">
+                <form:form class="w3-container" method="POST" action="main">
                   <div class="w3-section">
                     <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Username or email" name="usrname" id = "username_login" required>
                     <input class="w3-input w3-border" type="password" placeholder="Password" name="psw" id = "user_password" required>
@@ -49,8 +49,10 @@
             </div>
             <center>
               <div id="bottomLinks" style="margin-top:10%;">
-
-                <p> <a href="SignUp.html" target="_self"> SIGN UP </a></p>
+                  <form:form action="signup" method="GET">
+                      <button class="btn formButton" id="signButton" type="submit">Sign Up</button>
+                  </form:form>
+<!--                <p> <a href="signup"> SIGN UP </a></p>-->
                 <p> <a href="" target="_self"> RESET PASSWORD </a></p>
                 <p> <a href="" target="_self"> SETTINGS </a></p>
               </div>

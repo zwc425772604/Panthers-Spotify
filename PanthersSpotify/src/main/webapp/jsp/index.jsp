@@ -31,12 +31,14 @@
             <div class="col-sm-4 col-md-4">
             <div id="bannerimage" style="background-image: url(https://pro.keepvid.com/images/en/spotify/spotify-logo2.jpg); no repeat"></div>
             <div id = "loginForm">
-                <div class="wrapper" style="margin-top:3%;">
+<!--                <div class="wrapper" style="margin-top:3%;">
                     <button type="button" class="btn formButton" id="facebookButton">LOG IN WITH FACEBOOK</button>
                 </div>
             <br>
-            <p style="text-align:center; color: gray;font-size:1.5em;"> OR </p>
-
+            <p style="text-align:center; color: gray;font-size:1.5em;"> OR </p>-->
+<br>
+<div><p id="error_message" style="color:#ff4d4d; font-size:2em; "> ${error_message}</p></div>
+                
                 <form:form class="w3-container" method="POST" action="main">
                   <div class="w3-section">
                     <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="email" name="email" id = "username_login" required>

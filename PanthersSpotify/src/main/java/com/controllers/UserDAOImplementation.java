@@ -47,7 +47,7 @@ public class UserDAOImplementation {
        
     }
     //check user is already registered or not, for login function
-    public List<User> getUserId(String email, String password)
+    public List<User> getUser(String email, String password)
     {
         Query query = em.createQuery("Select a FROM USER a WHERE a.email = :email and a.password = :password",User.class)
                 .setParameter("email", email)

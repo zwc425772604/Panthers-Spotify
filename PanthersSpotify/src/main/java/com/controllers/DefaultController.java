@@ -35,16 +35,18 @@ public class DefaultController {
    public String userLogin(ModelMap map,
                             @RequestParam("email") String email,
                             @RequestParam("password") String password) {
-       List<User> li = UserDAO.getUserId(email,password);
+       List<User> li = UserDAO.getUser(email,password);
        //if the user is not in the database
-       if (li == null && li.isEmpty())
+//       System.out.println("li is "  + li);
+//       System.out.println("li size is "  + li.size());
+       if (li.size() == 0)
        {
-           map.put("error_message", "Your email and password does not match");
+           map.put("error_message", "Your email and password does not match. Please try again.");
            return "index";
        }
        else
        {
-           System.out.println("user id is " + li.get(0).getId());
+//           System.out.println("user id is " + li.get(0).getId());
            map.put("user_id", li.get(0).getId());
            map.put("username", li.get(0).getUsername());
            return "main";

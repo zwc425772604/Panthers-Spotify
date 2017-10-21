@@ -6,6 +6,7 @@
 package com.controllers;
 
 import com.model.User;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -31,10 +32,26 @@ public class DefaultController {
    
    /* user login */
    @RequestMapping(value = "/main", method = RequestMethod.POST)
-   public String serLogin(ModelMap map) {
-       map.put("username", "max");
+   public String userLogin(ModelMap map,
+                            @RequestParam("email") String email,
+                            @RequestParam("password") String password) {
+       List<User> li = UserDAO.getUserId(email,password);
+       //if the user is not in the database
+       if (li == null && li.isEmpty())
+       {
+           map.put("error_message", "Your email and password does not match");
+           return "index";
+       }
+       else
+       {
+           System.out.println("user id is " + li.get(0).getId());
+           map.put("user_id", li.get(0).getId());
+           map.put("username", li.get(0).getUsername());
+           return "main";
+       }
+      
             
-            return "main";
+            
    }
    
     /* user logout */
@@ -44,7 +61,7 @@ public class DefaultController {
             return "index";
    }
    
-      /* user sign up */
+      /* display sign up page */
    @RequestMapping(value = "/signup", method = RequestMethod.GET)
    public String displaySignUp(ModelMap map) {
             
@@ -58,22 +75,23 @@ public class DefaultController {
                             @RequestParam("email") String email,
                             @RequestParam("password") String password) 
    {                                                                                    
-    EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-    EntityManager em = entityManagerFactory.createEntityManager();
-    EntityTransaction userTransaction = em.getTransaction();
+//    EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+//    EntityManager em = entityManagerFactory.createEntityManager();
+//    EntityTransaction userTransaction = em.getTransaction();
     User user = new User();
     user.setUsername(username);
     user.setEmail(email);
     user.setPassword(password);
-     userTransaction.begin();
-    em.persist(user);
-    userTransaction.commit();
-    em.close();
+    UserDAO.add(user);
+//     userTransaction.begin();
+//    em.persist(user);
+//    userTransaction.commit();
+//    em.close();
             map.put("signUpMessage", "congratulation, sign up successfully");
             return "SignUp";
    }
    
    
-    
+   
     
 }

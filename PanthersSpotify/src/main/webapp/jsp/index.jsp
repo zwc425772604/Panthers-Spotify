@@ -39,8 +39,8 @@
 
                 <form:form class="w3-container" method="POST" action="main">
                   <div class="w3-section">
-                    <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Username or email" name="usrname" id = "username_login" required>
-                    <input class="w3-input w3-border" type="password" placeholder="Password" name="psw" id = "user_password" required>
+                    <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="email" name="email" id = "username_login" required>
+                    <input class="w3-input w3-border" type="password" placeholder="Password" name="password" id = "user_password" required>
                     <input class="w3-check w3-margin-top" type="checkbox" checked="checked"> <span style="color: white">Remember me </span>
                     <button class="btn formButton" id ="loginButton" type="submit">LOG IN</button>
 

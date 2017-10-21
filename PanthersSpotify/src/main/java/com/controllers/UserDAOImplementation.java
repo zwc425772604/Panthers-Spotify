@@ -8,9 +8,14 @@ package com.controllers;
  
 import com.model.User;
 import java.util.List;
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import org.springframework.stereotype.Repository;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
@@ -22,18 +27,33 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class UserDAOImplementation {
-    @PersistenceContext private EntityManager em;
-   
+//    @PersistenceContext private EntityManager em;
+     EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+    EntityManager em = entityManagerFactory.createEntityManager();
+    EntityTransaction userTransaction = em.getTransaction();
    @Transactional
     public void add(User user) {
-        em.getTransaction().begin();
-        em.persist(user);
-        em.getTransaction().commit();
+//        em.getTransaction().begin();
+//        em.persist(user);
+//        em.getTransaction().commit();
+             userTransaction.begin();
+    em.persist(user);
+    userTransaction.commit();
+    em.close();
     }
 
    
     public void remove(User user) {
        
+    }
+    //check user is already registered or not, for login function
+    public List<User> getUserId(String email, String password)
+    {
+        Query query = em.createQuery("Select a FROM USER a WHERE a.email = :email and a.password = :password",User.class)
+                .setParameter("email", email)
+                .setParameter("password", password);
+        List<User> list = query.getResultList();
+        return list;
     }
     
 }

@@ -46,11 +46,13 @@
 
             <form:form class="w3-container" method="POST" action="userSignUp">
               <div class="w3-section">
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Username or email" name="usrname" id = "username_login" required>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Username" name="username" id = "username_login" required>
                 <p style="color:red"></p>
-                <input class="w3-input w3-border" type="password" placeholder="Password" name="psw" id = "user_password" required>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Email" name="usrname" id = "email_login" required>
                 <p style="color:red"></p>
-                <input class="w3-input w3-border" type="password" placeholder="Confirm Password" name="psw" id = "user_password" required>
+                <input class="w3-input w3-border" type="password" placeholder="Password" name="password" id = "user_password" required>
+                <p style="color:red"></p>
+                <input class="w3-input w3-border" type="password" placeholder="Confirm Password" name="confirm_password" id = "confirm_password" required>
                 <p style="color:red"></p>
 
                 <button class="btn formButton" id ="loginButton" type="submit">Sign Up</button>

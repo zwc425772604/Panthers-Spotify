@@ -48,7 +48,7 @@
               <div class="w3-section">
                 <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Username" name="username" id = "username_login" required>
                 <p style="color:red"></p>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Email" name="usrname" id = "email_login" required>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Email" name="email" id = "email_login" required>
                 <p style="color:red"></p>
                 <input class="w3-input w3-border" type="password" placeholder="Password" name="password" id = "user_password" required>
                 <p style="color:red"></p>

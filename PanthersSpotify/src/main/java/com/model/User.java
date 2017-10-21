@@ -9,13 +9,15 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import static javax.persistence.GenerationType.TABLE;
 import javax.persistence.Id;
+import static org.eclipse.persistence.jpa.jpql.JPQLQueryDeclaration.Type.TABLE;
 
 /**
  *
  * @author Weichao ZHao
  */
-@Entity
+@Entity(name="USER")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,7 +32,7 @@ public class User implements Serializable {
     {
         
     }
-    public User(int id, String username, String email, String password)
+    public User(int id, String username, String password, String email)
     {
         this.id = id;
         this.password = password;

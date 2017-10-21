@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Component;
 
@@ -19,11 +20,11 @@ import org.springframework.stereotype.Component;
  *
  * @author Weichao ZHao
  */
-@Repository
+@Component
 public class UserDAOImplementation {
     @PersistenceContext private EntityManager em;
    
-   
+   @Transactional
     public void add(User user) {
         em.getTransaction().begin();
         em.persist(user);

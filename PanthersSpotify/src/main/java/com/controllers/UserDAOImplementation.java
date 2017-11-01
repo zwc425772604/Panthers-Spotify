@@ -49,11 +49,13 @@ public class UserDAOImplementation {
     //check user is already registered or not, for login function
     public List<User> getUser(String email, String password)
     {
-        Query query = em.createQuery("Select a FROM USER a WHERE a.email = :email and a.password = :password",User.class)
-                .setParameter("email", email)
-                .setParameter("password", password);
-        List<User> list = query.getResultList();
-        return list;
+        //NameQuery are from Entity class
+         TypedQuery<User> query1 =
+        em.createNamedQuery("User.findByEmail", User.class)
+                 .setParameter("email", email);
+        List<User> results = query1.getResultList();
+        return results;
+
     }
     
 }

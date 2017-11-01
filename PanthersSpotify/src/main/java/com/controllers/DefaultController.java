@@ -44,11 +44,14 @@ public class DefaultController {
            map.put("error_message", "Your email and password does not match. Please try again.");
            return "index";
        }
+       else if (li.get(0).getUpassword().equals(password))
+       {
+           map.put("username", li.get(0).getUname());
+           return "main";
+       }
        else
        {
-//           System.out.println("user id is " + li.get(0).getId());
-           map.put("user_id", li.get(0).getId());
-           map.put("username", li.get(0).getUsername());
+           map.put("username", li.get(0).getUname());
            return "main";
        }
       
@@ -81,9 +84,9 @@ public class DefaultController {
 //    EntityManager em = entityManagerFactory.createEntityManager();
 //    EntityTransaction userTransaction = em.getTransaction();
     User user = new User();
-    user.setUsername(username);
+    user.setUname(username);
     user.setEmail(email);
-    user.setPassword(password);
+    user.setUpassword(password);
     UserDAO.add(user);
 //     userTransaction.begin();
 //    em.persist(user);

@@ -37,7 +37,7 @@ public class DefaultController {
                             @RequestParam("password") String password) {
        List<User> li = UserDAO.getUser(email,password);
        //if the user is not in the database
-       System.out.println("li is "  + li);
+ //      System.out.println("li is "  + li);
 //       System.out.println("li size is "  + li.size());
        if (li.size() == 0)
        {

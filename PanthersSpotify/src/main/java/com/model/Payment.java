@@ -6,26 +6,25 @@
 package com.model;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Weichao ZHao
+ * @author weichaozhao
  */
 @Entity
 @Table(name = "payment")
@@ -64,8 +63,9 @@ public class Payment implements Serializable {
     @Size(max = 100)
     @Column(name = "billingAddress")
     private String billingAddress;
-    @OneToMany(mappedBy = "paymentId")
-    private Collection<User> userCollection;
+    @JoinColumn(name = "uemail", referencedColumnName = "email")
+    @ManyToOne
+    private User uemail;
 
     public Payment() {
     }
@@ -130,13 +130,12 @@ public class Payment implements Serializable {
         this.billingAddress = billingAddress;
     }
 
-    @XmlTransient
-    public Collection<User> getUserCollection() {
-        return userCollection;
+    public User getUemail() {
+        return uemail;
     }
 
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
+    public void setUemail(User uemail) {
+        this.uemail = uemail;
     }
 
     @Override

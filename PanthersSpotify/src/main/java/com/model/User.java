@@ -12,8 +12,6 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -27,7 +25,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Weichao ZHao
+ * @author weichaozhao
  */
 @Entity
 @Table(name = "user")
@@ -44,9 +42,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findByUtype", query = "SELECT u FROM User u WHERE u.utype = :utype")
     , @NamedQuery(name = "User.findByUpgradDate", query = "SELECT u FROM User u WHERE u.upgradDate = :upgradDate")})
 public class User implements Serializable {
-
-    @OneToMany(mappedBy = "powner")
-    private Collection<Playlist> playlistCollection;
 
     private static final long serialVersionUID = 1L;
     @Size(max = 20)
@@ -77,9 +72,14 @@ public class User implements Serializable {
     @Column(name = "upgradDate")
     @Temporal(TemporalType.DATE)
     private Date upgradDate;
-    @JoinColumn(name = "paymentId", referencedColumnName = "payid")
-    @ManyToOne
-    private Payment paymentId;
+    @OneToMany(mappedBy = "powner")
+    private Collection<Playlist> playlistCollection;
+    @OneToMany(mappedBy = "aowner")
+    private Collection<Album> albumCollection;
+    @OneToMany(mappedBy = "uemail")
+    private Collection<Location> locationCollection;
+    @OneToMany(mappedBy = "uemail")
+    private Collection<Payment> paymentCollection;
 
     public User() {
     }
@@ -160,12 +160,40 @@ public class User implements Serializable {
         this.upgradDate = upgradDate;
     }
 
-    public Payment getPaymentId() {
-        return paymentId;
+    @XmlTransient
+    public Collection<Playlist> getPlaylistCollection() {
+        return playlistCollection;
     }
 
-    public void setPaymentId(Payment paymentId) {
-        this.paymentId = paymentId;
+    public void setPlaylistCollection(Collection<Playlist> playlistCollection) {
+        this.playlistCollection = playlistCollection;
+    }
+
+    @XmlTransient
+    public Collection<Album> getAlbumCollection() {
+        return albumCollection;
+    }
+
+    public void setAlbumCollection(Collection<Album> albumCollection) {
+        this.albumCollection = albumCollection;
+    }
+
+    @XmlTransient
+    public Collection<Location> getLocationCollection() {
+        return locationCollection;
+    }
+
+    public void setLocationCollection(Collection<Location> locationCollection) {
+        this.locationCollection = locationCollection;
+    }
+
+    @XmlTransient
+    public Collection<Payment> getPaymentCollection() {
+        return paymentCollection;
+    }
+
+    public void setPaymentCollection(Collection<Payment> paymentCollection) {
+        this.paymentCollection = paymentCollection;
     }
 
     @Override
@@ -191,15 +219,6 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.model.User[ email=" + email + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Playlist> getPlaylistCollection() {
-        return playlistCollection;
-    }
-
-    public void setPlaylistCollection(Collection<Playlist> playlistCollection) {
-        this.playlistCollection = playlistCollection;
     }
     
 }

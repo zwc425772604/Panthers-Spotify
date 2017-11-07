@@ -7,6 +7,9 @@
     <class>com.model.User</class>
     <class>com.model.Payment</class>
     <class>com.model.Playlist</class>
+    <class>model.Album</class>
+    <class>model.Location</class>
+    <class>model.Song</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql2.cs.stonybrook.edu:3306/panthers?zeroDateTimeBehavior=convertToNull"/>

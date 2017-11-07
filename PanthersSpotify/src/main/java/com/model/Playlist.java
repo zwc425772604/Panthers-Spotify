@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Weichao ZHao
+ * @author weichaozhao
  */
 @Entity
 @Table(name = "playlist")

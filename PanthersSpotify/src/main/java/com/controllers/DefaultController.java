@@ -11,12 +11,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -32,28 +36,35 @@ public class DefaultController {
    
    /* user login */
    @RequestMapping(value = "/main", method = RequestMethod.POST)
-   public String userLogin(ModelMap map,
-                            @RequestParam("email") String email,
-                            @RequestParam("password") String password) {
+   public ModelAndView userLogin(ModelAndView mav,
+                           HttpServletRequest request, HttpSession session) {
+	   String email = request.getParameter("email");
+	   String password = request.getParameter("password");
        List<User> li = UserDAO.getUser(email,password);
-       //if the user is not in the database
+      
        System.out.println("li is "  + li);
-//       System.out.println("li size is "  + li.size());
+       //case 0: if the email is not registered
        if (li.size() == 0)
        {
-           map.put("error_message", "Your email and password does not match. Please try again.");
-           return "index";
+          
+            mav.setViewName("index");
+    	   	    mav.addObject("error_message", "This email does not register on our site!");
        }
+       //case 1: email and password match in database record
+       //if true - get the playlist, etc from the database and update the DOM
        else if (li.get(0).getUpassword().equals(password))
        {
-           map.put("username", li.get(0).getUname());
-           return "main";
+    	   	   session.setAttribute("user", li.get(0));
+           mav.addObject("username", li.get(0).getUname());
+           mav.setViewName("main");
        }
+       //case 2: incorrect email or password
        else
        {
-           map.put("username", li.get(0).getUname());
-           return "main";
+           mav.addObject("error_message", "Incorrect email or password!");
+           mav.setViewName("index");
        }
+       return mav;
       
             
             
@@ -61,16 +72,20 @@ public class DefaultController {
    
     /* user logout */
    @RequestMapping(value = "/home", method = RequestMethod.GET)
-   public String userLogout(ModelMap map) {
-            
-            return "index";
+   public ModelAndView userLogout(ModelAndView mav, HttpSession session) {
+	   		if (session.getAttribute("user") != null)
+	   		{
+	   			session.setAttribute("user", null);
+	   		}
+            mav.setViewName("index");
+            return mav;
    }
    
       /* display sign up page */
    @RequestMapping(value = "/signup", method = RequestMethod.GET)
-   public String displaySignUp(ModelMap map) {
-            
-            return "SignUp";
+   public ModelAndView displaySignUp(ModelAndView mav) {
+            mav.setViewName("SignUp");
+            return mav;
    }
    
        /* user sign up */

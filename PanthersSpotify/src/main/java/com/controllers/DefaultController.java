@@ -90,25 +90,27 @@ public class DefaultController {
    
        /* user sign up */
    @RequestMapping(value = "/userSignUp", method = RequestMethod.POST)
-   public String userSignUp(ModelMap map,
-                            @RequestParam("username") String username,
-                            @RequestParam("email") String email,
-                            @RequestParam("password") String password) 
-   {                                                                                    
-//    EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-//    EntityManager em = entityManagerFactory.createEntityManager();
-//    EntityTransaction userTransaction = em.getTransaction();
+   public ModelAndView userSignUp(ModelAndView mav,
+                  HttpServletRequest request, HttpSession session) 
+   {      
+	System.out.println("here in the sign up page");
+	String username = request.getParameter("username");
+	String password = request.getParameter("password");
+	String email = request.getParameter("email");
+	char gender = request.getParameter("gender").charAt(0);
+//	String first_name = request.getParameter("first_name");
+//	String last_name = request.getParameter("last_name");
     User user = new User();
     user.setUname(username);
     user.setEmail(email);
     user.setUpassword(password);
+    user.setUtype(1);
+    user.setGender(gender);
     UserDAO.add(user);
-//     userTransaction.begin();
-//    em.persist(user);
-//    userTransaction.commit();
-//    em.close();
-            map.put("signUpMessage", "congratulation, sign up successfully");
-            return "SignUp";
+            mav.addObject("signUpMessage", "congratulation, sign up successfully");
+          
+            mav.setViewName("SignUp");
+            return mav;
    }
    
    

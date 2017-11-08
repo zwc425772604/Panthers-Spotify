@@ -25,6 +25,80 @@
       //need to validate the username and password in later stage
        window.open("main.html", "_self");
     }
+    function validateEmailFormat(email)
+    {
+      var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    }
+    function checkPassword(password, password_confirm)
+    {
+      if (password.localeCompare(password_confirm) == 0)
+      {
+        return 0;
+      }
+      else {
+        return -1;
+      }
+    }
+
+    function validateFormInputs()
+    {
+      var email = $("#email_login").val();
+      var password = $("#user_password").val();
+      var password1 = $("#confirm_password").val();
+      var username = $("#username_login").val();
+      var gender = $("input[name='gender']").val();
+      var dob = new Date($("#date_of_birth").val());
+      var first_name = $("#first_name").val();
+      var last_name= $("#last_name").val();
+      var correct_email = validateEmailFormat(email);
+      var password_matched = checkPassword(password,password1);
+      if (password_matched == 0 && correct_email)
+      {
+        //ajax call to sign up
+        $("#password_error").text("");
+        $("#email_error").text("");
+        $.ajax({
+          url: "${cp}/userSignUp",
+          type: "POST",
+          data : {"username" : username, "email" : email, "password" : password, "dob" : dob,
+                  "first_name" : first_name, "last_name" : last_name, "gender" : gender},
+          asyn: true,
+          cache: false,
+          success : function(response)
+          {
+            console.log(response);
+          },
+          error: function(e)
+          {
+            console.log(e);
+          }
+
+        });
+      }
+      else
+      {
+
+        if (password_matched == 0)
+        {
+          $("#password_error").text("");
+        }
+        else
+        {
+          $("#password_error").text("Passwords do not match");
+        }
+        if (correct_email)
+        {
+          $("#email_error").text("");
+        }
+        else
+        {
+          $("#email_error").text("Incorrect email");
+        }
+
+      }
+
+    }
   </script>
 </head>
 <body>
@@ -36,35 +110,51 @@
       <div class="col-sm-4 col-md-4">
           <div id="bannerimage" style="background-image: url(https://pro.keepvid.com/images/en/spotify/spotify-logo2.jpg); no repeat"></div>
           <br>
-          <center>
-            <div id ="message">
+          
+            <div id ="message" style="text-align:center">
               <p style="color:buttonface; font-size: 2em;">${signUpMessage} </p>
             </div>
-          </center>
+         
           <div id = "loginForm">
             
 
-            <form:form class="w3-container" method="POST" action="userSignUp">
-              <div class="w3-section">
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Username" name="username" id = "username_login" required>
-                <p style="color:red"></p>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Email" name="email" id = "email_login" required>
-                <p style="color:red"></p>
-                <input class="w3-input w3-border" type="password" placeholder="Password" name="password" id = "user_password" required>
-                <p style="color:red"></p>
-                <input class="w3-input w3-border" type="password" placeholder="Confirm Password" name="confirm_password" id = "confirm_password" required>
-                <p style="color:red"></p>
+            <form:form class="w3-container" action="javascript:validateFormInputs()">
+               <div class="w3-section">
+                  <label> Username: </label>
+                  <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Username" name="username" id = "username_login" required>
+                  <p class = "input_error_message"  id = "username_error"></p>
+                  <label> Email address: </label>
+                  <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Email" name="email" id = "email_login" required>
+                  <p class = "input_error_message" id = "email_error"></p>
+                  <label> Password: </label>
+                  <input class="w3-input w3-border" type="password" placeholder="Password" name="password" id = "user_password" required>
+                  <p class = "input_error_message"></p>
+                  <label> Re-enter your password: </label>
+                  <input class="w3-input w3-border" type="password" placeholder="Confirm Password" name="confirm_password" id = "confirm_password" required>
+                  <p class = "input_error_message" id="password_error"></p>
+                  <label> First name: </label>
+                  <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="First name" name="first_name" id = "user_first_name" required>
+                  <p class = "input_error_message"></p>
+                  <label> Last name: </label>
+                  <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Last name" name="last_name" id = "user_last_name" required>
+                  <p class = "input_error_message"></p>
+                  <label> Date of Birth: </label>
+  				        <input class="w3-input w3-border" type="date" placeholder="Date of Birth (yyyy-mm-dd)" name="bob" id="date_of_birth" required>
+                  <p class = "input_error_message"></p>
+                  <div class="gender_radiobuttons" style="dispaly:inline;">
+            				<input class="w3-input w3-border" type="radio" name="gender" value="M"> <label class="gender_role">Male</label>
+            				<input class="w3-input w3-border" type="radio" name="gender" value="F"> <label class="gender_role">Female</label>
+          				</div>
 
-                <button class="btn formButton" id ="loginButton" type="submit">Sign Up</button>
-              </div>
+                  <br>
+                  <button class="btn formButton" id ="loginButton" type="submit">Sign Up</button>
+                </div>
             </form:form>
           </div>
           
-       
-
-          <center>
+          <div style="text-align: center;">
             <p style="color: white;"> Already have an account? <a href= "home.html" style="color: green;"> Log in </a> </p>
-        </center>
+        </div>
       </div>
     </div>
   </div>

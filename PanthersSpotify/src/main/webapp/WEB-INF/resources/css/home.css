@@ -68,3 +68,22 @@ input {
 input:focus{
    background-color: lightblue;
 }
+.gender_radiobuttons{
+   /* float: left;
+   width: auto;
+   margin-left: 2em; */
+   display: inline; 
+ 
+}
+.gender_role
+{
+	color:white;
+}
+label{
+  color: green;
+}
+p.input_error_message
+{
+  color: red;
+  font-size: 2em;
+}

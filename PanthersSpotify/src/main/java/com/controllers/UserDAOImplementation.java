@@ -33,13 +33,10 @@ public class UserDAOImplementation {
     EntityTransaction userTransaction = em.getTransaction();
    @Transactional
     public void add(User user) {
-//        em.getTransaction().begin();
-//        em.persist(user);
-//        em.getTransaction().commit();
-             userTransaction.begin();
+    userTransaction.begin();
     em.persist(user);
     userTransaction.commit();
-    em.close();
+   
     }
 
    

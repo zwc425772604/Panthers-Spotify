@@ -53,7 +53,7 @@ public class Playlist implements Serializable {
     @Column(name = "pname")
     private String pname;
     @Size(max = 500)
-    @Column(name = "dis")
+    @Column(name = "des")
     private String dis;
     @Size(max = 100)
     @Column(name = "photoUrl")

@@ -28,21 +28,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserDAOImplementation {
 //    @PersistenceContext private EntityManager em;
-     EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+    EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
     EntityManager em = entityManagerFactory.createEntityManager();
     EntityTransaction userTransaction = em.getTransaction();
-   @Transactional
+    @Transactional
     public void add(User user) {
-    userTransaction.begin();
-    em.persist(user);
-    userTransaction.commit();
-   
+	    userTransaction.begin();
+	    em.persist(user);
+	    userTransaction.commit();
     }
 
-   
     public void remove(User user) {
        
     }
+    
     //check user is already registered or not, for login function
     public List<User> getUser(String email, String password)
     {

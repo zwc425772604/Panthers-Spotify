@@ -36,8 +36,7 @@ public class DefaultController {
    
    /* user login */
    @RequestMapping(value = "/main", method = RequestMethod.POST)
-   public ModelAndView userLogin(ModelAndView mav,
-                           HttpServletRequest request, HttpSession session) {
+   public ModelAndView userLogin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   String email = request.getParameter("email");
 	   String password = request.getParameter("password");
        List<User> li = UserDAO.getUser(email,password);
@@ -45,16 +44,15 @@ public class DefaultController {
        System.out.println("li is "  + li);
        //case 0: if the email is not registered
        if (li.size() == 0)
-       {
-          
+       {          
             mav.setViewName("index");
-    	   	    mav.addObject("error_message", "This email does not register on our site!");
+    	   	mav.addObject("error_message", "This email does not register on our site!");
        }
        //case 1: email and password match in database record
        //if true - get the playlist, etc from the database and update the DOM
        else if (li.get(0).getUpassword().equals(password))
        {
-    	   	   session.setAttribute("user", li.get(0));
+    	   session.setAttribute("user", li.get(0));
            mav.addObject("username", li.get(0).getUname());
            mav.setViewName("main");
        }

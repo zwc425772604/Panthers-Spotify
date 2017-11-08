@@ -12,6 +12,9 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -43,6 +46,40 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findByUpgradDate", query = "SELECT u FROM User u WHERE u.upgradDate = :upgradDate")})
 public class User implements Serializable {
 
+    @Size(max = 45)
+    @Column(name = "firstName", length = 45)
+    private String firstName;
+    @Size(max = 45)
+    @Column(name = "middleName", length = 45)
+    private String middleName;
+    @Size(max = 45)
+    @Column(name = "lastName", length = 45)
+    private String lastName;
+    @JoinTable(name = "releasesong", joinColumns = {
+        @JoinColumn(name = "uemail", referencedColumnName = "email")}, inverseJoinColumns = {
+        @JoinColumn(name = "sid", referencedColumnName = "sid")})
+    @ManyToMany
+    private Collection<Song> songCollection;
+    @JoinTable(name = "followplaylist", joinColumns = {
+        @JoinColumn(name = "uemail", referencedColumnName = "email")}, inverseJoinColumns = {
+        @JoinColumn(name = "pid", referencedColumnName = "pid")})
+    @ManyToMany
+    private Collection<Playlist> playlistCollection;
+    @JoinTable(name = "followalbum", joinColumns = {
+        @JoinColumn(name = "uemail", referencedColumnName = "email")}, inverseJoinColumns = {
+        @JoinColumn(name = "aid", referencedColumnName = "aid")})
+    @ManyToMany
+    private Collection<Album> albumCollection;
+    @JoinTable(name = "followartist", joinColumns = {
+        @JoinColumn(name = "uemail", referencedColumnName = "email")}, inverseJoinColumns = {
+        @JoinColumn(name = "aemail", referencedColumnName = "email")})
+    @ManyToMany
+    private Collection<User> userCollection;
+    @ManyToMany(mappedBy = "userCollection")
+    private Collection<User> userCollection1;
+    @OneToMany(mappedBy = "uemail")
+    private Collection<Concert> concertCollection;
+
     private static final long serialVersionUID = 1L;
     @Size(max = 20)
     @Column(name = "uname")
@@ -72,10 +109,10 @@ public class User implements Serializable {
     @Column(name = "upgradDate")
     @Temporal(TemporalType.DATE)
     private Date upgradDate;
-    @OneToMany(mappedBy = "powner")
-    private Collection<Playlist> playlistCollection;
-    @OneToMany(mappedBy = "aowner")
-    private Collection<Album> albumCollection;
+//    @OneToMany(mappedBy = "powner")
+//    private Collection<Playlist> playlistCollection;
+//    @OneToMany(mappedBy = "aowner")
+//    private Collection<Album> albumCollection;
     @OneToMany(mappedBy = "uemail")
     private Collection<Location> locationCollection;
     @OneToMany(mappedBy = "uemail")
@@ -219,6 +256,84 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.model.User[ email=" + email + " ]";
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getMiddleName() {
+        return middleName;
+    }
+
+    public void setMiddleName(String middleName) {
+        this.middleName = middleName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    @XmlTransient
+    public Collection<Song> getSongCollection() {
+        return songCollection;
+    }
+
+    public void setSongCollection(Collection<Song> songCollection) {
+        this.songCollection = songCollection;
+    }
+
+//    @XmlTransient
+//    public Collection<Playlist> getPlaylistCollection() {
+//        return playlistCollection;
+//    }
+//
+//    public void setPlaylistCollection(Collection<Playlist> playlistCollection) {
+//        this.playlistCollection = playlistCollection;
+//    }
+//
+//    @XmlTransient
+//    public Collection<Album> getAlbumCollection() {
+//        return albumCollection;
+//    }
+//
+//    public void setAlbumCollection(Collection<Album> albumCollection) {
+//        this.albumCollection = albumCollection;
+//    }
+
+    @XmlTransient
+    public Collection<User> getUserCollection() {
+        return userCollection;
+    }
+
+    public void setUserCollection(Collection<User> userCollection) {
+        this.userCollection = userCollection;
+    }
+
+    @XmlTransient
+    public Collection<User> getUserCollection1() {
+        return userCollection1;
+    }
+
+    public void setUserCollection1(Collection<User> userCollection1) {
+        this.userCollection1 = userCollection1;
+    }
+
+    @XmlTransient
+    public Collection<Concert> getConcertCollection() {
+        return concertCollection;
+    }
+
+    public void setConcertCollection(Collection<Concert> concertCollection) {
+        this.concertCollection = concertCollection;
     }
     
 }

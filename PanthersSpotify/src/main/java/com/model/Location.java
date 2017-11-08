@@ -6,6 +6,7 @@
 package com.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,10 +15,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,6 +41,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Location.findByPostalCode", query = "SELECT l FROM Location l WHERE l.postalCode = :postalCode")
     , @NamedQuery(name = "Location.findByContryCode", query = "SELECT l FROM Location l WHERE l.contryCode = :contryCode")})
 public class Location implements Serializable {
+
+    @OneToMany(mappedBy = "lid")
+    private Collection<Concert> concertCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -183,6 +189,15 @@ public class Location implements Serializable {
     @Override
     public String toString() {
         return "com.model.Location[ lid=" + lid + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Concert> getConcertCollection() {
+        return concertCollection;
+    }
+
+    public void setConcertCollection(Collection<Concert> concertCollection) {
+        this.concertCollection = concertCollection;
     }
     
 }

@@ -91,19 +91,21 @@ public class DefaultController {
    public ModelAndView userSignUp(ModelAndView mav,
                   HttpServletRequest request, HttpSession session) 
    {      
-	System.out.println("here in the sign up page");
+	
 	String username = request.getParameter("username");
 	String password = request.getParameter("password");
 	String email = request.getParameter("email");
 	char gender = request.getParameter("gender").charAt(0);
-//	String first_name = request.getParameter("first_name");
-//	String last_name = request.getParameter("last_name");
+	String first_name = request.getParameter("first_name");
+	String last_name = request.getParameter("last_name");
     User user = new User();
     user.setUname(username);
     user.setEmail(email);
     user.setUpassword(password);
     user.setUtype(1);
     user.setGender(gender);
+    user.setFirstName(first_name);
+    user.setLastName(last_name);
     UserDAO.add(user);
             mav.addObject("signUpMessage", "congratulation, sign up successfully");
           

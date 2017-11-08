@@ -6,12 +6,14 @@
 package com.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,6 +23,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,7 +36,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Playlist.findAll", query = "SELECT p FROM Playlist p")
     , @NamedQuery(name = "Playlist.findByPid", query = "SELECT p FROM Playlist p WHERE p.pid = :pid")
     , @NamedQuery(name = "Playlist.findByPname", query = "SELECT p FROM Playlist p WHERE p.pname = :pname")
-    , @NamedQuery(name = "Playlist.findByDis", query = "SELECT p FROM Playlist p WHERE p.dis = :dis")
+    , @NamedQuery(name = "Playlist.findByDes", query = "SELECT p FROM Playlist p WHERE p.des = :des")
     , @NamedQuery(name = "Playlist.findByPhotoUrl", query = "SELECT p FROM Playlist p WHERE p.photoUrl = :photoUrl")
     , @NamedQuery(name = "Playlist.findByCreateDate", query = "SELECT p FROM Playlist p WHERE p.createDate = :createDate")
     , @NamedQuery(name = "Playlist.findByTimelength", query = "SELECT p FROM Playlist p WHERE p.timelength = :timelength")
@@ -41,6 +44,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Playlist.findByIspublic", query = "SELECT p FROM Playlist p WHERE p.ispublic = :ispublic")
     , @NamedQuery(name = "Playlist.findByNSongs", query = "SELECT p FROM Playlist p WHERE p.nSongs = :nSongs")})
 public class Playlist implements Serializable {
+
+    @ManyToMany(mappedBy = "playlistCollection")
+    private Collection<User> userCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -54,7 +60,7 @@ public class Playlist implements Serializable {
     private String pname;
     @Size(max = 500)
     @Column(name = "des")
-    private String dis;
+    private String des;
     @Size(max = 100)
     @Column(name = "photoUrl")
     private String photoUrl;
@@ -97,12 +103,12 @@ public class Playlist implements Serializable {
         this.pname = pname;
     }
 
-    public String getDis() {
-        return dis;
+    public String getDes() {
+        return des;
     }
 
-    public void setDis(String dis) {
-        this.dis = dis;
+    public void setDes(String des) {
+        this.des = des;
     }
 
     public String getPhotoUrl() {
@@ -184,6 +190,15 @@ public class Playlist implements Serializable {
     @Override
     public String toString() {
         return "com.model.Playlist[ pid=" + pid + " ]";
+    }
+
+    @XmlTransient
+    public Collection<User> getUserCollection() {
+        return userCollection;
+    }
+
+    public void setUserCollection(Collection<User> userCollection) {
+        this.userCollection = userCollection;
     }
     
 }

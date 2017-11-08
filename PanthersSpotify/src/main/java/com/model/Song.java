@@ -6,12 +6,14 @@
 package com.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -21,6 +23,7 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -40,6 +43,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Song.findByStype", query = "SELECT s FROM Song s WHERE s.stype = :stype")
     , @NamedQuery(name = "Song.findBySurl", query = "SELECT s FROM Song s WHERE s.surl = :surl")})
 public class Song implements Serializable {
+
+    @ManyToMany(mappedBy = "songCollection")
+    private Collection<User> userCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -174,6 +180,15 @@ public class Song implements Serializable {
     @Override
     public String toString() {
         return "com.model.Song[ sid=" + sid + " ]";
+    }
+
+    @XmlTransient
+    public Collection<User> getUserCollection() {
+        return userCollection;
+    }
+
+    public void setUserCollection(Collection<User> userCollection) {
+        this.userCollection = userCollection;
     }
     
 }

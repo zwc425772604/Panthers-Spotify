@@ -3,11 +3,8 @@
 <style type="text/css">
   #filter_keyword
   {
-
     width: 90%;
     font-size: 16px;
-
-
   }
 
   /* for the close button in input type search */
@@ -25,21 +22,20 @@
   }
   #filter_keyword
   {
-      background-color: #343a40;
-      border-color: inherit;
-  -webkit-box-shadow: none;
-  box-shadow: none;border:none;
-  color: #cccccc;
+    background-color: #343a40;
+    border-color: inherit;
+  	-webkit-box-shadow: none;
+    box-shadow: none;border:none;
+    color: #cccccc;
   }
   #filter_container
   {
     margin-top: 3%;
-
-
   }
 
 </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  
 <script>
 $(document).ready(function(){
 
@@ -64,7 +60,6 @@ $("#filter_keyword").blur(function(){
   $('#filter_keyword').css('background-color','#343a40');
   $('#search_span').css('background-color','#343a40');
     });
-
 
 </script>
 
@@ -102,13 +97,11 @@ $("#filter_keyword").blur(function(){
   <div class="suggestion-container" id = "charts-container">
 
       <div id ="top_content">
-
         <p style="display:inline;font-size:18px;">Sorted by</p>
         <select id = "sorted_by_keyword" style="display:inline; font-size:20px;">
           <option value="Name">Name</option>
           <option value="Recently Added">Recently Added</option>
         </select>
-
       </div>
 
     <div class="line"></div>

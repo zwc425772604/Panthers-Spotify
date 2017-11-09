@@ -18,15 +18,15 @@
   <!--js ref-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="${cp}/resources/js/bootstrap.min.js"></script>
-  <script src="https://www.w3schools.com/lib/w3.js"></script> <!-- for include html in div tag -->.
+  <script src="https://www.w3schools.com/lib/w3.js"></script> <!-- for include html in div tag -->
   <script src="${cp}/resources/js/main.js"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-   <link rel="stylesheet" href="${cp}/resources/css/custom.css">
-   <script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="stylesheet" href="${cp}/resources/css/custom.css">
+  <script>
    $(document).ready(function(){
      //hide all other containers in <div id= 'middle-content'> beside except overview_container
      //$("#overview_container").siblings().hide();
@@ -94,21 +94,21 @@
                 <li class="nav-item">
                   <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('artists')">Artists</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('stations')">Stations</a>
-                </li>
-                <li class="nav-item">
+                <li class="nav-item" id="extra-padding">
                   <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('local_files')">Local Files</a>
+                </li>
+                <!-- <li class="nav-item">
+                  <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('stations')">Stations</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('videos')">Videos</a>
                 </li>
                 <li class="nav-item" id="extra-padding">
                   <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('podcasts')">Podcasts</a>
-                </li>
+                </li>  -->
               </ul>
             </li>
-            <!--Playlist Section-->
+            <!-- Playlist Section-->
             <li>
               <p class="color-nav-header">PLAYLISTS</p>
                 <ul class="nav nav-stacked flex-column">

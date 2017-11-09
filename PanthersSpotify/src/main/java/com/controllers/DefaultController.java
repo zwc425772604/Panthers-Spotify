@@ -5,6 +5,7 @@
  */
 package com.controllers;
 
+import com.helper.Security;
 import com.model.User;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -38,7 +39,8 @@ public class DefaultController {
    @RequestMapping(value = "/main", method = RequestMethod.POST)
    public ModelAndView userLogin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   String email = request.getParameter("email");
-	   String password = request.getParameter("password");
+	   String nonEncPwd = request.getParameter("password");
+	   String password = Security.encryptPassword(nonEncPwd);
        List<User> li = UserDAO.getUser(email,password);
       
        System.out.println("li is "  + li);
@@ -89,28 +91,30 @@ public class DefaultController {
        /* user sign up */
    @RequestMapping(value = "/userSignUp", method = RequestMethod.POST)
    public ModelAndView userSignUp(ModelAndView mav,
-                  HttpServletRequest request, HttpSession session) 
-   {      
+                  HttpServletRequest request, HttpSession session){      
 	
-	String username = request.getParameter("username");
+    String username = request.getParameter("username");
 	String password = request.getParameter("password");
+	// encrypt password
+	String encPwd = Security.encryptPassword(password);
 	String email = request.getParameter("email");
 	char gender = request.getParameter("gender").charAt(0);
 	String first_name = request.getParameter("first_name");
 	String last_name = request.getParameter("last_name");
+	
     User user = new User();
     user.setUname(username);
     user.setEmail(email);
-    user.setUpassword(password);
+    user.setUpassword(encPwd);
     user.setUtype(1);
     user.setGender(gender);
     user.setFirstName(first_name);
     user.setLastName(last_name);
     UserDAO.add(user);
-            mav.addObject("signUpMessage", "congratulation, sign up successfully");
-          
-            mav.setViewName("SignUp");
-            return mav;
+    
+    mav.addObject("signUpMessage", "congratulation, sign up successfully");
+    mav.setViewName("SignUp");
+    return mav;
    }
    
    

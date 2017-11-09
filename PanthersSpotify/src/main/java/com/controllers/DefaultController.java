@@ -6,6 +6,7 @@
 package com.controllers;
 
 import com.helper.Security;
+import com.model.Playlist;
 import com.model.User;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -21,6 +22,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -28,6 +30,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class DefaultController {
     @Autowired
     private UserDAOImplementation UserDAO;
+    @Autowired
+    private PlaylistDAO PlaylistDAO;
     
    @RequestMapping(value = "/", method = RequestMethod.GET)
    public String index(ModelMap map) {
@@ -69,7 +73,7 @@ public class DefaultController {
             
             
    }
-   
+ 
     /* user logout */
    @RequestMapping(value = "/home", method = RequestMethod.GET)
    public ModelAndView userLogout(ModelAndView mav, HttpSession session) {
@@ -84,15 +88,23 @@ public class DefaultController {
       /* display sign up page */
    @RequestMapping(value = "/signup", method = RequestMethod.GET)
    public ModelAndView displaySignUp(ModelAndView mav) {
+	   		mav.addObject("signUpMessage", "Welcome to Panthers Spotify!");
             mav.setViewName("SignUp");
+            return mav;
+   }
+   
+   /* display sign up page */
+   @RequestMapping(value = "/main", method = RequestMethod.GET)
+   public ModelAndView displayMain(ModelAndView mav) {
+	   		//mav.addObject("signUpMessage", "Welcome to Panthers Spotify!");
+            mav.setViewName("main");
             return mav;
    }
    
        /* user sign up */
    @RequestMapping(value = "/userSignUp", method = RequestMethod.POST)
-   public ModelAndView userSignUp(ModelAndView mav,
-                  HttpServletRequest request, HttpSession session){      
-	
+   public @ResponseBody String userSignUp(ModelAndView mav,
+                  HttpServletRequest request, HttpSession session){ 
     String username = request.getParameter("username");
 	String password = request.getParameter("password");
 	// encrypt password
@@ -101,7 +113,6 @@ public class DefaultController {
 	char gender = request.getParameter("gender").charAt(0);
 	String first_name = request.getParameter("first_name");
 	String last_name = request.getParameter("last_name");
-	
     User user = new User();
     user.setUname(username);
     user.setEmail(email);
@@ -111,10 +122,25 @@ public class DefaultController {
     user.setFirstName(first_name);
     user.setLastName(last_name);
     UserDAO.add(user);
-    
-    mav.addObject("signUpMessage", "congratulation, sign up successfully");
-    mav.setViewName("SignUp");
-    return mav;
+//    mav.addObject("signUpMessage", "Congratulation, sign up successfully");
+//    mav.setViewName("SignUp");
+//    return mav;
+    String message = "Congratulation, sign up successfully. Please return to homepage for login.";
+    return message; //handle in SignUp.jsp
+   }
+   
+   /* display sign up page */
+   @RequestMapping(value = "/createPlaylist", method = RequestMethod.POST)
+   public ModelAndView createPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   		String playlist_name = request.getParameter("playlist_name");
+	   		Playlist playlist = new Playlist();
+	   		playlist.setPname(playlist_name);
+	   		playlist.setPid("2");
+	   		User user = (User) session.getAttribute("User");
+	   		playlist.setPowner(user);
+	   		PlaylistDAO.add(playlist);
+            mav.setViewName("main");
+            return mav;
    }
    
    

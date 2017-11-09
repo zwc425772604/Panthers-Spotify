@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
     , @NamedQuery(name = "User.findByUpassword", query = "SELECT u FROM User u WHERE u.upassword = :upassword")
     , @NamedQuery(name = "User.findByAddress", query = "SELECT u FROM User u WHERE u.address = :address")
-    , @NamedQuery(name = "User.findByZipcode", query = "SELECT u FROM User u WHERE u.zipcode = :zipcode")
+//    , @NamedQuery(name = "User.findByZipcode", query = "SELECT u FROM User u WHERE u.zipcode = :zipcode")
     , @NamedQuery(name = "User.findByGender", query = "SELECT u FROM User u WHERE u.gender = :gender")
     , @NamedQuery(name = "User.findByDob", query = "SELECT u FROM User u WHERE u.dob = :dob")
     , @NamedQuery(name = "User.findByUtype", query = "SELECT u FROM User u WHERE u.utype = :utype")
@@ -97,8 +97,8 @@ public class User implements Serializable {
     @Size(max = 50)
     @Column(name = "address")
     private String address;
-    @Column(name = "zipcode")
-    private Integer zipcode;
+//    @Column(name = "zipcode")
+//    private Integer zipcode;
     @Column(name = "gender")
     private Character gender;
     @Column(name = "dob")
@@ -157,13 +157,13 @@ public class User implements Serializable {
         this.address = address;
     }
 
-    public Integer getZipcode() {
-        return zipcode;
-    }
-
-    public void setZipcode(Integer zipcode) {
-        this.zipcode = zipcode;
-    }
+//    public Integer getZipcode() {
+//        return zipcode;
+//    }
+//
+//    public void setZipcode(Integer zipcode) {
+//        this.zipcode = zipcode;
+//    }
 
     public Character getGender() {
         return gender;

@@ -47,10 +47,10 @@
       var password = $("#user_password").val();
       var password1 = $("#confirm_password").val();
       var username = $("#username_login").val();
-      var gender = $("input[name='gender']").val();
+      var gender = $("input[name='gender']:checked").val();
       var dob = new Date($("#date_of_birth").val());
-      var first_name = $("#first_name").val();
-      var last_name= $("#last_name").val();
+      var first_name = $("#user_first_name").val();
+      var last_name= $("#user_last_name").val();
       var correct_email = validateEmailFormat(email);
       var password_matched = checkPassword(password,password1);
       if (password_matched == 0 && correct_email)
@@ -68,10 +68,16 @@
           success : function(response)
           {
             console.log(response);
+            $("#signup_message").empty();
+            $("#signup_message").css("color","green");
+            $("#signup_message").text(response);
           },
           error: function(e)
           {
             console.log(e);
+            $("#signup_message").empty();
+            $("#signup_message").css("color","red");
+            $("#signup_message").text("duplicate username");
           }
 
         });
@@ -112,7 +118,7 @@
           <br>
           
             <div id ="message" style="text-align:center">
-              <p style="color:buttonface; font-size: 2em;">${signUpMessage} </p>
+              <p style="color:buttonface; font-size: 2em;" id = "signup_message"><c:out value="${signUpMessage}"></c:out></p>
             </div>
          
           <div id = "loginForm">

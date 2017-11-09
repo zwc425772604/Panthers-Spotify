@@ -8,6 +8,8 @@ package com.controllers;
 import com.helper.Security;
 import com.model.Playlist;
 import com.model.User;
+
+import java.util.Calendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -133,11 +135,17 @@ public class DefaultController {
    @RequestMapping(value = "/createPlaylist", method = RequestMethod.POST)
    public ModelAndView createPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		String playlist_name = request.getParameter("playlist_name");
+	   		//String description = request.getParameter("description");
 	   		Playlist playlist = new Playlist();
 	   		playlist.setPname(playlist_name);
-	   		playlist.setPid("2");
+	   		playlist.setPid("4");
 	   		User user = (User) session.getAttribute("User");
 	   		playlist.setPowner(user);
+	   		playlist.setDes("hello world");
+	   		playlist.setFollowers(0);
+	   		playlist.setNSongs(0);
+	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
+	   		playlist.setCreateDate(date);
 	   		PlaylistDAO.add(playlist);
             mav.setViewName("main");
             return mav;

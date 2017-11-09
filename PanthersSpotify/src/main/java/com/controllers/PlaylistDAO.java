@@ -31,9 +31,11 @@ public class PlaylistDAO {
     EntityTransaction userTransaction = em.getTransaction();
     @Transactional
     public void add(Playlist playlist) {
-	    //userTransaction.begin();
+	    userTransaction.begin();
 	    em.persist(playlist);
-	   // userTransaction.commit();
+	    em.flush();
+	    userTransaction.commit();
+	    
     	System.out.println("want to add playlist");
     }
 

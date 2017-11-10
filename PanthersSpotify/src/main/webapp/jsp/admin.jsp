@@ -1,8 +1,10 @@
 
 <%-- set content type, language, and include the tag library for spring forms --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
 
+<%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +12,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!--CSS ref-->
-  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="${cp}/resources/css/bootstrap.css">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -18,18 +20,19 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="https://www.w3schools.com/lib/w3.js"></script> <!-- for include html in div tag -->.
-  <script src="js/main.js"></script>
+  <script src="${cp}/resources/js/main.js"></script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-   <link rel="stylesheet" href="admin.css">
+   <link rel="stylesheet" href="${cp}/resources/css/admin.css">
    <script>
    $(document).ready(function(){
      //hide all other containers in <div id= 'middle-content'> beside except overview_container
      //$("#overview_container").siblings().hide();
-     $("#main-changing-content").load("browse.html");
+     //$("#main-changing-content").load("browse.html");
+     $("#main-changing-content").load("jsp/browse.jsp");
    });
 function myFunction() {
     var x = document.getElementById("Demo");
@@ -140,7 +143,7 @@ function myFunction() {
                         <a href="#" class="w3-bar-item w3-button" id="dropdown-item">Account</a>
                         <a href="#" class="w3-bar-item w3-button" id="dropdown-item">Upgrade Your Account</a>
                         <a href="#" class="w3-bar-item w3-button" id="dropdown-item">Settings</a>
-                        <a href="#" class="w3-bar-item w3-button" id="dropdown-item">Log Out</a>
+                        <a href="home" class="w3-bar-item w3-button" id="dropdown-item">Log Out</a>
                       </div>
                   </div>
                 </div>

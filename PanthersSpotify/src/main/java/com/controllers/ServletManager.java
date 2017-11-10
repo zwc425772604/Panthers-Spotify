@@ -61,8 +61,19 @@ public class ServletManager {
        else if (li.get(0).getUpassword().equals(password))
        {
     	   session.setAttribute("user", li.get(0));
-           mav.addObject("username", li.get(0).getUname());
-           mav.setViewName("main");
+    	   //user page
+    	   if (li.get(0).getUtype() == 0)
+    	   {
+    		   mav.addObject("username", li.get(0).getUname());
+               mav.setViewName("main");
+    	   }
+    	   //display admin page
+    	   if (li.get(0).getUtype() == 3)
+    	   {
+    		   mav.addObject("username", li.get(0).getUname());
+               mav.setViewName("admin");
+    	   }
+          
        }
        //case 2: incorrect email or password
        else
@@ -95,15 +106,8 @@ public class ServletManager {
             return mav;
    }
    
-   /* display sign up page */
-   @RequestMapping(value = "/main", method = RequestMethod.GET)
-   public ModelAndView displayMain(ModelAndView mav) {
-	   		//mav.addObject("signUpMessage", "Welcome to Panthers Spotify!");
-            mav.setViewName("main");
-            return mav;
-   }
    
-       /* user sign up */
+       /* user sign up */ /* user type: 0=basic 1=premium 2=artist 3=admin */
    @RequestMapping(value = "/userSignUp", method = RequestMethod.POST)
    public @ResponseBody String userSignUp(ModelAndView mav,
                   HttpServletRequest request, HttpSession session){ 
@@ -119,7 +123,7 @@ public class ServletManager {
     user.setUname(username);
     user.setEmail(email);
     user.setUpassword(encPwd);
-    user.setUtype(1);
+    user.setUtype(0);
     user.setGender(gender);
     user.setFirstName(first_name);
     user.setLastName(last_name);
@@ -136,9 +140,9 @@ public class ServletManager {
 	   		//String description = request.getParameter("description");
 	   		Playlist playlist = new Playlist();
 	   		playlist.setPname(playlist_name);
-	   		User user = (User) session.getAttribute("User");
+	   		User user = (User) session.getAttribute("user");
 	   		playlist.setPowner(user);
-	   		playlist.setDes("hello world");
+	   		playlist.setDes(user.getEmail());
 	   		playlist.setFollowers(0);
 	   		playlist.setNSongs(0);
 	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());

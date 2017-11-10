@@ -40,10 +40,21 @@
         return -1;
       }
     }
+    function checkEmailAddress(email, email_confirm)
+    {
+    	if (email.localeCompare(email_confirm) == 0)
+        {
+          return 0;
+        }
+        else {
+          return -1;
+        }
+    }
 
     function validateFormInputs()
     {
       var email = $("#email_login").val();
+      var email1 = $("#re_email_login").val();
       var password = $("#user_password").val();
       var password1 = $("#confirm_password").val();
       var username = $("#username_login").val();
@@ -53,7 +64,8 @@
       var last_name= $("#user_last_name").val();
       var correct_email = validateEmailFormat(email);
       var password_matched = checkPassword(password,password1);
-      if (password_matched == 0 && correct_email)
+      var email_matched = checkPassword(email,email1);
+      if (password_matched == 0 && correct_email && email_matched == 0)
       {
         //ajax call to sign up
         $("#password_error").text("");
@@ -101,6 +113,14 @@
         {
           $("#email_error").text("Incorrect email");
         }
+        if (email_matched == 0)
+        {
+        	$("#email_error").text("");
+       	}
+        else
+        {
+        	$("#email_error").text("Emails do not match");
+        }
 
       }
 
@@ -127,13 +147,15 @@
             <form:form class="w3-container" action="javascript:validateFormInputs()">
                <div class="w3-section">
                   <label> Username: </label>
-                  <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Username" name="username" id = "username_login" required>
+                  <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="maximum of 20 characters)" name="username" id = "username_login" required>
                   <p class = "input_error_message"  id = "username_error"></p>
-                  <label> Email address: </label>
+                  <label>New Email address: </label>
                   <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Email" name="email" id = "email_login" required>
+                  <label> Re-enter Email address: </label>
+                  <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Email" name="re-email" id = "re_email_login" required>
                   <p class = "input_error_message" id = "email_error"></p>
                   <label> Password: </label>
-                  <input class="w3-input w3-border" type="password" placeholder="Password" name="password" id = "user_password" required>
+                  <input class="w3-input w3-border" type="password" placeholder="maximum of 20 characters" name="password" id = "user_password" required>
                   <p class = "input_error_message"></p>
                   <label> Re-enter your password: </label>
                   <input class="w3-input w3-border" type="password" placeholder="Confirm Password" name="confirm_password" id = "confirm_password" required>
@@ -147,10 +169,10 @@
                   <label> Date of Birth: </label>
   				        <input class="w3-input w3-border" type="date" placeholder="Date of Birth (yyyy-mm-dd)" name="bob" id="date_of_birth" required>
                   <p class = "input_error_message"></p>
-                  <div class="gender_radiobuttons" style="dispaly:inline;">
-            				<input class="w3-input w3-border" type="radio" name="gender" value="M"> <label class="gender_role">Male</label>
-            				<input class="w3-input w3-border" type="radio" name="gender" value="F"> <label class="gender_role">Female</label>
-          				</div>
+                  <div class="gender_radiobuttons">
+            			<input class="w3-input w3-border" type="radio" name="gender" value="M"> <label class="gender_role">Male</label>
+            			<input class="w3-input w3-border" type="radio" name="gender" value="F"> <label class="gender_role">Female</label>
+          		  </div>
 
                   <br>
                   <button class="btn formButton" id ="loginButton" type="submit">Sign Up</button>

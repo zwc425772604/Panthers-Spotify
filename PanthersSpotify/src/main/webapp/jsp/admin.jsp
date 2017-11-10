@@ -30,6 +30,15 @@
         //$("#overview_container").siblings().hide();
         //$("#main-changing-content").load("browse.html");
         $("#main-changing-content").load("jsp/browse.jsp");
+        $("#add_new_song_button").click(function(){
+          $('#new_song_dialog').dialog({
+	          height: 900,
+	          width: 550,
+	          modal: true,
+	          resizable: false,
+	          dialogClass: 'no-close'
+        	});
+          });
       });
       function myFunction() {
        var x = document.getElementById("Demo");
@@ -70,7 +79,64 @@
         <li>
           <p class="color-nav-header">Song:</p>
           <ul class="left_sizebar">
-            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add Song"  id="playbar-prev-button"><i class="material-icons">add</i></button></li>
+                <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add Song"  id="add_new_song_button"><i class="material-icons">add</i></button></li>
+                <div id="new_song_dialog" title="Add Song To Database" style="display:none;">
+                  <!-- create playlist -->
+                  <form:form  method = "post" action="addSongToDatabase" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
+                    <div class="w3-row w3-section">
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Song Title</span></div>
+                      <div class="w3-rest">
+                        <input class="w3-input w3-border" name="song_title" type="text" id="new_song_name" placeholder="Song Title">
+                      </div>
+                    </div>
+                    <div class="w3-row w3-section">
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Song Time</span></div>
+                      <div class="w3-rest">
+                        <input class="w3-input w3-border" type="text" name="song_time"  placeholder="Song Title">
+                      </div>
+                    </div>
+                    <div class="w3-row w3-section">
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Release Day</span></div>
+                      <div class="w3-rest">
+                        <input class="w3-input w3-border" name="release_day" type="text"  placeholder="Release date">
+                      </div>
+                    </div>
+                    <div class="w3-row w3-section">
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Genre</span></div>
+                      <div class="w3-rest">
+                        <input class="w3-input w3-border" name="song_genre" type="text" placeholder="Song Genre">
+                      </div>
+                    </div>
+                    <div class="w3-row w3-section">
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Song Type</span></div>
+                      <div class="w3-rest">
+                        <input class="w3-input w3-border" name="song_genre" type="text"  placeholder="Song Type(mp4, ogg, etc)">
+                      </div>
+                    </div>
+                    <div class="w3-row w3-section">
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Song URL</span></div>
+                      <div class="w3-rest">
+                        <input class="w3-input w3-border" name="song_genre" type="text"  placeholder="Song Url">
+                      </div>
+                    </div>
+
+
+                    <div class="w3-row w3-section">
+                      <div class="w3-third w3-container">
+                        <button onclick="event.preventDefault(); $('#new_song_dialog').dialog('close');" class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>
+                      </div>
+                      <div class="w3-third w3-container">
+
+                      </div>
+
+                      <div class="w3-third w3-container">
+                        <button type="submit" class="w3-button w3-block w3-section w3-blue w3-ripple">Create</button>
+                      </div>
+
+                    </div>
+                    </form:form>
+                </div> <!-- end of dialog popup box -->
+                <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit Song Information" id="edit_song_button"> <i class="material-icons">mode_edit</i></button></li>
             <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit Song Information" id="playbar-shuffle-button"> <i class="material-icons">mode_edit</i></button></li>
             <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete Song" id="playbar-play-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
           </ul>
@@ -154,7 +220,7 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading"> <a href="#" id="playbar-song-href"> <span id="playbar-song-name">   Song name     </span> </a></h4>
-              <p> <a href="#" id ="playbar-artist-href"/> <span id="playbar-artist-name"> Artist name </span>
+              <p> <a href="#" id ="playbar-artist-href"> <span id="playbar-artist-name"> Artist name </span></a>
                 <a href="#">
                 <span class="glyphicon glyphicon-search"></span>
                 </a>

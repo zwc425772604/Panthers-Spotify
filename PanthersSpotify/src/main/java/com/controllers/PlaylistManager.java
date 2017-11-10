@@ -30,13 +30,27 @@ public class PlaylistManager {
     EntityManager em = entityManagerFactory.createEntityManager();
     EntityTransaction userTransaction = em.getTransaction();
     @Transactional
-    public void add(Playlist playlist) {
+    public List<Playlist> add(String playlist_name,User user, String description,String pic,java.sql.Date date) {
+    		Playlist playlist = new Playlist();
+   		
+   		playlist.setPname(playlist_name);
+   		
+   		playlist.setPowner(user);
+   		playlist.setDes(description);
+   		playlist.setFollowers(0);
+   		playlist.setNSongs(0);
+   		playlist.setCreateDate(date);
+    	
+    		
 	    userTransaction.begin();
 	    em.persist(playlist);
 	    em.flush();
 	    userTransaction.commit();
 	    
-    	System.out.println("want to add playlist");
+	    
+	    List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
+	    user_playlist.add(playlist);
+	    return user_playlist;
     }
 
     public void remove(int pid) {

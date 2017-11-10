@@ -39,21 +39,38 @@ public class PlaylistManager {
     	System.out.println("want to add playlist");
     }
 
-    public void remove(User user) {
-       
-    }
-    
-    //check user is already registered or not, for login function
-    public List<User> getUser(String email, String password)
-    {
-        //NameQuery are from Entity class
-         TypedQuery<User> query1 =
-        em.createNamedQuery("User.findByEmail", User.class)
-                 .setParameter("email", email);
-        List<User> results = query1.getResultList();
-        return results;
+    public void remove(int pid) {
+  	  Playlist playlist = em.find(Playlist.class, pid);  
+  	  em.getTransaction().begin();
+  	  em.remove(playlist);
+  	  em.flush();
+  	  em.getTransaction().commit();
+  	  System.out.println("want to remove playlist");
+  }
+  public void edit(int pid, String des, String photoUrl, String pname) {
+  	
+	    TypedQuery<Playlist> query1 = em.createNamedQuery("Playlist.findByPid", Playlist.class)
+      		.setParameter("pid", pid);
+	    List<Playlist> results = query1.getResultList();
+	    Playlist p = results.get(0);
+	    p.setDes(des);
+	    p.setPhotoUrl(photoUrl);
+	    p.setPname(pname);
+	    //UPDATE playlist
+	    //SET description = des, photoUrl= photoUrl, pname = pname
+	    //		WHERE pid = 1;
+	    
+  	System.out.println("want to edit playlist");
+  }
 
-    }
-    
-    
+  //get the playlist for specific pid
+  public Playlist getPlaylist(int pid)
+  {
+  	TypedQuery<Playlist> query1 = em.createNamedQuery("Playlist.findByPid", Playlist.class)
+       		.setParameter("pid", pid);
+	    List<Playlist> result = query1.getResultList();
+	    return result.get(0);
+  }
+  
 }
+

@@ -28,11 +28,32 @@
         //hide all other containers in <div id= 'middle-content'> beside except overview_container
         //$("#overview_container").siblings().hide();
         $("#main-changing-content").load("jsp/browse.jsp");
+        $(".nav-item").click(function(){
+        	var pid = $(".playlist_id", this).text(); //get the pid of the playlist
+        	  $.ajax({
+                  url: "${cp}/getSpecificPlaylist",
+                  type: "GET",
+                  data : {"playlist_id" : pid },
+                  asyn: true,
+                  cache: true,
+                  success : function(response)
+                  {
+                    console.log(response);
+                    //$("#main-changing-content").load("jsp/playlist.jsp");
+                  },
+                  error: function(e)
+                  {
+                    console.log(e);
+                 
+                  }
+            
+                });
+        });
         
         
       //     window.open("browse.jsp","_blank");
       });
-      
+     
       function displayLeftNavbarContent(nav_name)
       {
         //compare the string
@@ -169,11 +190,23 @@
             <!-- Playlist Section-->
             <li>
               <p class="color-nav-header">PLAYLISTS</p>
+              <!--  
               <ul class="nav nav-stacked flex-column">
                 <li class="nav-item">
                   <a class="nav-link color-nav" href="#">Discover Weekly</a>
                 </li>
               </ul>
+              -->
+              <c:if test="${not empty user_playlist}">
+				<ul class="nav nav-stacked flex-column" >
+					<c:forEach var="playlist" items="${user_playlist}">
+						<li class="nav-item">
+							 <a class="nav-link color-nav" href="#">${playlist.pname}</a>
+							 <span style="display:none;" class="playlist_id">${playlist.pid}</span>
+						</li>
+					</c:forEach>
+				</ul>
+			  </c:if>
             </li>
           </ul>
         </nav>

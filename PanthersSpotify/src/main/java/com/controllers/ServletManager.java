@@ -69,6 +69,9 @@ public class ServletManager {
     	   if (li.get(0).getUtype() == 0)
     	   {
     		   mav.addObject("username", li.get(0).getUname());
+    		   List<Playlist> user_playlist = (List<Playlist>)(li.get(0).getUserPlaylistCollection());
+    		   mav.addObject("user_playlist", user_playlist);
+    		   session.setAttribute("song_page_title", "session testing"); //display in song.jsp
                mav.setViewName("main");
     	   }
     	   //display admin page
@@ -96,7 +99,7 @@ public class ServletManager {
    public ModelAndView userLogout(ModelAndView mav, HttpSession session) {
 	   		if (session.getAttribute("user") != null)
 	   		{
-	   			session.setAttribute("user", null);
+	   			session.removeAttribute("user");
 	   		}
             mav.setViewName("index");
             return mav;
@@ -137,7 +140,7 @@ public class ServletManager {
     return message; //handle in SignUp.jsp
    }
    
-   /* display sign up page */
+   /* create Playlist */
    @RequestMapping(value = "/createPlaylist", method = RequestMethod.POST)
    public ModelAndView createPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		String playlist_name = request.getParameter("playlist_name");
@@ -152,10 +155,26 @@ public class ServletManager {
 	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
 	   		playlist.setCreateDate(date);
 	   		playlistManager.add(playlist);
+	   		List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
+ 		    mav.addObject("user_playlist", user_playlist);
             mav.setViewName("main");
             return mav;
    }
-   /* display sign up page */
+   
+   
+   /* get specific playlist */
+   @RequestMapping(value = "/getSpecificPlaylist", method = RequestMethod.GET)
+   public String getSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   		int playlist_id = Integer.parseInt(request.getParameter("playlist_id"));
+	   		Playlist playlist = playlistManager.getPlaylist(playlist_id);
+	   		String pname = playlist.getPname();
+	   		System.out.println("playlist name is :" + pname);
+ 		    session.setAttribute("song_page_title", playlist);
+            return "ok";
+   }
+   
+   
+   /* add song to database */
    @RequestMapping(value = "/addSongToDatabase", method = RequestMethod.POST)
    public ModelAndView addSongToDatabase(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   String song_title = request.getParameter("song_title");
@@ -177,6 +196,8 @@ public class ServletManager {
 	   mav.setViewName("admin");
 	   return mav;
    }
+   
+  
    
    
    

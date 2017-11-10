@@ -82,7 +82,7 @@
                 <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add Song"  id="add_new_song_button"><i class="material-icons">add</i></button></li>
                 <div id="new_song_dialog" title="Add Song To Database" style="display:none;">
                   <!-- create playlist -->
-                  <form:form  method = "post" action="addSongToDatabase" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
+                  <form:form  method = "POST" action="addSongToDatabase" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
                     <div class="w3-row w3-section">
                       <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Song Title</span></div>
                       <div class="w3-rest">
@@ -92,7 +92,7 @@
                     <div class="w3-row w3-section">
                       <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Song Time</span></div>
                       <div class="w3-rest">
-                        <input class="w3-input w3-border" type="text" name="song_time"  placeholder="Song Title">
+                        <input class="w3-input w3-border" type="song_time" name="song_time"  placeholder="Song Title">
                       </div>
                     </div>
                     <div class="w3-row w3-section">
@@ -110,13 +110,13 @@
                     <div class="w3-row w3-section">
                       <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Song Type</span></div>
                       <div class="w3-rest">
-                        <input class="w3-input w3-border" name="song_genre" type="text"  placeholder="Song Type(mp4, ogg, etc)">
+                        <input class="w3-input w3-border" name="song_type" type="text"  placeholder="Song Type(mp4, ogg, etc)">
                       </div>
                     </div>
                     <div class="w3-row w3-section">
                       <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Song URL</span></div>
                       <div class="w3-rest">
-                        <input class="w3-input w3-border" name="song_genre" type="text"  placeholder="Song Url">
+                        <input class="w3-input w3-border" name="song_url" type="text"  placeholder="Song Url">
                       </div>
                     </div>
 

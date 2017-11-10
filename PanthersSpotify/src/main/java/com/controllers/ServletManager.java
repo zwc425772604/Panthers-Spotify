@@ -7,9 +7,11 @@ package com.controllers;
 
 import com.helper.Security;
 import com.model.Playlist;
+import com.model.Song;
 import com.model.User;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -34,6 +36,8 @@ public class ServletManager {
     private UserManager userManager;
     @Autowired
     private PlaylistManager playlistManager;
+    @Autowired
+    private SongManager songManager;
     
    @RequestMapping(value = "/", method = RequestMethod.GET)
    public String index(ModelMap map) {
@@ -150,6 +154,28 @@ public class ServletManager {
 	   		playlistManager.add(playlist);
             mav.setViewName("main");
             return mav;
+   }
+   /* display sign up page */
+   @RequestMapping(value = "/addSongToDatabase", method = RequestMethod.POST)
+   public ModelAndView addSongToDatabase(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   String song_title = request.getParameter("song_title");
+	   String song_time = request.getParameter("song_time");
+	   String release_day = request.getParameter("release_day");
+	   String song_genre = request.getParameter("song_genre");
+	   String song_type = request.getParameter("song_type");
+	   String song_url = request.getParameter("song_url");
+	   Song song = new Song();
+	   song.setStitle(song_title);
+	   
+	   
+	   //song.setReleaseDay(0);
+	   song.setGener(song_genre);
+	   song.setStype(song_type);
+	   song.setSurl(song_url);
+	   
+	   songManager.add(song);
+	   mav.setViewName("admin");
+	   return mav;
    }
    
    

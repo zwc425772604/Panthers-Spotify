@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -42,13 +44,13 @@ public class Payment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "payid")
-    private String payid;
+    @Column(name = "payid", nullable = false)
+    private Integer payid;
     @Size(max = 20)
-    @Column(name = "hodlName")
+    @Column(name = "hodlName", length = 20)
     private String hodlName;
     @Column(name = "cardNum")
     private Integer cardNum;
@@ -58,10 +60,10 @@ public class Payment implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date expirationDate;
     @Size(max = 10)
-    @Column(name = "company")
+    @Column(name = "company", length = 10)
     private String company;
     @Size(max = 100)
-    @Column(name = "billingAddress")
+    @Column(name = "billingAddress", length = 100)
     private String billingAddress;
     @JoinColumn(name = "uemail", referencedColumnName = "email")
     @ManyToOne
@@ -70,18 +72,18 @@ public class Payment implements Serializable {
     public Payment() {
     }
 
-    public Payment(String payid) {
+    public Payment(Integer payid) {
         this.payid = payid;
     }
 
-    public String getPayid() {
+    public Integer getPayid() {
         return payid;
     }
 
-    public void setPayid(String payid) {
+    public void setPayid(Integer payid) {
         this.payid = payid;
     }
-
+    
     public String getHodlName() {
         return hodlName;
     }

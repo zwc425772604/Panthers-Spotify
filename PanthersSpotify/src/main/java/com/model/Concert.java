@@ -10,6 +10,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -39,15 +41,16 @@ public class Concert implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "cid", nullable = false, length = 10)
-    private String cid;
+    @Column(name = "cid", nullable = false)
+    private Integer cid;
+    
     @Column(name = "ctime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date ctime;
-    @Size(max = 100)
-    @Column(name = "cname", length = 100)
+    @Size(max = 50)
+    @Column(name = "cname", length = 50)
     private String cname;
     @JoinColumn(name = "uemail", referencedColumnName = "email")
     @ManyToOne
@@ -59,15 +62,15 @@ public class Concert implements Serializable {
     public Concert() {
     }
 
-    public Concert(String cid) {
+    public Concert(Integer cid) {
         this.cid = cid;
     }
 
-    public String getCid() {
+    public Integer getCid() {
         return cid;
     }
 
-    public void setCid(String cid) {
+    public void setCid(Integer cid) {
         this.cid = cid;
     }
 

@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -46,19 +48,19 @@ public class Album implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "aid")
-    private String aid;
+    @Column(name = "aid", nullable = false)
+    private Integer aid;
     @Size(max = 10)
-    @Column(name = "aname")
+    @Column(name = "aname", length = 10)
     private String aname;
     @Size(max = 500)
-    @Column(name = "dis")
+    @Column(name = "dis", length = 500)
     private String dis;
     @Size(max = 100)
-    @Column(name = "photoUrl")
+    @Column(name = "photoUrl", length = 100)
     private String photoUrl;
     @Column(name = "releaseDate")
     @Temporal(TemporalType.DATE)
@@ -79,15 +81,15 @@ public class Album implements Serializable {
     public Album() {
     }
 
-    public Album(String aid) {
+    public Album(Integer aid) {
         this.aid = aid;
     }
 
-    public String getAid() {
+    public Integer getAid() {
         return aid;
     }
 
-    public void setAid(String aid) {
+    public void setAid(Integer aid) {
         this.aid = aid;
     }
 

@@ -10,6 +10,8 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -47,33 +49,33 @@ public class Location implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "lid")
-    private String lid;
-    @Size(max = 10)
-    @Column(name = "lname")
+    @Column(name = "lid", nullable = false)
+    private Integer lid;
+    @Size(max = 30)
+    @Column(name = "lname", length = 30)
     private String lname;
     @Size(max = 30)
-    @Column(name = "address")
+    @Column(name = "address", length = 30)
     private String address;
     @Size(max = 30)
-    @Column(name = "address2")
+    @Column(name = "address2", length = 30)
     private String address2;
     @Size(max = 30)
-    @Column(name = "address3")
+    @Column(name = "address3", length = 30)
     private String address3;
     @Size(max = 30)
-    @Column(name = "city")
+    @Column(name = "city", length = 30)
     private String city;
     @Size(max = 10)
-    @Column(name = "subdivision")
+    @Column(name = "subdivision", length = 10)
     private String subdivision;
     @Column(name = "postalCode")
     private Integer postalCode;
     @Size(max = 10)
-    @Column(name = "contryCode")
+    @Column(name = "contryCode", length = 10)
     private String contryCode;
     @JoinColumn(name = "uemail", referencedColumnName = "email")
     @ManyToOne
@@ -82,15 +84,15 @@ public class Location implements Serializable {
     public Location() {
     }
 
-    public Location(String lid) {
+    public Location(Integer lid) {
         this.lid = lid;
     }
 
-    public String getLid() {
+    public Integer getLid() {
         return lid;
     }
 
-    public void setLid(String lid) {
+    public void setLid(Integer lid) {
         this.lid = lid;
     }
 

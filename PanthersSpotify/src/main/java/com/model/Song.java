@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -49,11 +51,11 @@ public class Song implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "sid")
-    private String sid;
+    @Column(name = "sid", nullable = false)
+    private Integer sid;
     @Size(max = 20)
     @Column(name = "stitle")
     private String stitle;
@@ -66,30 +68,30 @@ public class Song implements Serializable {
     @Column(name = "monthlyPlayed")
     private Integer monthlyPlayed;
     @Size(max = 10)
-    @Column(name = "gener")
+    @Column(name = "gener", length=10)
     private String gener;
     @Size(max = 10)
-    @Column(name = "stype")
+    @Column(name = "stype", length=10)
     private String stype;
     @Size(max = 100)
-    @Column(name = "surl")
+    @Column(name = "surl", length=100)
     private String surl;
-    @JoinColumn(name = "albumId", referencedColumnName = "aid")
+    @JoinColumn(name = "aid", referencedColumnName = "aid")
     @ManyToOne
     private Album albumId;
 
     public Song() {
     }
 
-    public Song(String sid) {
+    public Song(Integer sid) {
         this.sid = sid;
     }
 
-    public String getSid() {
+    public Integer getSid() {
         return sid;
     }
 
-    public void setSid(String sid) {
+    public void setSid(Integer sid) {
         this.sid = sid;
     }
 

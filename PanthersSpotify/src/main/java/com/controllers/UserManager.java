@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
  * @author Weichao ZHao
  */
 @Component
-public class UserDAOImplementation {
+public class UserManager {
 //    @PersistenceContext private EntityManager em;
     EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
     EntityManager em = entityManagerFactory.createEntityManager();

@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
  * @author Weichao ZHao
  */
 @Component
-public class PlaylistDAO {
+public class PlaylistManager {
 //    @PersistenceContext private EntityManager em;
     EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
     EntityManager em = entityManagerFactory.createEntityManager();

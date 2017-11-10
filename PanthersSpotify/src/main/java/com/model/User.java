@@ -21,6 +21,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -31,15 +32,14 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author weichaozhao
  */
 @Entity
-@Table(name = "user")
+@Table(name = "user", catalog = "panthers", schema = "", uniqueConstraints = {
+	    @UniqueConstraint(columnNames = {"uname"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
     , @NamedQuery(name = "User.findByUname", query = "SELECT u FROM User u WHERE u.uname = :uname")
     , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
     , @NamedQuery(name = "User.findByUpassword", query = "SELECT u FROM User u WHERE u.upassword = :upassword")
-    , @NamedQuery(name = "User.findByAddress", query = "SELECT u FROM User u WHERE u.address = :address")
-//    , @NamedQuery(name = "User.findByZipcode", query = "SELECT u FROM User u WHERE u.zipcode = :zipcode")
     , @NamedQuery(name = "User.findByGender", query = "SELECT u FROM User u WHERE u.gender = :gender")
     , @NamedQuery(name = "User.findByDob", query = "SELECT u FROM User u WHERE u.dob = :dob")
     , @NamedQuery(name = "User.findByUtype", query = "SELECT u FROM User u WHERE u.utype = :utype")
@@ -88,17 +88,14 @@ public class User implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 30)
-    @Column(name = "email")
+    @Size(min = 1, max = 50)
+    @Column(name = "email", nullable = false, length=50)
     private String email;
     @Size(max = 20)
     @Column(name = "upassword")
     private String upassword;
-    @Size(max = 50)
-    @Column(name = "address")
-    private String address;
-//    @Column(name = "zipcode")
-//    private Integer zipcode;
+   
+
     @Column(name = "gender")
     private Character gender;
     @Column(name = "dob")
@@ -109,8 +106,8 @@ public class User implements Serializable {
     @Column(name = "upgradDate")
     @Temporal(TemporalType.DATE)
     private Date upgradDate;
-//    @OneToMany(mappedBy = "powner")
-//    private Collection<Playlist> playlistCollection;
+    @OneToMany(mappedBy = "powner")
+    private Collection<Playlist> user_playlist_collection;
 //    @OneToMany(mappedBy = "aowner")
 //    private Collection<Album> albumCollection;
     @OneToMany(mappedBy = "uemail")
@@ -149,13 +146,7 @@ public class User implements Serializable {
         this.upassword = upassword;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
+    
 
 //    public Integer getZipcode() {
 //        return zipcode;
@@ -205,6 +196,16 @@ public class User implements Serializable {
     public void setPlaylistCollection(Collection<Playlist> playlistCollection) {
         this.playlistCollection = playlistCollection;
     }
+    
+    @XmlTransient
+    public Collection<Playlist> getUserPlaylistCollection() {
+        return user_playlist_collection;
+    }
+
+    public void setUserPlaylistCollection(Collection<Playlist> userPlaylistCollection) {
+        this.user_playlist_collection = userPlaylistCollection;
+    }
+
 
     @XmlTransient
     public Collection<Album> getAlbumCollection() {

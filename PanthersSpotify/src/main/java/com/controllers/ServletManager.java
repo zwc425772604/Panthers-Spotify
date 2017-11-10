@@ -29,11 +29,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
-public class DefaultController {
+public class ServletManager {
     @Autowired
-    private UserDAOImplementation UserDAO;
+    private UserManager userManager;
     @Autowired
-    private PlaylistDAO PlaylistDAO;
+    private PlaylistManager playlistManager;
     
    @RequestMapping(value = "/", method = RequestMethod.GET)
    public String index(ModelMap map) {
@@ -47,7 +47,7 @@ public class DefaultController {
 	   String email = request.getParameter("email");
 	   String nonEncPwd = request.getParameter("password");
 	   String password = Security.encryptPassword(nonEncPwd);
-       List<User> li = UserDAO.getUser(email,password);
+       List<User> li = userManager.getUser(email,password);
       
        System.out.println("li is "  + li);
        //case 0: if the email is not registered
@@ -123,10 +123,8 @@ public class DefaultController {
     user.setGender(gender);
     user.setFirstName(first_name);
     user.setLastName(last_name);
-    UserDAO.add(user);
-//    mav.addObject("signUpMessage", "Congratulation, sign up successfully");
-//    mav.setViewName("SignUp");
-//    return mav;
+    userManager.add(user);
+
     String message = "Congratulation, sign up successfully. Please return to homepage for login.";
     return message; //handle in SignUp.jsp
    }
@@ -138,7 +136,6 @@ public class DefaultController {
 	   		//String description = request.getParameter("description");
 	   		Playlist playlist = new Playlist();
 	   		playlist.setPname(playlist_name);
-	   		playlist.setPid("4");
 	   		User user = (User) session.getAttribute("User");
 	   		playlist.setPowner(user);
 	   		playlist.setDes("hello world");
@@ -146,7 +143,7 @@ public class DefaultController {
 	   		playlist.setNSongs(0);
 	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
 	   		playlist.setCreateDate(date);
-	   		PlaylistDAO.add(playlist);
+	   		playlistManager.add(playlist);
             mav.setViewName("main");
             return mav;
    }

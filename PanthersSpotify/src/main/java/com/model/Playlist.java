@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author weichaozhao
  */
 @Entity
-@Table(name = "playlist")
+@Table(name = "playlist", catalog = "panthers", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Playlist.findAll", query = "SELECT p FROM Playlist p")
@@ -47,17 +47,16 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Playlist.findByNSongs", query = "SELECT p FROM Playlist p WHERE p.nSongs = :nSongs")})
 public class Playlist implements Serializable {
 
-    @ManyToMany(mappedBy = "playlistCollection")
-    private Collection<User> userCollection;
+   
 
     private static final long serialVersionUID = 1L;
+   
     @Id
-    //@GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "pid")
-    private String pid;
+    @Column(name = "pid", nullable = false)
+    private Integer pid;
     @Size(max = 10)
     @Column(name = "pname")
     private String pname;
@@ -79,6 +78,8 @@ public class Playlist implements Serializable {
     private Boolean ispublic;
     @Column(name = "nSongs")
     private Integer nSongs;
+    @ManyToMany(mappedBy = "playlistCollection")
+    private Collection<User> userCollection;
     @JoinColumn(name = "powner", referencedColumnName = "email")
     @ManyToOne
     private User powner;
@@ -86,15 +87,15 @@ public class Playlist implements Serializable {
     public Playlist() {
     }
 
-    public Playlist(String pid) {
+    public Playlist(Integer pid) {
         this.pid = pid;
     }
 
-    public String getPid() {
+    public Integer getPid() {
         return pid;
     }
 
-    public void setPid(String pid) {
+    public void setPid(Integer pid) {
         this.pid = pid;
     }
 

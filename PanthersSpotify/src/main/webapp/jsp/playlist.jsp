@@ -63,9 +63,19 @@
 
   .playlist_action_list
   {
-    max-height:250px;
+    max-height:350px;
     overflow:scroll;
   }
+  
+  #filter_and_download .download_right
+  {
+  	float: right;
+  } 
+  #filter_and_download .filter_left
+  {
+  	float: left;
+  } 
+}
 
 
 </style>
@@ -199,21 +209,22 @@ $(".playbar-play-button").click(function(){
       <button class="btn formButton" onclick="playSong();">  <span class="playingStatus"> PLAY </span></button>
   </div> -->
   <div class="suggestion-container-top">
-    <div class="row">
-      <div class="col-md-4">
+    
+      <div class="playlist_image_box" style="width: 20%">
         <img src="https://www.fuse.tv/image/56fe73a1e05e186b2000009b/768/512/the-boxer-rebellion-ocean-by-ocean-album-cover-full-size.jpg" width=100% height=width class="img-rounded" alt="Generic placeholder thumbnail">
       </div>
-      <div class="col-md-5">
-        <div id ="playlist-info" style="margin-top: 20%; margin-left:5%;">
+      <div class="playlist_details_box" style="width:70%">
+        <div id ="playlist-info" style="margin-top: 4%; margin-left:5%;">
           <h5> Playlist </h5>
-          <p style="font-size: 2em;"><c:out value="${selected_playlist.pname}"></c:out>  </p>
+          <p style="font-size: 1.8em;"><c:out value="${selected_playlist.pname}"></c:out>  </p>
+          <p style="font-size: 1.2em;"><c:out value="${selected_playlist.des}"></c:out>  </p>
           <p style="font-size: 1.1em;"> Created by: <a href="#"> <c:out value="${selected_playlist.powner.uname}"></c:out> </a> ⋅ <span id="num_song"> 1 song </span> , <span id="total_length"> 4 min 26 sec </span></p>
           <div class="row">
 
           <div class="col-md-3" style="display:inline;">
             <button class="btn formButton" onclick="playSong();">  <span class="playingStatus"> PLAY </span></button>
           </div>
-          <div class="col-md-3"></div>
+     
           <div class="col-md-3">
             <div class="w3-dropdown-click playlist_header_more_action_list">
               <button class="w3-button playlist_header_more_button" title="More" ><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
@@ -233,30 +244,36 @@ $(".playbar-play-button").click(function(){
               </div>
             </div>
           </div>
+          <div class="col-md-5"></div>
+          <div class="col-md-1">
+          	<p>FOLLOWERS</p>
+          	<p><c:out value="${selected_playlist.followers}"></c:out></p>
+          	</div>
           </div>
         </div>
       </div>
-    </div>
+    
+    
   </div>
 
 
   <!-- filter input div block -->
-  <div class="row">
-    <div class="col-md-6">
-      <div class="input-group" id="filter_container">
-        <span class="input-group-addon" id="search_span">
-            <i class="fa fa-search" aria-hidden="true"></i>
-        </span>
-      <!-- <input type="search"  id="filter_keyword" name="q" onkeyup="filterAlbum()" placeholder="Filter"> -->
-        <input placeholder= "filter" class="w3-input w3-border w3-animate-input" type="search" style="width:30%">
-      </div>
-
-     </div>
-     <div class="col-md-3"></div>
-     <div class="col-3" style="margin-top:1%;">
-         <p3 class="suggestion-topic" style="font-size: 1.5em;">Download</p3>
-     </div>
-  </div>
+  <div id="filter_and_download">
+	    <div class="filter_left" style="width:50%;">
+	      <div class="input-group" id="filter_container">
+	        <span class="input-group-addon" id="search_span">
+	            <i class="fa fa-search" aria-hidden="true"></i>
+	        </span>
+	      <!-- <input type="search"  id="filter_keyword" name="q" onkeyup="filterAlbum()" placeholder="Filter"> -->
+	        <input placeholder= "filter" class="w3-input w3-border w3-animate-input" type="search" style="width:30%">
+	      </div>
+	
+	     </div>
+     
+	     <div class="download_right"style="width: 20%;margin-top:1%;">
+	         <p3 class="suggestion-topic" style="font-size: 1.5em;">Download</p3>
+	     </div>
+  	</div>
 </div>
 
 
@@ -284,7 +301,7 @@ function dropdownDisplay(song_div) {
 </script>
 
   <!--  Container for track list -->
-  <div class="suggestion-container" id = "charts-container">
+  <div class="suggestion-container" style="margin-top: 5%;" id = "charts-container">
     <div class="table-responsive">
       <table class="table">
         <thead>

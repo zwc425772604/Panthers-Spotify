@@ -166,7 +166,9 @@ public class ServletManager {
 	   		Playlist playlist = playlistManager.getPlaylist(playlist_id);
 	   		String pname = playlist.getPname();
 	   		System.out.println("playlist name is :" + pname);
+	   		System.out.println("playlist num songs :" + playlist.getNSongs());
  		    session.setAttribute("selected_playlist", playlist);
+ 		   session.setAttribute("selected_playlist_nsongs", playlist.getNSongs());
             return "ok";
    }
    

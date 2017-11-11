@@ -32,7 +32,15 @@ public class UserManager {
     EntityManager em = entityManagerFactory.createEntityManager();
     EntityTransaction userTransaction = em.getTransaction();
     @Transactional
-    public void add(User user) {
+    public void add(String username, String email,String encPwd,int utype,char gender,String first_name, String last_name) {
+    		User user = new User();
+        user.setUname(username);
+        user.setEmail(email);
+        user.setUpassword(encPwd);
+        user.setUtype(utype);
+        user.setGender(gender);
+        user.setFirstName(first_name);
+        user.setLastName(last_name);
 	    userTransaction.begin();
 	    em.persist(user);
 	    userTransaction.commit();

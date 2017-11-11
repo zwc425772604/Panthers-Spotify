@@ -75,8 +75,10 @@ public class User implements Serializable {
         @JoinColumn(name = "aemail", referencedColumnName = "email")})
     @ManyToMany
     private Collection<User> userCollection;
+    
     @ManyToMany(mappedBy = "userCollection")
     private Collection<User> userCollection1;
+    
     @OneToMany(mappedBy = "uemail")
     private Collection<Concert> concertCollection;
 

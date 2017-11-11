@@ -73,6 +73,7 @@ public class ServletManager {
     	   {
     		   mav.addObject("username", li.get(0).getUname());
     		   List<Playlist> user_playlist = (List<Playlist>)(li.get(0).getUserPlaylistCollection());
+    		   
     		   mav.addObject("user_playlist", user_playlist);
     		   session.setAttribute("song_page_title", "session testing"); //display in song.jsp
                mav.setViewName("main");
@@ -129,15 +130,9 @@ public class ServletManager {
 	char gender = request.getParameter("gender").charAt(0);
 	String first_name = request.getParameter("first_name");
 	String last_name = request.getParameter("last_name");
-    User user = new User();
-    user.setUname(username);
-    user.setEmail(email);
-    user.setUpassword(encPwd);
-    user.setUtype(0);
-    user.setGender(gender);
-    user.setFirstName(first_name);
-    user.setLastName(last_name);
-    userManager.add(user);
+	int utype = 0;
+	
+    userManager.add(username,encPwd,email,utype,gender,first_name,last_name);
 
     String message = "Congratulation, sign up successfully. Please return to homepage for login.";
     return message; //handle in SignUp.jsp
@@ -147,18 +142,17 @@ public class ServletManager {
    @RequestMapping(value = "/createPlaylist", method = RequestMethod.POST)
    public ModelAndView createPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		String playlist_name = request.getParameter("playlist_name");
-	   		//String description = request.getParameter("description");
-	   		Playlist playlist = new Playlist();
-	   		playlist.setPname(playlist_name);
+	   		String description = request.getParameter("playlist_description");
+	   		String pic = request.getParameter("pic");
+	   		//System.out.println("picture address is "+pic);
 	   		User user = (User) session.getAttribute("user");
-	   		playlist.setPowner(user);
-	   		playlist.setDes(user.getEmail());
-	   		playlist.setFollowers(0);
-	   		playlist.setNSongs(0);
+	   		
 	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
-	   		playlist.setCreateDate(date);
-	   		playlistManager.add(playlist);
-	   		List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
+	   		
+	   		
+	   		
+	   		List<Playlist> user_playlist = playlistManager.add(playlist_name,user,description,pic,date);
+	   		
  		    mav.addObject("user_playlist", user_playlist);
             mav.setViewName("main");
             return mav;

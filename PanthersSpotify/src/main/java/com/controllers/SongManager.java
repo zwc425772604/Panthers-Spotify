@@ -16,12 +16,14 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
@@ -37,8 +39,8 @@ public class SongManager {
 	
     @Transactional
     public Song add(Song song, EntityManager em)throws IOException  {
-    		EntityTransaction userTransaction = em.getTransaction();
-    		song = changeUrl(song);
+    	EntityTransaction userTransaction = em.getTransaction();
+        song = changeUrl(song);
 	    userTransaction.begin();
 	    em.persist(song);
 	    em.flush();
@@ -54,6 +56,14 @@ public class SongManager {
     	song.setSurl(fileName);
     	return song;
     }
-  
+    
+    
+    public List<Song> getAllSongs(EntityManager em){
+    	List<Song> list = new ArrayList<Song>();
+    	
+    	Query query = em.createQuery("SELECT *", Song.class);
+    	list = (List<Song>)query.getResultList();
+    	return list;
+    }
     
 }

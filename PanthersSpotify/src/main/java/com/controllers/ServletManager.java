@@ -11,6 +11,7 @@ import com.model.Song;
 import com.model.User;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -18,6 +19,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -33,27 +36,24 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ServletManager {
-    @Autowired
-    private UserManager userManager;
-    @Autowired
-    private PlaylistManager playlistManager;
-    @Autowired
-    private SongManager songManager;
-    
-    
-    
-    
+	@Autowired
+	private UserManager userManager;
+	@Autowired
+	private PlaylistManager playlistManager;
+	@Autowired
+	private SongManager songManager;
+	@PersistenceContext
+	private EntityManager em;
+
    @RequestMapping(value = "/", method = RequestMethod.GET)
    public String index(ModelMap map) {
-      
        return "index";
    }
    
    /* user login */
    @RequestMapping(value = "/main", method = RequestMethod.POST)
    public ModelAndView userLogin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-	   EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-	    EntityManager em = entityManagerFactory.createEntityManager();
+	   EntityManager em = EMF.createEntityManager(); 
 	   String email = request.getParameter("email");
 	   String nonEncPwd = request.getParameter("password");
 	   String password = Security.encryptPassword(nonEncPwd);
@@ -101,7 +101,7 @@ public class ServletManager {
             
    }
  
-    /* user logout */
+   /* user logout */
    @RequestMapping(value = "/home", method = RequestMethod.GET)
    public ModelAndView userLogout(ModelAndView mav, HttpSession session) {
 	   		if (session.getAttribute("user") != null)
@@ -112,7 +112,7 @@ public class ServletManager {
             return mav;
    }
    
-      /* display sign up page */
+   /* display sign up page */
    @RequestMapping(value = "/signup", method = RequestMethod.GET)
    public ModelAndView displaySignUp(ModelAndView mav) {
 	   		mav.addObject("signUpMessage", "Welcome to Panthers Spotify!");
@@ -121,7 +121,7 @@ public class ServletManager {
    }
    
    
-       /* user sign up */ /* user type: 0=basic 1=premium 2=artist 3=admin */
+   /* user sign up */ /* user type: 0=basic 1=premium 2=artist 3=admin */
    @RequestMapping(value = "/userSignUp", method = RequestMethod.POST)
    public @ResponseBody String userSignUp(ModelAndView mav,
                   HttpServletRequest request, HttpSession session){ 
@@ -186,8 +186,6 @@ public class ServletManager {
 	   String songType = request.getParameter("song_type");
 	   String songUrl = request.getParameter("song_url");
 	   
-	   
-	   
 	   //Song songTime and release Day to be Fixed 
 	   Song song = new Song(songTitle, null,null, songGenre, songType, songUrl);
 	   
@@ -202,9 +200,16 @@ public class ServletManager {
 	   return mav;
    }
    
-  
    
+   /* Load song from database */
+   @RequestMapping(value="/loadSong", method = RequestMethod.POST)
+   public ModelAndView loadSongs(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+  	   EntityManager em = EMF.createEntityManager();
+	   List<Song> songs = songManager.getAllSongs(em);
+	   
+	   mav.addObject("list",songs);
+	   mav.setViewName("songs.jsp");
+	   return mav;
+   }
    
-   
-    
 }

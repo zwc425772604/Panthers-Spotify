@@ -114,9 +114,13 @@
                       </div>
                     </div>
                     <div class="w3-row w3-section">
-                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Song URL</span></div>
+                      <!-- <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Song URL</span></div>
                       <div class="w3-rest">
                         <input class="w3-input w3-border" name="song_url" type="text"  placeholder="Song Url">
+                      </div>  -->
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Song File</span></div>
+                      <div>
+                      	<input type="file" id="songFile" name="song_url">
                       </div>
                     </div>
 

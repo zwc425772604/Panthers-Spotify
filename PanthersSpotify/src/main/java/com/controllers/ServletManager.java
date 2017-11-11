@@ -10,6 +10,9 @@ import com.model.Playlist;
 import com.model.Song;
 import com.model.User;
 
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -177,29 +180,23 @@ public class ServletManager {
    /* add song to database */
    @RequestMapping(value = "/addSongToDatabase", method = RequestMethod.POST)
    public ModelAndView addSongToDatabase(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-	   String song_title = request.getParameter("song_title");
-	   String song_time = request.getParameter("song_time");
-	   String release_day = request.getParameter("release_day");
-	   String song_genre = request.getParameter("song_genre");
-	   String song_type = request.getParameter("song_type");
-	   String song_url = request.getParameter("song_url");
-	   Song song = new Song();
-	   song.setStitle(song_title);
+	   String songTitle = request.getParameter("song_title");
+	   String songTime = request.getParameter("song_time");
+	   String releaseDay = request.getParameter("release_day");
+	   String songGenre = request.getParameter("song_genre");
+	   String songType = request.getParameter("song_type");
+	   String songUrl = request.getParameter("song_url");
 	   
-	   
-	   //song.setReleaseDay(0);
-	   song.setGener(song_genre);
-	   song.setStype(song_type);
-	   song.setSurl(song_url);
-	   
-	   songManager.add(song);
+	   //Song songTime and release Day to be Fixed 
+	   Song song = new Song(songTitle, null,null, songGenre, songType, songUrl);
+	   try {
+			song = songManager.add(song);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	   mav.setViewName("admin");
 	   return mav;
    }
    
-  
-   
-   
-   
-    
 }

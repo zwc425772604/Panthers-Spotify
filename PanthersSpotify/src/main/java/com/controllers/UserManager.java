@@ -7,6 +7,9 @@ package com.controllers;
 
  
 import com.model.User;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -28,11 +31,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserManager {
 //    @PersistenceContext private EntityManager em;
-    EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-    EntityManager em = entityManagerFactory.createEntityManager();
-    EntityTransaction userTransaction = em.getTransaction();
+    
+    
     @Transactional
-    public void add(String username, String email,String encPwd,int utype,char gender,String first_name, String last_name) {
+    public void add(String username, String encPwd,String email,int utype,char gender,String first_name, String last_name,EntityManager em) {
     		User user = new User();
         user.setUname(username);
         user.setEmail(email);
@@ -41,6 +43,27 @@ public class UserManager {
         user.setGender(gender);
         user.setFirstName(first_name);
         user.setLastName(last_name);
+        
+        
+        File testfile1 = new File("PanthersSpotify");
+        if(testfile1.exists())
+        {
+        		System.out.println("ok");
+        		System.out.println(testfile1.getAbsolutePath());
+        }
+        else
+        {
+        		System.out.println("fail");
+        }
+        
+        
+        File testfile = new File("/Users/yangxiang/eclipse-workspace/panthers_spotify/"+email);//modify it
+        
+        
+        testfile.mkdirs();
+        
+        
+        EntityTransaction userTransaction = em.getTransaction();
 	    userTransaction.begin();
 	    em.persist(user);
 	    userTransaction.commit();
@@ -51,7 +74,7 @@ public class UserManager {
     }
     
     //check user is already registered or not, for login function
-    public List<User> getUser(String email, String password)
+    public List<User> getUser(String email, String password,EntityManager em)
     {
         //NameQuery are from Entity class
          TypedQuery<User> query1 =

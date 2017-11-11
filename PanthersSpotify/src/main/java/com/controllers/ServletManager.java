@@ -11,8 +11,6 @@ import com.model.Song;
 import com.model.User;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +40,9 @@ public class ServletManager {
     @Autowired
     private SongManager songManager;
     
+    
+    
+    
    @RequestMapping(value = "/", method = RequestMethod.GET)
    public String index(ModelMap map) {
       
@@ -51,10 +52,12 @@ public class ServletManager {
    /* user login */
    @RequestMapping(value = "/main", method = RequestMethod.POST)
    public ModelAndView userLogin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+	    EntityManager em = entityManagerFactory.createEntityManager();
 	   String email = request.getParameter("email");
 	   String nonEncPwd = request.getParameter("password");
 	   String password = Security.encryptPassword(nonEncPwd);
-       List<User> li = userManager.getUser(email,password);
+       List<User> li = userManager.getUser(email,password,em);
       
        System.out.println("li is "  + li);
        //case 0: if the email is not registered
@@ -131,8 +134,9 @@ public class ServletManager {
 	String first_name = request.getParameter("first_name");
 	String last_name = request.getParameter("last_name");
 	int utype = 0;
-	
-    userManager.add(username,encPwd,email,utype,gender,first_name,last_name);
+	EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+    EntityManager em = entityManagerFactory.createEntityManager();
+    userManager.add(username,encPwd,email,utype,gender,first_name,last_name,em);
 
     String message = "Congratulation, sign up successfully. Please return to homepage for login.";
     return message; //handle in SignUp.jsp
@@ -141,18 +145,15 @@ public class ServletManager {
    /* create Playlist */
    @RequestMapping(value = "/createPlaylist", method = RequestMethod.POST)
    public ModelAndView createPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+	    EntityManager em = entityManagerFactory.createEntityManager();
 	   		String playlist_name = request.getParameter("playlist_name");
 	   		String description = request.getParameter("playlist_description");
 	   		String pic = request.getParameter("pic");
-	   		//System.out.println("picture address is "+pic);
 	   		User user = (User) session.getAttribute("user");
 	   		
 	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
-	   		
-	   		
-	   		
-	   		List<Playlist> user_playlist = playlistManager.add(playlist_name,user,description,pic,date);
-	   		
+	   		List<Playlist> user_playlist = playlistManager.add(playlist_name,user,description,pic,date,em);
  		    mav.addObject("user_playlist", user_playlist);
             mav.setViewName("main");
             return mav;
@@ -163,7 +164,9 @@ public class ServletManager {
    @RequestMapping(value = "/getSpecificPlaylist", method = RequestMethod.GET)
    public String getSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		int playlist_id = Integer.parseInt(request.getParameter("playlist_id"));
-	   		Playlist playlist = playlistManager.getPlaylist(playlist_id);
+	   		EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+	   	    EntityManager em = entityManagerFactory.createEntityManager();
+	   		Playlist playlist = playlistManager.getPlaylist(playlist_id,em);
 	   		String pname = playlist.getPname();
 	   		System.out.println("playlist name is :" + pname);
  		    session.setAttribute("song_page_title", playlist);
@@ -174,6 +177,8 @@ public class ServletManager {
    /* add song to database */
    @RequestMapping(value = "/addSongToDatabase", method = RequestMethod.POST)
    public ModelAndView addSongToDatabase(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+	   EntityManager em = entityManagerFactory.createEntityManager();
 	   String songTitle = request.getParameter("song_title");
 	   String songTime = request.getParameter("song_time");
 	   String releaseDay = request.getParameter("release_day");
@@ -181,16 +186,25 @@ public class ServletManager {
 	   String songType = request.getParameter("song_type");
 	   String songUrl = request.getParameter("song_url");
 	   
+	   
+	   
 	   //Song songTime and release Day to be Fixed 
 	   Song song = new Song(songTitle, null,null, songGenre, songType, songUrl);
-	   try {
-			song = songManager.add(song);
+	   
+		try {
+			song = songManager.add(song,em);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 	   mav.setViewName("admin");
 	   return mav;
    }
    
+  
+   
+   
+   
+    
 }

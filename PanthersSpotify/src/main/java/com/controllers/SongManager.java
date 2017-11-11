@@ -11,11 +11,9 @@ import com.model.Playlist;
 import com.model.Song;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
@@ -27,7 +25,6 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
-import java.nio.file.Path;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,13 +33,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SongManager {
+//    @PersistenceContext private EntityManager em;
 	
-    EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-    EntityManager em = entityManagerFactory.createEntityManager();
-    EntityTransaction userTransaction = em.getTransaction();
     @Transactional
-    public Song add(Song song) throws IOException {
-    	song = changeUrl(song);
+    public Song add(Song song, EntityManager em)throws IOException  {
+    		EntityTransaction userTransaction = em.getTransaction();
+    		song = changeUrl(song);
 	    userTransaction.begin();
 	    em.persist(song);
 	    em.flush();
@@ -58,5 +54,6 @@ public class SongManager {
     	song.setSurl(fileName);
     	return song;
     }
+  
     
 }

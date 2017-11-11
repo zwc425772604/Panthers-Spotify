@@ -161,12 +161,12 @@ public class ServletManager {
    
    /* get specific playlist */
    @RequestMapping(value = "/getSpecificPlaylist", method = RequestMethod.GET)
-   public String getSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+   public  @ResponseBody String getSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		int playlist_id = Integer.parseInt(request.getParameter("playlist_id"));
 	   		Playlist playlist = playlistManager.getPlaylist(playlist_id);
 	   		String pname = playlist.getPname();
 	   		System.out.println("playlist name is :" + pname);
- 		    session.setAttribute("song_page_title", playlist);
+ 		    session.setAttribute("selected_playlist", playlist);
             return "ok";
    }
    

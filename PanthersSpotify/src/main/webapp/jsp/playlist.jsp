@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
+<%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -203,9 +205,9 @@ $(".playbar-play-button").click(function(){
       </div>
       <div class="col-md-5">
         <div id ="playlist-info" style="margin-top: 20%; margin-left:5%;">
-          <h5> Playlist </h3>
-          <p style="font-size: 2.5em;"> Chinese </p>
-          <p style="font-size: 1.1em;"> Created by: <a href="#"> username </a> ⋅ <span id="num_song"> 1 song </span> , <span id="total_length"> 4 min 26 sec </span></p>
+          <h5> Playlist </h5>
+          <p style="font-size: 2em;"><c:out value="${selected_playlist.pname}"></c:out>  </p>
+          <p style="font-size: 1.1em;"> Created by: <a href="#"> <c:out value="${selected_playlist.powner.uname}"></c:out> </a> ⋅ <span id="num_song"> 1 song </span> , <span id="total_length"> 4 min 26 sec </span></p>
           <div class="row">
 
           <div class="col-md-3" style="display:inline;">

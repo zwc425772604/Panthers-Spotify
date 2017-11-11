@@ -28,7 +28,7 @@
         //hide all other containers in <div id= 'middle-content'> beside except overview_container
         //$("#overview_container").siblings().hide();
         $("#main-changing-content").load("jsp/browse.jsp");
-        $(".nav-item").click(function(){
+        $(".playlist-item").click(function(){
         	var pid = $(".playlist_id", this).text(); //get the pid of the playlist
         	  $.ajax({
                   url: "${cp}/getSpecificPlaylist",
@@ -39,7 +39,7 @@
                   success : function(response)
                   {
                     console.log(response);
-                    //$("#main-changing-content").load("jsp/playlist.jsp");
+                    $("#main-changing-content").load("jsp/playlist.jsp");
                   },
                   error: function(e)
                   {
@@ -200,7 +200,7 @@
               <c:if test="${not empty user_playlist}">
 				<ul class="nav nav-stacked flex-column" >
 					<c:forEach var="playlist" items="${user_playlist}">
-						<li class="nav-item">
+						<li class="nav-item playlist-item">
 							 <a class="nav-link color-nav" href="#">${playlist.pname}</a>
 							 <span style="display:none;" class="playlist_id">${playlist.pid}</span>
 						</li>

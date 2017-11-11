@@ -148,7 +148,7 @@
 </script>
 <div class="suggestion-container" id = "release-container" style="margin-top: 3%;">
   <div class="suggestion-container-top">
-    <h3 class="suggestion-topic" style="font-size: 4em;">${song_page_title.pname}</h3>
+    <h3 class="suggestion-topic" style="font-size: 4em;">Song</h3>
   </div>
   <div class = "">
     <button class="btn formButton" onclick="playSong();">  <span class="playingStatus"> PLAY </span></button>

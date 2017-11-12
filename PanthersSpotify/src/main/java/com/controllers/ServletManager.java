@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -148,17 +149,20 @@ public class ServletManager {
    
    /* create Playlist */
    @RequestMapping(value = "/createPlaylist", method = RequestMethod.POST)
-   public ModelAndView createPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+   public ModelAndView createPlaylist(ModelAndView mav, @RequestParam CommonsMultipartFile file, HttpServletRequest request, HttpSession session) {
 	   		String playlist_name = request.getParameter("playlist_name");
 	   		String description = request.getParameter("playlist_description");
-	   		String pic = request.getParameter("pic");
+//	   		String pic = request.getParameter("pic");
 	   		//System.out.println("picture address is "+pic);
 	   		User user = (User) session.getAttribute("user");
-	   		
+	   		String path=session.getServletContext().getRealPath("/");  
+	        String filename=file.getOriginalFilename();  
+	          
+	        System.out.println(path+" "+filename);  
 	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
 	   		
 	   		
-	   		
+	   		String pic = "test";
 	   		List<Playlist> user_playlist = playlistManager.add(playlist_name,user,description,pic,date);
 	   		
  		    mav.addObject("user_playlist", user_playlist);

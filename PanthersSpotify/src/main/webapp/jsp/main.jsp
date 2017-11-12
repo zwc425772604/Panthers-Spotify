@@ -171,7 +171,7 @@
             </li>
             <div id="dialog" title="Create Playlist" style="display:none;">
               <!-- create playlist -->
-              <form:form action="createPlaylist" method="POST" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
+              <form:form action="createPlaylist" method="POST" enctype="multipart/form-data" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
                 <div class="w3-row w3-section">
                   <div class="w3-col" style="width:50px"><span style="font-size: 14px">Name</span></div>
                   <div class="w3-rest">
@@ -181,7 +181,7 @@
                 <div class="w3-row w3-section">
                   <div class="w3-col" style="width:50px"><span style="font-size: 14px">Image</span></div>
                   <div class="w3-rest">
-                    <input class="w3-input w3-border" type="file" name="pic" accept="image/*">
+                    <input class="w3-input w3-border" type="file" name="file" accept="image/*">
                   </div>
                 </div>
                 <div class="w3-row w3-section">

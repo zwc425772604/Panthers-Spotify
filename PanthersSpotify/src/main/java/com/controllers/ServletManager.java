@@ -174,7 +174,26 @@ public class ServletManager {
             mav.setViewName("main");
             return mav;
    }
-   
+   @RequestMapping(value = "/editPlaylistDetails", method = RequestMethod.POST)
+   public ModelAndView editPlaylist(ModelAndView mav, @RequestParam CommonsMultipartFile file, HttpServletRequest request, HttpSession session) {
+	   		String playlist_name = request.getParameter("playlist_name");
+	   		String description = request.getParameter("playlist_description");
+	   		User user = (User) session.getAttribute("user");
+	   		String path=session.getServletContext().getRealPath("/");  
+	        String filename=file.getOriginalFilename();  
+	          
+	        System.out.println(path+" "+filename);  
+	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
+	   		
+	   		
+	   		String pic = "test";
+	   		//List<Playlist> user_playlist = playlistManager.add(playlist_name,user,description,pic,date);
+//	   		
+// 		    mav.addObject("user_playlist", user_playlist);
+// 		    session.setAttribute("user_playlist", user_playlist);
+            mav.setViewName("main");
+            return mav;
+   }
    
    /* get specific playlist */
    @RequestMapping(value = "/getSpecificPlaylist", method = RequestMethod.GET)

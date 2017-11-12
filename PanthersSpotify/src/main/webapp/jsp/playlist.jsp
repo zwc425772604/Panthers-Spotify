@@ -11,6 +11,7 @@
 <body>
 	<!--  Container for DISCOVER -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-dark-grey.css">
  
 <style type="text/css">
 
@@ -93,6 +94,11 @@ $(document).ready(function(){
 	 	
 	 	$("#remove_playlist_modal").show();
 	});
+  $("#edit_playlist_button").click(function(){
+
+	 	
+	 	$("#edit_playlist_modal").show();
+	});
   $("#delete_playlist_confirm_button").click(function(){
 	 
 	  $("#remove_playlist_modal").hide();
@@ -119,6 +125,10 @@ $(document).ready(function(){
   });
   $("#cancel_delete_button").click(function(){
 	  $("#remove_playlist_modal").hide();
+  });
+  $("#cancel_edit_button").click(function(){
+	
+	  event.preventDefault(); document.getElementById('edit_playlist_modal').style.display='none';
   });
 });
 
@@ -272,6 +282,51 @@ $(".playbar-play-button").click(function(){
                 <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Make Secret</button>
                 <hr>
                 <button id = "edit_playlist_button" class="w3-bar-item w3-button playlist_action_dropdown">Edit Details</button>
+                	  <div id="edit_playlist_modal" class="w3-modal w3-animate-opacity">
+					    <div class="w3-modal-content w3-card-4">
+					      <header class="w3-container w3-theme-d3"> 
+					        <span onclick="document.getElementById('edit_playlist_modal').style.display='none'" 
+					        class="w3-button w3-large w3-display-topright">&times;</span>
+					        <h5>Edit Playlist Details</h5>
+					      </header>
+					      <div class="w3-container w3-theme-d4">
+					     
+					        <form:form action="editPlaylistDetails" method="POST" enctype="multipart/form-data">
+					        	<label>Name</label>
+					        	<br>
+					        	<input type="text" class="w3-input" name="playlist_name">
+					        	<br>
+					        	<div class="row" style="margin-top: 3%;">
+						        	<div class="col-md-4" style="margin-left:2%">
+						        		<label>Image</label>
+						        		<div class="content">
+						        			<img src = "https://www.fuse.tv/image/56fe73a1e05e186b2000009b/768/512/the-boxer-rebellion-ocean-by-ocean-album-cover-full-size.jpg" width="100%" height=width>
+						        			<input class="w3-input w3-border" type="file" name="file" accept="image/*">
+
+						        		</div>
+						        		
+						        	</div>
+						        	<div class="col-md-2"></div>
+						        	<div class="col-md-5">
+						        		
+						        		<p>Description <span class="w3-badge w3-blue">7/300</span></p>
+						        		
+						        		<textarea type="playlist_description" rows="14" cols="30"></textarea>
+						        	</div>
+					        	</div>
+					        	
+					        	
+					        		<div style="text-align:center;margin-top: 4%;">
+					        			<button id ="cancel_edit_button"  class="w3-button w3-round-xxlarge w3-black"> Cancel</button>
+					        			<button type="submit" id="delete_playlist_confirm_button" class="w3-button w3-round-xxlarge w3-green" style="margin-left: 40px;">Save</button>
+					        		</div>
+					        	
+					        </form:form> 
+					       	
+					      </div>
+					     
+					    </div>
+					  </div>
                 <button class="w3-bar-item w3-button playlist_action_dropdown" disabled>Report</button> <!-- w3css hover dropdown -->
                 <button id="remove_playlist_button" type="button" class="w3-bar-item w3-button playlist_action_dropdown">Delete</button>
 				   <div id="remove_playlist_modal" class="w3-modal">

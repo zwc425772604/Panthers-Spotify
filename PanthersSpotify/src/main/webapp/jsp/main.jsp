@@ -14,19 +14,27 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <!--js ref-->
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+   
     <script src="${cp}/resources/js/bootstrap.min.js"></script>
     <script src="https://www.w3schools.com/lib/w3.js"></script> <!-- for include html in div tag -->
     <script src="${cp}/resources/js/main.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="${cp}/resources/css/custom.css">
     <script>
       $(document).ready(function(){
         //hide all other containers in <div id= 'middle-content'> beside except overview_container
         //$("#overview_container").siblings().hide();
+        $.noConflict();
         $("#main-changing-content").load("jsp/browse.jsp");
         $(".playlist-item").click(function(){
         	var pid = $(".playlist_id", this).text(); //get the pid of the playlist
@@ -49,6 +57,21 @@
             
                 });
         });
+        $("#new_playlist_button").click(function(){
+        	 $('#dialog').dialog({
+                 //autoOpen: true,
+                 height: 550,
+                 width: 450,
+                 modal: true,
+                 resizable: false,
+                 //closeOnEscape: false,
+                 //open: function(event, ui) { $(".ui-dialog-titlebar-close", ui).hide(); }
+                 //closeOnEscape: false,
+                 //beforeclose: function (event, ui) { return false; },
+                 dialogClass: 'no-close'
+                 });
+        });
+       
         
         
       //     window.open("browse.jsp","_blank");
@@ -144,7 +167,7 @@
             </li>
             <hr>
             <li class= "nav-item">
-              <button class="unstyle-buttons btn btn-info btn-lg w3-blue" onclick="openDialogBox()" id="playbar-shuffle-button"> New Playlist</button>
+              <button class="unstyle-buttons btn btn-info btn-lg w3-blue" id="new_playlist_button" > New Playlist</button>
             </li>
             <div id="dialog" title="Create Playlist" style="display:none;">
               <!-- create playlist -->

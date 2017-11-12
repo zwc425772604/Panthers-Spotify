@@ -11,6 +11,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -108,7 +109,7 @@ public class User implements Serializable {
     @Column(name = "upgradDate")
     @Temporal(TemporalType.DATE)
     private Date upgradDate;
-    @OneToMany(mappedBy = "powner")
+    @OneToMany(mappedBy = "powner", fetch = FetchType.EAGER)
     private Collection<Playlist> user_playlist_collection;
 //    @OneToMany(mappedBy = "aowner")
 //    private Collection<Album> albumCollection;

@@ -24,10 +24,14 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import java.nio.file.Path;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,21 +40,27 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SongManager {
-	
-    EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-    EntityManager em = entityManagerFactory.createEntityManager();
-    EntityTransaction userTransaction = em.getTransaction();
+//	@Autowired
+//	@PersistenceContext private EntityManager em;
+	@PersistenceUnit(unitName = "pan")
+    private EntityManagerFactory entityManagerFactory;
+//    EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+//    EntityManager em = entityManagerFactory.createEntityManager();
+//    EntityTransaction userTransaction = em.getTransaction();
     @Transactional
     public Song add(Song song) throws IOException {
+    	EntityManager em = entityManagerFactory.createEntityManager();
     	song = changeUrl(song);
-	    userTransaction.begin();
+    	em.getTransaction().begin();
 	    em.persist(song);
 	    em.flush();
-	    userTransaction.commit();	    
+	    em.getTransaction().commit();	  
+	    em.close();
 	    return song;
     }
     
     public Song changeUrl(Song song) throws IOException {
+//    	EntityManager em = entityManagerFactory.createEntityManager();
     	String fileName = song.getSurl().substring(song.getSurl().lastIndexOf("\\") + 1);
     	final File f = new File(SongManager.class.getProtectionDomain().getCodeSource().getLocation().getPath());
     	Path input = (Path)Paths.get(song.getSurl());  

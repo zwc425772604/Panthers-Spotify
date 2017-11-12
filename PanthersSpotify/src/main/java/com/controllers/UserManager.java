@@ -15,25 +15,33 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import org.springframework.stereotype.Repository;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Weichao ZHao
  */
-@Component
+@Repository
+@Transactional
 public class UserManager {
-//    @PersistenceContext private EntityManager em;
-    EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-    EntityManager em = entityManagerFactory.createEntityManager();
-    EntityTransaction userTransaction = em.getTransaction();
+//	@Autowired
+     // @PersistenceContext private EntityManager em;
+// 	 @PersistenceUnit(unitName = "pan")
+//     private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory( "pan" );
+//     EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+//    EntityManager em = entityManagerFactory.createEntityManager();
+//    EntityTransaction userTransaction = em.getTransaction();
     @Transactional
     public void add(String username, String email,String encPwd,int utype,char gender,String first_name, String last_name) {
     		User user = new User();
+    		 EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+    		EntityManager em = entityManagerFactory.createEntityManager();
         user.setUname(username);
         user.setEmail(email);
         user.setUpassword(encPwd);
@@ -41,9 +49,11 @@ public class UserManager {
         user.setGender(gender);
         user.setFirstName(first_name);
         user.setLastName(last_name);
-	    userTransaction.begin();
+	   em.getTransaction().begin();
 	    em.persist(user);
-	    userTransaction.commit();
+	   em.getTransaction().commit();
+	   em.close();
+	   entityManagerFactory.close();
     }
 
     public void remove(User user) {
@@ -51,13 +61,19 @@ public class UserManager {
     }
     
     //check user is already registered or not, for login function
-    public List<User> getUser(String email, String password)
+    public List<User> getUser(String email, String password, EntityManager em)
     {
+//    	 EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+//    	EntityManager em = entityManagerFactory.createEntityManager();
+//    	entityManagerFactory = Persistence.createEntityManagerFactory( "pan" );
+//    	EntityManager em = entityManagerFactory.createEntityManager();
         //NameQuery are from Entity class
-         TypedQuery<User> query1 =
-        em.createNamedQuery("User.findByEmail", User.class)
-                 .setParameter("email", email);
-        List<User> results = query1.getResultList();
+    	System.out.println("email is :" + email);
+         List results =
+        em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email).getResultList();
+//        List<User> results = query1.getResultList();
+//        em.close();
+//        entityManagerFactory.close();
         return results;
 
     }

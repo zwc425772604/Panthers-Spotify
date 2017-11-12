@@ -23,6 +23,8 @@ import javax.persistence.Persistence;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -41,7 +43,7 @@ public class ServletManager {
     private PlaylistManager playlistManager;
     @Autowired
     private SongManager songManager;
-    
+    private EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
    @RequestMapping(value = "/", method = RequestMethod.GET)
    public String index(ModelMap map) {
       
@@ -54,7 +56,8 @@ public class ServletManager {
 	   String email = request.getParameter("email");
 	   String nonEncPwd = request.getParameter("password");
 	   String password = Security.encryptPassword(nonEncPwd);
-       List<User> li = userManager.getUser(email,password);
+	   EntityManager em = entityManagerFactory.createEntityManager();
+       List<User> li = userManager.getUser(email,password, em);
       
        System.out.println("li is "  + li);
        //case 0: if the email is not registered
@@ -74,8 +77,12 @@ public class ServletManager {
     		   mav.addObject("username", li.get(0).getUname());
     		   List<Playlist> user_playlist = (List<Playlist>)(li.get(0).getUserPlaylistCollection());
     		   
-    		   mav.addObject("user_playlist", user_playlist);
-    		   session.setAttribute("song_page_title", "session testing"); //display in song.jsp
+//    		   mav.addObject("user_playlist", user_playlist);
+    		   session.setAttribute("user_playlist", user_playlist);
+    		
+//    		   session.update("user_playlist");
+    		   System.out.println(session.getId().length());
+//    		   session.setAttribute("song_page_title", "session testing"); //display in song.jsp
                mav.setViewName("main");
     	   }
     	   //display admin page
@@ -92,6 +99,7 @@ public class ServletManager {
            mav.addObject("error_message", "Incorrect email or password!");
            mav.setViewName("index");
        }
+       em.close();
        return mav;
       
             

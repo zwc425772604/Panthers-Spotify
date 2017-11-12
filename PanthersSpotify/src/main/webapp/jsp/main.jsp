@@ -32,19 +32,19 @@
         	var pid = $(".playlist_id", this).text(); //get the pid of the playlist
         	  $.ajax({
                   url: "${cp}/getSpecificPlaylist",
-                  type: "GET",
+                  type: "POST",
                   data : {"playlist_id" : pid },
                   asyn: true,
                   cache: true,
                   success : function(response)
                   {
                     console.log(response);
-                    //$("#main-changing-content").load("jsp/playlist.jsp");
                   },
                   error: function(e)
                   {
+                	
                     console.log(e);
-                 
+                 	
                   }
             
                 });
@@ -63,6 +63,22 @@
         }
         else if (nav_name.localeCompare('albums') == 0)
         {
+        	$.ajax({
+                url: "${cp}/loadAlbum",
+                type: "POST",
+                asyn: true,
+                cache: true,
+                success : function(response)
+                {
+                  console.log(response);
+                 
+                },
+                error: function(e)
+                {
+                  c
+                  console.log(e);               
+                }
+              });
            $("#main-changing-content").load("jsp/album.jsp");
         }
         else if (nav_name.localeCompare('artists') == 0)
@@ -70,8 +86,8 @@
            $("#main-changing-content").load("jsp/artist.jsp");
         }
         else if (nav_name.localeCompare('songs') == 0)
-        {
-           //$("#main-changing-content").load("jsp/songs.jsp");
+        {       	
+
         	$.ajax({
                 url: "${cp}/loadSong",
                 type: "POST",
@@ -80,17 +96,15 @@
                 success : function(response)
                 {
                   console.log(response);
-                  $("#main-changing-content").load("jsp/song.jsp");
+                 
                 },
                 error: function(e)
                 {
-                  console.log(e);
-               
+                  c
+                  console.log(e);               
                 }
-          
               });
-           
-           
+        	 $("#main-changing-content").load("jsp/songs.jsp");
         }
         else
         {

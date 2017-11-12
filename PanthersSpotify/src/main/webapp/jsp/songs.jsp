@@ -1,4 +1,6 @@
 <!--  Container for DISCOVER -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <style type="text/css">
   /* for the close button in input type search */
   input[type="search"]::-webkit-search-cancel-button
@@ -212,130 +214,51 @@
         </tr>
       </thead>
       <tbody>
-      	<tr class="song_info">
-      		
-      	</tr>
-        <tr class= "song_info">
-          <td><button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">
-            <i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i></button>
-          </td>
-          <td>  <button class="unstyle-buttons tracklist-save-button" data-toggle="tooltip-save" title="Remove from Your Library"  onclick="removeSong()">
-            <i class="material-icons"><span class="tracklist-add-delete-button">done</span></i>
-            </button>
-          </td>
-          <td>
-            <p> HUMBLE. </p>
-          </td>
-          <td>
-            <p> <a href="#"> Kendrick Lamar </a> </p>
-          </td>
-          <td>
-            <p> <a href="#"> DAMN. </a></p>
-          </td>
-          <td>
-            <p> 2017-09-29</p>
-          </td>
-          <!-- ... button dropdown -->
-          <td>
-            <div class="w3-dropdown-click more_action_list">
-              <button class="w3-button more_button"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
-              <div class="w3-dropdown-content w3-bar-block w3-border song_action_list">
-                <button onclick="" class="w3-bar-item w3-button">Add to Queue</button>
-                <button onclick="" class="w3-bar-item w3-button">Go to Song Radio</button>
-                <hr>
-                <button onclick="" class="w3-bar-item w3-button">Go to Artist</button> <!-- a song might have multiple artists -->
-                <button onclick="" class="w3-bar-item w3-button">Go to Album</button>
-                <hr>
-                <button onclick="" class="w3-bar-item w3-button">Remove from Your Library</button>
-                <button onclick="" class="w3-bar-item w3-button">Add to Playlist</button> <!-- w3css hover dropdown -->
-                <button onclick="" class="w3-bar-item w3-button">Share</button>
-              </div>
-            </div>
-          </td>
-          <td>
-            <p> 2:57 </p>
-          </td>
-        </tr>
-        <tr class= "song_info">
-          <td><button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">
-            <i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i></button>
-          </td>
-          <td>  <button class="unstyle-buttons tracklist-save-button" data-toggle="tooltip-save" title="Remove from Your Library" onclick="removeSong()">
-            <i class="material-icons"><span class="tracklist-add-delete-button">done</span></i>
-            </button>
-          </td>
-          <td>
-            <p> DNA </p>
-          </td>
-          <td>
-            <p> <a href="#"> Kendrick Lamar </a> </p>
-          </td>
-          <td>
-            <p> <a href="#"> DAMN. </a> </p>
-          </td>
-          <td>
-            <p> 2017-09-29</p>
-          </td>
-          <td>
-            <div class="w3-dropdown-click more_action_list">
-              <button class="w3-button more_button"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
-              <div class="w3-dropdown-content w3-bar-block w3-border song_action_list">
-                <button onclick="" class="w3-bar-item w3-button">Add to Queue</button>
-                <button onclick="" class="w3-bar-item w3-button">Go to Song Radio</button>
-                <hr>
-                <button onclick="" class="w3-bar-item w3-button">Go to Artist</button> <!-- a song might have multiple artists -->
-                <button onclick="" class="w3-bar-item w3-button">Go to Album</button>
-                <hr>
-                <button onclick="" class="w3-bar-item w3-button">Remove from Your Library</button>
-                <button onclick="" class="w3-bar-item w3-button">Add to Playlist</button> <!-- w3css hover dropdown -->
-                <button onclick="" class="w3-bar-item w3-button">Share</button>
-              </div>
-            </div>
-          </td>
-          <td>
-            <p> 3:06 </p>
-          </td>
-        </tr>
-        <tr class= "song_info">
-          <td><button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">
-            <i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i></button>
-          </td>
-          <td>  <button class="unstyle-buttons tracklist-save-button" data-toggle="tooltip-save" title="Remove from Your Library" onclick="removeSong()">
-            <i class="material-icons"><span class="tracklist-add-delete-button">done</span></i>
-            </button>
-          </td>
-          <td>
-            <p> Hiphop Lover </p>
-          </td>
-          <td>
-            <p> <a href="#"> Dok2 </a></p>
-          </td>
-          <td>
-            <p> <a href="#"> Reborn </a> </p>
-          </td>
-          <td>
-            <p> 2017-09-28</p>
-          </td>
-          <td>
-            <div class="w3-dropdown-click more_action_list">
-              <button  class="w3-button more_button"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
-              <div class="w3-dropdown-content w3-bar-block w3-border song_action_list">
-                <button onclick="" class="w3-bar-item w3-button">Add to Queue</button>
-                <button onclick="" class="w3-bar-item w3-button">Go to Song Radio</button>
-                <hr>
-                <button onclick="" class="w3-bar-item w3-button">Go to Artist</button> <!-- a song might have multiple artists -->
-                <button onclick="" class="w3-bar-item w3-button">Go to Album</button>
-                <hr>
-                <button onclick="" class="w3-bar-item w3-button">Remove from Your Library</button>
-                <button onclick="" class="w3-bar-item w3-button">Add to Playlist</button> <!-- w3css hover dropdown -->
-                <button onclick="" class="w3-bar-item w3-button">Share</button>
-              </div>
-            </div>
-          </td>
-          <td>
-            <p> 3:19 </p>
-          </td>
-        </tr>
+		<c:if test="${not empty songs}">
+			<c:forEach var="song" items="${songs}">
+				<tr class="song_info">
+		      	  <td><button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">
+		            <i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i></button>
+			      </td>
+		          <td> <button class="unstyle-buttons tracklist-save-button" data-toggle="tooltip-save" title="Remove from Your Library"  onclick="removeSong()">
+		            <i class="material-icons"><span class="tracklist-add-delete-button">done</span></i>
+		            </button>
+		          </td>
+		          <td>
+		            <p>${song.stitle}</p>
+		          </td>
+		          <td>
+		            <p> <a href="#">${song.sid}</a> </p>
+		          </td>
+		          <td>
+		            <p> <a href="#">${song.stype}</a></p>
+		          </td>
+		          <td>
+		            <p>GAGA</p>
+		          </td>
+		          <!-- ... button dropdown -->
+		          <td>
+		            <div class="w3-dropdown-click more_action_list">
+		              <button class="w3-button more_button"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
+		              <div class="w3-dropdown-content w3-bar-block w3-border song_action_list">
+		                <button onclick="" class="w3-bar-item w3-button">Add to Queue</button>
+		                <button onclick="" class="w3-bar-item w3-button">Go to Song Radio</button>
+		                <hr>
+		                <button onclick="" class="w3-bar-item w3-button">Go to Artist</button> <!-- a song might have multiple artists -->
+		                <button onclick="" class="w3-bar-item w3-button">Go to Album</button>
+		                <hr>
+		                <button onclick="" class="w3-bar-item w3-button">Remove from Your Library</button>
+		                <button onclick="" class="w3-bar-item w3-button">Add to Playlist</button> <!-- w3css hover dropdown -->
+		                <button onclick="" class="w3-bar-item w3-button">Share</button>
+		              </div>
+		            </div>
+		          </td>
+		          <td>
+		            <p> </p>
+		          </td>
+		      	</tr>
+	      	</c:forEach>
+		</c:if>
       </tbody>
     </table>
   </div>

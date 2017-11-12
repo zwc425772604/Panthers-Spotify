@@ -6,6 +6,7 @@
 package com.controllers;
 
 import com.helper.Security;
+import com.model.Album;
 import com.model.Playlist;
 import com.model.Song;
 import com.model.User;
@@ -42,6 +43,8 @@ public class ServletManager {
 	private PlaylistManager playlistManager;
 	@Autowired
 	private SongManager songManager;
+	@Autowired
+	private AlbumManager albumManager;
 	@PersistenceContext
 	private EntityManager em;
 
@@ -161,7 +164,7 @@ public class ServletManager {
    
    
    /* get specific playlist */
-   @RequestMapping(value = "/getSpecificPlaylist", method = RequestMethod.GET)
+   @RequestMapping(value = "/getSpecificPlaylist", method = RequestMethod.POST)
    public String getSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		int playlist_id = Integer.parseInt(request.getParameter("playlist_id"));
 	   		EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
@@ -177,8 +180,8 @@ public class ServletManager {
    /* add song to database */
    @RequestMapping(value = "/addSongToDatabase", method = RequestMethod.POST)
    public ModelAndView addSongToDatabase(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-	   EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-	   EntityManager em = entityManagerFactory.createEntityManager();
+	   
+	   EntityManager em = EMF.createEntityManager();
 	   String songTitle = request.getParameter("song_title");
 	   String songTime = request.getParameter("song_time");
 	   String releaseDay = request.getParameter("release_day");
@@ -202,12 +205,21 @@ public class ServletManager {
    
    /* Load song from database */
    @RequestMapping(value="/loadSong", method = RequestMethod.POST)
-   public ModelAndView loadSongs(ModelAndView mav, HttpServletRequest request, HttpSession session) {	   
+   public String loadSongs(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
   	   EntityManager em = EMF.createEntityManager();
 	   List<Song> songs = songManager.getAllSongs(em);
-	   
 	   session.setAttribute("songs", songs);
-	   return mav;
+	   System.out.println("loadsongs" + songs.size());
+	   return "ok";
+   }
+   
+   @RequestMapping(value="/loadAlbum", method = RequestMethod.POST)
+   public String loadAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+  	   EntityManager em = EMF.createEntityManager();
+	   List<Album> albums = albumManager.getAllAlbums(em);
+	   session.setAttribute("album_list", albums);
+	   System.out.println("loadAlbum" + albums.size());
+  	   return "ok";
    }
    
 }

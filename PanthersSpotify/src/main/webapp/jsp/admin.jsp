@@ -114,6 +114,12 @@
                       </div>
                     </div>
                     <div class="w3-row w3-section">
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Album ID</span></div>
+                      <div class="w3-rest">
+                        <input class="w3-input w3-border" name="song_album_id" type="text"  placeholder="Album ID">
+                      </div>
+                    </div>
+                    <div class="w3-row w3-section">
                       <!-- <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Song URL</span></div>
                       <div class="w3-rest">
                         <input class="w3-input w3-border" name="song_url" type="text"  placeholder="Song Url">

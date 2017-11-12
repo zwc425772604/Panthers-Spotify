@@ -74,9 +74,9 @@ public class Album implements Serializable {
     private Integer nSongs;
     @OneToMany(mappedBy = "albumId")
     private Collection<Song> songCollection;
-    @JoinColumn(name = "aowner", referencedColumnName = "email")
-    @ManyToOne
-    private User aowner;
+//    @JoinColumn(name = "aowner", referencedColumnName = "email")
+//    @ManyToOne
+//    private User aowner;
 
     public Album() {
     }
@@ -158,13 +158,13 @@ public class Album implements Serializable {
         this.songCollection = songCollection;
     }
 
-    public User getAowner() {
-        return aowner;
-    }
-
-    public void setAowner(User aowner) {
-        this.aowner = aowner;
-    }
+//    public User getAowner() {
+//        return aowner;
+//    }
+//
+//    public void setAowner(User aowner) {
+//        this.aowner = aowner;
+//    }
 
     @Override
     public int hashCode() {

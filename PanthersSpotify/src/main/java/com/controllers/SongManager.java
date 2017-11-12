@@ -53,14 +53,15 @@ public class SongManager {
     	final File f = new File(SongManager.class.getProtectionDomain().getCodeSource().getLocation().getPath());
     	Path input = (Path)Paths.get(song.getSurl());  
     	Files.copy(input,(new File(f.toString() + "\\songs\\" + fileName)).toPath(), StandardCopyOption.REPLACE_EXISTING);
+    	//File testing = new File("\\..\\..\\..\\..\\src\\main\\java\\com\\controllers\\UserManager.java");
+    	//System.out.println(testing.exists());
     	song.setSurl(fileName);
     	return song;
     }
     
-    
-    public List<Song> getAllSongs(EntityManager em){
+	public List<Song> getAllSongs(EntityManager em){
     	List<Song> list = new ArrayList<Song>();	
-    	Query query = em.createQuery("SELECT song FROM Song song");
+    	Query query = em.createQuery("SELECT s FROM Song s");
     	list = (List<Song>)query.getResultList();
     	return list;
     }

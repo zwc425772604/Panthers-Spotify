@@ -1,4 +1,6 @@
 <!--  Container for DISCOVER -->
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <style type="text/css">
   .hover-control
   {
@@ -116,9 +118,9 @@
   
   }
   //sort by keyword handler
-  $('#sorted_by_keyword').on('change',function(){
-    //alert(this.value);
-  })ï¼›
+   $('#sorted_by_keyword').on('change',function(){
+     //alert(this.value);
++  });›
 </script>
 <!--  Container for Album -->
 <div class="suggestion-container" id = "charts-container">
@@ -140,75 +142,44 @@
   <div class="line"></div>
   <!-- Saved albums section -->
   <section class="row placeholders" id = "infoContainer">
-    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
-      <div class = "hover-control">
-        <img src="https://www.fuse.tv/image/56fe73a1e05e186b2000009b/768/512/the-boxer-rebellion-ocean-by-ocean-album-cover-full-size.jpg" width=100% height=width class="img-rounded info-image" alt="Generic placeholder thumbnail">
-        <!-- this div display when hover on the image of album/artist -->
-        <div class = "hover-buttons" style="display:none;">
-          <ul class="left_sizebar">
-            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add User"  id="playbar-prev-button"><i class="material-icons">add</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit User Information" id="playbar-shuffle-button"> <i class="material-icons">mode_edit</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete User" id="playbar-play-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
-          </ul>
-        </div>
-      </div>
-      <div class="medium-boxes-description">
-        <h6><a href="#"> <span id = "album_name"> DAMN. </span></a></h6>
-        <h6><a href="#"> <span id = "artist_name"> Kendrick Lamar</span></a> </h6>
-      </div>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
-      <!-- infoBox = whole image and text-->
-      <div class = "hover-control">
-        <img src="https://www.fuse.tv/image/56fe73a1e05e186b2000009b/768/512/the-boxer-rebellion-ocean-by-ocean-album-cover-full-size.jpg" width=100% height=width class="img-rounded info-image" alt="Generic placeholder thumbnail">
-        <!-- this div display when hover on the image of album/artist -->
-        <div class = "hover-buttons" style="display:none;">
-          <ul class="left_sizebar">
-            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add User"  id="playbar-prev-button"><i class="material-icons">add</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit User Information" id="playbar-shuffle-button"> <i class="material-icons">mode_edit</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete User" id="playbar-play-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
-          </ul>
-        </div>
-      </div>
-      <!-- album name and artist name here -->
-      <div class="medium-boxes-description" style="margin-top: 5%;">
-        <h6><a href="#"> <span id = "album_name"> DAMN. </span></a></h6>
-        <h6><a href="#"> <span id = "artist_name"> Kendrick Lamar</span></a> </h6>
-      </div>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
-      <div class = "hover-control">
-        <img src="https://www.fuse.tv/image/56fe73a1e05e186b2000009b/768/512/the-boxer-rebellion-ocean-by-ocean-album-cover-full-size.jpg" width=100% height=width class="img-rounded info-image" alt="Generic placeholder thumbnail">
-        <!-- this div display when hover on the image of album/artist -->
-        <div class = "hover-buttons" style="display:none;">
-          <ul class="left_sizebar">
-            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add User"  id="playbar-prev-button"><i class="material-icons">add</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit User Information" id="playbar-shuffle-button"> <i class="material-icons">mode_edit</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete User" id="playbar-play-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
-          </ul>
-        </div>
-      </div>
-      <div class="medium-boxes-description">
-        <h6><a href="#"> <span id = "album_name"> DAMN. </span></a></h6>
-        <h6><a href="#"> <span id = "artist_name"> Kendrick Lamar</span></a> </h6>
-      </div>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
-      <div class = "hover-control">
-        <img src="https://www.fuse.tv/image/56fe73a1e05e186b2000009b/768/512/the-boxer-rebellion-ocean-by-ocean-album-cover-full-size.jpg" width=100% height=width class="img-rounded info-image" alt="Generic placeholder thumbnail">
-        <!-- this div display when hover on the image of album/artist -->
-        <div class = "hover-buttons" style="display:none;">
-          <ul class="left_sizebar">
-            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add User"  id="playbar-prev-button"><i class="material-icons">add</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit User Information" id="playbar-shuffle-button"> <i class="material-icons">mode_edit</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete User" id="playbar-play-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
-          </ul>
-        </div>
-      </div>
-      <div class="medium-boxes-description">
-        <h6><a href="#"> <span id = "album_name"> DAMN. </span></a></h6>
-        <h6><a href="#"> <span id = "artist_name"> Kendrick Lamar</span></a> </h6>
-      </div>
-    </div>
+	  <c:if test="${not empty album_list}">
+	     <c:forEach var="album" items="${album_list}">
+		    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
+		      <div class = "hover-control">
+		        <img src="https://www.fuse.tv/image/56fe73a1e05e186b2000009b/768/512/the-boxer-rebellion-ocean-by-ocean-album-cover-full-size.jpg" width=100% height=width class="img-rounded info-image" alt="Generic placeholder thumbnail">
+		        <!-- this div display when hover on the image of album/artist -->
+		        <div class = "hover-buttons" style="display:none;">
+		          <ul class="left_sizebar">
+		            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add User"  id="playbar-prev-button"><i class="material-icons">add</i></button></li>
+		            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit User Information" id="playbar-shuffle-button"> <i class="material-icons">mode_edit</i></button></li>
+		            <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete User" id="playbar-play-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
+		          </ul>
+		        </div>
+		      </div>
+		      <div class="medium-boxes-description">
+		        <h6><a href="#"> <span id = "album_name">${album.aname} </span></a></h6>
+		        <h6><a href="#"> <span id = "artist_name">${album.dis}</span></a> </h6>
+		      </div>
+		    </div>
+	   </c:forEach>
+    </c:if>
+    
+		   <!-- <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
+		      <div class = "hover-control">
+		        <img src="https://www.fuse.tv/image/56fe73a1e05e186b2000009b/768/512/the-boxer-rebellion-ocean-by-ocean-album-cover-full-size.jpg" width=100% height=width class="img-rounded info-image" alt="Generic placeholder thumbnail">
+		        <!-- this div display when hover on the image of album/artist 
+		        <div class = "hover-buttons" style="display:none;">
+		          <ul class="left_sizebar">
+		            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add User"  id="playbar-prev-button"><i class="material-icons">add</i></button></li>
+		            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit User Information" id="playbar-shuffle-button"> <i class="material-icons">mode_edit</i></button></li>
+		            <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete User" id="playbar-play-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
+		          </ul>
+		        </div>
+		      </div>
+		      <div class="medium-boxes-description">
+		        <h6><a href="#"> <span id = "album_name"> DAMN. </span></a></h6>
+		        <h6><a href="#"> <span id = "artist_name"> Kendrick Lamar</span></a> </h6>
+		      </div>
+		    </div> --> 
   </section>
 </div>

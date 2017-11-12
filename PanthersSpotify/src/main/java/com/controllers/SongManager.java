@@ -59,9 +59,8 @@ public class SongManager {
     
     
     public List<Song> getAllSongs(EntityManager em){
-    	List<Song> list = new ArrayList<Song>();
-    	
-    	Query query = em.createQuery("SELECT *", Song.class);
+    	List<Song> list = new ArrayList<Song>();	
+    	Query query = em.createQuery("SELECT song FROM Song song");
     	list = (List<Song>)query.getResultList();
     	return list;
     }

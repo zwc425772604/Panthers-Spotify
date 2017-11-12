@@ -200,15 +200,13 @@ public class ServletManager {
 	   return mav;
    }
    
-   
    /* Load song from database */
    @RequestMapping(value="/loadSong", method = RequestMethod.POST)
-   public ModelAndView loadSongs(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+   public ModelAndView loadSongs(ModelAndView mav, HttpServletRequest request, HttpSession session) {	   
   	   EntityManager em = EMF.createEntityManager();
 	   List<Song> songs = songManager.getAllSongs(em);
 	   
-	   mav.addObject("list",songs);
-	   mav.setViewName("songs.jsp");
+	   session.setAttribute("songs", songs);
 	   return mav;
    }
    

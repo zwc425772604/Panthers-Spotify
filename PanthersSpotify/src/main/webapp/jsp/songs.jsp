@@ -212,6 +212,9 @@
         </tr>
       </thead>
       <tbody>
+      	<tr class="song_info">
+      		
+      	</tr>
         <tr class= "song_info">
           <td><button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">
             <i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i></button>

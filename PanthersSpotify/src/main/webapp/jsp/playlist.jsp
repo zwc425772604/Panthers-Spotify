@@ -11,6 +11,7 @@
 <body>
 	<!--  Container for DISCOVER -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+ 
 <style type="text/css">
 
 
@@ -85,6 +86,38 @@ var hoverEnabled = true;
 $(document).ready(function(){
   $(".more_action_list").hide(); //hide the ... button when page is loaded
   $(".playbar-play-button").hide(); //hide the play button when page is loaded
+  $("#remove_playlist_button").click(function(){
+
+	 	
+	 	$("#remove_playlist_modal").show();
+	});
+  $("#delete_playlist_confirm_button").click(function(){
+	 
+	  $("#remove_playlist_modal").hide();
+	  var pid = $("#playlist_id").text();
+	  $.ajax({
+          url: "${cp}/removeSpecificPlaylist",
+          type: "POST",
+          data : {"playlist_id" : pid },
+          asyn: true,
+          cache: false,
+          success : function(response)
+          {
+            console.log(response);
+           // $("#main-changing-content").load("jsp/playlist.jsp");
+            window.location.replace("http://localhost:10455/PanthersSpotify/main");
+          },
+          error: function(e)
+          {
+            console.log(e);
+         
+          }
+    
+        });
+  });
+  $("#cancel_delete_button").click(function(){
+	  $("#remove_playlist_modal").hide();
+  });
 });
 
 //style for the filter container
@@ -198,6 +231,7 @@ $(".playbar-play-button").click(function(){
 });
 
 
+
 </script>
 
 <div class="suggestion-container" id = "release-container" style="margin-top: 3%;">
@@ -217,6 +251,7 @@ $(".playbar-play-button").click(function(){
         <div id ="playlist-info" style="margin-top: 4%; margin-left:5%;">
           <h5> Playlist </h5>
           <p style="font-size: 1.8em;"><c:out value="${selected_playlist.pname}"></c:out>  </p>
+          <p id="playlist_id" style="display:none;"><c:out value="${selected_playlist.pid}"></c:out>  </p>
           <p style="font-size: 1.2em;"><c:out value="${selected_playlist.des}"></c:out>  </p>
           <p style="font-size: 1.1em;"> Created by: <a href="#"> <c:out value="${selected_playlist.powner.uname}"></c:out> </a> ⋅ <span id="num_song"> 1 song </span> , <span id="total_length"> 4 min 26 sec </span></p>
           <div class="row">
@@ -234,9 +269,23 @@ $(".playbar-play-button").click(function(){
                 <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Collaborative Playlist</button> <!-- a song might have multiple artists -->
                 <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Make Secret</button>
                 <hr>
-                <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Edit Details</button>
-                <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown" disabled>Report</button> <!-- w3css hover dropdown -->
-                <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Delete</button>
+                <button id = "edit_playlist_button" class="w3-bar-item w3-button playlist_action_dropdown">Edit Details</button>
+                <button class="w3-bar-item w3-button playlist_action_dropdown" disabled>Report</button> <!-- w3css hover dropdown -->
+                <button id="remove_playlist_button" type="button" class="w3-bar-item w3-button playlist_action_dropdown">Delete</button>
+				   <div id="remove_playlist_modal" class="w3-modal">
+				    <div class="w3-modal-content">
+				      <div class="w3-container w3-grey" >
+				        <span onclick="document.getElementById('remove_playlist_modal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+				        <div style="text-align:center;">
+					        <p>Do you really want to remove this playlist?</p>
+					        <div>
+					        	<button id ="cancel_delete_button" class="w3-button w3-round-xxlarge w3-black"> Cancel</button>
+					        	<button id="delete_playlist_confirm_button" class="w3-button w3-round-xxlarge w3-red" style="margin-left: 40px;"> Delete</button>
+					        </div>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
                 <hr>
                 <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Create Similar Playlist</button>
                 <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Download</button> <!-- w3css hover dropdown -->

@@ -74,7 +74,22 @@ public class PlaylistManager {
   	  System.out.println("want to remove playlist");
   	  em.close();
   	  emf.close();
+  	  
   }
+    public void removePlaylist(int pid)
+    {
+    	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+    	  EntityManager em = emf.createEntityManager(); 
+    	  Playlist playlist = em.find(Playlist.class, pid);
+	  	  em.getTransaction().begin();
+	  	  em.remove(playlist);
+	  	  em.flush();
+	  	  em.getTransaction().commit();
+	  	  System.out.println("want to remove playlist");
+	  	  em.close();
+	  	  emf.close();
+    }
+    
   public void edit(int pid, String des, String photoUrl, String pname) {
 	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
 	  EntityManager em = emf.createEntityManager();

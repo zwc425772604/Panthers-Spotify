@@ -81,8 +81,7 @@ public class ServletManager {
 //    		   mav.addObject("user_playlist", user_playlist);
     		   session.setAttribute("user_playlist", user_playlist);
     		
-//    		   session.update("user_playlist");
-    		   System.out.println(session.getId().length());
+    		
 //    		   session.setAttribute("song_page_title", "session testing"); //display in song.jsp
                mav.setViewName("main");
     	   }
@@ -105,6 +104,11 @@ public class ServletManager {
       
             
             
+   }
+   @RequestMapping(value = "/main", method = RequestMethod.GET)
+   public ModelAndView mainPage(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   mav.setViewName("main");
+	   return mav;
    }
  
     /* user logout */
@@ -166,6 +170,7 @@ public class ServletManager {
 	   		List<Playlist> user_playlist = playlistManager.add(playlist_name,user,description,pic,date);
 	   		
  		    mav.addObject("user_playlist", user_playlist);
+ 		    session.setAttribute("user_playlist", user_playlist);
             mav.setViewName("main");
             return mav;
    }
@@ -175,6 +180,7 @@ public class ServletManager {
    @RequestMapping(value = "/getSpecificPlaylist", method = RequestMethod.GET)
    public  @ResponseBody String getSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		int playlist_id = Integer.parseInt(request.getParameter("playlist_id"));
+	   		
 	   		Playlist playlist = playlistManager.getPlaylist(playlist_id);
 	   		String pname = playlist.getPname();
 	   		System.out.println("playlist name is :" + pname);
@@ -205,6 +211,22 @@ public class ServletManager {
 		}
 	   mav.setViewName("admin");
 	   return mav;
+   }
+   
+   /* get specific playlist */
+   @RequestMapping(value = "/removeSpecificPlaylist", method = RequestMethod.POST)
+   public  @ResponseBody String removeSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   		int playlist_id = Integer.parseInt(request.getParameter("playlist_id").trim());
+	   		Playlist playlist = playlistManager.getPlaylist(playlist_id);
+	   		playlistManager.removePlaylist(playlist_id);
+	   		//playlistManager.remove(playlist_id);
+	   		List<Playlist> user_playlist = (List<Playlist>) (session.getAttribute("user_playlist"));
+	   		user_playlist.remove(playlist);
+	   		System.out.println("playlist_size:" + user_playlist.size());
+	   		session.setAttribute("user_playlist", user_playlist);
+ 		    mav.addObject("user_playlist", user_playlist);
+	   		System.out.println("remove success");
+            return "ok";
    }
    
 }

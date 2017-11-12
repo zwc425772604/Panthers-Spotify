@@ -26,7 +26,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
      <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <link rel="stylesheet" href="/resources/demos/style.css">
+  
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="${cp}/resources/css/custom.css">
@@ -48,6 +48,7 @@
                   {
                     console.log(response);
                     $("#main-changing-content").load("jsp/playlist.jsp");
+                  
                   },
                   error: function(e)
                   {
@@ -58,6 +59,7 @@
                 });
         });
         $("#new_playlist_button").click(function(){
+        	
         	 $('#dialog').dialog({
                  //autoOpen: true,
                  height: 550,
@@ -224,7 +226,7 @@
 				<ul class="nav nav-stacked flex-column" >
 					<c:forEach var="playlist" items="${user_playlist}">
 						<li class="nav-item playlist-item">
-							 <a class="nav-link color-nav" href="#">${playlist.pname}</a>
+							 <a class="nav-link color-nav">${playlist.pname}</a>
 							 <span style="display:none;" class="playlist_id">${playlist.pid}</span>
 						</li>
 					</c:forEach>

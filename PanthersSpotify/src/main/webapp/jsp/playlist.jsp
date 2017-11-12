@@ -113,7 +113,7 @@ $(document).ready(function(){
           {
             console.log(response);
            // $("#main-changing-content").load("jsp/playlist.jsp");
-            window.location.replace("http://localhost:10455/PanthersSpotify/main");
+            window.location.replace("http://localhost:8080/PanthersSpotify/main");
           },
           error: function(e)
           {
@@ -283,7 +283,7 @@ $(".playbar-play-button").click(function(){
                 <hr>
                 <button id = "edit_playlist_button" class="w3-bar-item w3-button playlist_action_dropdown">Edit Details</button>
                 	  <div id="edit_playlist_modal" class="w3-modal w3-animate-opacity">
-					    <div class="w3-modal-content w3-card-4">
+					    <div class="w3-modal-content w3-card-4" style="height:500px; overflow:scroll;">
 					      <header class="w3-container w3-theme-d3"> 
 					        <span onclick="document.getElementById('edit_playlist_modal').style.display='none'" 
 					        class="w3-button w3-large w3-display-topright">&times;</span>
@@ -318,7 +318,7 @@ $(".playbar-play-button").click(function(){
 					        	
 					        		<div style="text-align:center;margin-top: 4%;">
 					        			<button id ="cancel_edit_button"  class="w3-button w3-round-xxlarge w3-black"> Cancel</button>
-					        			<button type="submit" id="delete_playlist_confirm_button" class="w3-button w3-round-xxlarge w3-green" style="margin-left: 40px;">Save</button>
+					        			<button type="submit" class="w3-button w3-round-xxlarge w3-green" style="margin-left: 40px;">Save</button>
 					        		</div>
 					        	
 					        </form:form> 

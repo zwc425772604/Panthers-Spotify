@@ -54,28 +54,14 @@ public class PlaylistManager {
 	    em.persist(playlist);
 	    em.flush();
 	    em.getTransaction().commit();
-	    
-	    
-	    List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
-	    user_playlist.add(playlist);
 	    em.close();
 	    emf.close();
+	    List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
+	    user_playlist.add(playlist);
 	    return user_playlist;
     }
-
-    public void remove(int pid) {
-    	EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
-    	EntityManager em = emf.createEntityManager();
-  	  Playlist playlist = em.find(Playlist.class, pid);  
-  	  em.getTransaction().begin();
-  	  em.remove(playlist);
-  	  em.flush();
-  	  em.getTransaction().commit();
-  	  System.out.println("want to remove playlist");
-  	  em.close();
-  	  emf.close();
-  	  
-  }
+    
+    //remove playlist
     public void removePlaylist(int pid)
     {
     	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
@@ -90,23 +76,51 @@ public class PlaylistManager {
 	  	  emf.close();
     }
     
-  public void edit(int pid, String des, String photoUrl, String pname) {
+  public List<Playlist> edit(int pid, String des, String photoUrl, String pname, User user) {
 	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
 	  EntityManager em = emf.createEntityManager();
-	    TypedQuery<Playlist> query1 = em.createNamedQuery("Playlist.findByPid", Playlist.class)
-      		.setParameter("pid", pid);
-	    List<Playlist> results = query1.getResultList();
-	    Playlist p = results.get(0);
-	    p.setDes(des);
-	    p.setPhotoUrl(photoUrl);
-	    p.setPname(pname);
+	    //TypedQuery<Playlist> query1 = em.createNamedQuery("Playlist.findByPid", Playlist.class)
+      	//	.setParameter("pid", pid);
+	    
+	    Playlist playlist = em.find(Playlist.class, pid);
+	    
+	    em.getTransaction().begin();
+	    if(des!=null)
+	    		playlist.setDes(des);
+	    if(photoUrl!=null)
+	    		playlist.setPhotoUrl(photoUrl);
+	    if(pname!=null)
+	    		playlist.setPname(pname);
+	    em.getTransaction().commit();
+	    
+	    
 	    //UPDATE playlist
 	    //SET description = des, photoUrl= photoUrl, pname = pname
 	    //		WHERE pid = 1;
 	    
+	    
   	System.out.println("want to edit playlist");
   	em.close();
   	emf.close();
+  	List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
+  	Playlist p=null;
+  	for(int i=0;i<user_playlist.size();i++)
+  	{
+  		p=user_playlist.get(i);
+  		if(p.getPid()==pid)
+  		{
+  			break;
+  		}
+  	}
+  	if(des!=null)
+		p.setDes(des);
+	if(photoUrl!=null)
+			p.setPhotoUrl(photoUrl);
+	if(pname!=null)
+			p.setPname(pname);
+  	return user_playlist;
+  	
+  	
   }
 
   //get the playlist for specific pid

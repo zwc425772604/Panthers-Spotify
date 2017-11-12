@@ -44,7 +44,7 @@ public class ServletManager {
     private PlaylistManager playlistManager;
     @Autowired
     private SongManager songManager;
-    private EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+    //private EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
    @RequestMapping(value = "/", method = RequestMethod.GET)
    public String index(ModelMap map) {
       
@@ -57,15 +57,16 @@ public class ServletManager {
 	   String email = request.getParameter("email");
 	   String nonEncPwd = request.getParameter("password");
 	   String password = Security.encryptPassword(nonEncPwd);
+	   EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
 	   EntityManager em = entityManagerFactory.createEntityManager();
-       List<User> li = userManager.getUser(email,password, em);
+       List<User> li = userManager.getUser(email, em);
       
        System.out.println("li is "  + li);
        //case 0: if the email is not registered
        if (li.size() == 0)
        {          
             mav.setViewName("index");
-    	   	mav.addObject("error_message", "This email does not register on our site!");
+    	   		mav.addObject("error_message", "This email does not register on our site!");
        }
        //case 1: email and password match in database record
        //if true - get the playlist, etc from the database and update the DOM
@@ -100,6 +101,8 @@ public class ServletManager {
            mav.setViewName("index");
        }
        em.close();
+       entityManagerFactory.close();
+       System.out.println("here");
        return mav;
       
             
@@ -145,7 +148,7 @@ public class ServletManager {
 	String last_name = request.getParameter("last_name");
 	int utype = 0;
 	
-    userManager.add(username,encPwd,email,utype,gender,first_name,last_name);
+    userManager.add(username,email,encPwd,utype,gender,first_name,last_name);
 
     String message = "Congratulation, sign up successfully. Please return to homepage for login.";
     return message; //handle in SignUp.jsp
@@ -176,21 +179,27 @@ public class ServletManager {
    }
    @RequestMapping(value = "/editPlaylistDetails", method = RequestMethod.POST)
    public ModelAndView editPlaylist(ModelAndView mav, @RequestParam CommonsMultipartFile file, HttpServletRequest request, HttpSession session) {
+	   		
 	   		String playlist_name = request.getParameter("playlist_name");
 	   		String description = request.getParameter("playlist_description");
 	   		User user = (User) session.getAttribute("user");
 	   		String path=session.getServletContext().getRealPath("/");  
 	        String filename=file.getOriginalFilename();  
-	          
-	        System.out.println(path+" "+filename);  
+	         
+	        Playlist playlistOne = (Playlist)session.getAttribute("selected_playlist");
+	        //System.out.println(path+" "+filename);  
 	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
-	   		
-	   		
+	   		int pid = playlistOne.getPid();
+	   		System.out.println(pid);
 	   		String pic = "test";
-	   		//List<Playlist> user_playlist = playlistManager.add(playlist_name,user,description,pic,date);
+	   		
+	   		List<Playlist> user_playlist = playlistManager.edit(pid,description,pic,playlist_name,user);
 //	   		
 // 		    mav.addObject("user_playlist", user_playlist);
 // 		    session.setAttribute("user_playlist", user_playlist);
+	   		
+	   		mav.addObject("user_playlist", user_playlist);
+ 		    session.setAttribute("user_playlist", user_playlist);
             mav.setViewName("main");
             return mav;
    }
@@ -241,7 +250,6 @@ public class ServletManager {
 	   		//playlistManager.remove(playlist_id);
 	   		List<Playlist> user_playlist = (List<Playlist>) (session.getAttribute("user_playlist"));
 	   		user_playlist.remove(playlist);
-	   		System.out.println("playlist_size:" + user_playlist.size());
 	   		session.setAttribute("user_playlist", user_playlist);
  		    mav.addObject("user_playlist", user_playlist);
 	   		System.out.println("remove success");

@@ -6,6 +6,7 @@
 package com.controllers;
 
  
+import com.model.Playlist;
 import com.model.User;
 import java.util.List;
 import javax.persistence.Entity;
@@ -60,8 +61,13 @@ public class UserManager {
        
     }
     
+    public void editUser(User user,String username)
+    {
+    		
+    }
+    
     //check user is already registered or not, for login function
-    public List<User> getUser(String email, String password, EntityManager em)
+    public List<User> getUser(String email, EntityManager em)
     {
 //    	 EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
 //    	EntityManager em = entityManagerFactory.createEntityManager();
@@ -69,11 +75,15 @@ public class UserManager {
 //    	EntityManager em = entityManagerFactory.createEntityManager();
         //NameQuery are from Entity class
     	System.out.println("email is :" + email);
-         List results =
-        em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email).getResultList();
-//        List<User> results = query1.getResultList();
+    	TypedQuery<User> query1 = em.createNamedQuery("User.findByEmail", User.class)
+          		.setParameter("email", email);
+       //  Query query1 =
+        //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
+        
+         List<User> results = query1.getResultList();
 //        em.close();
 //        entityManagerFactory.close();
+         System.out.println("here");
         return results;
 
     }

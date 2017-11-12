@@ -1,5 +1,6 @@
 <!--  Container for DISCOVER -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 <style type="text/css">
   #filter_keyword
   {
@@ -32,6 +33,8 @@
   }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
   $(document).ready(function(){
   
@@ -81,7 +84,7 @@
   //sort by keyword handler
   $('#sorted_by_keyword').on('change',function(){
     //alert(this.value);
-  })
+  });
 </script>
 <!--Container for release 1-->
 <!--  Container for DISCOVER -->

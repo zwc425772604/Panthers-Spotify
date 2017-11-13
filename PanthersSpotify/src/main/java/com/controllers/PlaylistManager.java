@@ -25,10 +25,16 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+
 import javax.persistence.Query;
+
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
+
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -37,12 +43,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class PlaylistManager {
-//    @PersistenceContext private EntityManager em;
-    
-    
-    @Transactional
-    public List<Playlist> add(String playlist_name,User user, String description,String pic,java.sql.Date date,EntityManager em) {
-    		BufferedImage image = null;
+
+	@Transactional
+    public List<Playlist> add(String playlist_name,User user, String description,String pic,java.sql.Date date) {
+		EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+   	    EntityManager em = emf.createEntityManager();	
+		BufferedImage image = null;
     		URL url = null;
     	    
     	
@@ -105,49 +111,89 @@ public class PlaylistManager {
 	    em.persist(playlist);
 	    em.flush();
 	    userTransaction.commit();
-	    
+	    em.close();
+	    emf.close();
 	    
 	    List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
 	    user_playlist.add(playlist);
+	    
 	    return user_playlist;
     }
-
-    public void remove(int pid,EntityManager em) {
-  	  Playlist playlist = em.find(Playlist.class, pid);  
-  	  em.getTransaction().begin();
-  	  em.remove(playlist);
-  	  em.flush();
-  	  em.getTransaction().commit();
-  	  System.out.println("want to remove playlist");
-  }
-  public void edit(int pid, String des, String photoUrl, String pname,EntityManager em) {
-  	
-	    TypedQuery<Playlist> query1 = em.createNamedQuery("Playlist.findByPid", Playlist.class)
-      		.setParameter("pid", pid);
-	    List<Playlist> results = query1.getResultList();
-	    Playlist p = results.get(0);
-	    p.setDes(des);
-	    p.setPhotoUrl(photoUrl);
-	    p.setPname(pname);
+ 
+	//remove playlist
+    public void removePlaylist(int pid)
+    {
+    	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+    	  EntityManager em = emf.createEntityManager(); 
+    	  Playlist playlist = em.find(Playlist.class, pid);
+	  	  em.getTransaction().begin();
+	  	  em.remove(playlist);
+	  	  em.flush();
+	  	  em.getTransaction().commit();
+	  	  System.out.println("want to remove playlist");
+	  	  em.close();
+	  	  emf.close();
+    }
+    
+  public List<Playlist> edit(int pid, String des, String photoUrl, String pname, User user) {
+	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+	  EntityManager em = emf.createEntityManager();
+	    //TypedQuery<Playlist> query1 = em.createNamedQuery("Playlist.findByPid", Playlist.class)
+      	//	.setParameter("pid", pid);
 	    
-	    Query query2 
-	    		= em.createQuery("UPDATE playlist SET description = des, photoUrl= photoUrl, pname = pname WHERE pid = :pid",Playlist.class)
-	    		.setParameter("pid", pid);
-	    query2.executeUpdate();
+	    Playlist playlist = em.find(Playlist.class, pid);
+	    
+	    em.getTransaction().begin();
+	    if(des!=null)
+	    		playlist.setDes(des);
+	    if(photoUrl!=null)
+	    		playlist.setPhotoUrl(photoUrl);
+	    if(pname!=null)
+	    		playlist.setPname(pname);
+	    em.getTransaction().commit();
+	    
+	    
 	    //UPDATE playlist
 	    //SET description = des, photoUrl= photoUrl, pname = pname
 	    //		WHERE pid = 1;
 	    
+	    
   	System.out.println("want to edit playlist");
+  	em.close();
+  	emf.close();
+  	List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
+  	Playlist p=null;
+  	for(int i=0;i<user_playlist.size();i++)
+  	{
+  		p=user_playlist.get(i);
+  		if(p.getPid()==pid)
+  		{
+  			break;
+  		}
+  	}
+  	if(des!=null)
+		p.setDes(des);
+	if(photoUrl!=null)
+			p.setPhotoUrl(photoUrl);
+	if(pname!=null)
+			p.setPname(pname);
+  	return user_playlist;
+  	
+  	
   }
 
+  
   //get the playlist for specific pid
-  public Playlist getPlaylist(int pid,EntityManager em)
+  public Playlist getPlaylist(int pid)
   {
-  	TypedQuery<Playlist> query1 = em.createNamedQuery("Playlist.findByPid", Playlist.class)
+	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+	  EntityManager em = emf.createEntityManager();
+  	  TypedQuery<Playlist> query1 = em.createNamedQuery("Playlist.findByPid", Playlist.class)
        		.setParameter("pid", pid);
-	    List<Playlist> result = query1.getResultList();
-	    return result.get(0);
+	  List<Playlist> result = query1.getResultList();
+	  em.close();
+	  emf.close();
+	  return result.get(0);
   }
   
 }

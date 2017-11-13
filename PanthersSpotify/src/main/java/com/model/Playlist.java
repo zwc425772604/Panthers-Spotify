@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -29,7 +30,7 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author weichaozhao
+ * @author Weichao ZHao
  */
 @Entity
 @Table(name = "playlist", catalog = "panthers", schema = "")
@@ -43,14 +44,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Playlist.findByCreateDate", query = "SELECT p FROM Playlist p WHERE p.createDate = :createDate")
     , @NamedQuery(name = "Playlist.findByTimelength", query = "SELECT p FROM Playlist p WHERE p.timelength = :timelength")
     , @NamedQuery(name = "Playlist.findByFollowers", query = "SELECT p FROM Playlist p WHERE p.followers = :followers")
-    , @NamedQuery(name = "Playlist.findByIspublic", query = "SELECT p FROM Playlist p WHERE p.ispublic = :ispublic")
-    , @NamedQuery(name = "Playlist.findByNSongs", query = "SELECT p FROM Playlist p WHERE p.nSongs = :nSongs")})
+    , @NamedQuery(name = "Playlist.findByIspublic", query = "SELECT p FROM Playlist p WHERE p.ispublic = :ispublic")})
 public class Playlist implements Serializable {
 
-   
-
     private static final long serialVersionUID = 1L;
-   
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Basic(optional = false)
@@ -58,13 +55,13 @@ public class Playlist implements Serializable {
     @Column(name = "pid", nullable = false)
     private Integer pid;
     @Size(max = 10)
-    @Column(name = "pname")
+    @Column(name = "pname", length = 10)
     private String pname;
     @Size(max = 500)
-    @Column(name = "des")
+    @Column(name = "des", length = 500)
     private String des;
     @Size(max = 100)
-    @Column(name = "photoUrl")
+    @Column(name = "photoUrl", length = 100)
     private String photoUrl;
     @Column(name = "createDate")
     @Temporal(TemporalType.DATE)
@@ -72,14 +69,17 @@ public class Playlist implements Serializable {
     @Column(name = "timelength")
     @Temporal(TemporalType.TIME)
     private Date timelength;
+    @Column(name = "nSongs")
+    private Integer nSongs;
     @Column(name = "followers")
     private Integer followers;
     @Column(name = "ispublic")
     private Boolean ispublic;
-    @Column(name = "nSongs")
-    private Integer nSongs;
-    @ManyToMany(mappedBy = "playlistCollection")
-    private Collection<User> userCollection;
+    @JoinTable(name = "playlistsong", joinColumns = {
+        @JoinColumn(name = "pid", referencedColumnName = "pid", nullable = false)}, inverseJoinColumns = {
+        @JoinColumn(name = "sid", referencedColumnName = "sid", nullable = false)})
+    @ManyToMany
+    private Collection<Song> songCollection;
     @JoinColumn(name = "powner", referencedColumnName = "email")
     @ManyToOne
     private User powner;
@@ -154,13 +154,20 @@ public class Playlist implements Serializable {
     public void setIspublic(Boolean ispublic) {
         this.ispublic = ispublic;
     }
-
     public Integer getNSongs() {
         return nSongs;
     }
 
     public void setNSongs(Integer nSongs) {
         this.nSongs = nSongs;
+    }
+    @XmlTransient
+    public Collection<Song> getSongCollection() {
+        return songCollection;
+    }
+
+    public void setSongCollection(Collection<Song> songCollection) {
+        this.songCollection = songCollection;
     }
 
     public User getPowner() {
@@ -194,15 +201,6 @@ public class Playlist implements Serializable {
     @Override
     public String toString() {
         return "com.model.Playlist[ pid=" + pid + " ]";
-    }
-
-    @XmlTransient
-    public Collection<User> getUserCollection() {
-        return userCollection;
-    }
-
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
     }
     
 }

@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
+<%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,6 +11,8 @@
 <body>
 	<!--  Container for DISCOVER -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-dark-grey.css">
+ 
 <style type="text/css">
 
 
@@ -61,18 +65,71 @@
 
   .playlist_action_list
   {
-    max-height:250px;
+    max-height:350px;
     overflow:scroll;
   }
+  
+  #filter_and_download .download_right
+  {
+  	float: right;
+  } 
+  #filter_and_download .filter_left
+  {
+  	float: left;
+  } 
+}
 
 
 </style>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 var hoverEnabled = true;
 $(document).ready(function(){
   $(".more_action_list").hide(); //hide the ... button when page is loaded
   $(".playbar-play-button").hide(); //hide the play button when page is loaded
+  $("#remove_playlist_button").click(function(){
+
+	 	
+	 	$("#remove_playlist_modal").show();
+	});
+  $("#edit_playlist_button").click(function(){
+
+	 	
+	 	$("#edit_playlist_modal").show();
+	});
+  $("#delete_playlist_confirm_button").click(function(){
+	 
+	  $("#remove_playlist_modal").hide();
+	  var pid = $("#playlist_id").text();
+	  $.ajax({
+          url: "${cp}/removeSpecificPlaylist",
+          type: "POST",
+          data : {"playlist_id" : pid },
+          asyn: true,
+          cache: false,
+          success : function(response)
+          {
+            console.log(response);
+           // $("#main-changing-content").load("jsp/playlist.jsp");
+            window.location.replace("http://localhost:8080/PanthersSpotify/main");
+          },
+          error: function(e)
+          {
+            console.log(e);
+         
+          }
+    
+        });
+  });
+  $("#cancel_delete_button").click(function(){
+	  $("#remove_playlist_modal").hide();
+  });
+  $("#cancel_edit_button").click(function(){
+	
+	  event.preventDefault(); document.getElementById('edit_playlist_modal').style.display='none';
+  });
 });
 
 //style for the filter container
@@ -186,6 +243,7 @@ $(".playbar-play-button").click(function(){
 });
 
 
+
 </script>
 
 <div class="suggestion-container" id = "release-container" style="margin-top: 3%;">
@@ -197,21 +255,23 @@ $(".playbar-play-button").click(function(){
       <button class="btn formButton" onclick="playSong();">  <span class="playingStatus"> PLAY </span></button>
   </div> -->
   <div class="suggestion-container-top">
-    <div class="row">
-      <div class="col-md-4">
+    
+      <div class="playlist_image_box" style="width: 20%">
         <img src="https://www.fuse.tv/image/56fe73a1e05e186b2000009b/768/512/the-boxer-rebellion-ocean-by-ocean-album-cover-full-size.jpg" width=100% height=width class="img-rounded" alt="Generic placeholder thumbnail">
       </div>
-      <div class="col-md-5">
-        <div id ="playlist-info" style="margin-top: 20%; margin-left:5%;">
-          <h5> Playlist </h3>
-          <p style="font-size: 2.5em;"> Chinese </p>
-          <p style="font-size: 1.1em;"> Created by: <a href="#"> username </a> ⋅ <span id="num_song"> 1 song </span> , <span id="total_length"> 4 min 26 sec </span></p>
+      <div class="playlist_details_box" style="width:70%">
+        <div id ="playlist-info" style="margin-top: 4%; margin-left:5%;">
+          <h5> Playlist </h5>
+          <p style="font-size: 1.8em;"><c:out value="${selected_playlist.pname}"></c:out>  </p>
+          <p id="playlist_id" style="display:none;"><c:out value="${selected_playlist.pid}"></c:out>  </p>
+          <p style="font-size: 1.2em;"><c:out value="${selected_playlist.des}"></c:out>  </p>
+          <p style="font-size: 1.1em;"> Created by: <a href="#"> <c:out value="${selected_playlist.powner.uname}"></c:out> </a> ⋅ <span id="num_song"> 1 song </span> , <span id="total_length"> 4 min 26 sec </span></p>
           <div class="row">
 
           <div class="col-md-3" style="display:inline;">
             <button class="btn formButton" onclick="playSong();">  <span class="playingStatus"> PLAY </span></button>
           </div>
-          <div class="col-md-3"></div>
+     
           <div class="col-md-3">
             <div class="w3-dropdown-click playlist_header_more_action_list">
               <button class="w3-button playlist_header_more_button" title="More" ><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
@@ -221,9 +281,68 @@ $(".playbar-play-button").click(function(){
                 <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Collaborative Playlist</button> <!-- a song might have multiple artists -->
                 <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Make Secret</button>
                 <hr>
-                <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Edit Details</button>
-                <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown" disabled>Report</button> <!-- w3css hover dropdown -->
-                <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Delete</button>
+                <button id = "edit_playlist_button" class="w3-bar-item w3-button playlist_action_dropdown">Edit Details</button>
+                	  <div id="edit_playlist_modal" class="w3-modal w3-animate-opacity">
+					    <div class="w3-modal-content w3-card-4" style="height:500px; overflow:scroll;">
+					      <header class="w3-container w3-theme-d3"> 
+					        <span onclick="document.getElementById('edit_playlist_modal').style.display='none'" 
+					        class="w3-button w3-large w3-display-topright">&times;</span>
+					        <h5>Edit Playlist Details</h5>
+					      </header>
+					      <div class="w3-container w3-theme-d4">
+					     
+					        <form:form action="editPlaylistDetails" method="POST" enctype="multipart/form-data">
+					        	<label>Name</label>
+					        	<br>
+					        	<input type="text" class="w3-input" name="playlist_name">
+					        	<br>
+					        	<div class="row" style="margin-top: 3%;">
+						        	<div class="col-md-4" style="margin-left:2%">
+						        		<label>Image</label>
+						        		<div class="content">
+						        			<img src = "https://www.fuse.tv/image/56fe73a1e05e186b2000009b/768/512/the-boxer-rebellion-ocean-by-ocean-album-cover-full-size.jpg" width="100%" height=width>
+						        			<input class="w3-input w3-border" type="file" name="file" accept="image/*">
+
+						        		</div>
+						        		
+						        	</div>
+						        	<div class="col-md-2"></div>
+						        	<div class="col-md-5">
+						        		
+						        		<p>Description <span class="w3-badge w3-blue">7/300</span></p>
+						        		
+						        		<textarea type="playlist_description" rows="14" cols="30"></textarea>
+						        	</div>
+					        	</div>
+					        	
+					        	
+					        		<div style="text-align:center;margin-top: 4%;">
+					        			<button id ="cancel_edit_button"  class="w3-button w3-round-xxlarge w3-black"> Cancel</button>
+					        			<button type="submit" class="w3-button w3-round-xxlarge w3-green" style="margin-left: 40px;">Save</button>
+					        		</div>
+					        	
+					        </form:form> 
+					       	
+					      </div>
+					     
+					    </div>
+					  </div>
+                <button class="w3-bar-item w3-button playlist_action_dropdown" disabled>Report</button> <!-- w3css hover dropdown -->
+                <button id="remove_playlist_button" type="button" class="w3-bar-item w3-button playlist_action_dropdown">Delete</button>
+				   <div id="remove_playlist_modal" class="w3-modal">
+				    <div class="w3-modal-content">
+				      <div class="w3-container w3-grey" >
+				        <span onclick="document.getElementById('remove_playlist_modal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+				        <div style="text-align:center;">
+					        <p>Do you really want to remove this playlist?</p>
+					        <div>
+					        	<button id ="cancel_delete_button" class="w3-button w3-round-xxlarge w3-black"> Cancel</button>
+					        	<button id="delete_playlist_confirm_button" class="w3-button w3-round-xxlarge w3-red" style="margin-left: 40px;"> Delete</button>
+					        </div>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
                 <hr>
                 <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Create Similar Playlist</button>
                 <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Download</button> <!-- w3css hover dropdown -->
@@ -231,30 +350,36 @@ $(".playbar-play-button").click(function(){
               </div>
             </div>
           </div>
+          <div class="col-md-5"></div>
+          <div class="col-md-1">
+          	<p>FOLLOWERS</p>
+          	<p><c:out value="${selected_playlist.followers}"></c:out></p>
+          	</div>
           </div>
         </div>
       </div>
-    </div>
+    
+    
   </div>
 
 
   <!-- filter input div block -->
-  <div class="row">
-    <div class="col-md-6">
-      <div class="input-group" id="filter_container">
-        <span class="input-group-addon" id="search_span">
-            <i class="fa fa-search" aria-hidden="true"></i>
-        </span>
-      <!-- <input type="search"  id="filter_keyword" name="q" onkeyup="filterAlbum()" placeholder="Filter"> -->
-        <input placeholder= "filter" class="w3-input w3-border w3-animate-input" type="search" style="width:30%">
-      </div>
-
-     </div>
-     <div class="col-md-3"></div>
-     <div class="col-3" style="margin-top:1%;">
-         <p3 class="suggestion-topic" style="font-size: 1.5em;">Download</p3>
-     </div>
-  </div>
+  <div id="filter_and_download">
+	    <div class="filter_left" style="width:50%;">
+	      <div class="input-group" id="filter_container">
+	        <span class="input-group-addon" id="search_span">
+	            <i class="fa fa-search" aria-hidden="true"></i>
+	        </span>
+	      <!-- <input type="search"  id="filter_keyword" name="q" onkeyup="filterAlbum()" placeholder="Filter"> -->
+	        <input placeholder= "filter" class="w3-input w3-border w3-animate-input" type="search" style="width:30%">
+	      </div>
+	
+	     </div>
+     
+	     <div class="download_right"style="width: 20%;margin-top:1%;">
+	         <p3 class="suggestion-topic" style="font-size: 1.5em;">Download</p3>
+	     </div>
+  	</div>
 </div>
 
 
@@ -282,7 +407,7 @@ function dropdownDisplay(song_div) {
 </script>
 
   <!--  Container for track list -->
-  <div class="suggestion-container" id = "charts-container">
+  <div class="suggestion-container" style="margin-top: 5%;" id = "charts-container">
     <div class="table-responsive">
       <table class="table">
         <thead>

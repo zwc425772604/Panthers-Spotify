@@ -34,10 +34,14 @@ public class AlbumManager {
 //    @PersistenceContext private EntityManager em;
 	
     
-	public List<Album> getAllAlbums(EntityManager em){
+	public List<Album> getAllAlbums(){
+		EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+		  EntityManager em = emf.createEntityManager();
     	List<Album> list = new ArrayList<Album>();	
     	Query query = em.createQuery("SELECT a FROM Album a");
     	list = (List<Album>)query.getResultList();
+    	em.close();
+    	emf.close();
     	return list;
     }
     

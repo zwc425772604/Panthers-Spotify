@@ -11,8 +11,11 @@ import com.model.Playlist;
 import com.model.Song;
 import com.model.User;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -20,11 +23,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,35 +35,34 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
 public class ServletManager {
-	@Autowired
-	private UserManager userManager;
-	@Autowired
-	private PlaylistManager playlistManager;
-	@Autowired
-	private SongManager songManager;
-	@Autowired
-	private AlbumManager albumManager;
-	@PersistenceContext
-	private EntityManager em;
-
+    @Autowired
+    private UserManager userManager;
+    @Autowired
+    private PlaylistManager playlistManager;
+    @Autowired
+    private SongManager songManager;
+    @Autowired
+    private AlbumManager albumManager;
+    //private EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
    @RequestMapping(value = "/", method = RequestMethod.GET)
    public String index(ModelMap map) {
+      
        return "index";
    }
    
    /* user login */
    @RequestMapping(value = "/main", method = RequestMethod.POST)
    public ModelAndView userLogin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-	   EntityManager em = EMF.createEntityManager(); 
 	   String email = request.getParameter("email");
 	   String nonEncPwd = request.getParameter("password");
 	   String password = Security.encryptPassword(nonEncPwd);
-       List<User> li = userManager.getUser(email,password,em);
+       List<User> li = userManager.getUser(email);
       
        System.out.println("li is "  + li);
        //case 0: if the email is not registered
@@ -80,8 +82,11 @@ public class ServletManager {
     		   mav.addObject("username", li.get(0).getUname());
     		   List<Playlist> user_playlist = (List<Playlist>)(li.get(0).getUserPlaylistCollection());
     		   
-    		   mav.addObject("user_playlist", user_playlist);
-    		   session.setAttribute("song_page_title", "session testing"); //display in song.jsp
+//    		   mav.addObject("user_playlist", user_playlist);
+    		   session.setAttribute("user_playlist", user_playlist);
+    		
+    		
+//    		   session.setAttribute("song_page_title", "session testing"); //display in song.jsp
                mav.setViewName("main");
     	   }
     	   //display admin page
@@ -98,13 +103,19 @@ public class ServletManager {
            mav.addObject("error_message", "Incorrect email or password!");
            mav.setViewName("index");
        }
+       System.out.println("here");
        return mav;
       
             
             
    }
+   @RequestMapping(value = "/main", method = RequestMethod.GET)
+   public ModelAndView mainPage(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   mav.setViewName("main");
+	   return mav;
+   }
  
-   /* user logout */
+    /* user logout */
    @RequestMapping(value = "/home", method = RequestMethod.GET)
    public ModelAndView userLogout(ModelAndView mav, HttpSession session) {
 	   		if (session.getAttribute("user") != null)
@@ -115,7 +126,7 @@ public class ServletManager {
             return mav;
    }
    
-   /* display sign up page */
+      /* display sign up page */
    @RequestMapping(value = "/signup", method = RequestMethod.GET)
    public ModelAndView displaySignUp(ModelAndView mav) {
 	   		mav.addObject("signUpMessage", "Welcome to Panthers Spotify!");
@@ -124,7 +135,7 @@ public class ServletManager {
    }
    
    
-   /* user sign up */ /* user type: 0=basic 1=premium 2=artist 3=admin */
+       /* user sign up */ /* user type: 0=basic 1=premium 2=artist 3=admin */
    @RequestMapping(value = "/userSignUp", method = RequestMethod.POST)
    public @ResponseBody String userSignUp(ModelAndView mav,
                   HttpServletRequest request, HttpSession session){ 
@@ -137,9 +148,8 @@ public class ServletManager {
 	String first_name = request.getParameter("first_name");
 	String last_name = request.getParameter("last_name");
 	int utype = 0;
-	EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-    EntityManager em = entityManagerFactory.createEntityManager();
-    userManager.add(username,encPwd,email,utype,gender,first_name,last_name,em);
+	
+    userManager.add(username,email,encPwd,utype,gender,first_name,last_name);
 
     String message = "Congratulation, sign up successfully. Please return to homepage for login.";
     return message; //handle in SignUp.jsp
@@ -147,32 +157,54 @@ public class ServletManager {
    
    /* create Playlist */
    @RequestMapping(value = "/createPlaylist", method = RequestMethod.POST)
-   public ModelAndView createPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-	   EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-	    EntityManager em = entityManagerFactory.createEntityManager();
+   public ModelAndView createPlaylist(ModelAndView mav, @RequestParam(value="file") CommonsMultipartFile file, HttpServletRequest request, HttpSession session) {
 	   		String playlist_name = request.getParameter("playlist_name");
 	   		String description = request.getParameter("playlist_description");
-	   		String pic = request.getParameter("pic");
 	   		User user = (User) session.getAttribute("user");
-	   		
+	   		//String path=session.getServletContext().getRealPath("/");
+	        String filename=file.getOriginalFilename();     
 	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
-	   		List<Playlist> user_playlist = playlistManager.add(playlist_name,user,description,pic,date,em);
+	   		List<Playlist> user_playlist = playlistManager.add(playlist_name,user,description,filename,date);
+	   		
  		    mav.addObject("user_playlist", user_playlist);
+ 		    session.setAttribute("user_playlist", user_playlist);
+            mav.setViewName("main");
+            return mav;
+   }
+   @RequestMapping(value = "/editPlaylistDetails", method = RequestMethod.POST)
+   public ModelAndView editPlaylist(ModelAndView mav, @RequestParam(value = "file") CommonsMultipartFile file, HttpServletRequest request, HttpSession session) {
+	   		
+	   		String playlist_name = request.getParameter("playlist_name");
+	   		String description = request.getParameter("playlist_description");
+	   		User user = (User) session.getAttribute("user");
+	   		String path=session.getServletContext().getRealPath("/");  
+	        String filename=file.getOriginalFilename();  
+	        String filepath = path.concat(filename);
+	        Playlist playlistOne = (Playlist)session.getAttribute("selected_playlist");
+	         
+	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
+	   		int pid = playlistOne.getPid();
+	   		System.out.println(pid);
+	   		
+	   		List<Playlist> user_playlist = playlistManager.edit(pid,description,filepath,playlist_name,user);
+	   		
+	   		mav.addObject("user_playlist", user_playlist);
+ 		    session.setAttribute("user_playlist", user_playlist);
             mav.setViewName("main");
             return mav;
    }
    
-   
    /* get specific playlist */
    @RequestMapping(value = "/getSpecificPlaylist", method = RequestMethod.POST)
-   public String getSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+   public  @ResponseBody String getSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		int playlist_id = Integer.parseInt(request.getParameter("playlist_id"));
-	   		EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-	   	    EntityManager em = entityManagerFactory.createEntityManager();
-	   		Playlist playlist = playlistManager.getPlaylist(playlist_id,em);
+	   		
+	   		Playlist playlist = playlistManager.getPlaylist(playlist_id);
 	   		String pname = playlist.getPname();
 	   		System.out.println("playlist name is :" + pname);
- 		    session.setAttribute("song_page_title", playlist);
+	   		System.out.println("playlist num songs :" + playlist.getNSongs());
+ 		    session.setAttribute("selected_playlist", playlist);
+ 		   session.setAttribute("selected_playlist_nsongs", playlist.getNSongs());
             return "ok";
    }
    
@@ -180,8 +212,6 @@ public class ServletManager {
    /* add song to database */
    @RequestMapping(value = "/addSongToDatabase", method = RequestMethod.POST)
    public ModelAndView addSongToDatabase(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-	   
-	   EntityManager em = EMF.createEntityManager();
 	   String songTitle = request.getParameter("song_title");
 	   String songTime = request.getParameter("song_time");
 	   String releaseDay = request.getParameter("release_day");
@@ -191,32 +221,43 @@ public class ServletManager {
 	   
 	   //Song songTime and release Day to be Fixed 
 	   Song song = new Song(songTitle, null,null, songGenre, songType, songUrl);
-	   
-		try {
-			song = songManager.add(song,em);
+	   try {
+			song = songManager.add(song);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	   mav.setViewName("admin");
 	   return mav;
    }
    
+   /* get specific playlist */
+   @RequestMapping(value = "/removeSpecificPlaylist", method = RequestMethod.POST)
+   public  @ResponseBody String removeSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   		int playlist_id = Integer.parseInt(request.getParameter("playlist_id").trim());
+	   		Playlist playlist = playlistManager.getPlaylist(playlist_id);
+	   		playlistManager.removePlaylist(playlist_id);
+	   		//playlistManager.remove(playlist_id);
+	   		List<Playlist> user_playlist = (List<Playlist>) (session.getAttribute("user_playlist"));
+	   		user_playlist.remove(playlist);
+	   		session.setAttribute("user_playlist", user_playlist);
+ 		    mav.addObject("user_playlist", user_playlist);
+	   		System.out.println("remove success");
+            return "ok";
+   }
+   
    /* Load song from database */
    @RequestMapping(value="/loadSong", method = RequestMethod.POST)
-   public String loadSongs(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
-  	   EntityManager em = EMF.createEntityManager();
-	   List<Song> songs = songManager.getAllSongs(em);
+   public @ResponseBody String loadSongs(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+	   List<Song> songs = songManager.getAllSongs();
 	   session.setAttribute("songs", songs);
 	   System.out.println("loadsongs" + songs.size());
 	   return "ok";
    }
    
    @RequestMapping(value="/loadAlbum", method = RequestMethod.POST)
-   public String loadAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
-  	   EntityManager em = EMF.createEntityManager();
-	   List<Album> albums = albumManager.getAllAlbums(em);
+   public @ResponseBody String loadAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+	   List<Album> albums = albumManager.getAllAlbums();
 	   session.setAttribute("album_list", albums);
 	   System.out.println("loadAlbum" + albums.size());
   	   return "ok";

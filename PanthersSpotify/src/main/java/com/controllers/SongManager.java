@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,9 +12,11 @@ import com.model.Playlist;
 import com.model.Song;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.file.CopyOption;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
@@ -23,10 +26,15 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import java.nio.file.Path;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,35 +43,49 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SongManager {
-//    @PersistenceContext private EntityManager em;
-	
+//	@Autowired
+//	@PersistenceContext private EntityManager em;
+	@PersistenceUnit(unitName = "pan")
+    private EntityManagerFactory entityManagerFactory;
+//    EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+//    EntityManager em = entityManagerFactory.createEntityManager();
+//    EntityTransaction userTransaction = em.getTransaction();
     @Transactional
-    public Song add(Song song, EntityManager em)throws IOException  {
-    	EntityTransaction userTransaction = em.getTransaction();
-        song = changeUrl(song);
-	    userTransaction.begin();
+    public Song add(Song song) throws IOException {
+    	EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+   	    EntityManager em = emf.createEntityManager();
+    	song = changeUrl(song);
+    	em.getTransaction().begin();
 	    em.persist(song);
 	    em.flush();
-	    userTransaction.commit();	    
+	    em.getTransaction().commit();	  
+	    em.close();
+	    emf.close();
 	    return song;
     }
     
     public Song changeUrl(Song song) throws IOException {
+//    	EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+//   	    EntityManager em = emf.createEntityManager();
     	String fileName = song.getSurl().substring(song.getSurl().lastIndexOf("\\") + 1);
     	final File f = new File(SongManager.class.getProtectionDomain().getCodeSource().getLocation().getPath());
     	Path input = (Path)Paths.get(song.getSurl());  
     	Files.copy(input,(new File(f.toString() + "\\songs\\" + fileName)).toPath(), StandardCopyOption.REPLACE_EXISTING);
-    	//File testing = new File("\\..\\..\\..\\..\\src\\main\\java\\com\\controllers\\UserManager.java");
-    	//System.out.println(testing.exists());
     	song.setSurl(fileName);
+//    	em.close();
+//    	emf.close();
     	return song;
     }
+    public List<Song> getAllSongs(){
+    	EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+   	    EntityManager em = emf.createEntityManager();
     
-	public List<Song> getAllSongs(EntityManager em){
     	List<Song> list = new ArrayList<Song>();	
     	Query query = em.createQuery("SELECT s FROM Song s");
     	list = (List<Song>)query.getResultList();
+    	em.close();
+    	emf.close();
     	return list;
     }
-    
 }
+    

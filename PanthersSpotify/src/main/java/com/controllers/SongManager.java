@@ -97,5 +97,13 @@ public class SongManager {
     	emf.close();
     	return list;
     }
+    
+    public Song getSong(int sid,EntityManager em)
+    {
+    	TypedQuery<Song> query1 = em.createNamedQuery("Song.findByPid", Song.class)
+         		.setParameter("sid", sid);
+  	    List<Song> result = query1.getResultList();
+  	    return result.get(0);
+    }
 }
     

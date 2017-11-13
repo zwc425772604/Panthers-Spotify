@@ -18,6 +18,7 @@ import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -26,6 +27,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
@@ -69,4 +71,14 @@ public class SongManager {
     	return song;
     }
     
+    public List<Song> getAllSongs(){
+    	EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+    	EntityManager em = emf.createEntityManager();
+    	List<Song> songs = new ArrayList<Song>();
+    	Query query = em.createQuery("SELECT song FROM Song song");
+    	songs = query.getResultList();
+    	em.close();
+      	emf.close();
+    	return songs;
+    }
 }

@@ -1,3 +1,7 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
+<%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <!--  Container for DISCOVER -->
 <style type="text/css">
   /* for the close button in input type search */
@@ -214,6 +218,53 @@
         </tr>
       </thead>
       <tbody>
+      	<c:if test="${not empty all_song_list}">
+      		<c:forEach var="song" items="${all_song_list}">
+      			<tr class= "song_info">
+		          <td><button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">
+		            <i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i></button>
+		          </td>
+		          <td>  <button class="unstyle-buttons tracklist-save-button" data-toggle="tooltip-save" title="Remove from Your Library"  onclick="removeSong()">
+		            <i class="material-icons"><span class="tracklist-add-delete-button">done</span></i>
+		            </button>
+		          </td>
+		          <td>
+		            <p>${song.stitle}</p>
+		          </td>
+		          <td>
+		            <p> <a href="#"> </a> </p>
+		          </td>
+		          <td>
+		            <p> <a href="#">  </a></p>
+		          </td>
+		          <td>
+		            <p>${song.releaseDay}</p>
+		          </td>
+		          <!-- ... button dropdown -->
+		          <td>
+		            <div class="w3-dropdown-click more_action_list">
+		              <button class="w3-button more_button"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
+		              <div class="w3-dropdown-content w3-bar-block w3-border song_action_list">
+		                <button onclick="" class="w3-bar-item w3-button">Add to Queue</button>
+		                <button onclick="" class="w3-bar-item w3-button">Go to Song Radio</button>
+		                <hr>
+		                <button onclick="" class="w3-bar-item w3-button">Go to Artist</button> <!-- a song might have multiple artists -->
+		                <button onclick="" class="w3-bar-item w3-button">Go to Album</button>
+		                <hr>
+		                <button onclick="" class="w3-bar-item w3-button">Remove from Your Library</button>
+		                <button onclick="" class="w3-bar-item w3-button">Add to Playlist</button> <!-- w3css hover dropdown -->
+		                <button onclick="" class="w3-bar-item w3-button">Share</button>
+		              </div>
+		            </div>
+		          </td>
+		          <td>
+		            <p>${song.stime}</p>
+		          </td>
+		        </tr>
+      		</c:forEach>
+      	</c:if>
+      
+      
         <tr class= "song_info">
           <td><button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">
             <i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i></button>

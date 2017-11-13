@@ -256,4 +256,15 @@ public class ServletManager {
             return "ok";
    }
    
+   /*load all songs to front end */
+   @RequestMapping(value = "/loadSong", method = RequestMethod.GET)
+   public  @ResponseBody String loadSong(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   		System.out.println("Enter Load song @ Servlet");
+	   		List<Song> songs = songManager.getAllSongs();
+	   		session.setAttribute("all_song_list",songs);
+	   		System.out.println("Load song finished" + songs.size());
+	   		
+            return "ok";
+   }
+   
 }

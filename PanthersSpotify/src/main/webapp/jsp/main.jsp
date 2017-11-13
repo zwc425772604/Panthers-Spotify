@@ -112,7 +112,23 @@
         }
         else if (nav_name.localeCompare('songs') == 0)
         {
-           $("#main-changing-content").load("jsp/songs.jsp");
+	       	$.ajax({
+	               url: "${cp}/loadSong",
+	               type: "GET",
+	               asyn: true,
+	               cache: true,
+	               success : function(response)
+	               {
+	                 console.log(response);
+	                 $("#main-changing-content").load("jsp/songs.jsp");            
+	               },
+	               error: function(e)
+	               {
+	                 console.log(e);
+	              
+	               }
+	         
+	             });
         }
         else
         {

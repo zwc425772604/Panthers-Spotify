@@ -30,6 +30,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import javax.transaction.Transactional;
 
 import java.nio.file.Path;
@@ -65,17 +68,24 @@ public class SongManager {
     }
     
     public Song changeUrl(Song song) throws IOException {
-//    	EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
-//   	    EntityManager em = emf.createEntityManager();
     	String fileName = song.getSurl().substring(song.getSurl().lastIndexOf("\\") + 1);
     	final File f = new File(SongManager.class.getProtectionDomain().getCodeSource().getLocation().getPath());
     	Path input = (Path)Paths.get(song.getSurl());  
     	Files.copy(input,(new File(f.toString() + "\\songs\\" + fileName)).toPath(), StandardCopyOption.REPLACE_EXISTING);
     	song.setSurl(fileName);
-//    	em.close();
-//    	emf.close();
+    	try {
+	    	AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(f);
+	 	    AudioFormat format = audioInputStream.getFormat();
+	 	    long frames = audioInputStream.getFrameLength();
+	 	    double durationInSeconds = (frames+0.0) / format.getFrameRate();  
+	 	    System.out.println(durationInSeconds);
+    	}catch(Exception ex) {
+    		
+    	}
+    	
     	return song;
     }
+    
     public List<Song> getAllSongs(){
     	EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
    	    EntityManager em = emf.createEntityManager();

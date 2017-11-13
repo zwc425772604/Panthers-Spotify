@@ -127,6 +127,10 @@
         }
       }
       
+      function displayAccount(){
+    	  $("#main-changing-content").load("jsp/account.jsp");
+      }
+      
       function openDialogBox()
       {
       //   $("#dialog").dialog();
@@ -180,10 +184,8 @@
                   <i class="fa fa-angle-down" aria-hidden="true"></i>
                   </button>
                   <div class="w3-dropdown-content w3-bar-block w3-border user-dropdown-button">
-                    <a href="#" class="w3-bar-item w3-button" id="dropdown-item">Session</a>
-                    <a href="#" class="w3-bar-item w3-button" id="dropdown-item">Account</a>
+                    <a href="javascript:displayAccount()" class="w3-bar-item w3-button" id="dropdown-item">Account</a>
                     <a href="#" class="w3-bar-item w3-button" id="dropdown-item">Upgrade Your Account</a>
-                    <a href="#" class="w3-bar-item w3-button" id="dropdown-item">Settings</a>
                     <a href="home" class="w3-bar-item w3-button" id="dropdown-item">Log Out</a>
                   </div>
                 </div>

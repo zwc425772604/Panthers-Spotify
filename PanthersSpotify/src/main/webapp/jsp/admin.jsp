@@ -82,7 +82,7 @@
                 <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add Song"  id="add_new_song_button"><i class="material-icons">add</i></button></li>
                 <div id="new_song_dialog" title="Add Song To Database" style="display:none;">
                   <!-- create playlist -->
-                  <form:form  method = "POST" action="addSongToDatabase" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
+                  <form:form  method = "POST" action="addSongToDatabase" enctype="multipart/form-data" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
                     <div class="w3-row w3-section">
                       <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Song Title</span></div>
                       <div class="w3-rest">

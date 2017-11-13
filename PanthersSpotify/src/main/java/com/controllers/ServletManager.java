@@ -23,8 +23,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -65,6 +68,7 @@ public class ServletManager {
        List<User> li = userManager.getUser(email);
       
        System.out.println("li is "  + li);
+       System.out.println(li.get(0));
        //case 0: if the email is not registered
        if (li.size() == 0)
        {          
@@ -210,8 +214,9 @@ public class ServletManager {
    
    
    /* add song to database */
+
    @RequestMapping(value = "/addSongToDatabase", method = RequestMethod.POST)
-   public ModelAndView addSongToDatabase(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+   public ModelAndView addSongToDatabase(ModelAndView mav, HttpServletRequest request, HttpSession session) throws ServletException, IOException {
 	   String songTitle = request.getParameter("song_title");
 	   String songTime = request.getParameter("song_time");
 	   String releaseDay = request.getParameter("release_day");
@@ -261,6 +266,17 @@ public class ServletManager {
 	   session.setAttribute("album_list", albums);
 	   System.out.println("loadAlbum" + albums.size());
   	   return "ok";
+   }
+   
+   @RequestMapping(value="/editUserAccount", method = RequestMethod.POST)
+   public ModelAndView editUserAccount(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+	   System.out.println("editing user account");
+	   User user = (User)session.getAttribute("user");
+	   String pwd = request.getParameter("password");
+	   String encPwd = Security.encryptPassword(pwd);
+	   userManager.editUser(user, encPwd);
+	   mav.setViewName("main");
+       return mav;
    }
    
 }

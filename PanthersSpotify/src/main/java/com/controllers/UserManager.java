@@ -79,10 +79,18 @@ public class UserManager {
     public void remove(User user) {
        
     }
-    
-    public void editUser(User user,String username)
+    /* More info to be added */
+    public void editUser(User user, String pwd)
     {
-    		
+    	EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		System.out.println("editUser");
+		
+		em.getTransaction().begin();
+		user.setUpassword(pwd);
+		em.merge(user);
+		em.getTransaction().commit();
+		
     }
     
     //check user is already registered or not, for login function

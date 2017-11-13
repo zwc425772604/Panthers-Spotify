@@ -180,19 +180,6 @@ public class ServletManager {
 	   		
 	   		String pic = dir+"/"+filename;
 	   		
-	   		try {
-        		byte[] barr = file.getBytes();
-			BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(dir+"/"+filename));
-			bout.write(barr);
-			bout.flush();
-			bout.close();
-        } catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	   		
 	   		System.out.println(pic);
 	   		List<Playlist> user_playlist = playlistManager.add(playlist_name,user,description,pic,date);

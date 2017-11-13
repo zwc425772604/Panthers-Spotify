@@ -8,6 +8,9 @@ package com.controllers;
  
 import com.model.Playlist;
 import com.model.User;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -50,6 +53,16 @@ public class UserManager {
         user.setGender(gender);
         user.setFirstName(first_name);
         user.setLastName(last_name);
+        
+        
+        final String dir = System.getProperty("user.dir");
+        
+        File f1 = new File(dir);
+        File userDir = new File(f1, email);
+        boolean userSuccess = userDir.mkdirs();
+        
+    		
+        
 	   em.getTransaction().begin();
 	    em.persist(user);
 	   em.getTransaction().commit();

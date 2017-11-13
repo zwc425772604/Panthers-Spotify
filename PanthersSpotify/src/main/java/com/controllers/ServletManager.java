@@ -10,12 +10,18 @@ import com.model.Playlist;
 import com.model.Song;
 import com.model.User;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -138,6 +144,8 @@ public class ServletManager {
    @RequestMapping(value = "/userSignUp", method = RequestMethod.POST)
    public @ResponseBody String userSignUp(ModelAndView mav,
                   HttpServletRequest request, HttpSession session){ 
+	   
+       
     String username = request.getParameter("username");
 	String password = request.getParameter("password");
 	// encrypt password
@@ -156,20 +164,37 @@ public class ServletManager {
    
    /* create Playlist */
    @RequestMapping(value = "/createPlaylist", method = RequestMethod.POST)
-   public ModelAndView createPlaylist(ModelAndView mav, @RequestParam CommonsMultipartFile file, HttpServletRequest request, HttpSession session) {
+   public ModelAndView createPlaylist(ModelAndView mav, @RequestParam(value = "file") CommonsMultipartFile file, HttpServletRequest request, HttpSession session) {
 	   		String playlist_name = request.getParameter("playlist_name");
 	   		String description = request.getParameter("playlist_description");
 //	   		String pic = request.getParameter("pic");
 	   		//System.out.println("picture address is "+pic);
 	   		User user = (User) session.getAttribute("user");
-	   		String path=session.getServletContext().getRealPath("/");  
+	   		//String path=session.getServletContext().getRealPath("/");  
+	   		String dir = System.getProperty("user.dir");
 	        String filename=file.getOriginalFilename();  
+	        
 	          
-	        System.out.println(path+" "+filename);  
 	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
 	   		
 	   		
-	   		String pic = "test";
+	   		String pic = dir+"/"+filename;
+	   		
+	   		try {
+        		byte[] barr = file.getBytes();
+			BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(dir+"/"+filename));
+			bout.write(barr);
+			bout.flush();
+			bout.close();
+        } catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	   		
+	   		System.out.println(pic);
 	   		List<Playlist> user_playlist = playlistManager.add(playlist_name,user,description,pic,date);
 	   		
  		    mav.addObject("user_playlist", user_playlist);
@@ -178,20 +203,35 @@ public class ServletManager {
             return mav;
    }
    @RequestMapping(value = "/editPlaylistDetails", method = RequestMethod.POST)
-   public ModelAndView editPlaylist(ModelAndView mav, @RequestParam CommonsMultipartFile file, HttpServletRequest request, HttpSession session) {
+   public ModelAndView editPlaylist(ModelAndView mav, @RequestParam(value = "file") CommonsMultipartFile file, HttpServletRequest request, HttpSession session) {
 	   		
 	   		String playlist_name = request.getParameter("playlist_name");
 	   		String description = request.getParameter("playlist_description");
 	   		User user = (User) session.getAttribute("user");
 	   		String path=session.getServletContext().getRealPath("/");  
-	        String filename=file.getOriginalFilename();  
+	        String filename=file.getOriginalFilename(); 
+	        try {
+	        		byte[] barr = file.getBytes();
+				BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(path+"/"+filename));
+				bout.write(barr);
+				bout.flush();
+				bout.close();
+	        } catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        System.out.println(path+"/"+filename);
 	         
 	        Playlist playlistOne = (Playlist)session.getAttribute("selected_playlist");
 	        //System.out.println(path+" "+filename);  
 	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
 	   		int pid = playlistOne.getPid();
-	   		System.out.println(pid);
+	   		
 	   		String pic = "test";
+	   		
 	   		
 	   		List<Playlist> user_playlist = playlistManager.edit(pid,description,pic,playlist_name,user);
 //	   		
@@ -266,5 +306,19 @@ public class ServletManager {
 	   		
             return "ok";
    }
+   
+   /*display overview page*/
+   @RequestMapping(value = "/loadSong", method = RequestMethod.GET)
+   public  @ResponseBody String displayOverview(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   Properties prop = new Properties();		
+	   		List<Song> songs = songManager.getAllSongs();
+	   		session.setAttribute("all_song_list",songs);
+	   		System.out.println("Load song finished" + songs.size());
+	   		
+            return "ok";
+   }
+   
+   
+   
    
 }

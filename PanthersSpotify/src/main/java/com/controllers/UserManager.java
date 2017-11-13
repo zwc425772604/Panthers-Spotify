@@ -40,41 +40,34 @@ public class UserManager {
 //     EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
 //    EntityManager em = entityManagerFactory.createEntityManager();
 //    EntityTransaction userTransaction = em.getTransaction();
-    @Transactional
-    public void add(String username, String email,String encPwd,int utype,char gender,String first_name, String last_name) {
-    		User user = new User();
-    		 EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-    		EntityManager em = entityManagerFactory.createEntityManager();
-        user.setUname(username);
-        user.setEmail(email);
-        user.setUpassword(encPwd);
-        user.setUtype(utype);
-        user.setGender(gender);
-        user.setFirstName(first_name);
-        user.setLastName(last_name);
-        
-        File testfile1 = new File("PanthersSpotify");
-        if(testfile1.exists())
-        {
-        		System.out.println("ok");
-        		System.out.println(testfile1.getAbsolutePath());
-        }
-        else
-        {
-        		System.out.println("fail");
-        }
-        
-        
-        File testfile = new File("/Users/yangxiang/eclipse-workspace/panthers_spotify/"+email);//modify it
-        
-        
-        testfile.mkdirs();
-	   em.getTransaction().begin();
-	    em.persist(user);
-	   em.getTransaction().commit();
-	   em.close();
-	   entityManagerFactory.close();
-    }
+	  @Transactional
+	    public void add(String username, String email,String encPwd,int utype,char gender,String first_name, String last_name) {
+	    		User user = new User();
+	    		 EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+	    		EntityManager em = entityManagerFactory.createEntityManager();
+	        user.setUname(username);
+	        user.setEmail(email);
+	        user.setUpassword(encPwd);
+	        user.setUtype(utype);
+	        user.setGender(gender);
+	        user.setFirstName(first_name);
+	        user.setLastName(last_name);
+	        
+	        
+	        final String dir = System.getProperty("user.dir");
+	        
+	        File f1 = new File(dir);
+	        File userDir = new File(f1, email);
+	        boolean userSuccess = userDir.mkdirs();
+	        
+	    		
+	        
+		   em.getTransaction().begin();
+		    em.persist(user);
+		   em.getTransaction().commit();
+		   em.close();
+		   entityManagerFactory.close();
+	    }
 
     public void remove(User user) {
        

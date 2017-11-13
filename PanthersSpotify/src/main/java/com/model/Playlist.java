@@ -86,6 +86,16 @@ public class Playlist implements Serializable {
 
     public Playlist() {
     }
+    public Playlist(String pname,String des,String photoUrl,int followers,int nSongs,Date createDate,User powner) {
+		this.pname = pname;
+		this.des=des;
+		this.photoUrl=photoUrl;
+		this.followers=followers;
+		this.nSongs=nSongs;
+		this.createDate=createDate;
+		this.powner=powner;
+}
+
 
     public Playlist(Integer pid) {
         this.pid = pid;

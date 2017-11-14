@@ -60,7 +60,9 @@ $(document).ready(function(){
             <li class= "nav-item">
               <button  class="unstyle-buttons btn btn-info btn-lg w3-blue" id="new_playlist_button" > New Playlist</button>
             </li>
+            
             <div id="dialog" title="Create Playlist" style="display:none;">
+            
               <!-- create playlist -->
               <form:form action="createPlaylist" method="POST" enctype="multipart/form-data" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
                 <div class="w3-row w3-section">
@@ -98,8 +100,8 @@ $(document).ready(function(){
                     <button type="submit" class="w3-button w3-block w3-section w3-blue w3-ripple">Create</button>
                   </div>
                 </div>
-              </form:form>
-            </div>
+	            </form:form>
+	           </div>
             <!-- end of dialog popup box -->
             <!-- Playlist Section-->
             <li>

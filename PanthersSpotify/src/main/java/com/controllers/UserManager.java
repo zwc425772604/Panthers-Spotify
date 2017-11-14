@@ -77,10 +77,15 @@ public class UserManager {
     }
 
     public void remove(User user) {
-       
+    	EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+		EntityManager em = entityManagerFactory.createEntityManager();
+		
+		em.getTransaction().begin();	
+		em.remove(em.contains(user) ? user : em.merge(user));
+		em.getTransaction().commit();	
     }
     /* More info to be added */
-    public void editUser(User user, String pwd)
+    public User editUser(User user, String pwd)
     {
     	EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
 		EntityManager em = entityManagerFactory.createEntityManager();
@@ -91,6 +96,7 @@ public class UserManager {
 		em.merge(user);
 		em.getTransaction().commit();
 		
+		return user;
     }
     
     //check user is already registered or not, for login function

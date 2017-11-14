@@ -41,12 +41,9 @@
                     $("#main-changing-content").load("jsp/playlist.jsp");
                   },
                   error: function(e)
-                  {
-                	
-                    console.log(e);
-                 	
-                  }
-            
+                  {                	
+                    console.log(e);                 	
+                  }         
                 });
         });
         $("#new_playlist_button").click(function(){
@@ -64,8 +61,7 @@
                   dialogClass: 'no-close'
                   });
          });
-        
-        
+               
       //     window.open("browse.jsp","_blank");
       });
      
@@ -81,7 +77,7 @@
         	$.ajax({
                 url: "${cp}/loadAlbum",
                 type: "POST",
-                asyn: true,
+                asyn: false,
                 cache: true,
                 success : function(response)
                 {
@@ -106,7 +102,7 @@
         	$.ajax({
                 url: "${cp}/loadSong",
                 type: "POST",
-                asyn: true,
+                asyn: false,
                 cache: true,
                 success : function(response)
                 {
@@ -176,7 +172,7 @@
                 </div>
               </div>
               <div id="top-tool-upgrade-and-user">
-                <button class="w3-button w3-black upgrade-button" onclick="" id="top-tool-upgrade">UPGRADE</button>
+                
                 <div class="w3-dropdown-hover">
                   <button class="w3-button w3-black" id="top-tool-profile">
                   <img width=25px height=25px class="rounded-circle" alt="Generic placeholder thumbnail" id="dropdown-img"  src="http://orig05.deviantart.net/f239/f/2011/089/3/3/jack_skellington_facebook_icon_by_valashard-d3cu1bt.jpg">

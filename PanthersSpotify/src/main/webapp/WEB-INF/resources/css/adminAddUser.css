@@ -1,0 +1,25 @@
+body {
+    background-color: #343a40;
+    font-size: 0.9vw;
+    overflow:hidden;
+    color: #343a40;
+}
+
+form
+{
+  margin-top: 3%;
+}
+.formButton
+{
+     margin:auto;display:block;
+     border-radius: 10px;
+      color:black;
+}
+
+input{
+	color:black;
+}
+
+input::placeholder{
+	color: black;
+}

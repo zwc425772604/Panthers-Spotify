@@ -68,7 +68,7 @@ public class ServletManager {
        List<User> li = userManager.getUser(email);
       
        System.out.println("li is "  + li);
-       System.out.println(li.get(0));
+       
        //case 0: if the email is not registered
        if (li.size() == 0)
        {          
@@ -104,6 +104,8 @@ public class ServletManager {
        //case 2: incorrect email or password
        else
        {
+    	   System.out.println(password);
+    	   System.out.println(li.get(0).getUpassword());
            mav.addObject("error_message", "Incorrect email or password!");
            mav.setViewName("index");
        }
@@ -274,9 +276,25 @@ public class ServletManager {
 	   User user = (User)session.getAttribute("user");
 	   String pwd = request.getParameter("password");
 	   String encPwd = Security.encryptPassword(pwd);
-	   userManager.editUser(user, encPwd);
+	   user = userManager.editUser(user, encPwd);
+	   session.setAttribute("user", user);
 	   mav.setViewName("main");
+	   mav.addObject("username", user.getUname());
        return mav;
    }
+   
+   @RequestMapping(value="/deleteUserAccount", method = RequestMethod.POST)
+   public ModelAndView deleteUserAccount(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+	   System.out.println("deleting user account");
+	   User user = (User)session.getAttribute("user");
+	   if (session.getAttribute("user") != null)
+		{
+			session.removeAttribute("user");
+		}
+	   userManager.remove(user);
+       mav.setViewName("index");
+       return mav;
+   }
+   
    
 }

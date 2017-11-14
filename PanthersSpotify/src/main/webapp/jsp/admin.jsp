@@ -48,6 +48,10 @@
            x.className = x.className.replace(" w3-show", "");
        }
       }
+      
+      function addUser(){
+    	  $("#main-changing-content").load("jsp/adminAddUser.jsp");
+      }
     </script>
   </head>
   <body>
@@ -63,9 +67,9 @@
         <li>
           <p class="color-nav-header">User:</p>
           <ul class="left_sizebar">
-            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add User"  id="playbar-prev-button"><i class="material-icons">add</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit User Information" id="playbar-shuffle-button"> <i class="material-icons">mode_edit</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete User" id="playbar-play-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
+            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add User"  id="add-user-button" onclick="addUser()"><i class="material-icons">add</i></button></li>
+            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit User Information" id="edit-user-button"> <i class="material-icons">mode_edit</i></button></li>
+            <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete User" id="delete-user-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
           </ul>
         </li>
         <li>

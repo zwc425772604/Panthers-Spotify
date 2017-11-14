@@ -61,7 +61,7 @@ public class Playlist implements Serializable {
     @Column(name = "des", length = 500)
     private String des;
     @Size(max = 100)
-    @Column(name = "photoUrl", length = 100)
+    @Column(name = "photoUrl", length = 1000)
     private String photoUrl;
     @Column(name = "createDate")
     @Temporal(TemporalType.DATE)

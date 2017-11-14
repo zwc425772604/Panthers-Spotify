@@ -8,8 +8,7 @@ package com.controllers;
  
 import com.model.User;
 
-
-
+import com.helper.UploadFile;
 import com.model.Playlist;
 
 import java.awt.image.BufferedImage;
@@ -31,6 +30,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
  *
@@ -46,54 +46,135 @@ public class PlaylistManager {
 //	    private EntityManagerFactory entityManagerFactory;
 //    EntityTransaction userTransaction = em.getTransaction();
     @Transactional
-    public List<Playlist> add(String playlistName,User user, String description,String photoUrl,Date date) {
-    	EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
-    	EntityManager em = emf.createEntityManager();
+    public List<Playlist> add(String playlistName,User user, String description,CommonsMultipartFile file,Date date) {
+    		List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
+	    	EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+	    	EntityManager em = emf.createEntityManager();
+	    	String filename = file.getOriginalFilename();
+	    	//String dir = System.getProperty("user.dir");
+	    //	System.out.println("file type is "+file.getContentType());
+	    	File playlistFile = new File("Users/"+user.getEmail()+"/playlist"+user_playlist.size());
+	    	if(!playlistFile.exists())
+	    	{
+	    		playlistFile.mkdirs();
+	    	}
+	    	else
+	    	{
+	    		System.out.println("exist fail");
+	    	}
+	    	
+	    	System.out.println(playlistFile.getAbsolutePath());
+	    	
+	    	String photoUrl = UploadFile.upload("Users/"+user.getEmail()+"/playlist"+user_playlist.size(),filename,file);
     		Playlist playlist = new Playlist(playlistName,description,photoUrl,0,0,date,user);
-   		String dir = System.getProperty("user.dir");
-   		File f = new File(photoUrl);
-   		File userFile = new File(dir+"/"+user.getEmail());
-   		BufferedImage image=null;
-   		try {
-			image = ImageIO.read(f);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+    		System.out.println(photoUrl);
+//   		File f = new File(photoUrl);
+//   		BufferedImage image=null;
+//   		try {
+//			image = ImageIO.read(f);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
    		em.getTransaction().begin();
 	    em.persist(playlist);
 	    em.flush();
 	    em.getTransaction().commit();
 	    em.close();
 	    emf.close();
-	    List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
+	    
+	    
+	    
+	    
 	    user_playlist.add(playlist);
 	    return user_playlist;
     }
     
     //remove playlist
-    public void removePlaylist(int pid)
+    public void removePlaylist(int pid,User user)
     {
-    	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
-    	  EntityManager em = emf.createEntityManager(); 
-    	  Playlist playlist = em.find(Playlist.class, pid);
+    		List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
+	    	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+	    	  EntityManager em = emf.createEntityManager(); 
+	    	  Playlist playlist = em.find(Playlist.class, pid);
 	  	  em.getTransaction().begin();
 	  	  em.remove(playlist);
 	  	  em.flush();
 	  	  em.getTransaction().commit();
-	  	  System.out.println("want to remove playlist");
 	  	  em.close();
 	  	  emf.close();
+	  	  int num=0;
+	  	  for(int i=0;i<user_playlist.size();i++)
+	  	  {
+	  		  if(user_playlist.get(i).getPid()==pid)
+	  		  {
+	  			  user_playlist.remove(i);
+	  			  num=i;
+	  			  break;
+	  		  }
+	  	  }
+	  	File index = new File("Users/"+user.getEmail()+"/playlist"+num);
+	  	if(index.exists())
+	  	{
+		  	String[]entries = index.list();
+		  	for(String s: entries){
+		  	    File currentFile = new File(index.getPath(),s);
+		  	    currentFile.delete();
+		  	}
+		  	index.delete();
+	  	}
+	  	else
+	  	{
+	  		System.out.println("error folder is missing");
+	  	}
+	  	  
+	  	  
     }
     
-  public List<Playlist> edit(int pid, String des, String photoUrl, String pname, User user) {
+  public List<Playlist> edit(int pid, String des,CommonsMultipartFile file, String pname, User user) {
+	  List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
+	  	Playlist p=null;
+	  	String photoUrl=null;
+	  	int num=0;
+	  	for(int i=0;i<user_playlist.size();i++)
+	  	{
+	  		p=user_playlist.get(i);
+	  		if(p.getPid()==pid)
+	  		{
+	  			num=i;
+	  			break;
+	  		}
+	  	}
+	  	if(des!=null)
+			p.setDes(des);
+	  	if(p.getPhotoUrl()!=null)
+	  	{
+	  		File deleteFile = new File(p.getPhotoUrl());
+	  		if(deleteFile.exists())
+	  		{
+	  			deleteFile.delete();
+	  		}
+	  	}
+		if(file!=null)
+		{
+			File playlistFile = new File("Users/"+user.getEmail()+"/playlist"+num);
+			
+			String filename = file.getOriginalFilename();
+		  	if(!playlistFile.exists())
+		  	{
+		  		System.out.println("exist fail");
+		  	}
+		  	else
+		  	{
+		  		photoUrl = UploadFile.upload("Users/"+user.getEmail()+"/playlist"+num,filename,file);
+		  	}
+			p.setPhotoUrl(photoUrl);
+		}	
+		if(pname!=null)
+				p.setPname(pname);
 	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
 	  EntityManager em = emf.createEntityManager();
-	    //TypedQuery<Playlist> query1 = em.createNamedQuery("Playlist.findByPid", Playlist.class)
-      	//	.setParameter("pid", pid);
-	    
 	    Playlist playlist = em.find(Playlist.class, pid);
-	    
 	    em.getTransaction().begin();
 	    if(des!=null)
 	    		playlist.setDes(des);
@@ -102,35 +183,9 @@ public class PlaylistManager {
 	    if(pname!=null)
 	    		playlist.setPname(pname);
 	    em.getTransaction().commit();
-	    
-	    
-	    //UPDATE playlist
-	    //SET description = des, photoUrl= photoUrl, pname = pname
-	    //		WHERE pid = 1;
-	    
-	    
-  	System.out.println("want to edit playlist");
   	em.close();
   	emf.close();
-  	List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
-  	Playlist p=null;
-  	for(int i=0;i<user_playlist.size();i++)
-  	{
-  		p=user_playlist.get(i);
-  		if(p.getPid()==pid)
-  		{
-  			break;
-  		}
-  	}
-  	if(des!=null)
-		p.setDes(des);
-	if(photoUrl!=null)
-			p.setPhotoUrl(photoUrl);
-	if(pname!=null)
-			p.setPname(pname);
   	return user_playlist;
-  	
-  	
   }
 
   //get the playlist for specific pid

@@ -87,12 +87,7 @@ public class ServletManager {
     	   {
     		   mav.addObject("username", li.get(0).getUname());
     		   List<Playlist> user_playlist = (List<Playlist>)(li.get(0).getUserPlaylistCollection());
-    		   
-//    		   mav.addObject("user_playlist", user_playlist);
     		   session.setAttribute("user_playlist", user_playlist);
-    		
-    		
-//    		   session.setAttribute("song_page_title", "session testing"); //display in song.jsp
                mav.setViewName("main");
     	   }
     	   //display admin page
@@ -148,6 +143,7 @@ public class ServletManager {
     String username = request.getParameter("username");
 	String password = request.getParameter("password");
 	// encrypt password
+	
 	String encPwd = Security.encryptPassword(password);
 	String email = request.getParameter("email");
 	char gender = request.getParameter("gender").charAt(0);
@@ -170,18 +166,13 @@ public class ServletManager {
 	   		//System.out.println("picture address is "+pic);
 	   		User user = (User) session.getAttribute("user");
 	   		//String path=session.getServletContext().getRealPath("/");  
-	   		String dir = System.getProperty("user.dir");
-	        String filename=file.getOriginalFilename();  
+	   		
+	        //String filename=file.getOriginalFilename();  
 	        
 	          
 	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
 	   		
-	   		
-	   		String pic = dir+"/"+filename;
-	   		
-	   		
-	   		System.out.println(pic);
-	   		List<Playlist> user_playlist = playlistManager.add(playlist_name,user,description,pic,date);
+	   		List<Playlist> user_playlist = playlistManager.add(playlist_name,user,description,file,date);
 	   		
  		    mav.addObject("user_playlist", user_playlist);
  		    session.setAttribute("user_playlist", user_playlist);
@@ -195,32 +186,21 @@ public class ServletManager {
 	   		String playlist_name = request.getParameter("playlist_name");
 	   		String description = request.getParameter("playlist_description");
 	   		User user = (User) session.getAttribute("user");
-	   		String path=session.getServletContext().getRealPath("/");  
-	        String filename=file.getOriginalFilename(); 
-	        try {
-	        		byte[] barr = file.getBytes();
-				BufferedOutputStream bout = new BufferedOutputStream(new FileOutputStream(path+"/"+filename));
-				bout.write(barr);
-				bout.flush();
-				bout.close();
-	        } catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-	        System.out.println(path+"/"+filename);
+//	   		String path=session.getServletContext().getRealPath("/");  
+//	        String filename=file.getOriginalFilename(); 
+//	        
+//	        
+//	        System.out.println(path+"/"+filename);
 	         
 	        Playlist playlistOne = (Playlist)session.getAttribute("selected_playlist");
 	        //System.out.println(path+" "+filename);  
 	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
 	   		int pid = playlistOne.getPid();
 	   		
-	   		String pic = "test";
+	   		//String pic = "test";
 	   		
 	   		
-	   		List<Playlist> user_playlist = playlistManager.edit(pid,description,pic,playlist_name,user);
+	   		List<Playlist> user_playlist = playlistManager.edit(pid,description,file,playlist_name,user);
 //	   		
 // 		    mav.addObject("user_playlist", user_playlist);
 // 		    session.setAttribute("user_playlist", user_playlist);
@@ -270,12 +250,13 @@ public class ServletManager {
 	   return mav;
    }
    
-   /* get specific playlist */
+   /* remove specific playlist */
    @RequestMapping(value = "/removeSpecificPlaylist", method = RequestMethod.POST)
    public  @ResponseBody String removeSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		int playlist_id = Integer.parseInt(request.getParameter("playlist_id").trim());
 	   		Playlist playlist = playlistManager.getPlaylist(playlist_id);
-	   		playlistManager.removePlaylist(playlist_id);
+	   		User user = (User) session.getAttribute("user");
+	   		playlistManager.removePlaylist(playlist_id,user);
 	   		//playlistManager.remove(playlist_id);
 	   		List<Playlist> user_playlist = (List<Playlist>) (session.getAttribute("user_playlist"));
 	   		user_playlist.remove(playlist);

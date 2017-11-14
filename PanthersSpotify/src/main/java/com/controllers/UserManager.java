@@ -56,7 +56,11 @@ public class UserManager {
 	        
 	        final String dir = System.getProperty("user.dir");
 	        
-	        File f1 = new File(dir);
+	        File f1 = new File(dir+"/Users");
+	        if(f1.exists())
+	        {
+	        		System.out.println("here");
+	        }
 	        File userDir = new File(f1, email);
 	        boolean userSuccess = userDir.mkdirs();
 	        

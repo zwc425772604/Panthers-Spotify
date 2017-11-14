@@ -61,7 +61,7 @@ public class Playlist implements Serializable {
     @Column(name = "des", length = 500)
     private String des;
     @Size(max = 100)
-    @Column(name = "photoUrl", length = 100)
+    @Column(name = "photoUrl", length = 1000)
     private String photoUrl;
     @Column(name = "createDate")
     @Temporal(TemporalType.DATE)
@@ -86,6 +86,16 @@ public class Playlist implements Serializable {
 
     public Playlist() {
     }
+    public Playlist(String pname,String des,String photoUrl,int followers,int nSongs,Date createDate,User powner) {
+		this.pname = pname;
+		this.des=des;
+		this.photoUrl=photoUrl;
+		this.followers=followers;
+		this.nSongs=nSongs;
+		this.createDate=createDate;
+		this.powner=powner;
+}
+
 
     public Playlist(Integer pid) {
         this.pid = pid;

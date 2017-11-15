@@ -216,4 +216,15 @@ public class PlaylistManager {
 	  	  emf.close();
   }
   
+  public List<Playlist> getTopFollowedPlaylist(int numberOfPlaylist){
+	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+  	  EntityManager em = emf.createEntityManager(); 
+  	  TypedQuery<Playlist> query = 
+  			  (TypedQuery<Playlist>)em.createQuery("SELECT playlist FROM Playlist playlist ORDER BY playlist.followers DESC" );
+  	  query.setMaxResults(numberOfPlaylist);
+	  List<Playlist> result = query.getResultList();
+	  
+	  return result;
+  }
+  
 }

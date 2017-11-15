@@ -313,8 +313,10 @@ public class ServletManager {
    
    @RequestMapping(value="/getOverviewPlaylist", method = RequestMethod.POST)
    public ModelAndView getOverviewPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
-	   User user = (User) session.getAttribute("user");	   
-	   List<Playlist> userPlaylist = (List<Playlist>)(user.getUserPlaylistCollection());	   
+	   //Get Top Follower Playlist
+	   int NUMBER_OF_TOP_FOLLOWED = 4;
+	   List<Playlist> userPlaylist = (List<Playlist>)(playlistManager.getTopFollowedPlaylist(NUMBER_OF_TOP_FOLLOWED));	
+	   
 	   session.setAttribute("overviewPlaylist", userPlaylist);	   
 	   mav.setViewName("main");
 	   return mav;

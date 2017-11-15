@@ -311,5 +311,14 @@ public class ServletManager {
        return mav;
    }
    
+   @RequestMapping(value="/getOverviewPlaylist", method = RequestMethod.POST)
+   public ModelAndView getOverviewPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+	   User user = (User) session.getAttribute("user");	   
+	   List<Playlist> userPlaylist = (List<Playlist>)(user.getUserPlaylistCollection());	   
+	   session.setAttribute("overviewPlaylist", userPlaylist);	   
+	   mav.setViewName("main");
+	   return mav;
+   }
    
+  
 }

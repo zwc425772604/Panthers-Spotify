@@ -1,44 +1,42 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
+<%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
+
 <!--  Container for DISCOVER -->
 <div class="suggestion-container" id = "discover-container">
   <div class="suggestion-container-top">
-    <h3 class="suggestion-topic">Head Home In Style</h3>
+    <h3 class="suggestion-topic">Playlist Collections</h3>
     <button class="suggestion-top-page-button"><i class="fa fa-angle-left fa-2x" aria-hidden="true"></i></button>
     <button class="suggestion-top-page-button-right"><i class="fa fa-angle-right fa-2x" aria-hidden="true"></i></button>
   </div>
   <div class="line"></div>
   <section class="row placeholders">
-    <div class="col-xs-6 col-sm-4 col-md-2 col-sm-2 placeholder medium-boxes">
-      <img src="https://www.fuse.tv/image/56fe73a1e05e186b2000009b/768/512/the-boxer-rebellion-ocean-by-ocean-album-cover-full-size.jpg" width=100% height=width class="img-rounded" alt="Generic placeholder thumbnail">
-      <div class="suggestion-boxes-description">
-        <h6>Discover Weekly</h6>
-        <div class="text-muted">Your weekly mixtape of fresh music. Enjoy new discoveries and deep ..</div>
-      </div>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-2 col-sm-2 placeholder medium-boxes">
-      <img src="https://spark.adobe.com/images/landing/examples/blizzard-album-cover.jpg" width=100% height=width class="img-rounded" alt="Generic placeholder thumbnail">
-      <div class="suggestion-boxes-description">
-        <h6>Discover Weekly</h6>
-        <div class="text-muted">Your weekly mixtape of fresh music. Enjoy new discoveries and deep ..</div>
-      </div>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-2 col-sm-2 placeholder medium-boxes">
-      <img src="https://i.pinimg.com/736x/8d/e4/20/8de42050e671b93b1d6bad2f2764ba89--calm-graphic-design-sun-graphic.jpg" width=100% height=width class="img-rounded" alt="Generic placeholder thumbnail">
-      <div class="suggestion-boxes-description">
-        <h6>Discover Weekly</h6>
-        <div class="text-muted">Your weekly mixtape of fresh music. Enjoy new discoveries and deep ..</div>
-      </div>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-2 col-sm-2 placeholder medium-boxes">
-      <img src="https://peopledotcom.files.wordpress.com/2017/08/taylor-swift7.jpg?w=2000&h=2013" width=100% height=width class="img-rounded" alt="Generic placeholder thumbnail">
-      <div class="suggestion-boxes-description">
-        <h6>Discover Weekly</h6>
-        <div class="text-muted">Your weekly mixtape of fresh music. Enjoy new discoveries and deep ..</div>
-      </div>
-    </div>
+  	
+  	<c:if test="${not empty overviewPlaylist}">
+  		<c:forEach var="overviewPlaylist" items="${overviewPlaylist}">
+  		<div class="col-xs-6 col-sm-4 col-md-2 col-sm-2 placeholder medium-boxes">
+  			  <a href="#">
+  			  	<object width=100% height=width data="http://www.designformusic.com/wp-content/uploads/2015/10/insurgency-digital-album-cover-design.jpg" type="image/png">
+              		<img src="${overviewPlaylist.photoUrl}"  class="img-rounded" alt="Generic placeholder thumbnail">
+              	</object>
+              </a>
+              <div class="suggestion-boxes-description">
+                <h6 id="playlistName">
+                	<a href="#">
+                	${overviewPlaylist.pname}
+                	</a>
+                </h6>
+                <div class="text-muted" id="playlistDes">${overviewPlaylist.des}</div>
+              </div>
+            </div>
+        </c:forEach>
+    </c:if>
   </section>
 </div>
+
 <!--Container for CHARTS-->
-<div class="suggestion-container" id = "charts-container">
+<!--  <div class="suggestion-container" id = "charts-container">
   <div class="line"></div>
   <section class="row placeholders">
     <div class="col-md-3 placeholder medium-boxes">
@@ -63,9 +61,9 @@
       </div>
     </div>
   </section>
-</div>
+</div> -->
 <!-- Podcast and Videos  -->
-<div class="suggestion-container">
+<!-- <div class="suggestion-container">
   <div class="line"></div>
   <section class="row placeholders">
     <div class=" col-sm-5 placeholder suggestion-boxes">
@@ -84,9 +82,9 @@
       </div>
     </div>
   </section>
-</div>
+</div> -->
 <!--Container for Genres & Moods-->
-<div class="suggestion-container">
+<!-- <div class="suggestion-container">
   <div class="suggestion-container-top">
     <h3 class="suggestion-topic">Genres & Moods</h3>
     <button class="suggestion-top-page-button"><i class="fa fa-angle-left fa-2x" aria-hidden="true"></i></button>
@@ -151,4 +149,4 @@
       </div>
     </div>
   </section>
-</div>
+</div> -->

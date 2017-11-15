@@ -22,128 +22,6 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="${cp}/resources/css/custom.css">
-    <script>
-      $(document).ready(function(){
-        //hide all other containers in <div id= 'middle-content'> beside except overview_container
-        //$("#overview_container").siblings().hide();
-        $("#main-changing-content").load("jsp/browse.jsp");
-        $(".playlist-item").click(function(){
-        	var pid = $(".playlist_id", this).text(); //get the pid of the playlist
-        	  $.ajax({
-                  url: "${cp}/getSpecificPlaylist",
-                  type: "POST",
-                  data : {"playlist_id" : pid },
-                  asyn: true,
-                  cache: true,
-                  success : function(response)
-                  {
-                    console.log(response);
-                    $("#main-changing-content").load("jsp/playlist.jsp");
-                  },
-                  error: function(e)
-                  {                	
-                    console.log(e);                 	
-                  }         
-                });
-        });
-        $("#new_playlist_button").click(function(){
-        	
-         	 $('#dialog').dialog({
-                  //autoOpen: true,
-                  height: 550,
-                  width: 450,
-                  modal: true,
-                  resizable: false,
-                  //closeOnEscape: false,
-                  //open: function(event, ui) { $(".ui-dialog-titlebar-close", ui).hide(); }
-                  //closeOnEscape: false,
-                  //beforeclose: function (event, ui) { return false; },
-                  dialogClass: 'no-close'
-                  });
-         });
-               
-      //     window.open("browse.jsp","_blank");
-      });
-     
-      function displayLeftNavbarContent(nav_name)
-      {
-        //compare the string
-        if (nav_name.localeCompare('browse') == 0)
-        {
-          $("#main-changing-content").load("jsp/browse.jsp");
-        }
-        else if (nav_name.localeCompare('albums') == 0)
-        {
-        	$.ajax({
-                url: "${cp}/loadAlbum",
-                type: "POST",
-                asyn: false,
-                cache: true,
-                success : function(response)
-                {
-                  console.log(response);
-                 
-                },
-                error: function(e)
-                {
-                 
-                  console.log(e);               
-                }
-              });
-           $("#main-changing-content").load("jsp/album.jsp");
-        }
-        else if (nav_name.localeCompare('artists') == 0)
-        {
-           $("#main-changing-content").load("jsp/artist.jsp");
-        }
-        else if (nav_name.localeCompare('songs') == 0)
-        {       	
-
-        	$.ajax({
-                url: "${cp}/loadSong",
-                type: "POST",
-                asyn: false,
-                cache: true,
-                success : function(response)
-                {
-                  console.log(response);
-                 
-                },
-                error: function(e)
-                {
-                  
-                  console.log(e);               
-                }
-              });
-        	 $("#main-changing-content").load("jsp/songs.jsp");
-        }
-        else
-        {
-           $("#main-changing-content").load("jsp/overview.jsp");
-        }
-      }
-      
-      function displayAccount(){
-    	  $("#main-changing-content").load("jsp/account.jsp");
-      }
-      
-      function openDialogBox()
-      {
-      //   $("#dialog").dialog();
-        $('#dialog').dialog({
-      //autoOpen: true,
-      height: 550,
-      width: 450,
-      modal: true,
-      resizable: false,
-      //closeOnEscape: false,
-      //open: function(event, ui) { $(".ui-dialog-titlebar-close", ui).hide(); }
-      //closeOnEscape: false,
-      //beforeclose: function (event, ui) { return false; },
-      dialogClass: 'no-close'
-      });
-      }
-    </script>
   </head>
   <body>
     <div class="container-fluid">
@@ -163,12 +41,16 @@
               </div>
               <div class="col-sm-3 col-sm-offset-3" id="top-tool-search">
                 <div class="input-group stylish-input-group"  id="top-tool-search">
-                  <input type="text" class="form-control"  placeholder="Search" >
-                  <span class="input-group-addon">
-                  <button type="submit">
-                  <i class="fa fa-search" aria-hidden="true"></i>
-                  </button>
-                  </span>
+                <form:form action="search" method="POST">
+                	<div class="row" >
+	                  <input type="text" class="w3-input" style="width: 80%; height: 75%;" placeholder="Search" name="search">
+	                  <span class="input-group-addon">
+	                  <button type="submit">
+	                  <i class="fa fa-search" aria-hidden="true" ></i>
+	                  </button>
+	                  </span>
+                  	</div>
+                  </form:form>
                 </div>
               </div>
               <div id="top-tool-upgrade-and-user">

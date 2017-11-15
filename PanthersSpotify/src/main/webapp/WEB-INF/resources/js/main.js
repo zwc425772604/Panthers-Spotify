@@ -1,4 +1,145 @@
 
+$(document).ready(function(){
+//hide all other containers in <div id= 'middle-content'> beside except overview_container
+//$("#overview_container").siblings().hide();
+	$.ajax({
+        url: "${cp}/../getOverviewPlaylist",
+        type: "POST",
+        asyn: true,
+        cache: true,
+        success : function(response)
+        {
+          //Template
+          //var photoUrl = response.url
+          //var playlistName = playlistName
+          //var playlistDesc = playlistDesc
+        
+          $("#main-changing-content").load("jsp/browse.jsp");
+          
+        },
+        error: function(e)
+        {                	
+          console.log(e);                 	
+        }  	
+	});	
+	
+	$(".playlist-item").click(function(){
+		var pid = $(".playlist_id", this).text(); //get the pid of the playlist
+		  $.ajax({
+	          url: "${cp}/../getSpecificPlaylist",
+	          type: "POST",
+	          data : {"playlist_id" : pid },
+	          asyn: true,
+	          cache: true,
+	          success : function(response)
+	          {
+	            console.log(response);
+	            $("#main-changing-content").load("jsp/playlist.jsp");
+	          },
+	          error: function(e)
+	          {                	
+	            console.log(e);                 	
+	          }       
+		  });
+	});
+
+
+	$("#new_playlist_button").click(function(){	
+	 	 $('#dialog').dialog({
+	          //autoOpen: true,
+	          height: 550,
+	          width: 450,
+	          modal: true,
+	          resizable: false,
+	          //closeOnEscape: false,
+	          //open: function(event, ui) { $(".ui-dialog-titlebar-close", ui).hide(); }
+	          //closeOnEscape: false,
+	          //beforeclose: function (event, ui) { return false; },
+	          dialogClass: 'no-close'
+	     });           
+	  //     window.open("browse.jsp","_blank");
+	});
+});
+
+ 
+function displayLeftNavbarContent(nav_name)
+{
+    //compare the string
+	if (nav_name.localeCompare('browse') == 0)
+	{
+	  $("#main-changing-content").load("jsp/browse.jsp");
+	}
+	else if (nav_name.localeCompare('albums') == 0)
+	{
+		$.ajax({
+	        url: "${cp}/../loadAlbum",
+	        type: "POST",
+	        asyn: false,
+	        cache: true,
+	        success : function(response)
+	        {
+	          console.log(response);	         
+	        },
+	        error: function(e)
+	        {
+	         
+	          console.log(e);               
+	        }
+	      });
+	   $("#main-changing-content").load("jsp/album.jsp");
+	}
+	else if (nav_name.localeCompare('artists') == 0)
+	{
+	   $("#main-changing-content").load("jsp/artist.jsp");
+	}
+	else if (nav_name.localeCompare('songs') == 0)
+	{       	
+	
+		$.ajax({
+	        url: "${cp}/../loadSong",
+	        type: "POST",
+	        asyn: false,
+	        cache: true,
+	        success : function(response)
+	        {
+	          console.log(response);
+	         
+	        },
+	        error: function(e)
+	        {
+	          
+	          console.log(e);               
+	        }
+	      });
+		 $("#main-changing-content").load("jsp/songs.jsp");
+	}
+	else
+	{
+	   $("#main-changing-content").load("jsp/overview.jsp");
+	    }
+}
+	  
+function displayAccount(){
+	$("#main-changing-content").load("jsp/account.jsp");
+}
+  
+function openDialogBox()
+{
+  //   $("#dialog").dialog();
+	$('#dialog').dialog({
+	  //autoOpen: true,
+	  height: 550,
+	  width: 450,
+	  modal: true,
+	  resizable: false,
+	  //closeOnEscape: false,
+	  //open: function(event, ui) { $(".ui-dialog-titlebar-close", ui).hide(); }
+	  //closeOnEscape: false,
+	  //beforeclose: function (event, ui) { return false; },
+	  dialogClass: 'no-close'
+	  });
+}
+
 var audio;
 $(document).ready(function(){
   //  $('[data-toggle="tooltip"]').tooltip();

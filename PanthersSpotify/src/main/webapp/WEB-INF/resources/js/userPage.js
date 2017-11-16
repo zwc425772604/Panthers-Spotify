@@ -154,3 +154,40 @@ $(".playbar-play-button").click(function(){
     }
 
 });
+
+$(".AddFriendButton").click(function(){
+	var status = $("#friendStatus").text();
+	var email = $("#selectedFriend.email").text();
+	
+	if (status.localeCompare('Add Friend') == 0 )
+	{
+		$.ajax({
+			url: "addFriend",
+			type: "POST",
+			data: {"userEmail" : email},
+			asyn: true,
+			cache: false,
+			success: function(response)
+			{
+				console.log(response);
+				$("#friendStatus").html("Delete Friend");
+			}
+		});
+	}
+	else
+	{
+		$.ajax({
+			url: "deleteFriend",
+			type: "POST",
+			data: {"userEmail" : email},
+			asyn: true,
+			cache: false,
+			success: function(response)
+			{
+				console.log(response);
+				$("#friendStatus").html("Add Friend");
+			}
+		});
+	}
+
+});

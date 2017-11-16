@@ -344,6 +344,15 @@ public class ServletManager {
             return mav;
    }
    
+   @RequestMapping(value = "/deleteFriend", method = RequestMethod.POST)
+   public ModelAndView deleteFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   		System.out.println("Delete Friend");
+	   		User user = (User) session.getAttribute("user");
+	   		mav.setViewName("main");
+	   		mav.addObject("username",user.getUname());
+            return mav;
+   }
+   
    @RequestMapping(value="/getUserPage", method = RequestMethod.POST)
    public @ResponseBody String getUserPage(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
 	   

@@ -26,6 +26,12 @@
       		<div id ="userInfo" style="margin-top: 4%; margin-left:5%;">
       			<h5> User Page </h5>
           		<p style="font-size: 1.8em;"><c:out value="${selectedFriend.uname}"></c:out>  </p>
+          		
+          		<div class="col-md-5" style="display:inline;">		            
+		            <c:if test="${selectedFriend.uname != user}">
+		            	<button class="w3-button w3-round-xxlarge formButton AddFriendButton" style="width:auto" >  <span id="friendStatus" >Add Friend</span></button>
+		            </c:if>
+		        </div>
       		</div>
       	</div>
 	</div>

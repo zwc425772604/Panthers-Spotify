@@ -333,4 +333,25 @@ public class ServletManager {
 	   session.setAttribute("userFriendList", temp);
   	   return "ok";
    }
+   
+   @RequestMapping(value = "/addFriend", method = RequestMethod.POST)
+   public ModelAndView addFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   		System.out.println("HI");
+	   		User user = (User) session.getAttribute("user");
+	   		mav.setViewName("main");
+	   		mav.addObject("username",user.getUname());
+            return mav;
+   }
+   
+   @RequestMapping(value="/getUserPage", method = RequestMethod.POST)
+   public @ResponseBody String getUserPage(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+	   
+	   String username = request.getParameter("username");
+	   String email = request.getParameter("userEmail");
+	   List<User> users = userManager.getUser(email);
+	   User user = (users.size() != 0 )?users.get(0):null;
+	   session.setAttribute("selectedFriend", user);
+  	   return "ok";
+   }
+   
 }

@@ -2,10 +2,11 @@
 $(document).ready(function(){
 //hide all other containers in <div id= 'middle-content'> beside except overview_container
 //$("#overview_container").siblings().hide();
+	//Loading Friend List for the user
 	$.ajax({
         url: "${cp}/../getUserFriendList",
         type: "POST",
-        asyn: true,
+        asyn: false,
         cache: true,
         success : function(response)
         {
@@ -21,10 +22,11 @@ $(document).ready(function(){
         }  	
 	});	
 	
+	//Loading top followed playlist
 	$.ajax({
         url: "${cp}/../getOverviewPlaylist",
         type: "POST",
-        asyn: true,
+        asyn: false,
         cache: true,
         success : function(response)
         {
@@ -75,6 +77,38 @@ $(document).ready(function(){
 	     });           
 	  //     window.open("browse.jsp","_blank");
 	});
+	
+	$("#addFriendButton").click(function(){	
+	 	 $('#addFriendDialog').dialog({
+	          //autoOpen: true,
+	          height: 550,
+	          width: 450,
+	          modal: true,
+	          resizable: false,	          
+	          dialogClass: 'no-close'
+	     });  
+	});
+});
+
+$(document).on("click", ".right-col-friends-name", function(){
+		var username = $(".right-col-friends-name", this).text(); //get the pid of the playlist
+		var email = $(".friends-email",this).text();
+		  $.ajax({
+	        url: "${cp}/../getUserPage",
+	        type: "POST",
+	        data : {"username" : username, "userEmail" : email },
+	        asyn: true,
+	        cache: true,
+	        success : function(response)
+	        {
+	          console.log(response);
+	          $("#main-changing-content").load("jsp/userPage.jsp");
+	        },
+	        error: function(e)
+	        {                	
+	          console.log(e);                 	
+	        }       
+		  });
 });
 
 $(document).on("click", ".playlist-item", function(){
@@ -96,7 +130,6 @@ $(document).on("click", ".playlist-item", function(){
         }       
 	  });
 });
-
 
 function displayLeftNavbarContent(nav_name)
 {

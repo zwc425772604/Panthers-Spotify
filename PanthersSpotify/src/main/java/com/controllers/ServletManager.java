@@ -88,6 +88,8 @@ public class ServletManager {
     	   {
     		   mav.addObject("username", li.get(0).getUname());
     		   List<Playlist> user_playlist = (List<Playlist>)(li.get(0).getUserPlaylistCollection());
+    		   List<Playlist> follow_playlist = playlistManager.getUserFollowPlaylist(li.get(0));
+    		   user_playlist.addAll(follow_playlist);
     		   session.setAttribute("user_playlist", user_playlist);
                mav.setViewName("main");
     	   }

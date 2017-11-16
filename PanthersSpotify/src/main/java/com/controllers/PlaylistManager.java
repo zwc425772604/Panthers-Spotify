@@ -15,6 +15,7 @@ import com.model.Playlist;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -288,6 +289,29 @@ public class PlaylistManager {
 	  	  
 	  	user_playlist.remove((Playlist)result.get(0));
 	  	return true;
+  }
+  
+  public List<Playlist> getUserFollowPlaylist(User user)
+  {
+	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+  	  EntityManager em = emf.createEntityManager();
+  	 
+  	TypedQuery<Followplaylist> query1 = em.createNamedQuery("Followplaylist.findByUemail", Followplaylist.class)
+       		.setParameter("uemail", user.getEmail());
+  	List<Followplaylist> result = query1.getResultList();
+  	List<Playlist> ret = new ArrayList<Playlist>();
+  	for(int i =0;i<result.size();i++)
+  	{
+  		ret.add(result.get(i).getPlaylist());
+  	}
+	    //List<Followplaylist> result = query1.getResultList();
+  	  //SELECT * FROM panthers.playlist pl where pl.pid in (select pid from panthers.followplaylist fp where fp.uemail = '4@qq.com');
+	  	  em.getTransaction().begin();
+	  	  em.flush();
+	  	  em.getTransaction().commit();
+	  	  em.close();
+	  	  emf.close();
+	  	  return ret;
   }
   
   private int findPlaylist(int playlistId, List<Playlist> playlists)

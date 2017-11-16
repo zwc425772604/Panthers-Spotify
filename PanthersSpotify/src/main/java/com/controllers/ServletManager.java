@@ -369,6 +369,8 @@ public class ServletManager {
    @RequestMapping(value="/followSpecificPlaylist", method=RequestMethod.POST)
    public @ResponseBody String followSpecificPlaylist(HttpServletRequest request, HttpSession session) {
 	   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
+	   User user = (User) session.getAttribute("user");
+	   boolean ret = playlistManager.followPlaylist(playlistID,user);
 	   System.out.println("playlist id to be follow is : " + playlistID);
 	   return "ok";
    }
@@ -376,6 +378,8 @@ public class ServletManager {
    @RequestMapping(value="/unfollowSpecificPlaylist", method=RequestMethod.POST)
    public @ResponseBody String unfollowSpecificPlaylist(HttpServletRequest request, HttpSession session) {
 	   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
+	   User user = (User) session.getAttribute("user");
+	   boolean ret = playlistManager.unfollowPlaylist(playlistID,user);
 	   System.out.println("playlist id to be unfollow is : " + playlistID);
 	   return "ok";
    }

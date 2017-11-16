@@ -9,6 +9,7 @@ package com.controllers;
 import com.model.User;
 
 import com.helper.UploadFile;
+import com.model.Followplaylist;
 import com.model.Playlist;
 
 import java.awt.image.BufferedImage;
@@ -227,6 +228,80 @@ public class PlaylistManager {
 	  em.close();
 	  emf.close();
 	  return result;
+  }
+  
+//follow playlist
+  public boolean followPlaylist(int playlistId,User user)
+  {
+	  List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
+  	  int playlistIndex = findPlaylist(playlistId,user_playlist);
+  	  
+  	  if(playlistIndex!=-1)
+  	  {
+  		  return false;
+  	  }
+  	  
+  	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+  	  EntityManager em = emf.createEntityManager();
+  	  
+  	TypedQuery<Playlist> query1 = em.createNamedQuery("Playlist.findByPid", Playlist.class)
+       		.setParameter("pid", playlistId);
+	    List<Playlist> result = query1.getResultList();
+	    Followplaylist fp = new Followplaylist(playlistId,user.getEmail());
+	    
+	  	  em.getTransaction().begin();
+	  	  em.persist(fp);;
+	  	  em.flush();
+	  	  em.getTransaction().commit();
+	  	  em.close();
+	  	  emf.close();
+	  	  
+	  	user_playlist.add((Playlist)result.get(0));
+	  	return true;
+  }
+  
+//unfollow playlist
+  public boolean unfollowPlaylist(int playlistId,User user)
+  {
+	  List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
+  	  int playlistIndex = findPlaylist(playlistId,user_playlist);
+  	  
+  	  if(playlistIndex==-1)
+  	  {
+  		  return false;
+  	  }
+  	  
+  	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+  	  EntityManager em = emf.createEntityManager();
+  	  
+  	TypedQuery<Playlist> query1 = em.createNamedQuery("Playlist.findByPid", Playlist.class)
+       		.setParameter("pid", playlistId);
+	    List<Playlist> result = query1.getResultList();
+  	  
+	  	  em.getTransaction().begin();
+	  	  em.remove(result.get(0));;
+	  	  em.flush();
+	  	  em.getTransaction().commit();
+	  	  em.close();
+	  	  emf.close();
+	  	
+	  	  
+	  	user_playlist.remove((Playlist)result.get(0));
+	  	return true;
+  }
+  
+  private int findPlaylist(int playlistId, List<Playlist> playlists)
+  {
+	  int num=-1;
+	  for(int i=0;i<playlists.size();i++)
+	  {
+		  if(playlists.get(i).getPid()==playlistId)
+		  {
+			  num=i;
+			  break;
+		  }
+	  }
+	  return num;
   }
   
 }

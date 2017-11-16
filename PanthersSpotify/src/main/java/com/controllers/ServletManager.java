@@ -91,6 +91,7 @@ public class ServletManager {
     		   List<Playlist> follow_playlist = playlistManager.getUserFollowPlaylist(li.get(0));
     		   user_playlist.addAll(follow_playlist);
     		   session.setAttribute("user_playlist", user_playlist);
+    		   session.setAttribute("userFollowedPlaylists", follow_playlist);
                mav.setViewName("main");
     	   }
     	   //display admin page

@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -43,7 +44,19 @@
           <div class="col-md-3" style="display:inline;">
             <button class="w3-button w3-round-xxlarge btn formButton" onclick="playSong();">  <span class="playingStatus">PLAY</span></button>
             <c:if test="${selectedPlaylist.powner != user}">
-            	<button class="w3-button w3-round-xxlarge formButton followPlaylistButton" >  <span id="followingPlaylistStatus" >FOLLOW</span></button>
+            	<button class="w3-button w3-round-xxlarge formButton followPlaylistButton" >  <span id="followingPlaylistStatus" >
+            	<c:if test='${fn:contains(list, "two")}'>
+				        My list contains two <br/>
+				</c:if>
+				<c:choose>
+				  <c:when test="${fn:contains(userFollowedPlaylists,selectedPlaylist)}">
+				   	UNFOLLOW
+				  </c:when>
+				  <c:otherwise>
+				    FOLLOW
+				  </c:otherwise>
+				</c:choose>
+            	</span></button>
             </c:if>
           </div>
      

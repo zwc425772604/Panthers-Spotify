@@ -18,6 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -322,5 +323,14 @@ public class ServletManager {
 	   return mav;
    }
    
-  
+   @RequestMapping(value="/getUserFriendList", method = RequestMethod.POST)
+   public @ResponseBody String getUserFriendList(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+	   
+	   System.out.println("Getting user friendlist");
+	   User user = (User) session.getAttribute("user");
+	   List<User> temp = new ArrayList<User>();
+	   temp.add(user);
+	   session.setAttribute("userFriendList", temp);
+  	   return "ok";
+   }
 }

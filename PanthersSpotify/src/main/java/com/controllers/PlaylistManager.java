@@ -224,6 +224,8 @@ public class PlaylistManager {
   	  query.setMaxResults(numberOfPlaylist);
 	  List<Playlist> result = query.getResultList();
 	  
+	  em.close();
+	  emf.close();
 	  return result;
   }
   

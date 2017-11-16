@@ -77,19 +77,7 @@
         </main>
         <!--Right Most Column-->
         <div id="right-col">
-          <div class="right-col-top">
-            <h2 id="right-col-topic">Friend activity</h2>
-            <div class="line"></div>
-          </div>
-          <div class="right-col-section row">
-            <div><img src="http://weclipart.com/gimg/0A3C841B9FA4F2C6/13099629981030824019profile.svg.hi.png" class="rounded-circle right-col-image" alt="Generic placeholder thumbnail"></div>
-            <div class="right-col-desp">
-              <div class="right-col-friends-name">Your Only Friend</div>
-              <div class="right-col-song-name">Discover Weekly</div>
-              <div class="right-col-singer">Kenny Rogers</div>
-            </div>
-          </div>
-          <button onclick="" class="w3-button right-col-button">FIND FRIENDS</button>
+         <%@ include file = "rightSidebar.jsp" %>
         </div>
       </div>
     </div>

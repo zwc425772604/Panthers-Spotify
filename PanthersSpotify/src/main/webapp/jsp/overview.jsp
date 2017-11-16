@@ -16,18 +16,18 @@
   	<c:if test="${not empty overviewPlaylist}">
   		<c:forEach var="overviewPlaylist" items="${overviewPlaylist}">
   		<div class="col-xs-6 col-sm-4 col-md-2 col-sm-2 placeholder medium-boxes">
-  			  <a href="#">
+  			  <a class="playlist-item">
   			  	<object width=100% height=width data="http://www.designformusic.com/wp-content/uploads/2015/10/insurgency-digital-album-cover-design.jpg" type="image/png">
               		<img src="${overviewPlaylist.photoUrl}"  class="img-rounded" alt="Generic placeholder thumbnail">
               	</object>
+              	<span style="display:none;" class="playlist_id">${overviewPlaylist.pid}</span>
               </a>
-              <div class="suggestion-boxes-description">
-                <h6 id="playlistName">
-                	<a href="#">
-                	${overviewPlaylist.pname}
-                	</a>
+              <div class="suggestion-boxes-description playlist-item">
+                <h6 id="playlistName">               	
+                	${overviewPlaylist.pname}       
                 </h6>
                 <div class="text-muted" id="playlistDes">${overviewPlaylist.des}</div>
+                <span style="display:none;" class="playlist_id">${overviewPlaylist.pid}</span>
               </div>
             </div>
         </c:forEach>

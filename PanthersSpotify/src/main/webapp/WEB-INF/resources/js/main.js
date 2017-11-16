@@ -3,6 +3,25 @@ $(document).ready(function(){
 //hide all other containers in <div id= 'middle-content'> beside except overview_container
 //$("#overview_container").siblings().hide();
 	$.ajax({
+        url: "${cp}/../getUserFriendList",
+        type: "POST",
+        asyn: true,
+        cache: true,
+        success : function(response)
+        {
+          //Template
+          //var photoUrl = response.url
+          //var playlistName = playlistName
+          //var playlistDesc = playlistDesc       
+           
+        },
+        error: function(e)
+        {                	
+          console.log(e);                 	
+        }  	
+	});	
+	
+	$.ajax({
         url: "${cp}/../getOverviewPlaylist",
         type: "POST",
         asyn: true,
@@ -12,10 +31,8 @@ $(document).ready(function(){
           //Template
           //var photoUrl = response.url
           //var playlistName = playlistName
-          //var playlistDesc = playlistDesc
-        
-          $("#main-changing-content").load("jsp/browse.jsp");
-          
+          //var playlistDesc = playlistDesc       
+          $("#main-changing-content").load("jsp/browse.jsp");    
         },
         error: function(e)
         {                	
@@ -43,7 +60,6 @@ $(document).ready(function(){
 		  });
 	});
 
-
 	$("#new_playlist_button").click(function(){	
 	 	 $('#dialog').dialog({
 	          //autoOpen: true,
@@ -61,7 +77,27 @@ $(document).ready(function(){
 	});
 });
 
- 
+$(document).on("click", ".playlist-item", function(){
+	var pid = $(".playlist_id", this).text(); //get the pid of the playlist
+	  $.ajax({
+        url: "${cp}/../getSpecificPlaylist",
+        type: "POST",
+        data : {"playlist_id" : pid },
+        asyn: true,
+        cache: true,
+        success : function(response)
+        {
+          console.log(response);
+          $("#main-changing-content").load("jsp/playlist.jsp");
+        },
+        error: function(e)
+        {                	
+          console.log(e);                 	
+        }       
+	  });
+});
+
+
 function displayLeftNavbarContent(nav_name)
 {
     //compare the string
@@ -102,8 +138,7 @@ function displayLeftNavbarContent(nav_name)
 	        cache: true,
 	        success : function(response)
 	        {
-	          console.log(response);
-	         
+	          console.log(response);	         
 	        },
 	        error: function(e)
 	        {

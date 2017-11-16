@@ -224,8 +224,8 @@ public class ServletManager {
 	   		String pname = playlist.getPname();
 	   		System.out.println("playlist name is :" + pname);
 	   		System.out.println("playlist num songs :" + playlist.getNSongs());
- 		    session.setAttribute("selected_playlist", playlist);
- 		   session.setAttribute("selected_playlist_nsongs", playlist.getNSongs());
+ 		    session.setAttribute("selectedPlaylist", playlist);
+ 		   session.setAttribute("selectedPlaylistNumSongs", playlist.getNSongs());
             return "ok";
    }
    
@@ -256,10 +256,10 @@ public class ServletManager {
    /* remove specific playlist */
    @RequestMapping(value = "/removeSpecificPlaylist", method = RequestMethod.POST)
    public  @ResponseBody String removeSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-	   		int playlist_id = Integer.parseInt(request.getParameter("playlist_id").trim());
-	   		Playlist playlist = playlistManager.getPlaylist(playlist_id);
+	   		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
+	   		Playlist playlist = playlistManager.getPlaylist(playlistID);
 	   		User user = (User) session.getAttribute("user");
-	   		playlistManager.removePlaylist(playlist_id,user);
+	   		playlistManager.removePlaylist(playlistID,user);
 	   		//playlistManager.remove(playlist_id);
 	   		List<Playlist> user_playlist = (List<Playlist>) (session.getAttribute("user_playlist"));
 	   		user_playlist.remove(playlist);
@@ -334,6 +334,7 @@ public class ServletManager {
   	   return "ok";
    }
    
+
    @RequestMapping(value = "/addFriend", method = RequestMethod.POST)
    public ModelAndView addFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		System.out.println("HI");
@@ -354,4 +355,20 @@ public class ServletManager {
   	   return "ok";
    }
    
+
+   
+   @RequestMapping(value="/followSpecificPlaylist", method=RequestMethod.POST)
+   public @ResponseBody String followSpecificPlaylist(HttpServletRequest request, HttpSession session) {
+	   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
+	   System.out.println("playlist id to be follow is : " + playlistID);
+	   return "ok";
+   }
+   
+   @RequestMapping(value="/unfollowSpecificPlaylist", method=RequestMethod.POST)
+   public @ResponseBody String unfollowSpecificPlaylist(HttpServletRequest request, HttpSession session) {
+	   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
+	   System.out.println("playlist id to be unfollow is : " + playlistID);
+	   return "ok";
+   }
+
 }

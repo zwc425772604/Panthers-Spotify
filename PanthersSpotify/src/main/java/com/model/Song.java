@@ -9,16 +9,15 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,10 +28,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author weichaozhao
+ * @author Weichao ZHao
  */
 @Entity
-@Table(name = "song")
+@Table(name = "song", catalog = "panthers", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Song.findAll", query = "SELECT s FROM Song s")
@@ -46,18 +45,14 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Song.findBySurl", query = "SELECT s FROM Song s WHERE s.surl = :surl")})
 public class Song implements Serializable {
 
-    @ManyToMany(mappedBy = "songCollection")
-    private Collection<User> userCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     @Basic(optional = false)
     @NotNull
     @Column(name = "sid", nullable = false)
     private Integer sid;
     @Size(max = 20)
-    @Column(name = "stitle")
+    @Column(name = "stitle", length = 20)
     private String stitle;
     @Column(name = "stime")
     @Temporal(TemporalType.TIME)
@@ -68,30 +63,25 @@ public class Song implements Serializable {
     @Column(name = "monthlyPlayed")
     private Integer monthlyPlayed;
     @Size(max = 10)
-    @Column(name = "gener", length=10)
+    @Column(name = "gener", length = 10)
     private String gener;
     @Size(max = 10)
-    @Column(name = "stype", length=10)
+    @Column(name = "stype", length = 10)
     private String stype;
     @Size(max = 100)
-    @Column(name = "surl", length=100)
+    @Column(name = "surl", length = 100)
     private String surl;
     @JoinColumn(name = "aid", referencedColumnName = "aid")
     @ManyToOne
-    private Album albumId;
+    private Album aid;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "song")
+    private Collection<Playlistsong> playlistsongCollection;
+    @OneToMany(mappedBy = "nowPlay")
+    private Collection<Songqueue> songqueueCollection;
 
     public Song() {
     }
-    
-    public Song(String songTitle, Date songTime, Date releaseDay, String genre, String type, String url) {
-    	this.stitle = songTitle;
-    	this.stime = songTime;
-    	this.releaseDay = releaseDay;
-    	this.gener = genre;
-    	this.stype = type;
-    	this.surl = url;
-    }
-    
+
     public Song(Integer sid) {
         this.sid = sid;
     }
@@ -160,12 +150,30 @@ public class Song implements Serializable {
         this.surl = surl;
     }
 
-    public Album getAlbumId() {
-        return albumId;
+    public Album getAid() {
+        return aid;
     }
 
-    public void setAlbumId(Album albumId) {
-        this.albumId = albumId;
+    public void setAid(Album aid) {
+        this.aid = aid;
+    }
+
+    @XmlTransient
+    public Collection<Playlistsong> getPlaylistsongCollection() {
+        return playlistsongCollection;
+    }
+
+    public void setPlaylistsongCollection(Collection<Playlistsong> playlistsongCollection) {
+        this.playlistsongCollection = playlistsongCollection;
+    }
+
+    @XmlTransient
+    public Collection<Songqueue> getSongqueueCollection() {
+        return songqueueCollection;
+    }
+
+    public void setSongqueueCollection(Collection<Songqueue> songqueueCollection) {
+        this.songqueueCollection = songqueueCollection;
     }
 
     @Override
@@ -191,15 +199,6 @@ public class Song implements Serializable {
     @Override
     public String toString() {
         return "com.model.Song[ sid=" + sid + " ]";
-    }
-
-    @XmlTransient
-    public Collection<User> getUserCollection() {
-        return userCollection;
-    }
-
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
     }
     
 }

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,6 +48,27 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "User.findByUtype", query = "SELECT u FROM User u WHERE u.utype = :utype")
     , @NamedQuery(name = "User.findByUpgradDate", query = "SELECT u FROM User u WHERE u.upgradDate = :upgradDate")})
 public class User implements Serializable {
+
+    @Column(name = "lastTimeLogin")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastTimeLogin;
+    @Column(name = "signUpDate")
+    @Temporal(TemporalType.DATE)
+    private Date signUpDate;
+    @JoinTable(name = "addfriendrequest", joinColumns = {
+        @JoinColumn(name = "uemail", referencedColumnName = "email")}, inverseJoinColumns = {
+        @JoinColumn(name = "femail", referencedColumnName = "email")})
+    @ManyToMany
+    private Collection<User> userCollection;
+    @JoinTable(name = "friend", joinColumns = {
+        @JoinColumn(name = "oneuemail", referencedColumnName = "email", nullable = false)}, inverseJoinColumns = {
+        @JoinColumn(name = "twouemail", referencedColumnName = "email", nullable = false)})
+    @ManyToMany
+    private Collection<User> userCollection2;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Collection<Followplaylist> followplaylistCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    private Songqueue songqueue;
 
     @Size(max = 45)
     @Column(name = "firstName", length = 45)
@@ -338,6 +361,57 @@ public class User implements Serializable {
 
     public void setConcertCollection(Collection<Concert> concertCollection) {
         this.concertCollection = concertCollection;
+    }
+
+    public Date getLastTimeLogin() {
+        return lastTimeLogin;
+    }
+
+    public void setLastTimeLogin(Date lastTimeLogin) {
+        this.lastTimeLogin = lastTimeLogin;
+    }
+
+    public Date getSignUpDate() {
+        return signUpDate;
+    }
+
+    public void setSignUpDate(Date signUpDate) {
+        this.signUpDate = signUpDate;
+    }
+
+    @XmlTransient
+    public Collection<User> getUserCollection() {
+        return userCollection;
+    }
+
+    public void setUserCollection(Collection<User> userCollection) {
+        this.userCollection = userCollection;
+    }
+
+    @XmlTransient
+    public Collection<User> getUserCollection2() {
+        return userCollection2;
+    }
+
+    public void setUserCollection2(Collection<User> userCollection2) {
+        this.userCollection2 = userCollection2;
+    }
+
+    @XmlTransient
+    public Collection<Followplaylist> getFollowplaylistCollection() {
+        return followplaylistCollection;
+    }
+
+    public void setFollowplaylistCollection(Collection<Followplaylist> followplaylistCollection) {
+        this.followplaylistCollection = followplaylistCollection;
+    }
+
+    public Songqueue getSongqueue() {
+        return songqueue;
+    }
+
+    public void setSongqueue(Songqueue songqueue) {
+        this.songqueue = songqueue;
     }
     
 }

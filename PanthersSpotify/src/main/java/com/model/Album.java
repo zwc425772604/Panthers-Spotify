@@ -11,11 +11,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -29,10 +25,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author weichaozhao
+ * @author Weichao ZHao
  */
 @Entity
-@Table(name = "album")
+@Table(name = "album", catalog = "panthers", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Album.findAll", query = "SELECT a FROM Album a")
@@ -48,13 +44,12 @@ public class Album implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     @Basic(optional = false)
     @NotNull
     @Column(name = "aid", nullable = false)
     private Integer aid;
-    @Size(max = 10)
-    @Column(name = "aname", length = 10)
+    @Size(max = 40)
+    @Column(name = "aname", length = 40)
     private String aname;
     @Size(max = 500)
     @Column(name = "dis", length = 500)
@@ -72,11 +67,8 @@ public class Album implements Serializable {
     private Integer followers;
     @Column(name = "nSongs")
     private Integer nSongs;
-    @OneToMany(mappedBy = "albumId")
+    @OneToMany(mappedBy = "aid")
     private Collection<Song> songCollection;
-//    @JoinColumn(name = "aowner", referencedColumnName = "email")
-//    @ManyToOne
-//    private User aowner;
 
     public Album() {
     }
@@ -157,14 +149,6 @@ public class Album implements Serializable {
     public void setSongCollection(Collection<Song> songCollection) {
         this.songCollection = songCollection;
     }
-
-//    public User getAowner() {
-//        return aowner;
-//    }
-//
-//    public void setAowner(User aowner) {
-//        this.aowner = aowner;
-//    }
 
     @Override
     public int hashCode() {

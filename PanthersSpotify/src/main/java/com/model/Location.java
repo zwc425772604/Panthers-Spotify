@@ -10,8 +10,6 @@ import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,10 +24,10 @@ import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author weichaozhao
+ * @author Weichao ZHao
  */
 @Entity
-@Table(name = "location")
+@Table(name = "location", catalog = "panthers", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Location.findAll", query = "SELECT l FROM Location l")
@@ -40,16 +38,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Location.findByAddress3", query = "SELECT l FROM Location l WHERE l.address3 = :address3")
     , @NamedQuery(name = "Location.findByCity", query = "SELECT l FROM Location l WHERE l.city = :city")
     , @NamedQuery(name = "Location.findBySubdivision", query = "SELECT l FROM Location l WHERE l.subdivision = :subdivision")
-    , @NamedQuery(name = "Location.findByPostalCode", query = "SELECT l FROM Location l WHERE l.postalCode = :postalCode")
+    , @NamedQuery(name = "Location.findByPosyalCode", query = "SELECT l FROM Location l WHERE l.posyalCode = :posyalCode")
     , @NamedQuery(name = "Location.findByContryCode", query = "SELECT l FROM Location l WHERE l.contryCode = :contryCode")})
 public class Location implements Serializable {
 
-    @OneToMany(mappedBy = "lid")
-    private Collection<Concert> concertCollection;
-
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     @Basic(optional = false)
     @NotNull
     @Column(name = "lid", nullable = false)
@@ -72,11 +66,13 @@ public class Location implements Serializable {
     @Size(max = 10)
     @Column(name = "subdivision", length = 10)
     private String subdivision;
-    @Column(name = "postalCode")
-    private Integer postalCode;
+    @Column(name = "posyalCode")
+    private Integer posyalCode;
     @Size(max = 10)
     @Column(name = "contryCode", length = 10)
     private String contryCode;
+    @OneToMany(mappedBy = "lid")
+    private Collection<Concert> concertCollection;
     @JoinColumn(name = "uemail", referencedColumnName = "email")
     @ManyToOne
     private User uemail;
@@ -144,12 +140,12 @@ public class Location implements Serializable {
         this.subdivision = subdivision;
     }
 
-    public Integer getPostalCode() {
-        return postalCode;
+    public Integer getPosyalCode() {
+        return posyalCode;
     }
 
-    public void setPostalCode(Integer postalCode) {
-        this.postalCode = postalCode;
+    public void setPosyalCode(Integer posyalCode) {
+        this.posyalCode = posyalCode;
     }
 
     public String getContryCode() {
@@ -158,6 +154,15 @@ public class Location implements Serializable {
 
     public void setContryCode(String contryCode) {
         this.contryCode = contryCode;
+    }
+
+    @XmlTransient
+    public Collection<Concert> getConcertCollection() {
+        return concertCollection;
+    }
+
+    public void setConcertCollection(Collection<Concert> concertCollection) {
+        this.concertCollection = concertCollection;
     }
 
     public User getUemail() {
@@ -191,15 +196,6 @@ public class Location implements Serializable {
     @Override
     public String toString() {
         return "com.model.Location[ lid=" + lid + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Concert> getConcertCollection() {
-        return concertCollection;
-    }
-
-    public void setConcertCollection(Collection<Concert> concertCollection) {
-        this.concertCollection = concertCollection;
     }
     
 }

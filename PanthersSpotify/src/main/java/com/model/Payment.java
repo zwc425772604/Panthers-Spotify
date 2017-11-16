@@ -10,8 +10,6 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,10 +24,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author weichaozhao
+ * @author Weichao ZHao
  */
 @Entity
-@Table(name = "payment")
+@Table(name = "payment", catalog = "panthers", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Payment.findAll", query = "SELECT p FROM Payment p")
@@ -44,7 +42,6 @@ public class Payment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     @Basic(optional = false)
     @NotNull
     @Column(name = "payid", nullable = false)
@@ -83,7 +80,7 @@ public class Payment implements Serializable {
     public void setPayid(Integer payid) {
         this.payid = payid;
     }
-    
+
     public String getHodlName() {
         return hodlName;
     }

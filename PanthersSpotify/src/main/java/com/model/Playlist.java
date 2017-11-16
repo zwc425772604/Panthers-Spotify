@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,6 +48,13 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Playlist.findByFollowers", query = "SELECT p FROM Playlist p WHERE p.followers = :followers")
     , @NamedQuery(name = "Playlist.findByIspublic", query = "SELECT p FROM Playlist p WHERE p.ispublic = :ispublic")})
 public class Playlist implements Serializable {
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "playlist")
+    private Collection<Playlistsong> playlistsongCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "playlist")
+    private Collection<Followplaylist> followplaylistCollection;
+    @OneToMany(mappedBy = "pid")
+    private Collection<Songqueue> songqueueCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -210,6 +219,33 @@ public class Playlist implements Serializable {
     @Override
     public String toString() {
         return "com.model.Playlist[ pid=" + pid + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Playlistsong> getPlaylistsongCollection() {
+        return playlistsongCollection;
+    }
+
+    public void setPlaylistsongCollection(Collection<Playlistsong> playlistsongCollection) {
+        this.playlistsongCollection = playlistsongCollection;
+    }
+
+    @XmlTransient
+    public Collection<Followplaylist> getFollowplaylistCollection() {
+        return followplaylistCollection;
+    }
+
+    public void setFollowplaylistCollection(Collection<Followplaylist> followplaylistCollection) {
+        this.followplaylistCollection = followplaylistCollection;
+    }
+
+    @XmlTransient
+    public Collection<Songqueue> getSongqueueCollection() {
+        return songqueueCollection;
+    }
+
+    public void setSongqueueCollection(Collection<Songqueue> songqueueCollection) {
+        this.songqueueCollection = songqueueCollection;
     }
     
 }

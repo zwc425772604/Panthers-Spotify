@@ -7,245 +7,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-dark-grey.css">
+  <link rel="stylesheet" href="${cp}/resources/css/playlist.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="${cp}/resources/js/playlist.js"></script>
+  	
 </head>
 <body>
 	<!--  Container for DISCOVER -->
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-dark-grey.css">
- 
-<style type="text/css">
-
-
-  /* for the close button in input type search */
-  input[type="search"]::-webkit-search-cancel-button
-  {
-    -webkit-appearance: searchfield-cancel-button;
-  }
-
-  #search_span
-  {
-    background-color: #343a40;
-    color: white;
-    border: none;
-    color: #cccccc;
-  }
-  #filter_keyword
-  {
-    width: 90%;
-    font-size: 16px;
-      background-color: #343a40;
-      border-color: inherit;
-  -webkit-box-shadow: none;
-  box-shadow: none;border:none;
-  color: #cccccc;
-  }
-  #filter_container
-  {
-    margin-top: 3%;
-
-  }
-
-  .formButton
-  {
-      display:block;
-       border-radius: 10px;
-        color:white;
-        width: 90px;
-        background-color:#00cc00;
-  }
-  .song_action_list
-  {
-    background-color: gray;
-    margin-left: 5%;
-  }
-  .playlist_action_dropdown
-  {
-    font-size: 10px;
-  }
-
-  .playlist_action_list
-  {
-    max-height:350px;
-    overflow:scroll;
-  }
-  
-  #filter_and_download .download_right
-  {
-  	float: right;
-  } 
-  #filter_and_download .filter_left
-  {
-  	float: left;
-  } 
-}
-
-
-</style>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-var hoverEnabled = true;
-$(document).ready(function(){
-  $(".more_action_list").hide(); //hide the ... button when page is loaded
-  $(".playbar-play-button").hide(); //hide the play button when page is loaded
-  $("#remove_playlist_button").click(function(){
-
-	 	
-	 	$("#remove_playlist_modal").show();
-	});
-  $("#edit_playlist_button").click(function(){
-
-	 	
-	 	$("#edit_playlist_modal").show();
-	});
-  $("#delete_playlist_confirm_button").click(function(){
-	 
-	  $("#remove_playlist_modal").hide();
-	  var pid = $("#playlist_id").text();
-	  $.ajax({
-          url: "${cp}/removeSpecificPlaylist",
-          type: "POST",
-          data : {"playlist_id" : pid },
-          asyn: true,
-          cache: false,
-          success : function(response)
-          {
-            console.log(response);
-           // $("#main-changing-content").load("jsp/playlist.jsp");
-            window.location.replace("http://localhost:8080/PanthersSpotify/main");
-          },
-          error: function(e)
-          {
-            console.log(e);
-         
-          }
-    
-        });
-  });
-  $("#cancel_delete_button").click(function(){
-	  $("#remove_playlist_modal").hide();
-  });
-  $("#cancel_edit_button").click(function(){
-	
-	  event.preventDefault(); document.getElementById('edit_playlist_modal').style.display='none';
-  });
-});
-
-//style for the filter container
-$( "#filter_container" )
-.mouseover(function() {
-  $('#filter_keyword').css('color', 'white');
-  $('#search_span').css('color','white');
-})
-.mouseout(function(){
-  $('#filter_keyword').css('color','#cccccc');
-  $('#search_span').css('color','#cccccc');
-});
-
-//style for the filter keyword input tag
-$( "#filter_keyword" )
-.focus(function(){
-  $('#filter_keyword').css('background-color','gray');
-  $('#search_span').css('background-color','gray');
-});
-$("#filter_keyword").blur(function(){
-  $('#filter_keyword').css('background-color','#343a40');
-  $('#search_span').css('background-color','#343a40');
-  });
-
-//toggle between add and remove in the song lists
-$(".tracklist-save-button")
-.mouseover(function()
-{
-  $(".tracklist-add-delete-button",this).text("clear");
-})
-.mouseout(function()
-{
-  $(".tracklist-add-delete-button",this).text("done");
-});
-
-
-$( ".song_info" ).bind({
-  mouseover: function() {
-    if (hoverEnabled)
-    {
-      $(".more_action_list",this).show();
-      $(".playbar-play-button",this).show();
-    }
-
-  },
-  mouseout: function() {
-    if (hoverEnabled)
-    {
-      $(".more_action_list",this).hide();
-      $(".playbar-play-button",this).hide();
-    }
-
-  }
-});
-
-$(".more_button").click(function()
-{
-  var x =$(this).siblings( ".song_action_list");
-  if($(this).siblings( ".song_action_list").hasClass('w3-show') == false)
-  {
-    $(this).siblings( ".song_action_list").addClass("w3-show");
-  }
-  else {
-    $(this).siblings( ".song_action_list").removeClass("w3-show");
-  }
-  hoverEnabled = !hoverEnabled;
-
-});
-$(".playlist_header_more_button").click(function()
-{
-  var x =$(this).siblings( ".playlist_action_list");
-  if($(this).siblings( ".playlist_action_list").hasClass('w3-show') == false)
-  {
-    $(this).siblings( ".playlist_action_list").addClass("w3-show");
-  }
-  else {
-    $(this).siblings( ".playlist_action_list").removeClass("w3-show");
-  }
-  hoverEnabled = !hoverEnabled;
-  //alert("clicked");
-});
-
-
-// handler for play/pause button in the song list
-$(".playbar-play-button").click(function(){
-
-    if (isPlaying)
-    {
-      // $(".song-page-play-pause-button",this).text("play_circle_filled");
-      if ($(".song-page-play-pause-button",this).text().localeCompare('play_circle_filled') == 0)
-      {
-        isPlaying = false;
-        $(".song-page-play-pause-button").text("play_circle_filled");
-        $(".song-page-play-pause-button",this).text("pause_circle_filled");
-        playSong();
-      }
-      else
-      {
-          $(".song-page-play-pause-button",this).text("play_circle_filled");
-          playSong();
-      }
-    }
-    else
-    {
-      playSong();
-
-      $(".song-page-play-pause-button").text("play_circle_filled");
-      $(".song-page-play-pause-button",this).text("pause_circle_filled");
-    }
-
-});
-
-
-
-</script>
-
 <div class="suggestion-container" id = "release-container" style="margin-top: 3%;">
 
   <!-- <div class="suggestion-container-top">
@@ -262,14 +34,17 @@ $(".playbar-play-button").click(function(){
       <div class="playlist_details_box" style="width:70%">
         <div id ="playlist-info" style="margin-top: 4%; margin-left:5%;">
           <h5> Playlist </h5>
-          <p style="font-size: 1.8em;"><c:out value="${selected_playlist.pname}"></c:out>  </p>
-          <p id="playlist_id" style="display:none;"><c:out value="${selected_playlist.pid}"></c:out>  </p>
-          <p style="font-size: 1.2em;"><c:out value="${selected_playlist.des}"></c:out>  </p>
-          <p style="font-size: 1.1em;"> Created by: <a href="#"> <c:out value="${selected_playlist.powner.uname}"></c:out> </a> ⋅ <span id="num_song"> 1 song </span> , <span id="total_length"> 4 min 26 sec </span></p>
+          <p style="font-size: 1.8em;"><c:out value="${selectedPlaylist.pname}"></c:out>  </p>
+          <p id="playlistID" style="display:none;"><c:out value="${selectedPlaylist.pid}"></c:out>  </p>
+          <p style="font-size: 1.2em;"><c:out value="${selectedPlaylist.des}"></c:out>  </p>
+          <p style="font-size: 1.1em;"> Created by: <a href="#"> <c:out value="${selectedPlaylist.powner.uname}"></c:out> </a> ⋅ <span id="num_song"> <c:out value="${selectedPlaylistNumSongs}"></c:out> song </span> , <span id="total_length"> 4 min 26 sec </span></p>
           <div class="row">
 
           <div class="col-md-3" style="display:inline;">
-            <button class="btn formButton" onclick="playSong();">  <span class="playingStatus"> PLAY </span></button>
+            <button class="w3-button w3-round-xxlarge btn formButton" onclick="playSong();">  <span class="playingStatus">PLAY</span></button>
+            <c:if test="${selectedPlaylist.powner != user}">
+            	<button class="w3-button w3-round-xxlarge formButton followPlaylistButton" >  <span id="followingPlaylistStatus" >FOLLOW</span></button>
+            </c:if>
           </div>
      
           <div class="col-md-3">

@@ -82,16 +82,19 @@ public class ServletManager {
        //if true - get the playlist, etc from the database and update the DOM
        else if (li.get(0).getUpassword().equals(password))
        {
-    	   session.setAttribute("user", li.get(0));
+    	   User user = li.get(0);
+    	   session.setAttribute("user", user);
     	   //user page
     	   if (li.get(0).getUtype() == 0)
     	   {
-    		   mav.addObject("username", li.get(0).getUname());
-    		   List<Playlist> user_playlist = (List<Playlist>)(li.get(0).getUserPlaylistCollection());
-    		   List<Playlist> follow_playlist = playlistManager.getUserFollowPlaylist(li.get(0));
+    		   mav.addObject("username", user.getUname());
+    		   List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
+    		   List<Playlist> follow_playlist = playlistManager.getUserFollowPlaylist(user);
     		   user_playlist.addAll(follow_playlist);
     		   session.setAttribute("user_playlist", user_playlist);
     		   session.setAttribute("userFollowedPlaylists", follow_playlist);
+    		   List<Playlist> userFollowingPlaylists = (List<Playlist>) user.getPlaylistCollection();
+    		   System.out.println("number of following playlist : " + userFollowingPlaylists.size());
                mav.setViewName("main");
     	   }
     	   //display admin page
@@ -386,5 +389,16 @@ public class ServletManager {
 	   System.out.println("playlist id to be unfollow is : " + playlistID);
 	   return "ok";
    }
+   
+   @RequestMapping(value="/addSongToPlaylist", method=RequestMethod.POST)
+   public @ResponseBody String addSongToPlaylist(HttpServletRequest request, HttpSession session) {
+	   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
+	   int songID = Integer.parseInt(request.getParameter("songID").trim());
+	   User user = (User) session.getAttribute("user");
+	  
+	   return "ok";
+   }
+   
+   
 
 }

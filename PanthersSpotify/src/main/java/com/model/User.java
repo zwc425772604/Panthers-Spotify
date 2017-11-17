@@ -28,6 +28,9 @@ import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 /**
  * User object
  * @author weichaozhao
@@ -64,7 +67,8 @@ public class User implements Serializable {
     @JoinTable(name = "followplaylist", joinColumns = {
         @JoinColumn(name = "uemail", referencedColumnName = "email")}, inverseJoinColumns = {
         @JoinColumn(name = "pid", referencedColumnName = "pid")})
-    @ManyToMany
+    @ManyToMany(fetch=FetchType.EAGER)
+    @Fetch(value=FetchMode.SUBSELECT)
     private Collection<Playlist> playlistCollection;
     @JoinTable(name = "followalbum", joinColumns = {
         @JoinColumn(name = "uemail", referencedColumnName = "email")}, inverseJoinColumns = {

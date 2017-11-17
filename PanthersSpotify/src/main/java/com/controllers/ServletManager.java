@@ -424,8 +424,9 @@ public class ServletManager {
    @RequestMapping(value="/deleteSelectedUserAccount", method = RequestMethod.POST)
    public @ResponseBody String deleteSelectedUserAccount(HttpServletRequest request, HttpSession session) throws JSONException {	 
 	   String userID = request.getParameter("userID");
-	   List<User> li = userManager.getUser(userID);
-	   userManager.remove(li.get(0));
+//	   List<User> li = userManager.getUser(userID);
+//	   userManager.remove(li.get(0));
+	   System.out.println("removevvv");
   	   return "remove success";
    }
    

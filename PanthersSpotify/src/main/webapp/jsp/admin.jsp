@@ -19,7 +19,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://www.w3schools.com/lib/w3.js"></script> <!-- for include html in div tag -->.
     <!--  <script src="${cp}/resources/js/main.js"></script> -->
-    <script src="${cp}/resources/js/admin.js"></script>
+    
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -30,7 +30,7 @@
         //hide all other containers in <div id= 'middle-content'> beside except overview_container
         //$("#overview_container").siblings().hide();
         //$("#main-changing-content").load("browse.html");
-        //$("#main-changing-content").load("jsp/dashboard.jsp");
+        $("#main-changing-content").load("jsp/dashboard.jsp");
         $("#add_new_song_button").click(function(){
           $('#new_song_dialog').dialog({
 	          height: 600,
@@ -69,7 +69,7 @@
           <ul class="left_sizebar">
             <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add User"  id="add-user-button" onclick="addUser()"><i class="material-icons">add</i></button></li>
             <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit User Information" id="edit-user-button"> <i class="material-icons">mode_edit</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete User" id="delete-user-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
+            
           </ul>
         </li>
         <li>
@@ -77,7 +77,7 @@
           <ul class="left_sizebar">
             <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add Artist"  id="playbar-prev-button"><i class="material-icons">add</i></button></li>
             <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit Artist Information" id="playbar-shuffle-button"> <i class="material-icons">mode_edit</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete Artist" id="playbar-play-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
+          
           </ul>
         </li>
         <li>
@@ -151,7 +151,7 @@
                     </form:form>
                 </div> <!-- end of dialog popup box -->
             <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit Song Information" id="edit_song_button"> <i class="material-icons">mode_edit</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete Song" id="playbar-play-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
+           
           </ul>
         </li>
         <li>
@@ -159,7 +159,7 @@
           <ul class="left_sizebar">
             <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add Album"  id="playbar-prev-button"><i class="material-icons">add</i></button></li>
             <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit Album Information" id="playbar-shuffle-button"> <i class="material-icons">mode_edit</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete Album" id="playbar-play-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
+         
           </ul>
         </li>
         <li>
@@ -220,193 +220,10 @@
         </div>
         <!--Banner Image-->
         <div id = "main-changing-content">
-        	<div id="bannerimage" style="background-image: url(http://ep.id-t.com/dam/asset/pictures/website-content/newsitems/banner-sensation-spotify-playlist-.jpeg?uuid=6j3c6dvv5ncwviv4yuwizw7tfa);"></div>
-		        <!--  
-		        <div class="w3-bar w3-black">
-				  <button class="w3-bar-item w3-button" onclick="openCity('London')">London</button>
-				  <button class="w3-bar-item w3-button" onclick="openCity('Paris')">Paris</button>
-				  <button class="w3-bar-item w3-button" onclick="openCity('Tokyo')">Tokyo</button>
-				</div> -->
-				<nav class="navbar navbar-expand-md bg-dark navbar-dark"
-				  id="bootstrap-overrides-navbar">
-				  <ul class="navbar-nav mr-auto tab" id="navbar-ul">
-				    <li class="nav-item">
-				      <a class="nav-link tablinks" href="javascript:displayContent('songsTable')">SONGS </a>
-				    </li>
-				    <li class="nav-item">
-				      <a class="nav-link tablinks" href="javascript:displayContent('albumsTable')">ALBUMS</a>
-				    </li>
-				    <li class="nav-item">
-				      <a class="nav-link" href="javascript:displayContent('playlistsTable')">PLAYLISTS</a>
-				    </li>
-				    <li class="nav-item">
-				      <a class="nav-link" href="javascript:displayContent('usersTable')">USERS</a>
-				    </li>
-				    <li class="nav-item">
-				      <a class="nav-link" href="javascript:displayContent('artistsTable')">ARTISTS</a>
-				    </li>
-				  </ul>
-				</nav>
-				<div id="songsTable" class="w3-container info-table">
-				  
-				</div>
-				
-				<div id="albumsTable" class="w3-container info-table" style="display:none">
-				  <h2>Paris</h2>
-				  <p>Paris is the capital of France.</p> 
-				</div>
-				
-				<div id="playlistsTable" class="w3-container info-table" style="display:none">
-				      <h1>Playlist Table</h1>
-					  <table class="w3-table-all w3-hoverable" id = "playlists-table">
-					    <thead>
-					      <tr class="w3-light-grey">
-					        <th>ID</th>
-					        <th>Name</th>
-					        <th>Owner</th>
-					        <th># of Songs</th>
-					        <th># of Followers</th>
-					        <th>Created Date</th>
-					        <th></th>
-					      </tr>
-					    </thead>
-					    <tbody>
-					    </tbody>
-					  </table>
-				</div>
-				
-				<div id="usersTable" class="w3-container info-table" style="display:none">
-				  <h1>Users Table</h1>
-				   <div class="table-responsive">
-				        <table class="table table-bordered" id = "users-table">
-				          <thead>
-						     <tr class="w3-light-grey">
-						       <th>Email</th>
-						       <th>First Name</th>
-						       <th>Last Name</th>
-						       <th>Membership</th>
-						       <th>Username</th>
-						       <th></th> 
-						     </tr>
-						  </thead>
-						  <tbody>
-						  </tbody>
-				        </table>
-				   </div>
-				  <!-- 
-				  <table class="w3-table-all w3-hoverable">
-				    <thead>
-				      <tr class="w3-light-grey">
-				        <th>User Email</th>
-				        <th>User First Name</th>
-				        <th>User Last Name</th>
-				        <th>User 
-				      </tr>
-				    </thead>
-				    <tr>
-				      <td>Jill</td>
-				      <td>Smith</td>
-				      <td>50</td>
-				    </tr>
-				    <tr>
-				      <td>Eve</td>
-				      <td>Jackson</td>
-				      <td>94</td>
-				    </tr>
-				    <tr>
-				      <td>Adam</td>
-				      <td>Johnson</td>
-				      <td>67</td>
-				    </tr>
-				  </table>
-				   -->
-				</div>
-				<div id="artistsTable" class="w3-container info-table" style="display:none">
-				  <h2>Tokyo</h2>
-				  <p>Tokyo is the capital of Japan.</p>
-				</div>
-
-<script>
-function displayContent(table) {
-    var i;
-    var x = document.getElementsByClassName("info-table");
-    for (i = 0; i < x.length; i++) {
-       x[i].style.display = "none";  
-    }
-    document.getElementById(table).style.display = "block";  
-}
-</script>
+        	
         </div>
         <!-- closed tag for scrolled-main -->
       </div>
     </main>
-    <footer class="fixed-bottom">
-      <div class="row">
-        <div class="col-md-3 col-sm-3" id = "playbar-artist-info">
-          <div class="media">
-            <div class="media-left">
-              <img src="https://i.pinimg.com/736x/8d/e4/20/8de42050e671b93b1d6bad2f2764ba89--calm-graphic-design-sun-graphic.jpg" class="media-object" style="width:60px">
-            </div>
-            <div class="media-body">
-              <h4 class="media-heading"> <a href="#" id="playbar-song-href"> <span id="playbar-song-name">   Song name     </span> </a></h4>
-              <p> <a href="#" id ="playbar-artist-href"> <span id="playbar-artist-name"> Artist name </span></a>
-                <a href="#">
-                <span class="glyphicon glyphicon-search"></span>
-                </a>
-                <a href="#" data-toggle ="tooltip-save-library" title= "Save to Your Library" id="playbar-save-anchor-tag"><i class="fa fa-plus-square"></i></a>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 col-sm-6" id="playbar-control">
-          <div class="row">
-            <div class="col-md-3">
-              <!-- offset -->
-            </div>
-            <div class="col-md-6" id = "playbar-center">
-              <ul id="playbar-center-icons">
-                <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Shuffle" id="playbar-shuffle-button"> <i class="material-icons">shuffle</i></button></li>
-                <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Previous"  id="playbar-prev-button"><i class="material-icons">skip_previous</i></button></li>
-                <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Play" id="playbar-play-button" onclick="playSong()"> <i class="material-icons"><span id="play-pause-button">play_circle_filled</span></i></button></li>
-                <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Next"  id="playbar-next-button"><i class="material-icons">skip_next</i></button></li>
-                <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Repeat"  id="playbar-repeat-button"><i class="material-icons"><span id="repeat-button-text">repeat</span></i></button></li>
-              </ul>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-              <!-- offset -->
-              <div class = "playback-bar-current-time" style="float:right; margin-right: 12px;"> <span id="currentPos"> 0:00 </span></div>
-            </div>
-            <div class="col-md-6 playback-bar">
-              <!-- <div class="progress" onseeked="testing(this.child);">
-                <div class="progress-bar"  id="progress_bar_play" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:10%">
-                  <span class="sr-only">70% Complete</span>
-                </div>
-                </div> -->
-              <div id="slider">
-                <div id="innerSlider" style="background-color:blue; width: 30px; left:30%;"></div>
-              </div>
-              <div class="audio-bar">
-                <!-- use javascript to play the songs -->
-                <audio id="myAudio" ontimeupdate="updateTime()">
-                  <source src="" type="audio/mpeg">
-                  
-                </audio>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="playback-bar-finish-time" style="margin-left: 12px;"> <span id="duration">  0:00 </span> </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-3 col-sm-3" id="playbar-right">
-          <ul id="playbar-right-icons">
-            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Queue" id="playbar-queue-anchor-tag"> <i class="material-icons">add_to_queue</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Mute"  id="playbar-mute-anchor-tag"><i class="material-icons">volume_up</i></button></li>
-            <li><input class="bar" type="range" id="rangeinput" value="50" min = "0" max = "100" onchange="console.log(this.value);"/></li>
-          </ul>
-        </div>
-      </div>
-    </footer>
+    
   </body>

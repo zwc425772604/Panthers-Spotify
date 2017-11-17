@@ -1,4 +1,7 @@
-
+function displayPage()
+{
+	$("#main-changing-content").load("jsp/dashboard.jsp");
+}
 $(document).ready(function(){
 	
 		
@@ -6,7 +9,7 @@ $(document).ready(function(){
         url: "{cp}/../loadUserTables",
         type: "POST",
         asyn: false,
-        cache: true,
+        cache: false,
         success : function(response)
         {
           console.log(response);
@@ -25,7 +28,7 @@ $(document).ready(function(){
 	        url: "{cp}/../loadAlbum",
 	        type: "POST",
 	        asyn: false,
-	        cache: true,
+	        cache: false,
 	        success : function(response)
 	        {
 	          console.log(response);
@@ -42,7 +45,7 @@ $(document).ready(function(){
 	        url: "{cp}/../loadAllPlaylists",
 	        type: "POST",
 	        asyn: false,
-	        cache: true,
+	        cache:false,
 	        success : function(response)
 	        {
 	          console.log(response);
@@ -64,12 +67,13 @@ function insertUserTables(data)
 	for (var i = 0; i < data.length; i++)
 		{
 			$("#users-table").find('tbody').append([
-				'<tr class="user-items w3-blue-grey">',
+				'<tr>',
 				  '<td>' + data[i]['userID'] + '</td>',
 				  '<td>' + data[i]['userFirstName'] + '</td>',
 				  '<td>' + data[i]['userLastName'] + '</td>',
 				  '<td>' + data[i]['userType'] + '</td>',
 				  '<td>' + data[i]['username'] + '</td>',
+				  '<td><button class="unstyle-buttons edit_user_button"  data-toggle="tooltip-play" title="Edit This User Profiles"> <i class="material-icons">mode_edit</i></button></td>',
 				  '<td><button class="unstyle-buttons delete-user-button"  data-toggle="tooltip-play" title="Delete This User"> <i class="material-icons">delete_forever</i></button></td>',
 				 '</tr>' 
 			].join(''));
@@ -141,6 +145,17 @@ $(document).on ("click", ".delete-playlist-button", function () {
 	          console.log(e);               
 	        }
 	      });
+});
+
+$(document).on ("click", ".edit_user_button", function () {
+	var userID = $(this).closest('tr').children('td:eq(0)').text();
+	$("#edit-user-profile-modal").show();
+	
+//	 alert("haha");
+});
+$("#cancel_edit_button").click(function(){
+	
+	  event.preventDefault(); document.getElementById('edit-user-profile-modal').style.display='none';
 });
 
 

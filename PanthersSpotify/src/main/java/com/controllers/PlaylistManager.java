@@ -27,6 +27,7 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
@@ -231,6 +232,8 @@ public class PlaylistManager {
 	  return result;
   }
   
+  
+  
 //follow playlist
   public boolean followPlaylist(int playlistId,User user)
   {
@@ -327,5 +330,15 @@ public class PlaylistManager {
 	  }
 	  return num;
   }
+  
+  @SuppressWarnings("unchecked")
+ 	public List<Playlist> getAllPlaylists(){
+ 		EntityManager em = EMF.createEntityManager();
+     	List<Playlist> list = new ArrayList<Playlist>();	
+     	Query query = em.createQuery("SELECT a FROM Playlist a");
+     	list = (List<Playlist>)query.getResultList();
+     	em.close();
+     	return list;
+     }
   
 }

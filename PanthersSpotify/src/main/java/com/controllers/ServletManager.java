@@ -5,6 +5,7 @@
  */
 package com.controllers;
 
+import com.helper.JSONHelper;
 import com.helper.Security;
 import com.model.Album;
 import com.model.Playlist;
@@ -22,6 +23,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.json.JsonArray;
+import javax.json.JsonObject;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -34,6 +38,7 @@ import javax.servlet.http.Part;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -398,6 +403,49 @@ public class ServletManager {
 	  
 	   return "ok";
    }
+   
+   @RequestMapping(value="/loadUserTables", method = RequestMethod.POST)
+   public @ResponseBody String loadAllUsers(HttpServletRequest request, HttpSession session) throws JSONException {	 
+	   List<User> users = userManager.getAllUsers();
+	   String userJsonArray = JSONHelper.userListToJSON(users);
+	   System.out.println("userJsonArray is :" + userJsonArray);
+  	   return userJsonArray;
+   }
+   
+   @RequestMapping(value="/loadAllPlaylists", method = RequestMethod.POST)
+   public @ResponseBody String loadAllPlaylists(HttpServletRequest request, HttpSession session) throws JSONException {	 
+	   List<Playlist> playlists = playlistManager.getAllPlaylists();
+	   String playlistsJsonArray = JSONHelper.playlistListToJSON(playlists);
+	   System.out.println("playlistJsonArray is :" + playlistsJsonArray);
+  	   return playlistsJsonArray;
+   }
+   
+   /*fire from admin.js admin action*/
+   @RequestMapping(value="/deleteSelectedUserAccount", method = RequestMethod.POST)
+   public @ResponseBody String deleteSelectedUserAccount(HttpServletRequest request, HttpSession session) throws JSONException {	 
+	   String userID = request.getParameter("userID");
+	   List<User> li = userManager.getUser(userID);
+	   userManager.remove(li.get(0));
+  	   return "remove success";
+   }
+   
+   /* fire from admin.js admin action*/
+   @RequestMapping(value = "/deleteSelectedPlaylist", method = RequestMethod.POST)
+   public  @ResponseBody String deleteSelectedUserPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
+//	   		Playlist playlist = playlistManager.getPlaylist(playlistID);
+//	   		User user = (User) session.getAttribute("user");
+//	   		playlistManager.removePlaylist(playlistID,user);
+//	   		//playlistManager.remove(playlist_id);
+//	   		List<Playlist> user_playlist = (List<Playlist>) (session.getAttribute("user_playlist"));
+//	   		user_playlist.remove(playlist);
+//	   		session.setAttribute("user_playlist", user_playlist);
+// 		    mav.addObject("user_playlist", user_playlist);
+//	   		System.out.println("remove success");
+            return "ok";
+   }
+   
+   
    
    
 

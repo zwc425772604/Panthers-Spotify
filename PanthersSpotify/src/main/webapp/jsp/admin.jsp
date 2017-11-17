@@ -18,7 +18,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://www.w3schools.com/lib/w3.js"></script> <!-- for include html in div tag -->.
-    <script src="${cp}/resources/js/main.js"></script>
+    <!--  <script src="${cp}/resources/js/main.js"></script> -->
+    <script src="${cp}/resources/js/admin.js"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -29,10 +30,10 @@
         //hide all other containers in <div id= 'middle-content'> beside except overview_container
         //$("#overview_container").siblings().hide();
         //$("#main-changing-content").load("browse.html");
-        $("#main-changing-content").load("jsp/browse.jsp");
+        //$("#main-changing-content").load("jsp/dashboard.jsp");
         $("#add_new_song_button").click(function(){
           $('#new_song_dialog').dialog({
-	          height: 900,
+	          height: 600,
 	          width: 550,
 	          modal: true,
 	          resizable: false,
@@ -55,13 +56,12 @@
     </script>
   </head>
   <body>
-    <div class="container-fluid">
-    <div class="row">
+  
     <nav class="sidebar" id="left-sidebar">
       <ul class="nav flex-column" >
         <!--First Section: browse and radio-->
         <li class="nav-item" id="extra-padding">
-          <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('browse')">Dashboard</a>
+          <a class="nav-link color-nav" href="javascript:displayPage('dashboard')">Dashboard</a>
         </li>
         <!--Actions taken by the admin-->
         <li>
@@ -150,8 +150,7 @@
                     </div>
                     </form:form>
                 </div> <!-- end of dialog popup box -->
-                <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit Song Information" id="edit_song_button"> <i class="material-icons">mode_edit</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit Song Information" id="playbar-shuffle-button"> <i class="material-icons">mode_edit</i></button></li>
+            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit Song Information" id="edit_song_button"> <i class="material-icons">mode_edit</i></button></li>
             <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete Song" id="playbar-play-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
           </ul>
         </li>
@@ -221,6 +220,122 @@
         </div>
         <!--Banner Image-->
         <div id = "main-changing-content">
+        	<div id="bannerimage" style="background-image: url(http://ep.id-t.com/dam/asset/pictures/website-content/newsitems/banner-sensation-spotify-playlist-.jpeg?uuid=6j3c6dvv5ncwviv4yuwizw7tfa);"></div>
+		        <!--  
+		        <div class="w3-bar w3-black">
+				  <button class="w3-bar-item w3-button" onclick="openCity('London')">London</button>
+				  <button class="w3-bar-item w3-button" onclick="openCity('Paris')">Paris</button>
+				  <button class="w3-bar-item w3-button" onclick="openCity('Tokyo')">Tokyo</button>
+				</div> -->
+				<nav class="navbar navbar-expand-md bg-dark navbar-dark"
+				  id="bootstrap-overrides-navbar">
+				  <ul class="navbar-nav mr-auto tab" id="navbar-ul">
+				    <li class="nav-item">
+				      <a class="nav-link tablinks" href="javascript:displayContent('songsTable')">SONGS </a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link tablinks" href="javascript:displayContent('albumsTable')">ALBUMS</a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" href="javascript:displayContent('playlistsTable')">PLAYLISTS</a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" href="javascript:displayContent('usersTable')">USERS</a>
+				    </li>
+				    <li class="nav-item">
+				      <a class="nav-link" href="javascript:displayContent('artistsTable')">ARTISTS</a>
+				    </li>
+				  </ul>
+				</nav>
+				<div id="songsTable" class="w3-container info-table">
+				  
+				</div>
+				
+				<div id="albumsTable" class="w3-container info-table" style="display:none">
+				  <h2>Paris</h2>
+				  <p>Paris is the capital of France.</p> 
+				</div>
+				
+				<div id="playlistsTable" class="w3-container info-table" style="display:none">
+				      <h1>Playlist Table</h1>
+					  <table class="w3-table-all w3-hoverable" id = "playlists-table">
+					    <thead>
+					      <tr class="w3-light-grey">
+					        <th>ID</th>
+					        <th>Name</th>
+					        <th>Owner</th>
+					        <th># of Songs</th>
+					        <th># of Followers</th>
+					        <th>Created Date</th>
+					        <th></th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					    </tbody>
+					  </table>
+				</div>
+				
+				<div id="usersTable" class="w3-container info-table" style="display:none">
+				  <h1>Users Table</h1>
+				   <div class="table-responsive">
+				        <table class="table table-bordered" id = "users-table">
+				          <thead>
+						     <tr class="w3-light-grey">
+						       <th>Email</th>
+						       <th>First Name</th>
+						       <th>Last Name</th>
+						       <th>Membership</th>
+						       <th>Username</th>
+						       <th></th> 
+						     </tr>
+						  </thead>
+						  <tbody>
+						  </tbody>
+				        </table>
+				   </div>
+				  <!-- 
+				  <table class="w3-table-all w3-hoverable">
+				    <thead>
+				      <tr class="w3-light-grey">
+				        <th>User Email</th>
+				        <th>User First Name</th>
+				        <th>User Last Name</th>
+				        <th>User 
+				      </tr>
+				    </thead>
+				    <tr>
+				      <td>Jill</td>
+				      <td>Smith</td>
+				      <td>50</td>
+				    </tr>
+				    <tr>
+				      <td>Eve</td>
+				      <td>Jackson</td>
+				      <td>94</td>
+				    </tr>
+				    <tr>
+				      <td>Adam</td>
+				      <td>Johnson</td>
+				      <td>67</td>
+				    </tr>
+				  </table>
+				   -->
+				</div>
+				<div id="artistsTable" class="w3-container info-table" style="display:none">
+				  <h2>Tokyo</h2>
+				  <p>Tokyo is the capital of Japan.</p>
+				</div>
+
+<script>
+function displayContent(table) {
+    var i;
+    var x = document.getElementsByClassName("info-table");
+    for (i = 0; i < x.length; i++) {
+       x[i].style.display = "none";  
+    }
+    document.getElementById(table).style.display = "block";  
+}
+</script>
         </div>
         <!-- closed tag for scrolled-main -->
       </div>
@@ -276,7 +391,7 @@
                 <!-- use javascript to play the songs -->
                 <audio id="myAudio" ontimeupdate="updateTime()">
                   <source src="" type="audio/mpeg">
-                  Your browser does not support the audio element.
+                  
                 </audio>
               </div>
             </div>
@@ -287,8 +402,8 @@
         </div>
         <div class="col-md-3 col-sm-3" id="playbar-right">
           <ul id="playbar-right-icons">
-            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Queue" id="playbar-queue-anchor-tag"/> <i class="material-icons">add_to_queue</i></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Mute"  id="playbar-mute-anchor-tag"/><i class="material-icons">volume_up</i></li>
+            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Queue" id="playbar-queue-anchor-tag"> <i class="material-icons">add_to_queue</i></button></li>
+            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Mute"  id="playbar-mute-anchor-tag"><i class="material-icons">volume_up</i></button></li>
             <li><input class="bar" type="range" id="rangeinput" value="50" min = "0" max = "100" onchange="console.log(this.value);"/></li>
           </ul>
         </div>

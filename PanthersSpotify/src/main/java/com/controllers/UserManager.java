@@ -6,10 +6,12 @@
 package com.controllers;
 
  
+import com.model.Album;
 import com.model.Playlist;
 import com.model.User;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.EntityManager;
@@ -115,6 +117,16 @@ public class UserManager {
   	    entityManagerFactory.close();
         return results;
 
+    }
+    
+    @SuppressWarnings("unchecked")
+	public List<User> getAllUsers(){
+		EntityManager em = EMF.createEntityManager();
+    	List<User> list = new ArrayList<User>();	
+    	Query query = em.createQuery("SELECT a FROM User a");
+    	list = (List<User>)query.getResultList();
+    	em.close();
+    	return list;
     }
     
     

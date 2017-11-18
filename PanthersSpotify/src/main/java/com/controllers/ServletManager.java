@@ -337,36 +337,12 @@ public class ServletManager {
    @RequestMapping(value="/getUserFriendList", method = RequestMethod.POST)
    public @ResponseBody String getUserFriendList(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
 	   
-	   System.out.println("Getting user friendlist");
-	   User user = (User) session.getAttribute("user");
 	   
+	   User user = (User) session.getAttribute("user");
+	   System.out.println("Getting user friendlist" + user.getEmail());
 	   List<User> temp = userManager.getFriend(user.getEmail());
-	   //temp.add(user);
 	   session.setAttribute("userFriendList", temp);
   	   return "ok";
-   }
-   
-
-   @RequestMapping(value = "/addFriend", method = RequestMethod.POST)
-   public ModelAndView addFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-	   		System.out.println("HI");
-	   		User user = (User) session.getAttribute("user");
-	   		String femail = request.getParameter("femail");//friend email
-	   		List<User> temp = userManager.addFriend(user.getEmail(),femail);
-	   		mav.setViewName("main");
-	   		mav.addObject("username",user.getUname());
-            return mav;
-   }
-   
-   @RequestMapping(value = "/deleteFriend", method = RequestMethod.POST)
-   public ModelAndView deleteFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-	   		System.out.println("Delete Friend");
-	   		User user = (User) session.getAttribute("user");
-	   		String femail = request.getParameter("femail");//friend email
-	   		List<User> temp = userManager.deleteFriend(user.getEmail(),femail);
-	   		mav.setViewName("main");
-	   		mav.addObject("username",user.getUname());
-            return mav;
    }
    
    @RequestMapping(value="/getUserPage", method = RequestMethod.POST)
@@ -377,11 +353,37 @@ public class ServletManager {
 	   List<User> users = userManager.getUser(email);
 	   User user = (users.size() != 0 )?users.get(0):null;
 	   session.setAttribute("selectedFriend", user);
+	   System.out.println(user.getEmail());
   	   return "ok";
    }
    
-
+   @RequestMapping(value = "/addFriend", method = RequestMethod.POST)
+   public ModelAndView addFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   		System.out.println("HI");
+	   		User user = (User) session.getAttribute("user");
+	   		String femail = request.getParameter("femail");//friend email
+	   		List<User> temp = userManager.addFriend(user.getEmail(),femail);
+	   		mav.setViewName("main");
+	   		mav.addObject("username",user.getEmail());
+            return mav;
+   }
    
+   @RequestMapping(value = "/deleteFriend", method = RequestMethod.POST)
+   public ModelAndView deleteFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	   		System.out.println("Delete Friend");
+	   		User user = (User) session.getAttribute("user");
+	   		String femail = request.getParameter("femail");//friend email
+	   		System.out.println("Friend to be deleted" + femail);
+	   		boolean temp = userManager.deleteFriend(user.getEmail(),femail);
+	   		//remove the 
+	   		List<User> newFriendlist = userManager.getFriend(user.getEmail());
+	 	    session.setAttribute("userFriendList", newFriendlist);
+	   		mav.setViewName("main");
+	   		mav.addObject("username",user.getUname());
+            return mav;
+   }
+   
+  
    @RequestMapping(value="/followSpecificPlaylist", method=RequestMethod.POST)
    public @ResponseBody String followSpecificPlaylist(HttpServletRequest request, HttpSession session) {
 	   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());

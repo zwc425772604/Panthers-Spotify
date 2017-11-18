@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -28,8 +29,20 @@
           		<p style="font-size: 1.8em;"><c:out value="${selectedFriend.uname}"></c:out>  </p>
           		
           		<div class="col-md-5" style="display:inline;">		            
-		            <c:if test="${selectedFriend.uname != user}">
-		            	<button class="w3-button w3-round-xxlarge formButton AddFriendButton" style="width:auto" >  <span id="friendStatus" >Add Friend</span></button>
+		            <c:if test="${selectedFriend.email != user}">
+		            	<button class="w3-button w3-round-xxlarge formButton AddFriendButton" style="width:auto" >  <span id="friendStatus" >
+		            	<c:choose>
+						  <c:when test="${fn:contains(userFriendList,selectedFriend)}">
+						   	Delete Friend
+						  </c:when>
+						  <c:otherwise>
+						    Add Friend
+						  </c:otherwise>
+						</c:choose>
+		            	
+		            	</span>
+		            	<span id="friendEmail" style="display:none;"><c:out value="${selectedFriend.email}"></c:out></span>
+		            	</button>
 		            </c:if>
 		        </div>
       		</div>

@@ -19,12 +19,11 @@
 	            <div class="right-col-desp">
 	              <div class="right-col-friends-name">
 	              	${friend.uname}	              	
-	              	<span style="display:none;" class="friends-email">${friend.email}</span>
-	              	
+	              	<span style="display:none;" class="friends-email">${friend.email}</span>              	
 	              </div>
-	              <div class="right-col-song-name">PLACEHOLDER</div>
-	              <div class="right-col-singer">PLACEHOLDER</div>
 	              
+	              <!--  <div class="right-col-song-name">FRIEND SONG</div>
+	              <div class="right-col-singer">SONG SINGER</div>-->
 	              
 	            </div>
 	          </div>

@@ -157,14 +157,14 @@ $(".playbar-play-button").click(function(){
 
 $(".AddFriendButton").click(function(){
 	var status = $("#friendStatus").text();
-	var email = $("#selectedFriend.email").text();
+	var email = $("#friendEmail",this).text();
 	
 	if (status.localeCompare('Add Friend') == 0 )
 	{
 		$.ajax({
 			url: "addFriend",
 			type: "POST",
-			data: {"userEmail" : email},
+			data: {"femail" : email},
 			asyn: true,
 			cache: false,
 			success: function(response)
@@ -179,7 +179,7 @@ $(".AddFriendButton").click(function(){
 		$.ajax({
 			url: "deleteFriend",
 			type: "POST",
-			data: {"userEmail" : email},
+			data: {"femail" : email},
 			asyn: true,
 			cache: false,
 			success: function(response)

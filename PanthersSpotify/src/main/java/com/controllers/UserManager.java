@@ -164,7 +164,7 @@ public class UserManager {
        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
     	List<User> results = query.getResultList();	
-         em.close();
+        em.close();
   	    entityManagerFactory.close();
   	    for(int i=0;i<results.size();i++)
   	    {
@@ -178,34 +178,21 @@ public class UserManager {
     }
     
   //add friends
-    public List<User> deleteFriend(String uemail,String femail)
+    public boolean deleteFriend(String uemail,String femail)
     {
-    	 EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+    	EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
  		EntityManager em = entityManagerFactory.createEntityManager();
- 		em.getTransaction().begin();
  		Friend ret = new Friend(uemail, femail);
- 		
- 		em.persist(ret);
+ 		em.getTransaction().begin();
         //NameQuery are from Entity class
-    	System.out.println("user email is :" + uemail);
-    	String queryString = "SELECT u FROM User u WHERE u.email in (SELECT f.friendPK.femail FROM Friend f WHERE f.friendPK.uemail=:uemail)";
-    	Query query = em.createQuery(queryString);
-    	query.setParameter("uemail", uemail);
+    	em.remove(em.contains(ret)? ret: em.merge(ret));	
     	em.getTransaction().commit();
-       //  Query query1 =
+        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
-    	List<User> results = query.getResultList();	
-         em.close();
+        em.close();
   	    entityManagerFactory.close();
-  	    for(int i=0;i<results.size();i++)
-  	    {
-  	    		System.out.println(results.get(i).getEmail());
-  	    }
-  	    if(results.size()==0)
-  	    {
-  	    	System.out.println("no friends");
-  	    }
-        return results;
+  	    
+        return true;
     }
     
     

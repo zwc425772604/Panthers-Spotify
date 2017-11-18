@@ -42,5 +42,16 @@ public class AlbumManager {
     	em.close();
     	return list;
     }
+	
+	public List<Album> findRelative(String input)
+	  {
+		  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+	  	  EntityManager em = emf.createEntityManager();
+	  	  
+	  	TypedQuery<Album> query1 = em.createNamedQuery("SELECT p from Album p WHERE p.aname LIKE LOWER(CONCAT(:searchTerm, '%'))", Album.class)
+	       		.setParameter("searchTerm", input);
+	  	List<Album> result = query1.getResultList();
+	  	return result;
+	  }
     
 }

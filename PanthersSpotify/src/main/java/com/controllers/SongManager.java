@@ -8,6 +8,7 @@ package com.controllers;
 
  
 import com.model.User;
+import com.model.Album;
 import com.model.Playlist;
 import com.model.Song;
 
@@ -105,5 +106,16 @@ public class SongManager {
   	    List<Song> result = query1.getResultList();
   	    return result.get(0);
     }
+    
+    public List<Song> findRelative(String input)
+	  {
+		  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+	  	  EntityManager em = emf.createEntityManager();
+	  	  
+	  	TypedQuery<Song> query1 = em.createNamedQuery("SELECT p from Song p WHERE p.stitle LIKE LOWER(CONCAT(:searchTerm, '%'))", Song.class)
+	       		.setParameter("searchTerm", input);
+	  	List<Song> result = query1.getResultList();
+	  	return result;
+	  }
 }
     

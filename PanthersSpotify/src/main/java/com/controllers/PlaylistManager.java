@@ -354,6 +354,17 @@ public class PlaylistManager {
 	  return num;
   }
   
+  public List<Playlist> findRelative(String input)
+  {
+	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+  	  EntityManager em = emf.createEntityManager();
+  	  
+  	TypedQuery<Playlist> query1 = em.createNamedQuery("SELECT p from Playlist p WHERE p.pname LIKE LOWER(CONCAT(:searchTerm, '%'))", Playlist.class)
+       		.setParameter("searchTerm", input);
+  	List<Playlist> result = query1.getResultList();
+  	return result;
+  }
+  
   @SuppressWarnings("unchecked")
  	public List<Playlist> getAllPlaylists(){
  		EntityManager em = EMF.createEntityManager();

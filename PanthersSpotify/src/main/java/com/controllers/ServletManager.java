@@ -439,13 +439,13 @@ public class ServletManager {
    @RequestMapping(value="/deleteSelectedUserAccount", method = RequestMethod.POST)
    public @ResponseBody String deleteSelectedUserAccount(HttpServletRequest request, HttpSession session) throws JSONException {	 
 	   String userID = request.getParameter("userID");
-//	   List<User> li = userManager.getUser(userID);
-//	   userManager.remove(li.get(0));
+	   List<User> li = userManager.getUser(userID);
+	   userManager.remove(li.get(0));
 	   System.out.println("removevvv");
   	   return "remove success";
    }
    
-   /* fire from admin.js admin action*/
+   /* fire from admin.js admin action*///did it 
    @RequestMapping(value = "/deleteSelectedPlaylist", method = RequestMethod.POST)
    public  @ResponseBody String deleteSelectedUserPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
@@ -460,6 +460,34 @@ public class ServletManager {
 //	   		System.out.println("remove success");
             return "ok";
    }
+   
+   
+
+
+ //Servlet 
+ @RequestMapping(value="/search", method = RequestMethod.POST)
+    public ModelAndView search(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+ 	   System.out.println("search");
+ 	   User user = (User)session.getAttribute("user");
+ 	   String input = request.getParameter("input");
+ 	   List<Playlist>retPlaylist = playlistManager.findRelative(input);
+ 	   if(retPlaylist.isEmpty())
+ 	   {
+ 		   System.out.println("playlist is empty");
+ 	   }
+ 	  List<Song>retSong = songManager.findRelative(input);
+ 	 if(retPlaylist.isEmpty())
+	   {
+		   System.out.println("song is empty");
+	   }
+ 	 List<Album>retAlbum = albumManager.findRelative(input);
+ 	if(retPlaylist.isEmpty())
+	   {
+		   System.out.println("album is empty");
+	   }
+        mav.setViewName("index");
+        return mav;
+    }
    
    
    

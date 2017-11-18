@@ -5,7 +5,7 @@
  */
 package com.controllers;
 
- 
+
 import com.model.Album;
 import com.model.Friend;
 import com.model.Playlist;
@@ -55,10 +55,10 @@ public class UserManager {
 	        user.setGender(gender);
 	        user.setFirstName(first_name);
 	        user.setLastName(last_name);
-	        
-	        
+
+
 	        final String dir = System.getProperty("user.dir");
-	        
+
 	        File f1 = new File(dir+"/Users");
 	        if(f1.exists())
 	        {
@@ -66,9 +66,9 @@ public class UserManager {
 	        }
 	        File userDir = new File(f1, email);
 	        boolean userSuccess = userDir.mkdirs();
-	        
-	    		
-	        
+
+
+
 		   em.getTransaction().begin();
 		    em.persist(user);
 		   em.getTransaction().commit();
@@ -79,10 +79,10 @@ public class UserManager {
     public void remove(User user) {
     	EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
 		EntityManager em = entityManagerFactory.createEntityManager();
-		
-		em.getTransaction().begin();	
+
+		em.getTransaction().begin();
 		em.remove(em.contains(user) ? user : em.merge(user));
-		em.getTransaction().commit();	
+		em.getTransaction().commit();
     }
     /* More info to be added */
     public User editUser(User user, String pwd)
@@ -90,15 +90,15 @@ public class UserManager {
     	EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
 		EntityManager em = entityManagerFactory.createEntityManager();
 		System.out.println("editUser");
-		
+
 		em.getTransaction().begin();
 		user.setUpassword(pwd);
 		em.merge(user);
 		em.getTransaction().commit();
-		
+
 		return user;
     }
-    
+
     //check user is already registered or not, for login function
     public List<User> getUser(String email)
     {
@@ -110,7 +110,7 @@ public class UserManager {
           		.setParameter("email", email);
        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
-        
+
          List<User> results = query1.getResultList();
 
          System.out.println("here");
@@ -133,7 +133,7 @@ public class UserManager {
     	em.getTransaction().commit();
        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
-    	List<User> results = query.getResultList();	
+    	List<User> results = query.getResultList();
          em.close();
   	    entityManagerFactory.close();
   	    for(int i=0;i<results.size();i++)
@@ -146,7 +146,7 @@ public class UserManager {
   	    }
         return results;
     }
-    
+
   //add friends
     public List<User> addFriend(String uemail,String femail)
     {
@@ -163,8 +163,9 @@ public class UserManager {
     	em.getTransaction().commit();
        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
-    	List<User> results = query.getResultList();	
-        em.close();
+    	List<User> results = query.getResultList();
+         em.close();
+
   	    entityManagerFactory.close();
   	    for(int i=0;i<results.size();i++)
   	    {
@@ -176,37 +177,41 @@ public class UserManager {
   	    }
         return results;
     }
-    
+
   //add friends
     public boolean deleteFriend(String uemail,String femail)
     {
     	EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
  		EntityManager em = entityManagerFactory.createEntityManager();
  		Friend ret = new Friend(uemail, femail);
+
  		em.getTransaction().begin();
+
         //NameQuery are from Entity class
     	em.remove(em.contains(ret)? ret: em.merge(ret));	
     	em.getTransaction().commit();
         //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
+
         em.close();
+   	
   	    entityManagerFactory.close();
   	    
         return true;
     }
-    
-    
+
+
     @SuppressWarnings("unchecked")
-	public List<User> getAllUsers(){
+	public List<User> getUsersByType(int usertype){
     	 EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
 		EntityManager em = entityManagerFactory.createEntityManager();
-    	List<User> list = new ArrayList<User>();	
-    	Query query = em.createNamedQuery("User.findAll",User.class);
+    	List<User> list = new ArrayList<User>();
+    	Query query = em.createNamedQuery("User.findByUtype",User.class).setParameter("utype", usertype);
     	list = (List<User>)query.getResultList();
     	em.close();
     	entityManagerFactory.close();
     	return list;
     }
-    
-    
+
+
 }

@@ -19,7 +19,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://www.w3schools.com/lib/w3.js"></script> <!-- for include html in div tag -->.
     <!--  <script src="${cp}/resources/js/main.js"></script> -->
-    
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -49,14 +49,14 @@
            x.className = x.className.replace(" w3-show", "");
        }
       }
-      
+
       function addUser(){
     	  $("#main-changing-content").load("jsp/adminAddUser.jsp");
       }
     </script>
   </head>
   <body>
-  
+
     <nav class="sidebar" id="left-sidebar">
       <ul class="nav flex-column" >
         <!--First Section: browse and radio-->
@@ -69,15 +69,80 @@
           <ul class="left_sizebar">
             <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add User"  id="add-user-button" onclick="addUser()"><i class="material-icons">add</i></button></li>
             <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit User Information" id="edit-user-button"> <i class="material-icons">mode_edit</i></button></li>
-            
+
           </ul>
         </li>
         <li>
           <p class="color-nav-header">Artist:</p>
           <ul class="left_sizebar">
-            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add Artist"  id="playbar-prev-button"><i class="material-icons">add</i></button></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit Artist Information" id="playbar-shuffle-button"> <i class="material-icons">mode_edit</i></button></li>
-          
+            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add Artist"  id="add-new-artist-button"><i class="material-icons">add</i></button></li>
+         		<div id="new-artist-dialog" title="Add Artist To Database" style="display:none;">
+                  <!-- create playlist -->
+                  <form:form  method = "POST" action="addArtistToDatabase" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
+                    <div class="w3-row w3-section">
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Artist Name</span></div>
+                      <div class="w3-rest">
+                        <input class="w3-input w3-border" name="artist-name" type="text" placeholder="Artist's stage name">
+                      </div>
+                    </div>
+                    <div class="w3-row w3-section">
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Artist Email </span></div>
+                      <div class="w3-rest">
+                        <input class="w3-input w3-border" type="email" name="artist-email"  placeholder="Artist Email Address">
+                      </div>
+                    </div>
+                    <div class="w3-row w3-section">
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Password</span></div>
+                      <div class="w3-rest">
+                        <input class="w3-input w3-border" name="artist-password" type="password"  placeholder="Password">
+                      </div>
+                    </div>
+                    <div class="w3-row w3-section">
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Artist First Name</span></div>
+                      <div class="w3-rest">
+                        <input class="w3-input w3-border" name="artist-first-name" type="text" placeholder="First name">
+                      </div>
+                    </div>
+                    <div class="w3-row w3-section">
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Artist Last Name</span></div>
+                      <div class="w3-rest">
+                        <input class="w3-input w3-border" name="artist-last-name" type="text"  placeholder="Last name">
+                      </div>
+                    </div>
+                    <div class="w3-row w3-section">
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Gender</span></div>
+                      <div class="w3-rest">
+                        <div style="display: inline";>
+            						  <input class="w3-input w3-border w3-radio" type="radio" name="gender" value="male" checked>
+            						  <label>Male</label>
+            						  <input class="w3-input w3-border w3-radio" type="radio" name="gender" value="female">
+            						  <label>Female</label>
+                      </div>
+                    </div>
+                    <div class="w3-row w3-section">
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Artist Biography</span></div>
+                      <div class="w3-rest">
+                        <textarea class="form-control w3-border" rows="5" name="artist-biography" placeholder="Artist Biography"></textarea>
+                      </div>
+                    </div>
+                    <div class="w3-row w3-section">
+                      <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Date of Birth</span></div>
+                      <div class="w3-rest">
+                        <input class="w3-input w3-border" type="date" placeholder="Date of Birth (yyyy-mm-dd)" name = "artist-dob" required>
+                      </div>
+                    </div>
+                    <div class="w3-row w3-section">
+                      <div class="w3-third w3-container">
+                        <button onclick="event.preventDefault(); $('#new-artist-dialog').dialog('close');" class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>
+                      </div>
+                      <div class="w3-third w3-container">
+                      </div>
+                      <div class="w3-third w3-container">
+                        <button type="submit" class="w3-button w3-block w3-section w3-blue w3-ripple">Create</button>
+                      </div>
+                    </div>
+                    </form:form>
+                </div> <!-- end of dialog popup box -->
           </ul>
         </li>
         <li>
@@ -151,7 +216,7 @@
                     </form:form>
                 </div> <!-- end of dialog popup box -->
             <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit Song Information" id="edit_song_button"> <i class="material-icons">mode_edit</i></button></li>
-           
+
           </ul>
         </li>
         <li>
@@ -159,7 +224,7 @@
           <ul class="left_sizebar">
             <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add Album"  id="playbar-prev-button"><i class="material-icons">add</i></button></li>
             <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit Album Information" id="playbar-shuffle-button"> <i class="material-icons">mode_edit</i></button></li>
-         
+
           </ul>
         </li>
         <li>
@@ -220,10 +285,10 @@
         </div>
         <!--Banner Image-->
         <div id = "main-changing-content">
-        	
+
         </div>
         <!-- closed tag for scrolled-main -->
       </div>
     </main>
-    
+
   </body>

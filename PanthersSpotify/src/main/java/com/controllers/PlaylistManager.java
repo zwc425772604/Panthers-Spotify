@@ -11,6 +11,7 @@ import com.model.User;
 import com.helper.UploadFile;
 import com.model.Followplaylist;
 import com.model.Playlist;
+import com.model.Playlistsong;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -205,16 +206,31 @@ public class PlaylistManager {
   }
   
   //add song to playlist
-  public void addSongPlaylist(int playlist_id,int song_id)
+  public void addSongPlaylist(int playlistId,int songId)
   {
   	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
   	  EntityManager em = emf.createEntityManager(); 
-  	  Playlist playlist = em.find(Playlist.class, playlist_id);
+  	  Playlistsong ps = new Playlistsong(playlistId, songId);
 	  	  em.getTransaction().begin();
-	  	  em.remove(playlist);
+	  	  em.persist(ps);
 	  	  em.flush();
 	  	  em.getTransaction().commit();
-	  	  System.out.println("want to remove playlist");
+	  	  System.out.println("want to add song to playlist");
+	  	  em.close();
+	  	  emf.close();
+  }
+  
+//re song to playlist
+  public void removeSongPlaylist(int playlistId,int songId)
+  {
+  	  EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+  	  EntityManager em = emf.createEntityManager(); 
+  	  Playlistsong ps = new Playlistsong(playlistId, songId);
+	  	  em.getTransaction().begin();
+	  	  em.remove(ps);
+	  	  em.flush();
+	  	  em.getTransaction().commit();
+	  	  System.out.println("want to add song to playlist");
 	  	  em.close();
 	  	  emf.close();
   }
@@ -251,6 +267,13 @@ public class PlaylistManager {
   	TypedQuery<Playlist> query1 = em.createNamedQuery("Playlist.findByPid", Playlist.class)
        		.setParameter("pid", playlistId);
 	    List<Playlist> result = query1.getResultList();
+	    
+	    TypedQuery<Followplaylist> query2 = em.createNamedQuery("Followplaylist.findByPid", Followplaylist.class)
+	       		.setParameter("pid", playlistId);
+	    if(query2.getResultList().get(0).getUser().equals(user.getEmail()))
+	    	{
+	    		System.out.println("false");
+	    	}
 	    Followplaylist fp = new Followplaylist(playlistId,user.getEmail());
 	    
 	  	  em.getTransaction().begin();
@@ -281,9 +304,9 @@ public class PlaylistManager {
   	TypedQuery<Playlist> query1 = em.createNamedQuery("Playlist.findByPid", Playlist.class)
        		.setParameter("pid", playlistId);
 	    List<Playlist> result = query1.getResultList();
-  	  
+	    Followplaylist fp = new Followplaylist(playlistId,user.getEmail());
 	  	  em.getTransaction().begin();
-	  	  em.remove(result.get(0));;
+	  	  em.remove(fp);
 	  	  em.flush();
 	  	  em.getTransaction().commit();
 	  	  em.close();

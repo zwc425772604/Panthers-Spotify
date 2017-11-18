@@ -10,6 +10,10 @@
     <class>com.model.Location</class>
     <class>com.model.Song</class>
     <class>com.model.Concert</class>
+    <class>com.model.Followplaylist</class>
+    <class>com.model.FollowplaylistPK</class>
+    <class>com.model.Friend</class>
+    <class>com.model.FriendPK</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
      <properties>
       

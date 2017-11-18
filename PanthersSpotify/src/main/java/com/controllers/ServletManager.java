@@ -339,8 +339,9 @@ public class ServletManager {
 	   
 	   System.out.println("Getting user friendlist");
 	   User user = (User) session.getAttribute("user");
-	   List<User> temp = new ArrayList<User>();
-	   temp.add(user);
+	   
+	   List<User> temp = userManager.getFriend(user.getEmail());
+	   //temp.add(user);
 	   session.setAttribute("userFriendList", temp);
   	   return "ok";
    }
@@ -350,6 +351,8 @@ public class ServletManager {
    public ModelAndView addFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		System.out.println("HI");
 	   		User user = (User) session.getAttribute("user");
+	   		String femail = request.getParameter("femail");//friend email
+	   		List<User> temp = userManager.addFriend(user.getEmail(),femail);
 	   		mav.setViewName("main");
 	   		mav.addObject("username",user.getUname());
             return mav;
@@ -359,6 +362,8 @@ public class ServletManager {
    public ModelAndView deleteFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		System.out.println("Delete Friend");
 	   		User user = (User) session.getAttribute("user");
+	   		String femail = request.getParameter("femail");//friend email
+	   		List<User> temp = userManager.deleteFriend(user.getEmail(),femail);
 	   		mav.setViewName("main");
 	   		mav.addObject("username",user.getUname());
             return mav;
@@ -391,6 +396,7 @@ public class ServletManager {
 	   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
 	   User user = (User) session.getAttribute("user");
 	   boolean ret = playlistManager.unfollowPlaylist(playlistID,user);
+	   System.out.println("here is unfollow");
 	   System.out.println("playlist id to be unfollow is : " + playlistID);
 	   return "ok";
    }
@@ -400,7 +406,16 @@ public class ServletManager {
 	   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
 	   int songID = Integer.parseInt(request.getParameter("songID").trim());
 	   User user = (User) session.getAttribute("user");
-	  
+	   playlistManager.addSongPlaylist(playlistID, songID);
+	   return "ok";
+   }
+   
+   @RequestMapping(value="/removeSongToPlaylist", method=RequestMethod.POST)
+   public @ResponseBody String removeSongToPlaylist(HttpServletRequest request, HttpSession session) {
+	   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
+	   int songID = Integer.parseInt(request.getParameter("songID").trim());
+	   User user = (User) session.getAttribute("user");
+	   playlistManager.removeSongPlaylist(playlistID, songID);
 	   return "ok";
    }
    

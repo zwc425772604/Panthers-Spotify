@@ -63,10 +63,10 @@ public class ServletManager {
     //private EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
    @RequestMapping(value = "/", method = RequestMethod.GET)
    public String index(ModelMap map) {
-      
+
        return "index";
    }
-   
+
    /* user login */
    @RequestMapping(value = "/main", method = RequestMethod.POST)
    public ModelAndView userLogin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
@@ -74,12 +74,12 @@ public class ServletManager {
 	   String nonEncPwd = request.getParameter("password");
 	   String password = Security.encryptPassword(nonEncPwd);
        List<User> li = userManager.getUser(email);
-      
+
        System.out.println("li is "  + li);
-       
+
        //case 0: if the email is not registered
        if (li.size() == 0)
-       {          
+       {
             mav.setViewName("index");
     	   	mav.addObject("error_message", "This email does not register on our site!");
        }
@@ -108,7 +108,7 @@ public class ServletManager {
     		   mav.addObject("username", li.get(0).getUname());
                mav.setViewName("admin");
     	   }
-          
+
        }
        //case 2: incorrect email or password
        else
@@ -120,16 +120,16 @@ public class ServletManager {
        }
        System.out.println("here");
        return mav;
-      
-            
-            
+
+
+
    }
    @RequestMapping(value = "/main", method = RequestMethod.GET)
    public ModelAndView mainPage(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   mav.setViewName("main");
 	   return mav;
    }
- 
+
     /* user logout */
    @RequestMapping(value = "/home", method = RequestMethod.GET)
    public ModelAndView userLogout(ModelAndView mav, HttpSession session) {
@@ -140,7 +140,7 @@ public class ServletManager {
             mav.setViewName("index");
             return mav;
    }
-   
+
       /* display sign up page */
    @RequestMapping(value = "/signup", method = RequestMethod.GET)
    public ModelAndView displaySignUp(ModelAndView mav) {
@@ -148,29 +148,29 @@ public class ServletManager {
             mav.setViewName("SignUp");
             return mav;
    }
-   
-   
+
+
        /* user sign up */ /* user type: 0=basic 1=premium 2=artist 3=admin */
    @RequestMapping(value = "/userSignUp", method = RequestMethod.POST)
    public @ResponseBody String userSignUp(ModelAndView mav,
-                  HttpServletRequest request, HttpSession session){ 
+                  HttpServletRequest request, HttpSession session){
     String username = request.getParameter("username");
 	String password = request.getParameter("password");
 	// encrypt password
-	
+
 	String encPwd = Security.encryptPassword(password);
 	String email = request.getParameter("email");
 	char gender = request.getParameter("gender").charAt(0);
 	String first_name = request.getParameter("first_name");
 	String last_name = request.getParameter("last_name");
 	int utype = 0;
-	
+
     userManager.add(username,email,encPwd,utype,gender,first_name,last_name);
 
     String message = "Congratulation, sign up successfully. Please return to homepage for login.";
     return message; //handle in SignUp.jsp
    }
-   
+
    /* create Playlist */
    @RequestMapping(value = "/createPlaylist", method = RequestMethod.POST)
    public ModelAndView createPlaylist(ModelAndView mav, @RequestParam(value = "file") CommonsMultipartFile file, HttpServletRequest request, HttpSession session) {
@@ -179,58 +179,58 @@ public class ServletManager {
 //	   		String pic = request.getParameter("pic");
 	   		//System.out.println("picture address is "+pic);
 	   		User user = (User) session.getAttribute("user");
-	   		//String path=session.getServletContext().getRealPath("/");  
-	   		
-	        //String filename=file.getOriginalFilename();  
-	        
-	          
+	   		//String path=session.getServletContext().getRealPath("/");
+
+	        //String filename=file.getOriginalFilename();
+
+
 	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
-	   		
+
 	   		List<Playlist> user_playlist = playlistManager.add(playlist_name,user,description,file,date);
-	   		
+
  		    mav.addObject("user_playlist", user_playlist);
  		    session.setAttribute("user_playlist", user_playlist);
             mav.setViewName("main");
             return mav;
    }
-  
+
    @RequestMapping(value = "/editPlaylistDetails", method = RequestMethod.POST)
    public ModelAndView editPlaylist(ModelAndView mav, @RequestParam(value = "file") CommonsMultipartFile file, HttpServletRequest request, HttpSession session) {
-	   		
+
 	   		String playlist_name = request.getParameter("playlist_name");
 	   		String description = request.getParameter("playlist_description");
 	   		User user = (User) session.getAttribute("user");
-//	   		String path=session.getServletContext().getRealPath("/");  
-//	        String filename=file.getOriginalFilename(); 
-//	        
-//	        
+//	   		String path=session.getServletContext().getRealPath("/");
+//	        String filename=file.getOriginalFilename();
+//
+//
 //	        System.out.println(path+"/"+filename);
-	         
+
 	        Playlist playlistOne = (Playlist)session.getAttribute("selected_playlist");
-	        //System.out.println(path+" "+filename);  
+	        //System.out.println(path+" "+filename);
 	   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
 	   		int pid = playlistOne.getPid();
-	   		
+
 	   		//String pic = "test";
-	   		
-	   		
+
+
 	   		List<Playlist> user_playlist = playlistManager.edit(pid,description,file,playlist_name,user);
-//	   		
+//
 // 		    mav.addObject("user_playlist", user_playlist);
 // 		    session.setAttribute("user_playlist", user_playlist);
-	   		
+
 	   		mav.addObject("user_playlist", user_playlist);
  		    session.setAttribute("user_playlist", user_playlist);
             mav.setViewName("main");
             return mav;
    }
-   
-   
+
+
    /* get specific playlist */
    @RequestMapping(value = "/getSpecificPlaylist", method = RequestMethod.POST)
    public  @ResponseBody String getSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		int playlist_id = Integer.parseInt(request.getParameter("playlist_id"));
-	   		
+
 	   		Playlist playlist = playlistManager.getPlaylist(playlist_id);
 	   		String pname = playlist.getPname();
 	   		System.out.println("playlist name is :" + pname);
@@ -239,8 +239,8 @@ public class ServletManager {
  		   session.setAttribute("selectedPlaylistNumSongs", playlist.getNSongs());
             return "ok";
    }
-   
-   
+
+
    /* add song to database */
 
    @RequestMapping(value = "/addSongToDatabase", method = RequestMethod.POST)
@@ -251,8 +251,8 @@ public class ServletManager {
 	   String songGenre = request.getParameter("song_genre");
 	   String songType = request.getParameter("song_type");
 	   String songUrl = request.getParameter("song_url");
-	   
-	   //Song songTime and release Day to be Fixed 
+
+	   //Song songTime and release Day to be Fixed
 	   Song song = new Song(songTitle, null,null, songGenre, songType, songUrl);
 	   try {
 			song = songManager.add(song);
@@ -263,7 +263,7 @@ public class ServletManager {
 	   mav.setViewName("admin");
 	   return mav;
    }
-   
+
    /* remove specific playlist */
    @RequestMapping(value = "/removeSpecificPlaylist", method = RequestMethod.POST)
    public  @ResponseBody String removeSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
@@ -279,26 +279,26 @@ public class ServletManager {
 	   		System.out.println("remove success");
             return "ok";
    }
-   
+
    /* Load song from database */
    @RequestMapping(value="/loadSong", method = RequestMethod.POST)
-   public @ResponseBody String loadSongs(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+   public @ResponseBody String loadSongs(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   List<Song> songs = songManager.getAllSongs();
 	   session.setAttribute("songs", songs);
 	   System.out.println("loadsongs" + songs.size());
 	   return "ok";
    }
-   
+
    @RequestMapping(value="/loadAlbum", method = RequestMethod.POST)
-   public @ResponseBody String loadAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+   public @ResponseBody String loadAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   List<Album> albums = albumManager.getAllAlbums();
 	   session.setAttribute("album_list", albums);
 	   System.out.println("loadAlbum" + albums.size());
   	   return "ok";
    }
-   
+
    @RequestMapping(value="/editUserAccount", method = RequestMethod.POST)
-   public ModelAndView editUserAccount(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+   public ModelAndView editUserAccount(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   System.out.println("editing user account");
 	   User user = (User)session.getAttribute("user");
 	   String pwd = request.getParameter("password");
@@ -309,9 +309,9 @@ public class ServletManager {
 	   mav.addObject("username", user.getUname());
        return mav;
    }
-   
+
    @RequestMapping(value="/deleteUserAccount", method = RequestMethod.POST)
-   public ModelAndView deleteUserAccount(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+   public ModelAndView deleteUserAccount(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   System.out.println("deleting user account");
 	   User user = (User)session.getAttribute("user");
 	   if (session.getAttribute("user") != null)
@@ -322,30 +322,30 @@ public class ServletManager {
        mav.setViewName("index");
        return mav;
    }
-   
+
    @RequestMapping(value="/getOverviewPlaylist", method = RequestMethod.POST)
-   public ModelAndView getOverviewPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+   public ModelAndView getOverviewPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   //Get Top Follower Playlist
 	   int NUMBER_OF_TOP_FOLLOWED = 4;
-	   List<Playlist> userPlaylist = (List<Playlist>)(playlistManager.getTopFollowedPlaylist(NUMBER_OF_TOP_FOLLOWED));	
-	   
-	   session.setAttribute("overviewPlaylist", userPlaylist);	   
+	   List<Playlist> userPlaylist = (List<Playlist>)(playlistManager.getTopFollowedPlaylist(NUMBER_OF_TOP_FOLLOWED));
+
+	   session.setAttribute("overviewPlaylist", userPlaylist);
 	   mav.setViewName("main");
 	   return mav;
    }
-   
+
    @RequestMapping(value="/getUserFriendList", method = RequestMethod.POST)
-   public @ResponseBody String getUserFriendList(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
-	   
+   public @ResponseBody String getUserFriendList(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+
 	   System.out.println("Getting user friendlist");
 	   User user = (User) session.getAttribute("user");
-	   
+
 	   List<User> temp = userManager.getFriend(user.getEmail());
 	   //temp.add(user);
 	   session.setAttribute("userFriendList", temp);
   	   return "ok";
    }
-   
+
 
    @RequestMapping(value = "/addFriend", method = RequestMethod.POST)
    public ModelAndView addFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
@@ -357,7 +357,7 @@ public class ServletManager {
 	   		mav.addObject("username",user.getUname());
             return mav;
    }
-   
+
    @RequestMapping(value = "/deleteFriend", method = RequestMethod.POST)
    public ModelAndView deleteFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		System.out.println("Delete Friend");
@@ -368,10 +368,10 @@ public class ServletManager {
 	   		mav.addObject("username",user.getUname());
             return mav;
    }
-   
+
    @RequestMapping(value="/getUserPage", method = RequestMethod.POST)
-   public @ResponseBody String getUserPage(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
-	   
+   public @ResponseBody String getUserPage(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+
 	   String username = request.getParameter("username");
 	   String email = request.getParameter("userEmail");
 	   List<User> users = userManager.getUser(email);
@@ -379,9 +379,9 @@ public class ServletManager {
 	   session.setAttribute("selectedFriend", user);
   	   return "ok";
    }
-   
 
-   
+
+
    @RequestMapping(value="/followSpecificPlaylist", method=RequestMethod.POST)
    public @ResponseBody String followSpecificPlaylist(HttpServletRequest request, HttpSession session) {
 	   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
@@ -390,7 +390,7 @@ public class ServletManager {
 	   System.out.println("playlist id to be follow is : " + playlistID);
 	   return "ok";
    }
-   
+
    @RequestMapping(value="/unfollowSpecificPlaylist", method=RequestMethod.POST)
    public @ResponseBody String unfollowSpecificPlaylist(HttpServletRequest request, HttpSession session) {
 	   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
@@ -400,7 +400,7 @@ public class ServletManager {
 	   System.out.println("playlist id to be unfollow is : " + playlistID);
 	   return "ok";
    }
-   
+
    @RequestMapping(value="/addSongToPlaylist", method=RequestMethod.POST)
    public @ResponseBody String addSongToPlaylist(HttpServletRequest request, HttpSession session) {
 	   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
@@ -409,7 +409,7 @@ public class ServletManager {
 	   playlistManager.addSongPlaylist(playlistID, songID);
 	   return "ok";
    }
-   
+
    @RequestMapping(value="/removeSongToPlaylist", method=RequestMethod.POST)
    public @ResponseBody String removeSongToPlaylist(HttpServletRequest request, HttpSession session) {
 	   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
@@ -418,34 +418,34 @@ public class ServletManager {
 	   playlistManager.removeSongPlaylist(playlistID, songID);
 	   return "ok";
    }
-   
+
    @RequestMapping(value="/loadUserTables", method = RequestMethod.POST)
-   public @ResponseBody String loadAllUsers(HttpServletRequest request, HttpSession session) throws JSONException {	 
+   public @ResponseBody String loadAllUsers(HttpServletRequest request, HttpSession session) throws JSONException {
 	   List<User> users = userManager.getAllUsers();
 	   String userJsonArray = JSONHelper.userListToJSON(users);
 	   System.out.println("userJsonArray is :" + userJsonArray);
   	   return userJsonArray;
    }
-   
+
    @RequestMapping(value="/loadAllPlaylists", method = RequestMethod.POST)
-   public @ResponseBody String loadAllPlaylists(HttpServletRequest request, HttpSession session) throws JSONException {	 
+   public @ResponseBody String loadAllPlaylists(HttpServletRequest request, HttpSession session) throws JSONException {
 	   List<Playlist> playlists = playlistManager.getAllPlaylists();
 	   String playlistsJsonArray = JSONHelper.playlistListToJSON(playlists);
 	   System.out.println("playlistJsonArray is :" + playlistsJsonArray);
   	   return playlistsJsonArray;
    }
-   
+
    /*fire from admin.js admin action*/
    @RequestMapping(value="/deleteSelectedUserAccount", method = RequestMethod.POST)
-   public @ResponseBody String deleteSelectedUserAccount(HttpServletRequest request, HttpSession session) throws JSONException {	 
+   public @ResponseBody String deleteSelectedUserAccount(HttpServletRequest request, HttpSession session) throws JSONException {
 	   String userID = request.getParameter("userID");
 	   List<User> li = userManager.getUser(userID);
 	   userManager.remove(li.get(0));
 	   System.out.println("removevvv");
   	   return "remove success";
    }
-   
-   /* fire from admin.js admin action*///did it 
+
+   /* fire from admin.js admin action*///did it
    @RequestMapping(value = "/deleteSelectedPlaylist", method = RequestMethod.POST)
    public  @ResponseBody String deleteSelectedUserPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
@@ -460,13 +460,13 @@ public class ServletManager {
 //	   		System.out.println("remove success");
             return "ok";
    }
-   
-   
 
 
- //Servlet 
+
+
+ //Servlet
  @RequestMapping(value="/search", method = RequestMethod.POST)
-    public ModelAndView search(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+    public ModelAndView search(ModelAndView mav, HttpServletRequest request, HttpSession session) {
  	   System.out.println("search");
  	   User user = (User)session.getAttribute("user");
  	   String input = request.getParameter("input");
@@ -488,9 +488,28 @@ public class ServletManager {
         mav.setViewName("index");
         return mav;
     }
-   
-   
-   
-   
+
+
+ //admin action, add artist
+ @RequestMapping(value="/addArtistToDatabase", method = RequestMethod.POST)
+    public ModelAndView addNewArtist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	    String artistName = request.getParameter("artist-name");
+      String artistEmail = request.getParameter("artist-email");
+      String artistPassword = request.getParameter("artist-password");
+      String encPwd = Security.encryptPassword(artistPassword);
+      String artistFirstName = request.getParameter("artist-first-name");
+      String artistLastName = request.getParameter("artist-last-name");
+      String artistBiography = request.getParameter("artist-biography"); //missing bio column in user table
+      char gender = request.getParameter("gender").charAt(0);
+      int userType = 2;
+      userManager.add(artistName,artistEmail,encPwd,userType,gender,artistFirstName,artistLastName);
+ 	  	mav.setViewName("admin");
+      System.out.println("adding artist successfully");
+      return mav;
+    }
+
+
+
+
 
 }

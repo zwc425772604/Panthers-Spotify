@@ -105,6 +105,7 @@ $(document).ready ( function () {
     $(document).on ("click", ".delete-user-button", function () {
     	var userID = $(this).closest('tr').children('td:eq(0)').text();
     	console.log("userId is : " + userID);
+    	$(this).closest('tr').remove();
     	 $.ajax({
  	        url: "{cp}/../deleteSelectedUserAccount",
  	        data: {"userID" : userID},
@@ -114,7 +115,7 @@ $(document).ready ( function () {
  	        success : function(response)
  	        {
  	          console.log(response);
- 	         
+ 	         $(this).closest('tr').remove();
  	        },
  	        error: function(e)
  	        {
@@ -156,6 +157,21 @@ $(document).on ("click", ".edit_user_button", function () {
 $("#cancel_edit_button").click(function(){
 	
 	  event.preventDefault(); document.getElementById('edit-user-profile-modal').style.display='none';
+});
+
+
+$(document).on ("click", "#add-new-artist-button", function () {
+	var userID = $(this).closest('tr').children('td:eq(0)').text();
+	
+	$('#new-artist-dialog').dialog({
+        height: 600,
+        width: 550,
+        modal: true,
+        resizable: false,
+        dialogClass: 'no-close'
+  	});
+  
+
 });
 
 

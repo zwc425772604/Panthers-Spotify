@@ -1,5 +1,6 @@
 <!--  Container for DISCOVER -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
 <head>
 <!-- 	<link rel="stylesheet" href="${cp}/resources/css/songs.css"> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
@@ -186,9 +187,9 @@ $(".add-to-playlist-item").click(function(){
 	var songID = $(".song-id", this).text();
 	var playlistID = $(".add-song-to-playlist-id",this).text();
 	  $.ajax({
-          url: "/addSongToPlaylist",
+          url: "${cp}/addSongToPlaylist",
           type: "POST",
-          data : {"playlistID" : pid, "songID" : songID },
+          data : {"playlistID" : playlistID, "songID" : songID },
           asyn: false,
           cache: false,
           success : function(response)

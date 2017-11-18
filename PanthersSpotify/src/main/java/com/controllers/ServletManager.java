@@ -42,6 +42,7 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -419,11 +420,13 @@ public class ServletManager {
 	   return "ok";
    }
 
-   @RequestMapping(value="/loadUserTables", method = RequestMethod.POST)
-   public @ResponseBody String loadAllUsers(HttpServletRequest request, HttpSession session) throws JSONException {
-	   List<User> users = userManager.getAllUsers();
-	   String userJsonArray = JSONHelper.userListToJSON(users);
-	   System.out.println("userJsonArray is :" + userJsonArray);
+   @RequestMapping(value="/loadUserTables/{userType}", method = RequestMethod.POST)
+   public @ResponseBody String loadAllUsers(@PathVariable int userType, HttpServletRequest request, HttpSession session) throws JSONException {
+     System.out.println("user type" + userType);
+	   List<User> users = userManager.getUsersByType(userType);
+     String userJsonArray;
+     userJsonArray =  userType == 2 ? JSONHelper.artistListToJSON(users) : JSONHelper.userListToJSON(users) ;
+	   System.out.println("basicUserJsonArray is :" + userJsonArray);
   	   return userJsonArray;
    }
 

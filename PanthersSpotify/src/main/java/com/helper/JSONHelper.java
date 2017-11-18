@@ -30,11 +30,11 @@ public class JSONHelper {
 //			}
 //			jsonObject.put("songs", songArray);
 //			playlistJsonArray.put(songArray);
-//			
+//
 //		}
 //		return playlistJsonArray.toString();
 //	}
-	
+
 	public static String userListToJSON(List<User> users) throws JSONException
 	{
 		JSONArray arr = new JSONArray();
@@ -47,11 +47,11 @@ public class JSONHelper {
 			jsonObject.put("userType", u.getUtype());
 			jsonObject.put("userFirstName", u.getFirstName());
 			jsonObject.put("userLastName", u.getLastName());
-			arr.put(jsonObject);	
+			arr.put(jsonObject);
 		}
 		return arr.toString();
 	}
-	
+
 	public static String playlistListToJSON(List<Playlist> playlists) throws JSONException
 	{
 		JSONArray arr = new JSONArray();
@@ -65,10 +65,27 @@ public class JSONHelper {
 			jsonObject.put("playlistNumSongs", p.getNSongs());
 			jsonObject.put("playlistNumFollowers", p.getFollowers());
 			jsonObject.put("playlistCreateDate", p.getCreateDate());
-			arr.put(jsonObject);	
+			arr.put(jsonObject);
 		}
 		return arr.toString();
 	}
-	
+
+	public static String artistListToJSON(List<User> users) throws JSONException
+	{
+		JSONArray arr = new JSONArray();
+		JSONObject jsonObject;
+		for (User u : users)
+		{
+			jsonObject = new JSONObject();
+			jsonObject.put("artistName", u.getUname());
+			jsonObject.put("artistFirstName", u.getFirstName());
+			jsonObject.put("artistLastName", u.getLastName());
+			jsonObject.put("artistEmail", u.getEmail());
+			arr.put(jsonObject);
+		}
+		return arr.toString();
+	}
+
+
 
 }

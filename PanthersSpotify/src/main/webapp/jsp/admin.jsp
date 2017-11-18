@@ -109,50 +109,40 @@
                         <input class="w3-input w3-border" name="artist-last-name" type="text"  placeholder="Last name">
                       </div>
                     </div>
-
                     <div class="w3-row w3-section">
                       <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Gender</span></div>
                       <div class="w3-rest">
-                        <div style="display: inline;">
+                        <div style="display: inline";>
             						  <input class="w3-input w3-border w3-radio" type="radio" name="gender" value="male" checked>
             						  <label>Male</label>
             						  <input class="w3-input w3-border w3-radio" type="radio" name="gender" value="female">
             						  <label>Female</label>
                       </div>
                     </div>
-
                     <div class="w3-row w3-section">
                       <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Artist Biography</span></div>
                       <div class="w3-rest">
-
                         <textarea class="form-control w3-border" rows="5" name="artist-biography" placeholder="Artist Biography"></textarea>
                       </div>
                     </div>
-
                     <div class="w3-row w3-section">
                       <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Date of Birth</span></div>
                       <div class="w3-rest">
                         <input class="w3-input w3-border" type="date" placeholder="Date of Birth (yyyy-mm-dd)" name = "artist-dob" required>
                       </div>
                     </div>
-
-
                     <div class="w3-row w3-section">
                       <div class="w3-third w3-container">
                         <button onclick="event.preventDefault(); $('#new-artist-dialog').dialog('close');" class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>
                       </div>
                       <div class="w3-third w3-container">
-
                       </div>
-
                       <div class="w3-third w3-container">
                         <button type="submit" class="w3-button w3-block w3-section w3-blue w3-ripple">Create</button>
                       </div>
-
                     </div>
                     </form:form>
                 </div> <!-- end of dialog popup box -->
-
           </ul>
         </li>
         <li>

@@ -3,27 +3,61 @@ function displayPage()
 	$("#main-changing-content").load("jsp/dashboard.jsp");
 }
 $(document).ready(function(){
-	
-		
-	$.ajax({			
-        url: "{cp}/../loadUserTables",
+
+
+	$.ajax({
+        url: "{cp}/../loadUserTables/0",
         type: "POST",
         asyn: false,
         cache: false,
         success : function(response)
         {
-          console.log(response);
+          //console.log(response);
           var actual_JSON = JSON.parse(response);
-          insertUserTables(actual_JSON);
+          insertBasicUserTables(actual_JSON);
          // $("#main-changing-content").load("jsp/songs.jsp");
         },
         error: function(e)
         {
-          
-          console.log(e);               
+
+          console.log(e);
         }
       });
-	 
+
+	$.ajax({
+		url: "{cp}/../loadUserTables/1",
+		  type: "POST",
+		  asyn: false,
+		  cache: false,
+		  success : function(response)
+		  {
+	         //console.log(response);
+		    var actual_JSON = JSON.parse(response);
+		    insertPremiumUserTables(actual_JSON);
+		  },
+		  error: function(e)
+		  {
+			  console.log(e);
+		  }
+	});
+	$.ajax({
+		url: "{cp}/../loadUserTables/2",
+		type: "POST",
+		asyn: false,
+		cache: false,
+		success : function(response)
+			{
+				var actual_JSON = JSON.parse(response);
+				insertArtistTables(actual_JSON);
+			},
+		error: function(e)
+		{
+			console.log(e);
+		}
+	});
+
+
+
 	 $.ajax({
 	        url: "{cp}/../loadAlbum",
 	        type: "POST",
@@ -31,14 +65,13 @@ $(document).ready(function(){
 	        cache: false,
 	        success : function(response)
 	        {
-	          console.log(response);
-	          console.log("load album done");
+	       
 	        //  $("#main-changing-content").load("jsp/album.jsp");
 	        },
 	        error: function(e)
 	        {
-	         
-	          console.log(e);               
+
+	          console.log(e);
 	        }
 	      });
 	 $.ajax({
@@ -48,25 +81,26 @@ $(document).ready(function(){
 	        cache:false,
 	        success : function(response)
 	        {
-	          console.log(response);
+	         // console.log(response);
 	          var actual_JSON = JSON.parse(response);
 	          insertPlaylistTables(actual_JSON);
 	        //  $("#main-changing-content").load("jsp/album.jsp");
 	        },
 	        error: function(e)
 	        {
-	         
-	          console.log(e);               
+
+	          console.log(e);
 	        }
 	      });
 });
 
-function insertUserTables(data)
+function insertBasicUserTables(data)
 {
-	
-	for (var i = 0; i < data.length; i++)
+	var num = data.length;
+	$("#num-of-basic-user").html(num);
+	for (var i = 0; i < num; i++)
 		{
-			$("#users-table").find('tbody').append([
+			$("#basic-users-table").find('tbody').append([
 				'<tr>',
 				  '<td>' + data[i]['userID'] + '</td>',
 				  '<td>' + data[i]['userFirstName'] + '</td>',
@@ -75,16 +109,57 @@ function insertUserTables(data)
 				  '<td>' + data[i]['username'] + '</td>',
 				  '<td><button class="unstyle-buttons edit_user_button"  data-toggle="tooltip-play" title="Edit This User Profiles"> <i class="material-icons">mode_edit</i></button></td>',
 				  '<td><button class="unstyle-buttons delete-user-button"  data-toggle="tooltip-play" title="Delete This User"> <i class="material-icons">delete_forever</i></button></td>',
-				 '</tr>' 
+				 '</tr>'
 			].join(''));
 		}
-	
 
+
+}
+
+function insertPremiumUserTables(data)
+{
+	var num = data.length;
+	$("#num-of-premium-user").html(num);
+	for (var i = 0; i < num; i++)
+		{
+			$("#premium-users-table").find('tbody').append([
+				'<tr>',
+				  '<td>' + data[i]['userID'] + '</td>',
+				  '<td>' + data[i]['userFirstName'] + '</td>',
+				  '<td>' + data[i]['userLastName'] + '</td>',
+				  '<td>' + data[i]['userType'] + '</td>',
+				  '<td>' + data[i]['username'] + '</td>',
+				  '<td><button class="unstyle-buttons edit_user_button"  data-toggle="tooltip-play" title="Edit This User Profiles"> <i class="material-icons">mode_edit</i></button></td>',
+				  '<td><button class="unstyle-buttons delete-user-button"  data-toggle="tooltip-play" title="Delete This User"> <i class="material-icons">delete_forever</i></button></td>',
+				 '</tr>'
+			].join(''));
+		}
+}
+
+function insertArtistTables(data)
+{
+	var num = data.length;
+	$("#num-of-artist").html(num);
+	for (var i = 0; i < num; i++)
+		{
+			$("#artist-table").find('tbody').append([
+				'<tr>',
+				  '<td>' + data[i]['artistEmail'] + '</td>',
+				  '<td>' + data[i]['artistName'] + '</td>',
+				  '<td>' + data[i]['artistFirstName'] + '</td>',
+				  '<td>' + data[i]['artistLastName'] + '</td>',
+				  '<td><button class="unstyle-buttons edit_user_button"  data-toggle="tooltip-play" title="Edit This User Profiles"> <i class="material-icons">mode_edit</i></button></td>',
+				  '<td><button class="unstyle-buttons delete-user-button"  data-toggle="tooltip-play" title="Delete This User"> <i class="material-icons">delete_forever</i></button></td>',
+				 '</tr>'
+			].join(''));
+		}
 }
 
 function insertPlaylistTables(data)
 {
-	for (var i = 0; i < data.length; i++)
+	var num = data.length;
+	$("#num-of-playlist").html(num);
+	for (var i = 0; i < num; i++)
 		{
 			$("#playlists-table").find('tbody').append([
 				'<tr>',
@@ -95,7 +170,7 @@ function insertPlaylistTables(data)
 				  '<td>' + data[i]['playlistNumFollowers'] + '</td>',
 				  '<td>' + data[i]['playlistCreateDate'] + '</td>',
 				  '<td><button class="unstyle-buttons delete-playlist-button"  data-toggle="tooltip-play" title="Remove this playlist"> <i class="material-icons">delete_forever</i></button></td>',
-				 '</tr>' 
+				 '</tr>'
 			].join(''));
 		}
 }
@@ -119,8 +194,8 @@ $(document).ready ( function () {
  	        },
  	        error: function(e)
  	        {
- 	         
- 	          console.log(e);               
+
+ 	          console.log(e);
  	        }
  	      });
     });
@@ -138,12 +213,12 @@ $(document).on ("click", ".delete-playlist-button", function () {
 	        success : function(response)
 	        {
 	          console.log(response);
-	         
+
 	        },
 	        error: function(e)
 	        {
-	         
-	          console.log(e);               
+
+	          console.log(e);
 	        }
 	      });
 });
@@ -151,18 +226,18 @@ $(document).on ("click", ".delete-playlist-button", function () {
 $(document).on ("click", ".edit_user_button", function () {
 	var userID = $(this).closest('tr').children('td:eq(0)').text();
 	$("#edit-user-profile-modal").show();
-	
+
 //	 alert("haha");
 });
 $("#cancel_edit_button").click(function(){
-	
+
 	  event.preventDefault(); document.getElementById('edit-user-profile-modal').style.display='none';
 });
 
 
 $(document).on ("click", "#add-new-artist-button", function () {
 	var userID = $(this).closest('tr').children('td:eq(0)').text();
-	
+
 	$('#new-artist-dialog').dialog({
         height: 600,
         width: 550,
@@ -170,14 +245,6 @@ $(document).on ("click", "#add-new-artist-button", function () {
         resizable: false,
         dialogClass: 'no-close'
   	});
-  
+
 
 });
-
-
-
-
-
-
-
-

@@ -37,12 +37,13 @@ import org.springframework.stereotype.Component;
 @Transactional
 public class UserManager {
 //	@Autowired
-     @PersistenceContext private EntityManager em;
+     //@PersistenceContext private EntityManager em;
 
 	  @Transactional
 	    public void add(String username, String email,String encPwd,int utype,char gender,String first_name, String last_name) {
 	    		User user = new User();
-	    
+	    		EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+		    	EntityManager em = emf.createEntityManager();
 	        user.setUname(username);
 	        user.setEmail(email);
 	        user.setUpassword(encPwd);
@@ -67,30 +68,39 @@ public class UserManager {
 		   em.getTransaction().begin();
 		    em.persist(user);
 		   em.getTransaction().commit();
-		  
+		   em.close();
+		   emf.close();
 	    }
 
     public void remove(User user) {
+    	EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+    	EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		em.remove(em.contains(user) ? user : em.merge(user));
 		em.getTransaction().commit();
+		em.close();
+		emf.close();
     }
     /* More info to be added */
     public User editUser(User user, String pwd)
     {
 		System.out.println("editUser");
-
+		EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+    	EntityManager em = emf.createEntityManager();
 		em.getTransaction().begin();
 		user.setUpassword(pwd);
 		em.merge(user);
 		em.getTransaction().commit();
+		em.close();
+		emf.close();
 		return user;
     }
 
     //check user is already registered or not, for login function
     public List<User> getUser(String email)
     {
-    	 
+    	EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+    	EntityManager em = emf.createEntityManager();
     	System.out.println("email is :" + email);
     	TypedQuery<User> query1 = em.createNamedQuery("User.findByEmail", User.class)
           		.setParameter("email", email);
@@ -98,7 +108,8 @@ public class UserManager {
          List<User> results = query1.getResultList();
 
          System.out.println("here");
-       
+       em.close();
+       emf.close();
   	   
         return results;
 
@@ -106,8 +117,10 @@ public class UserManager {
   //get friends
     public List<User> getFriend(String uemail)
     {
+    	EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+    	EntityManager em = emf.createEntityManager();
  		em.getTransaction().begin();
-  
+ 		
     	System.out.println("user email is :" + uemail);
     	String queryString = "SELECT u FROM User u WHERE u.email in (SELECT f.friendPK.femail FROM Friend f WHERE f.friendPK.uemail=:uemail)";
     	Query query = em.createQuery(queryString);
@@ -125,12 +138,16 @@ public class UserManager {
   	    {
   	    	System.out.println("no friends");
   	    }
+  	  em.close();
+		emf.close();
         return results;
     }
 
   //add friends
     public List<User> addFriend(String uemail,String femail)
     {
+    	EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+    	EntityManager em = emf.createEntityManager();
  		em.getTransaction().begin();
  		Friend ret = new Friend(uemail, femail);
  		em.persist(ret);
@@ -151,13 +168,16 @@ public class UserManager {
   	    {
   	    	System.out.println("no friends");
   	    }
+  	    em.close();
+  	    emf.close();
         return results;
     }
 
   //add friends
     public boolean deleteFriend(String uemail,String femail)
     {
- 
+    	EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+    	EntityManager em = emf.createEntityManager();
  		Friend ret = new Friend(uemail, femail);
 
  		em.getTransaction().begin();
@@ -165,7 +185,8 @@ public class UserManager {
         //NameQuery are from Entity class
     	em.remove(em.contains(ret)? ret: em.merge(ret));	
     	em.getTransaction().commit();
-  	    
+  	    em.close();
+  	    em.close();
         return true;
     }
 

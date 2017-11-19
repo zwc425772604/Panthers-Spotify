@@ -9,18 +9,27 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--CSS ref-->
-    <link rel="stylesheet" href="${cp}/resources/css/bootstrap.css">
+
+  <link rel="stylesheet" href="${cp}/resources/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <!--js ref-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script src="${cp}/resources/js/bootstrap.min.js"></script>
+   <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
     <script src="https://www.w3schools.com/lib/w3.js"></script> <!-- for include html in div tag -->
-    <script src="${cp}/resources/js/main.js"></script>
+   
+     <script src="${cp}/resources/js/main.js" /></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+    $(document).on("click", "#playbar-queue-button", function () {
+    	$("#main-changing-content").load("jsp/queue.jsp");
+    });
+    </script>
+    <%-- <link href="<c:url value="/WEB-INF/resources/css/custom.css" />" rel="stylesheet"> --%>
+    <%-- <style><%@include file="/WEB-INF/resources/css/custom.css"%></style> --%>
     <link rel="stylesheet" href="${cp}/resources/css/custom.css">
   </head>
   <body>
@@ -54,7 +63,7 @@
                 </div>
               </div>
               <div id="top-tool-upgrade-and-user">
-                
+
                 <div class="w3-dropdown-hover">
                   <button class="w3-button w3-black" id="top-tool-profile">
                   <img width=25px height=25px class="rounded-circle" alt="Generic placeholder thumbnail" id="dropdown-img"  src="http://orig05.deviantart.net/f239/f/2011/089/3/3/jack_skellington_facebook_icon_by_valashard-d3cu1bt.jpg">
@@ -144,7 +153,7 @@
         </div>
         <div class="col-md-3 col-sm-3" id="playbar-right">
           <ul id="playbar-right-icons">
-            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Queue" id="playbar-queue-anchor-tag"/> <i class="material-icons">add_to_queue</i></li>
+            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Queue" id="playbar-queue-button"/> <i class="material-icons">add_to_queue</i></li>
             <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Mute"  id="playbar-mute-anchor-tag"/><i class="material-icons">volume_up</i></li>
             <li><input class="bar" type="range" id="rangeinput" value="50" min = "0" max = "100" onchange="console.log(this.value);"/></li>
           </ul>
@@ -152,6 +161,3 @@
       </div>
     </footer>
   </body>
-
-
-

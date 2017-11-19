@@ -37,17 +37,12 @@ import org.springframework.stereotype.Component;
 @Transactional
 public class UserManager {
 //	@Autowired
-     // @PersistenceContext private EntityManager em;
-// 	 @PersistenceUnit(unitName = "pan")
-//     private EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory( "pan" );
-//     EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-//    EntityManager em = entityManagerFactory.createEntityManager();
-//    EntityTransaction userTransaction = em.getTransaction();
+     @PersistenceContext private EntityManager em;
+
 	  @Transactional
 	    public void add(String username, String email,String encPwd,int utype,char gender,String first_name, String last_name) {
 	    		User user = new User();
-	    		 EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-	    		EntityManager em = entityManagerFactory.createEntityManager();
+	    
 	        user.setUname(username);
 	        user.setEmail(email);
 	        user.setUpassword(encPwd);
@@ -72,14 +67,10 @@ public class UserManager {
 		   em.getTransaction().begin();
 		    em.persist(user);
 		   em.getTransaction().commit();
-		   em.close();
-		   entityManagerFactory.close();
+		  
 	    }
 
     public void remove(User user) {
-    	EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-		EntityManager em = entityManagerFactory.createEntityManager();
-
 		em.getTransaction().begin();
 		em.remove(em.contains(user) ? user : em.merge(user));
 		em.getTransaction().commit();
@@ -87,33 +78,27 @@ public class UserManager {
     /* More info to be added */
     public User editUser(User user, String pwd)
     {
-    	EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
-		EntityManager em = entityManagerFactory.createEntityManager();
 		System.out.println("editUser");
 
 		em.getTransaction().begin();
 		user.setUpassword(pwd);
 		em.merge(user);
 		em.getTransaction().commit();
-
 		return user;
     }
 
     //check user is already registered or not, for login function
     public List<User> getUser(String email)
     {
-    	 EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
- 		EntityManager em = entityManagerFactory.createEntityManager();
-        //NameQuery are from Entity class
+    	 
     	System.out.println("email is :" + email);
     	TypedQuery<User> query1 = em.createNamedQuery("User.findByEmail", User.class)
           		.setParameter("email", email);
-       //  Query query1 =
-        //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
+
          List<User> results = query1.getResultList();
          System.out.println("here");
-         em.close();
-  	    entityManagerFactory.close();
+       
+  	   
         return results;
     }
     
@@ -130,10 +115,8 @@ public class UserManager {
   //get friends
     public List<User> getFriend(String uemail)
     {
-    	 EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
- 		EntityManager em = entityManagerFactory.createEntityManager();
  		em.getTransaction().begin();
-        //NameQuery are from Entity class
+  
     	System.out.println("user email is :" + uemail);
     	String queryString = "SELECT u FROM User u WHERE u.email in (SELECT f.friendPK.femail FROM Friend f WHERE f.friendPK.uemail=:uemail)";
     	Query query = em.createQuery(queryString);
@@ -142,8 +125,7 @@ public class UserManager {
        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
     	List<User> results = query.getResultList();
-         em.close();
-  	    entityManagerFactory.close();
+    
   	    for(int i=0;i<results.size();i++)
   	    {
   	    		System.out.println(results.get(i).getEmail());
@@ -158,8 +140,6 @@ public class UserManager {
   //add friends
     public List<User> addFriend(String uemail,String femail)
     {
-    	 EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
- 		EntityManager em = entityManagerFactory.createEntityManager();
  		em.getTransaction().begin();
  		Friend ret = new Friend(uemail, femail);
  		em.persist(ret);
@@ -172,9 +152,6 @@ public class UserManager {
        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
     	List<User> results = query.getResultList();
-         em.close();
-
-  	    entityManagerFactory.close();
   	    for(int i=0;i<results.size();i++)
   	    {
   	    		System.out.println(results.get(i).getEmail());
@@ -189,21 +166,24 @@ public class UserManager {
     //add friends
     public boolean deleteFriend(String uemail,String femail)
     {
-    	EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
- 		EntityManager em = entityManagerFactory.createEntityManager();
+ 
  		Friend ret = new Friend(uemail, femail);
  		em.getTransaction().begin();
         //NameQuery are from Entity class
     	em.remove(em.contains(ret)? ret: em.merge(ret));	
     	em.getTransaction().commit();
+<<<<<<< HEAD
         em.close();
   	    entityManagerFactory.close();  	    
+=======
+  	    
+>>>>>>> f4be679ffaf46ff3fee456e9eadc31329b37c591
         return true;
     }
 
     @SuppressWarnings("unchecked")
 	public List<User> getUsersByType(int usertype){
-    	 EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+    	EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
 		EntityManager em = entityManagerFactory.createEntityManager();
     	List<User> list = new ArrayList<User>();
     	Query query = em.createNamedQuery("User.findByUtype",User.class).setParameter("utype", usertype);

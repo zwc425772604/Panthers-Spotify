@@ -12,7 +12,7 @@
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring.version>4.0.1.RELEASE</spring.version>
+        <spring.version>4.3.6.RELEASE</spring.version>
         <jstl.version>1.2</jstl.version>
         <hibernate.version>5.2.10.Final</hibernate.version>
         <javax.servlet.version>3.0.1</javax.servlet.version>
@@ -64,7 +64,13 @@
 	  <artifactId>commons-io</artifactId>
    <version>2.4</version>
  </dependency>
-
+	<!-- https://mvnrepository.com/artifact/org.springframework/spring-orm -->
+<dependency>
+    <groupId>org.springframework</groupId>
+    <artifactId>spring-orm</artifactId>
+    <version>${spring.version}</version>
+</dependency>
+	
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
@@ -76,6 +82,7 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${spring.version}</version>
         </dependency>
+        
         
         <dependency>
     <groupId>org.json</groupId>

@@ -113,15 +113,15 @@ public class UserManager {
         return results.get(0);
     }
   //get friends
+    @Transactional
     public List<User> getFriend(String uemail)
     {
- 		em.getTransaction().begin();
   
     	System.out.println("user email is :" + uemail);
     	String queryString = "SELECT u FROM User u WHERE u.email in (SELECT f.friendPK.femail FROM Friend f WHERE f.friendPK.uemail=:uemail)";
     	Query query = em.createQuery(queryString);
     	query.setParameter("uemail", uemail);
-    	em.getTransaction().commit();
+    	
        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
     	List<User> results = query.getResultList();
@@ -140,7 +140,7 @@ public class UserManager {
   //add friends
     public List<User> addFriend(String uemail,String femail)
     {
- 		em.getTransaction().begin();
+ 		
  		Friend ret = new Friend(uemail, femail);
  		em.persist(ret);
         //NameQuery are from Entity class
@@ -148,7 +148,7 @@ public class UserManager {
     	String queryString = "SELECT u FROM User u WHERE u.email in (SELECT f.friendPK.femail FROM Friend f WHERE f.friendPK.uemail=:uemail)";
     	Query query = em.createQuery(queryString);
     	query.setParameter("uemail", uemail);
-    	em.getTransaction().commit();
+    	
        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
     	List<User> results = query.getResultList();
@@ -168,16 +168,11 @@ public class UserManager {
     {
  
  		Friend ret = new Friend(uemail, femail);
- 		em.getTransaction().begin();
+ 		
         //NameQuery are from Entity class
     	em.remove(em.contains(ret)? ret: em.merge(ret));	
-    	em.getTransaction().commit();
-<<<<<<< HEAD
-        em.close();
-  	    entityManagerFactory.close();  	    
-=======
-  	    
->>>>>>> f4be679ffaf46ff3fee456e9eadc31329b37c591
+    	
+
         return true;
     }
 

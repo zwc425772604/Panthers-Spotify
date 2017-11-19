@@ -31,9 +31,9 @@
           </c:if>
           <button id="addFriendButton" class="w3-button right-col-button">FIND FRIENDS</button>
           
-          <div id="addFriendDialog" title="Add Friend" style="display:none;">
+         <div id="addFriendDialog" title="Add Friend" style="display:none;">
                           
-              <form:form action="addFriend" method="POST" enctype="multipart/form-data" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
+              
                 <div class="w3-row w3-section">
                   <div class="w3-col" style="width:70px"><span style="font-size: 12px">Username</span></div>
                   <div class="w3-rest">
@@ -47,8 +47,8 @@
                   <div class="w3-third w3-container">
                   </div>
                   <div class="w3-third w3-container">
-                    <button type="submit" class="w3-button w3-block w3-section w3-blue w3-ripple">Add</button>
+                    <button id="findFriend' class="w3-button w3-block w3-section w3-blue w3-ripple">Find</button>
                   </div>
                 </div>
-	            </form:form>
+	            
 	           </div>

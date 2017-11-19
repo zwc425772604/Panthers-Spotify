@@ -13,8 +13,7 @@ $(document).ready(function(){
           //Template
           //var photoUrl = response.url
           //var playlistName = playlistName
-          //var playlistDesc = playlistDesc       
-           
+          //var playlistDesc = playlistDesc                 
         },
         error: function(e)
         {                	
@@ -88,7 +87,28 @@ $(document).ready(function(){
 	          dialogClass: 'no-close'
 	     });  
 	});
+	
+	$("#findFriend").click(function(){	
+		var username = $(".addFriendUsername",this).text();
+		$.ajax({
+	        url: "${cp}/../findFriend",
+	        type: "POST",
+	        data : {"username" : username },
+	        asyn: true,
+	        cache: true,
+	        success : function(response)
+	        {
+	          console.log(response);
+	          $("#main-changing-content").load("jsp/userPage.jsp");
+	        },
+	        error: function(e)
+	        {                	
+	          console.log(e);                 	
+	        }       
+		  });
+	});
 });
+
 
 $(document).on("click", ".right-col-friends-name", function(){
 		var username = $(".right-col-friends-name", this).text(); //get the pid of the playlist
@@ -130,6 +150,7 @@ $(document).on("click", ".playlist-item", function(){
         }       
 	  });
 });
+
 
 function displayLeftNavbarContent(nav_name)
 {

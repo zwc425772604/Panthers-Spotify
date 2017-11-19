@@ -110,14 +110,22 @@ public class UserManager {
           		.setParameter("email", email);
        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
-
          List<User> results = query1.getResultList();
-
          System.out.println("here");
          em.close();
   	    entityManagerFactory.close();
         return results;
-
+    }
+    
+    public User getUserByUsername(String username) {
+    	EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
+ 		EntityManager em = entityManagerFactory.createEntityManager();
+    	TypedQuery<User> query1 = em.createNamedQuery("User.findByUname", User.class)
+          		.setParameter("uname",username); 
+        List<User> results = query1.getResultList();
+        em.close();
+  	    entityManagerFactory.close();
+        return results.get(0);
     }
   //get friends
     public List<User> getFriend(String uemail)
@@ -178,28 +186,20 @@ public class UserManager {
         return results;
     }
 
-  //add friends
+    //add friends
     public boolean deleteFriend(String uemail,String femail)
     {
     	EntityManagerFactory entityManagerFactory =  Persistence.createEntityManagerFactory("pan");
  		EntityManager em = entityManagerFactory.createEntityManager();
  		Friend ret = new Friend(uemail, femail);
-
  		em.getTransaction().begin();
-
         //NameQuery are from Entity class
     	em.remove(em.contains(ret)? ret: em.merge(ret));	
     	em.getTransaction().commit();
-        //  Query query1 =
-        //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
-
         em.close();
-   	
-  	    entityManagerFactory.close();
-  	    
+  	    entityManagerFactory.close();  	    
         return true;
     }
-
 
     @SuppressWarnings("unchecked")
 	public List<User> getUsersByType(int usertype){

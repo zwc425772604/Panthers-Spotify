@@ -38,8 +38,7 @@
 						  <c:otherwise>
 						    Add Friend
 						  </c:otherwise>
-						</c:choose>
-		            	
+						</c:choose>		            	
 		            	</span>
 		            	<span id="friendEmail" style="display:none;"><c:out value="${selectedFriend.email}"></c:out></span>
 		            	</button>

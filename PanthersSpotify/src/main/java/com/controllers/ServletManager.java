@@ -346,7 +346,21 @@ public class ServletManager {
   	   return "ok";
    }
    
-   
+   @RequestMapping(value = "/findFriend", method = RequestMethod.POST)
+   public ModelAndView findFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+  			User user = (User) session.getAttribute("user");
+	   		String username = request.getParameter("username");
+	   		User temp = userManager.getUserByUsername(username);
+	   		if(temp == null) {
+	   			System.out.println("GG");
+	   		}
+	   		else {
+	   			session.setAttribute("selectedFriend", temp);
+	   		}
+	   		mav.setViewName("main");
+	   		mav.addObject("username",user.getEmail());
+            return mav;
+   }
    
    @RequestMapping(value = "/addFriend", method = RequestMethod.POST)
    public ModelAndView addFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {

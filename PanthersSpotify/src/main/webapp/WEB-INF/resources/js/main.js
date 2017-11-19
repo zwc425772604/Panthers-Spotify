@@ -13,15 +13,15 @@ $(document).ready(function(){
           //Template
           //var photoUrl = response.url
           //var playlistName = playlistName
-          //var playlistDesc = playlistDesc       
-           
+          //var playlistDesc = playlistDesc
+
         },
         error: function(e)
-        {                	
-          console.log(e);                 	
-        }  	
-	});	
-	
+        {
+          console.log(e);
+        }
+	});
+
 	//Loading top followed playlist
 	$.ajax({
         url: "${cp}/../getOverviewPlaylist",
@@ -33,15 +33,15 @@ $(document).ready(function(){
           //Template
           //var photoUrl = response.url
           //var playlistName = playlistName
-          //var playlistDesc = playlistDesc       
-          $("#main-changing-content").load("jsp/browse.jsp");    
+          //var playlistDesc = playlistDesc
+          $("#main-changing-content").load("jsp/browse.jsp");
         },
         error: function(e)
-        {                	
-          console.log(e);                 	
-        }  	
-	});	
-	
+        {
+          console.log(e);
+        }
+	});
+
 	$(".playlist-item").click(function(){
 		var pid = $(".playlist_id", this).text(); //get the pid of the playlist
 		  $.ajax({
@@ -56,13 +56,13 @@ $(document).ready(function(){
 	            $("#main-changing-content").load("jsp/playlist.jsp");
 	          },
 	          error: function(e)
-	          {                	
-	            console.log(e);                 	
-	          }       
+	          {
+	            console.log(e);
+	          }
 		  });
 	});
 
-	$("#new_playlist_button").click(function(){	
+	$("#new_playlist_button").click(function(){
 	 	 $('#dialog').dialog({
 	          //autoOpen: true,
 	          height: 550,
@@ -74,19 +74,19 @@ $(document).ready(function(){
 	          //closeOnEscape: false,
 	          //beforeclose: function (event, ui) { return false; },
 	          dialogClass: 'no-close'
-	     });           
+	     });
 	  //     window.open("browse.jsp","_blank");
 	});
-	
-	$("#addFriendButton").click(function(){	
+
+	$("#addFriendButton").click(function(){
 	 	 $('#addFriendDialog').dialog({
 	          //autoOpen: true,
 	          height: 550,
 	          width: 450,
 	          modal: true,
-	          resizable: false,	          
+	          resizable: false,
 	          dialogClass: 'no-close'
-	     });  
+	     });
 	});
 });
 
@@ -105,9 +105,9 @@ $(document).on("click", ".right-col-friends-name", function(){
 	          $("#main-changing-content").load("jsp/userPage.jsp");
 	        },
 	        error: function(e)
-	        {                	
-	          console.log(e);                 	
-	        }       
+	        {
+	          console.log(e);
+	        }
 		  });
 });
 
@@ -125,9 +125,9 @@ $(document).on("click", ".playlist-item", function(){
           $("#main-changing-content").load("jsp/playlist.jsp");
         },
         error: function(e)
-        {                	
-          console.log(e);                 	
-        }       
+        {
+          console.log(e);
+        }
 	  });
 });
 
@@ -147,12 +147,12 @@ function displayLeftNavbarContent(nav_name)
 	        cache: true,
 	        success : function(response)
 	        {
-	          console.log(response);	         
+	          console.log(response);
 	        },
 	        error: function(e)
 	        {
-	         
-	          console.log(e);               
+
+	          console.log(e);
 	        }
 	      });
 	   $("#main-changing-content").load("jsp/album.jsp");
@@ -162,8 +162,8 @@ function displayLeftNavbarContent(nav_name)
 	   $("#main-changing-content").load("jsp/artist.jsp");
 	}
 	else if (nav_name.localeCompare('songs') == 0)
-	{       	
-	
+	{
+
 		$.ajax({
 	        url: "${cp}/../loadSong",
 	        type: "POST",
@@ -171,12 +171,12 @@ function displayLeftNavbarContent(nav_name)
 	        cache: true,
 	        success : function(response)
 	        {
-	          console.log(response);	         
+	          console.log(response);
 	        },
 	        error: function(e)
 	        {
-	          
-	          console.log(e);               
+
+	          console.log(e);
 	        }
 	      });
 		 $("#main-changing-content").load("jsp/songs.jsp");
@@ -186,11 +186,11 @@ function displayLeftNavbarContent(nav_name)
 	   $("#main-changing-content").load("jsp/overview.jsp");
 	    }
 }
-	  
+
 function displayAccount(){
 	$("#main-changing-content").load("jsp/account.jsp");
 }
-  
+
 function openDialogBox()
 {
   //   $("#dialog").dialog();
@@ -331,4 +331,6 @@ function displayCharts()
 // });
 
 
-
+$(document).on ("click", "#playbar-queue-button", function () {
+	$("#main-changing-content").load("queue.jsp");
+});

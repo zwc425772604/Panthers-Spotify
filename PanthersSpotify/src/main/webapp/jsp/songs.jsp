@@ -46,21 +46,21 @@
   background-color: gray;
   margin-left: -100%;
   margin-top: -10%;
-  
+
   }
-  .add-to-playlists-section 
+  .add-to-playlists-section
   {
   	margin-left: -100%;
   	background-color: gray;
   	margin-top: -60%;
-  
+
   }
-  
-  
- 
- 
-	
-	
+
+
+
+
+
+
 	</style>
 </head>
 <script>
@@ -126,8 +126,8 @@ $( ".song_info" ).bind({
  mouseover: function() {
    if (hoverEnabled)
    {
-     $(".more_action_list",this).css('visibility','visible'); 
-     $(".playbar-play-button",this).css('visibility','visible'); 
+     $(".more_action_list",this).css('visibility','visible');
+     $(".playbar-play-button",this).css('visibility','visible');
    }
 
  },
@@ -195,12 +195,12 @@ $(".add-to-playlist-item").click(function(){
           success : function(response)
           {
             console.log(response);
-            
+
           },
           error: function(e)
-          {                	
-            console.log(e);                 	
-          }       
+          {
+            console.log(e);
+          }
 	  });
 });
 </script>
@@ -226,27 +226,14 @@ $(".add-to-playlist-item").click(function(){
     <table class="table">
       <thead>
         <tr>
-          <th></th>
-          <!-- play/pause button -->
-          <th></th>
-          <!-- add/remove button -->
-          <th>
-            <p> TITLE </p>
-          </th>
-          <th>
-            <p> ALBUM </p>
-          </th>
-          <th>
-            <p> ARTIST</p>
-          </th>
-          <th>
-            <p> <i class="fa fa-calendar" aria-hidden="true"></i> </p>
-          </th>
-          <th> </th>
-          <!-- more button -->
-          <th>
-            <p> <i class="fa fa-clock-o" aria-hidden="true"></i> </p>
-          </th>
+          <th></th>  <!-- play/pause button -->
+          <th></th>  <!-- add/remove button -->
+          <th>TITLE</th>
+          <th>ALBUM</th>
+          <th>ARTIST</th>
+          <th><p> <i class="fa fa-calendar" aria-hidden="true"></i> </p></th>
+    			<th> </th><!-- more button -->
+          <th><p> <i class="fa fa-clock-o" aria-hidden="true"></i> </p></th>
         </tr>
       </thead>
       <tbody>
@@ -284,17 +271,17 @@ $(".add-to-playlist-item").click(function(){
 		                <button onclick="" class="w3-bar-item w3-button">Go to Album</button>
 		                <hr>
 		                <button onclick="" class="w3-bar-item w3-button">Remove from Your Library</button>
-		                <!-- <button onclick="" class="w3-bar-item w3-button add-to-playlist-button dropdown1">Add to Playlist</button> --> <!-- w3css hover dropdown -->  
+		                <!-- <button onclick="" class="w3-bar-item w3-button add-to-playlist-button dropdown1">Add to Playlist</button> --> <!-- w3css hover dropdown -->
 		          		<div class="w3-dropdown-hover">
 						    <button onclick="" class="w3-bar-item w3-button add-to-playlist-button dropdown1">Add to Playlist</button>
 						    <div class="w3-dropdown-content w3-bar-block w3-border add-to-playlists-section">
-						    	
-						      <!--  
+
+						      <!--
 						    	 <button onclick="" class="w3-bar-item w3-button">Go to Song Radio</button>
 				                 <hr>
-				                 <button onclick="" class="w3-bar-item w3-button">Go to Artist</button> 
-				                 <button onclick="" class="w3-bar-item w3-button">Go to Album</button> 
-				               -->   
+				                 <button onclick="" class="w3-bar-item w3-button">Go to Artist</button>
+				                 <button onclick="" class="w3-bar-item w3-button">Go to Album</button>
+				               -->
 				               	 <button onclick="" class="w3-bar-item w3-button">Create New Playlist</button>
 				               	 <hr>
 				                  <c:if test="${not empty user_playlist}">
@@ -312,7 +299,7 @@ $(".add-to-playlist-item").click(function(){
 								  </c:if>
 							</div>
 						 </div>
-								
+
 		                <button onclick="" class="w3-bar-item w3-button">Share</button>
 		              </div>
 		            </div>

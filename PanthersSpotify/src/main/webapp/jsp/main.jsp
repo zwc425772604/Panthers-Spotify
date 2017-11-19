@@ -21,6 +21,11 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+    $(document).on("click", "#playbar-queue-button", function () {
+    	$("#main-changing-content").load("jsp/queue.jsp");
+    });
+    </script>
     <link rel="stylesheet" href="${cp}/resources/css/custom.css">
   </head>
   <body>
@@ -54,7 +59,7 @@
                 </div>
               </div>
               <div id="top-tool-upgrade-and-user">
-                
+
                 <div class="w3-dropdown-hover">
                   <button class="w3-button w3-black" id="top-tool-profile">
                   <img width=25px height=25px class="rounded-circle" alt="Generic placeholder thumbnail" id="dropdown-img"  src="http://orig05.deviantart.net/f239/f/2011/089/3/3/jack_skellington_facebook_icon_by_valashard-d3cu1bt.jpg">
@@ -144,7 +149,7 @@
         </div>
         <div class="col-md-3 col-sm-3" id="playbar-right">
           <ul id="playbar-right-icons">
-            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Queue" id="playbar-queue-anchor-tag"/> <i class="material-icons">add_to_queue</i></li>
+            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Queue" id="playbar-queue-button"/> <i class="material-icons">add_to_queue</i></li>
             <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Mute"  id="playbar-mute-anchor-tag"/><i class="material-icons">volume_up</i></li>
             <li><input class="bar" type="range" id="rangeinput" value="50" min = "0" max = "100" onchange="console.log(this.value);"/></li>
           </ul>
@@ -152,6 +157,3 @@
       </div>
     </footer>
   </body>
-
-
-

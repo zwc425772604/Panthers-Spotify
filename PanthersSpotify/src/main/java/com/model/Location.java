@@ -44,42 +44,12 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Location.findByContryCode", query = "SELECT l FROM Location l WHERE l.contryCode = :contryCode")})
 public class Location implements Serializable {
 
+
+
     @OneToMany(mappedBy = "lid")
     private Collection<Concert> concertCollection;
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "lid", nullable = false)
-    private Integer lid;
-    @Size(max = 30)
-    @Column(name = "lname", length = 30)
-    private String lname;
-    @Size(max = 30)
-    @Column(name = "address", length = 30)
-    private String address;
-    @Size(max = 30)
-    @Column(name = "address2", length = 30)
-    private String address2;
-    @Size(max = 30)
-    @Column(name = "address3", length = 30)
-    private String address3;
-    @Size(max = 30)
-    @Column(name = "city", length = 30)
-    private String city;
-    @Size(max = 10)
-    @Column(name = "subdivision", length = 10)
-    private String subdivision;
-    @Column(name = "postalCode")
-    private Integer postalCode;
-    @Size(max = 10)
-    @Column(name = "contryCode", length = 10)
-    private String contryCode;
-    @JoinColumn(name = "uemail", referencedColumnName = "email")
-    @ManyToOne
-    private User uemail;
 
     public Location() {
     }
@@ -88,82 +58,104 @@ public class Location implements Serializable {
         this.lid = lid;
     }
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "lid", nullable = false)
+    private Integer lid;
     public Integer getLid() {
         return lid;
     }
-
     public void setLid(Integer lid) {
         this.lid = lid;
     }
 
+    @Size(max = 30)
+    @Column(name = "lname", length = 30)
+    private String lname;
     public String getLname() {
         return lname;
     }
-
     public void setLname(String lname) {
         this.lname = lname;
     }
 
+    @Size(max = 30)
+    @Column(name = "address", length = 30)
+    private String address;
     public String getAddress() {
         return address;
     }
-
     public void setAddress(String address) {
         this.address = address;
     }
 
+    @Size(max = 30)
+    @Column(name = "address2", length = 30)
+    private String address2;
     public String getAddress2() {
         return address2;
     }
-
     public void setAddress2(String address2) {
         this.address2 = address2;
     }
 
+    @Size(max = 30)
+    @Column(name = "address3", length = 30)
+    private String address3;
     public String getAddress3() {
         return address3;
     }
-
     public void setAddress3(String address3) {
         this.address3 = address3;
     }
 
+    @Size(max = 30)
+    @Column(name = "city", length = 30)
+    private String city;
     public String getCity() {
         return city;
     }
-
     public void setCity(String city) {
         this.city = city;
     }
 
+    @Size(max = 10)
+    @Column(name = "subdivision", length = 10)
+    private String subdivision;
     public String getSubdivision() {
         return subdivision;
     }
-
     public void setSubdivision(String subdivision) {
         this.subdivision = subdivision;
     }
 
+    @Column(name = "postalCode")
+    private Integer postalCode;
     public Integer getPostalCode() {
         return postalCode;
     }
-
     public void setPostalCode(Integer postalCode) {
         this.postalCode = postalCode;
     }
 
+    @Size(max = 10)
+    @Column(name = "contryCode", length = 10)
     public String getContryCode() {
         return contryCode;
     }
-
     public void setContryCode(String contryCode) {
         this.contryCode = contryCode;
     }
 
+    private String contryCode;
+    @JoinColumn(name = "uemail", referencedColumnName = "email")
+    @ManyToOne
+    private User uemail;
     public User getUemail() {
         return uemail;
     }
-
     public void setUemail(User uemail) {
         this.uemail = uemail;
     }
@@ -201,5 +193,7 @@ public class Location implements Serializable {
     public void setConcertCollection(Collection<Concert> concertCollection) {
         this.concertCollection = concertCollection;
     }
-    
+
+
+
 }

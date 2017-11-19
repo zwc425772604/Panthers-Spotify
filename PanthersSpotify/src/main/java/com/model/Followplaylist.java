@@ -29,14 +29,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Followplaylist implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected FollowplaylistPK followplaylistPK;
-    @JoinColumn(name = "uemail", referencedColumnName = "email", nullable = false, insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private User user;
-    @JoinColumn(name = "pid", referencedColumnName = "pid", nullable = false, insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private Playlist playlist;
+   
 
     public Followplaylist() {
     }
@@ -48,27 +41,31 @@ public class Followplaylist implements Serializable {
     public Followplaylist(int pid, String uemail) {
         this.followplaylistPK = new FollowplaylistPK(pid, uemail);
     }
-
+    @EmbeddedId
+    protected FollowplaylistPK followplaylistPK;
     public FollowplaylistPK getFollowplaylistPK() {
         return followplaylistPK;
     }
-
     public void setFollowplaylistPK(FollowplaylistPK followplaylistPK) {
         this.followplaylistPK = followplaylistPK;
     }
 
+    @JoinColumn(name = "uemail", referencedColumnName = "email", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private User user;
     public User getUser() {
         return user;
     }
-
     public void setUser(User user) {
         this.user = user;
     }
 
+    @JoinColumn(name = "pid", referencedColumnName = "pid", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Playlist playlist;
     public Playlist getPlaylist() {
         return playlist;
     }
-
     public void setPlaylist(Playlist playlist) {
         this.playlist = playlist;
     }
@@ -97,5 +94,5 @@ public class Followplaylist implements Serializable {
     public String toString() {
         return "com.model.Followplaylist[ followplaylistPK=" + followplaylistPK + " ]";
     }
-    
+
 }

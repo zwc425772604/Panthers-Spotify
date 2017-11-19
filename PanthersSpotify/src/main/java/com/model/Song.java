@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,6 +20,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -45,44 +47,10 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Song.findByStype", query = "SELECT s FROM Song s WHERE s.stype = :stype")
     , @NamedQuery(name = "Song.findBySurl", query = "SELECT s FROM Song s WHERE s.surl = :surl")})
 public class Song implements Serializable {
-
-    @ManyToMany(mappedBy = "songCollection")
-    private Collection<User> userCollection;
-
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "sid", nullable = false)
-    private Integer sid;
-    @Size(max = 20)
-    @Column(name = "stitle")
-    private String stitle;
-    @Column(name = "stime")
-    @Temporal(TemporalType.TIME)
-    private Date stime;
-    @Column(name = "releaseDay")
-    @Temporal(TemporalType.DATE)
-    private Date releaseDay;
-    @Column(name = "monthlyPlayed")
-    private Integer monthlyPlayed;
-    @Size(max = 10)
-    @Column(name = "gener", length=10)
-    private String gener;
-    @Size(max = 10)
-    @Column(name = "stype", length=10)
-    private String stype;
-    @Size(max = 100)
-    @Column(name = "surl", length=100)
-    private String surl;
-    @JoinColumn(name = "aid", referencedColumnName = "aid")
-    @ManyToOne
-    private Album albumId;
-
     public Song() {
     }
-    
+
     public Song(String songTitle, Date songTime, Date releaseDay, String genre, String type, String url) {
     	this.stitle = songTitle;
     	this.stime = songTime;
@@ -91,79 +59,100 @@ public class Song implements Serializable {
     	this.stype = type;
     	this.surl = url;
     }
-    
+
     public Song(Integer sid) {
         this.sid = sid;
     }
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "sid", nullable = false)
+    private Integer sid;
     public Integer getSid() {
         return sid;
     }
-
     public void setSid(Integer sid) {
         this.sid = sid;
     }
 
+    @Size(max = 20)
+    @Column(name = "stitle")
+    private String stitle;
     public String getStitle() {
         return stitle;
     }
-
     public void setStitle(String stitle) {
         this.stitle = stitle;
     }
 
+    @Column(name = "stime")
+    @Temporal(TemporalType.TIME)
+    private Date stime;
     public Date getStime() {
         return stime;
     }
-
     public void setStime(Date stime) {
         this.stime = stime;
     }
 
+    @Column(name = "releaseDay")
+    @Temporal(TemporalType.DATE)
+    private Date releaseDay;
     public Date getReleaseDay() {
         return releaseDay;
     }
-
     public void setReleaseDay(Date releaseDay) {
         this.releaseDay = releaseDay;
     }
 
+    @Column(name = "monthlyPlayed")
+    private Integer monthlyPlayed;
     public Integer getMonthlyPlayed() {
         return monthlyPlayed;
     }
-
     public void setMonthlyPlayed(Integer monthlyPlayed) {
         this.monthlyPlayed = monthlyPlayed;
     }
 
+
+    @Size(max = 10)
+    @Column(name = "gener", length=10)
+    private String gener;
     public String getGener() {
         return gener;
     }
-
     public void setGener(String gener) {
         this.gener = gener;
     }
 
+    @Size(max = 10)
+    @Column(name = "stype", length=10)
+    private String stype;
     public String getStype() {
         return stype;
     }
-
     public void setStype(String stype) {
         this.stype = stype;
     }
 
+    @Size(max = 100)
+    @Column(name = "surl", length=100)
+    private String surl;
     public String getSurl() {
         return surl;
     }
-
     public void setSurl(String surl) {
         this.surl = surl;
     }
 
+    @JoinColumn(name = "aid", referencedColumnName = "aid")
+    @ManyToOne
+    private Album albumId;
     public Album getAlbumId() {
         return albumId;
     }
-
     public void setAlbumId(Album albumId) {
         this.albumId = albumId;
     }
@@ -193,13 +182,34 @@ public class Song implements Serializable {
         return "com.model.Song[ sid=" + sid + " ]";
     }
 
+    @ManyToMany(mappedBy = "songCollection")
+    private Collection<User> userCollection;
     @XmlTransient
     public Collection<User> getUserCollection() {
         return userCollection;
     }
-
     public void setUserCollection(Collection<User> userCollection) {
         this.userCollection = userCollection;
     }
-    
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "song")
+    private Collection<Playlistsong> playlistsongCollection;
+    @XmlTransient
+    public Collection<Playlistsong> getPlaylistsongCollection() {
+        return playlistsongCollection;
+    }
+    public void setPlaylistsongCollection(Collection<Playlistsong> playlistsongCollection) {
+        this.playlistsongCollection = playlistsongCollection;
+    }
+
+    @OneToMany(mappedBy = "nowPlay")
+    private Collection<Songqueue_1> songqueueCollection;
+    @XmlTransient
+    public Collection<Songqueue_1> getSongqueueCollection() {
+        return songqueueCollection;
+    }
+    public void setSongqueueCollection(Collection<Songqueue_1> songqueueCollection) {
+        this.songqueueCollection = songqueueCollection;
+    }
+
 }

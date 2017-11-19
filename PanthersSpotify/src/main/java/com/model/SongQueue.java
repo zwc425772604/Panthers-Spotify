@@ -34,51 +34,51 @@ import javax.xml.bind.annotation.XmlTransient;
 
 public class SongQueue implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String uemail;	
-	private Integer nowPlay;	
+	private String uemail;
+	private Integer nowPlay;
 	private Integer pid;
 	private Queue<Squeue> queue;
-	
+
 	public SongQueue(){}
-	
-	public SongQueue(String email){ 
-		this.uemail = email; 
+
+	public SongQueue(String email){
+		this.uemail = email;
 	}
-	
+
 	public String getUemail(){ return this.uemail; }
-	
+
 	public void setUemail (String email) {
 		this.uemail = email;
 	}
-	
+
 	public Integer getNowPlay() {
-		return this.nowPlay;	
+		return this.nowPlay;
 	}
-	
+
 	public void setNowPlay(Integer sid){
 		this.nowPlay = sid;
 	}
-	
+
 	public Integer getPid () {
 		return this.pid;
 	}
-	
+
 	public void setPid(Integer pid){
 		this.pid = pid;
 	}
-	
+
 	@XmlTransient
 	public Queue<Squeue> getQueue() {
 		return this.queue;
 	}
-	
+
 	public void setQueueCollection (Queue<Squeue> queueCollection) {
 		this.queue = queueCollection;
 	}
-	
+
 	@Override
     public String toString() {
         return "com.model.SongQueue[ uemail=" + this.uemail + " ]";
     }
-	
+
 }

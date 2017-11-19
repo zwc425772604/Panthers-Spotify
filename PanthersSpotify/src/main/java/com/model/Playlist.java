@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +21,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -46,43 +48,7 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Playlist.findByFollowers", query = "SELECT p FROM Playlist p WHERE p.followers = :followers")
     , @NamedQuery(name = "Playlist.findByIspublic", query = "SELECT p FROM Playlist p WHERE p.ispublic = :ispublic")})
 public class Playlist implements Serializable {
-
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "pid", nullable = false)
-    private Integer pid;
-    @Size(max = 10)
-    @Column(name = "pname", length = 10)
-    private String pname;
-    @Size(max = 500)
-    @Column(name = "des", length = 500)
-    private String des;
-    @Size(max = 100)
-    @Column(name = "photoUrl", length = 1000)
-    private String photoUrl;
-    @Column(name = "createDate")
-    @Temporal(TemporalType.DATE)
-    private Date createDate;
-    @Column(name = "timelength")
-    @Temporal(TemporalType.TIME)
-    private Date timelength;
-    @Column(name = "nSongs")
-    private Integer nSongs;
-    @Column(name = "followers")
-    private Integer followers;
-    @Column(name = "ispublic")
-    private Boolean ispublic;
-    @JoinTable(name = "playlistsong", joinColumns = {
-        @JoinColumn(name = "pid", referencedColumnName = "pid", nullable = false)}, inverseJoinColumns = {
-        @JoinColumn(name = "sid", referencedColumnName = "sid", nullable = false)})
-    @ManyToMany
-    private Collection<Song> songCollection;
-    @JoinColumn(name = "powner", referencedColumnName = "email")
-    @ManyToOne
-    private User powner;
 
     public Playlist() {
     }
@@ -96,94 +62,119 @@ public class Playlist implements Serializable {
 		this.powner=powner;
 }
 
-
     public Playlist(Integer pid) {
         this.pid = pid;
     }
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "pid", nullable = false)
+    private Integer pid;
     public Integer getPid() {
         return pid;
     }
-
     public void setPid(Integer pid) {
         this.pid = pid;
     }
 
+    @Size(max = 10)
+    @Column(name = "pname", length = 10)
+    private String pname;
     public String getPname() {
         return pname;
     }
-
     public void setPname(String pname) {
         this.pname = pname;
     }
 
+    @Size(max = 500)
+    @Column(name = "des", length = 500)
+    private String des;
     public String getDes() {
         return des;
     }
-
     public void setDes(String des) {
         this.des = des;
     }
 
+    @Size(max = 100)
+    @Column(name = "photoUrl", length = 1000)
+    private String photoUrl;
     public String getPhotoUrl() {
         return photoUrl;
     }
-
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
 
+    @Column(name = "createDate")
+    @Temporal(TemporalType.DATE)
+    private Date createDate;
     public Date getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
+    @Column(name = "timelength")
+    @Temporal(TemporalType.TIME)
+    private Date timelength;
     public Date getTimelength() {
         return timelength;
     }
-
     public void setTimelength(Date timelength) {
         this.timelength = timelength;
     }
 
+    @Column(name = "followers")
+    private Integer followers;
     public Integer getFollowers() {
         return followers;
     }
-
     public void setFollowers(Integer followers) {
         this.followers = followers;
     }
 
+    @Column(name = "ispublic")
+    private Boolean ispublic;
     public Boolean getIspublic() {
         return ispublic;
     }
-
     public void setIspublic(Boolean ispublic) {
         this.ispublic = ispublic;
     }
+
+    @Column(name = "nSongs")
+    private Integer nSongs;
     public Integer getNSongs() {
         return nSongs;
     }
-
     public void setNSongs(Integer nSongs) {
         this.nSongs = nSongs;
     }
+
+    @JoinTable(name = "playlistsong", joinColumns = {
+        @JoinColumn(name = "pid", referencedColumnName = "pid", nullable = false)}, inverseJoinColumns = {
+        @JoinColumn(name = "sid", referencedColumnName = "sid", nullable = false)})
+    @ManyToMany
+    private Collection<Song> songCollection;
     @XmlTransient
     public Collection<Song> getSongCollection() {
         return songCollection;
     }
-
     public void setSongCollection(Collection<Song> songCollection) {
         this.songCollection = songCollection;
     }
 
+    @JoinColumn(name = "powner", referencedColumnName = "email")
+    @ManyToOne
+    private User powner;
     public User getPowner() {
         return powner;
     }
-
     public void setPowner(User powner) {
         this.powner = powner;
     }
@@ -212,5 +203,35 @@ public class Playlist implements Serializable {
     public String toString() {
         return "com.model.Playlist[ pid=" + pid + " ]";
     }
-    
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "playlist")
+    private Collection<Playlistsong> playlistsongCollection;
+    @XmlTransient
+    public Collection<Playlistsong> getPlaylistsongCollection() {
+        return playlistsongCollection;
+    }
+    public void setPlaylistsongCollection(Collection<Playlistsong> playlistsongCollection) {
+        this.playlistsongCollection = playlistsongCollection;
+    }
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "playlist")
+    private Collection<Userplaylist> userplaylistCollection;
+    @XmlTransient
+    public Collection<Userplaylist> getUserplaylistCollection() {
+        return userplaylistCollection;
+    }
+    public void setUserplaylistCollection(Collection<Userplaylist> userplaylistCollection) {
+        this.userplaylistCollection = userplaylistCollection;
+    }
+
+    @OneToMany(mappedBy = "pid")
+    private Collection<Songqueue_1> songqueueCollection;
+    @XmlTransient
+    public Collection<Songqueue_1> getSongqueueCollection() {
+        return songqueueCollection;
+    }
+    public void setSongqueueCollection(Collection<Songqueue_1> songqueueCollection) {
+        this.songqueueCollection = songqueueCollection;
+    }
+
 }

@@ -39,25 +39,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Concert implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @NotNull
-    @Column(name = "cid", nullable = false)
-    private Integer cid;
-    
-    @Column(name = "ctime")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date ctime;
-    @Size(max = 50)
-    @Column(name = "cname", length = 50)
-    private String cname;
-    @JoinColumn(name = "uemail", referencedColumnName = "email")
-    @ManyToOne
-    private User uemail;
-    @JoinColumn(name = "lid", referencedColumnName = "lid")
-    @ManyToOne
-    private Location lid;
 
     public Concert() {
     }
@@ -66,38 +47,53 @@ public class Concert implements Serializable {
         this.cid = cid;
     }
 
+    @Id
+    @Basic(optional = false)
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @NotNull
+    @Column(name = "cid", nullable = false)
+    private Integer cid;
     public Integer getCid() {
         return cid;
     }
-
     public void setCid(Integer cid) {
         this.cid = cid;
     }
 
+    @Column(name = "ctime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date ctime;
     public Date getCtime() {
         return ctime;
     }
-
     public void setCtime(Date ctime) {
         this.ctime = ctime;
     }
 
+    @Size(max = 50)
+    @Column(name = "cname", length = 50)
+    private String cname;
     public String getCname() {
         return cname;
     }
-
     public void setCname(String cname) {
         this.cname = cname;
     }
 
+    @JoinColumn(name = "uemail", referencedColumnName = "email")
+    @ManyToOne
+    private User uemail;
     public User getUemail() {
         return uemail;
     }
-
     public void setUemail(User uemail) {
         this.uemail = uemail;
     }
 
+
+    @JoinColumn(name = "lid", referencedColumnName = "lid")
+    @ManyToOne
+    private Location lid;
     public Location getLid() {
         return lid;
     }
@@ -130,5 +126,5 @@ public class Concert implements Serializable {
     public String toString() {
         return "com.model.Concert[ cid=" + cid + " ]";
     }
-    
+
 }

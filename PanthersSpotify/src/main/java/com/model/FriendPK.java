@@ -12,13 +12,6 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class FriendPK implements Serializable {
 
-    @Basic(optional = false)
-    @Column(name = "uemail", nullable = false, length = 50)
-    private String uemail;
-    @Basic(optional = false)
-    @Column(name = "femail", nullable = false, length = 50)
-    private String femail;
-
     public FriendPK() {
     }
 
@@ -27,18 +20,22 @@ public class FriendPK implements Serializable {
         this.femail = femail;
     }
 
+    @Basic(optional = false)
+    @Column(name = "uemail", nullable = false, length = 50)
+    private String uemail;
     public String getUemail() {
         return uemail;
     }
-
     public void setUemail(String uemail) {
         this.uemail = uemail;
     }
 
+    @Basic(optional = false)
+    @Column(name = "femail", nullable = false, length = 50)
+    private String femail;
     public String getFemail() {
         return femail;
     }
-
     public void setFemail(String femail) {
         this.femail = femail;
     }
@@ -71,5 +68,5 @@ public class FriendPK implements Serializable {
     public String toString() {
         return "javaapplication2.FriendPK[ uemail=" + uemail + ", femail=" + femail + " ]";
     }
-    
+
 }

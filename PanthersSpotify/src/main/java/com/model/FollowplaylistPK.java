@@ -19,15 +19,8 @@ import javax.validation.constraints.Size;
 @Embeddable
 public class FollowplaylistPK implements Serializable {
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "pid", nullable = false)
-    private int pid;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
-    @Column(name = "uemail", nullable = false, length = 50)
-    private String uemail;
+
+
 
     public FollowplaylistPK() {
     }
@@ -37,18 +30,25 @@ public class FollowplaylistPK implements Serializable {
         this.uemail = uemail;
     }
 
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "pid", nullable = false)
+    private int pid;
     public int getPid() {
         return pid;
     }
-
     public void setPid(int pid) {
         this.pid = pid;
     }
 
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(name = "uemail", nullable = false, length = 50)
+    private String uemail;
     public String getUemail() {
         return uemail;
     }
-
     public void setUemail(String uemail) {
         this.uemail = uemail;
     }
@@ -81,5 +81,5 @@ public class FollowplaylistPK implements Serializable {
     public String toString() {
         return "com.model.FollowplaylistPK[ pid=" + pid + ", uemail=" + uemail + " ]";
     }
-    
+
 }

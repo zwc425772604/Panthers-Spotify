@@ -12,12 +12,7 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class PlaylistsongPK implements Serializable {
 
-    @Basic(optional = false)
-    @Column(name = "pid", nullable = false)
-    private int pid;
-    @Basic(optional = false)
-    @Column(name = "sid", nullable = false)
-    private int sid;
+
 
     public PlaylistsongPK() {
     }
@@ -27,18 +22,22 @@ public class PlaylistsongPK implements Serializable {
         this.sid = sid;
     }
 
+    @Basic(optional = false)
+    @Column(name = "pid", nullable = false)
+    private int pid;
     public int getPid() {
         return pid;
     }
-
     public void setPid(int pid) {
         this.pid = pid;
     }
 
+    @Basic(optional = false)
+    @Column(name = "sid", nullable = false)
+    private int sid;
     public int getSid() {
         return sid;
     }
-
     public void setSid(int sid) {
         this.sid = sid;
     }
@@ -71,6 +70,5 @@ public class PlaylistsongPK implements Serializable {
     public String toString() {
         return "javaapplication2.PlaylistsongPK[ pid=" + pid + ", sid=" + sid + " ]";
     }
-    
-}
 
+}

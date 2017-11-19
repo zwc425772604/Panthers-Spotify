@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -25,13 +27,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Playlistsong.findBySid", query = "SELECT p FROM Playlistsong p WHERE p.playlistsongPK.sid = :sid")
     , @NamedQuery(name = "Playlistsong.findByCreateDate", query = "SELECT p FROM Playlistsong p WHERE p.createDate = :createDate")})
 public class Playlistsong implements Serializable {
-
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected PlaylistsongPK playlistsongPK;
-    @Column(name = "createDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
 
     public Playlistsong() {
     }
@@ -44,18 +40,21 @@ public class Playlistsong implements Serializable {
         this.playlistsongPK = new PlaylistsongPK(pid, sid);
     }
 
+    @EmbeddedId
+    protected PlaylistsongPK playlistsongPK;
     public PlaylistsongPK getPlaylistsongPK() {
         return playlistsongPK;
     }
-
     public void setPlaylistsongPK(PlaylistsongPK playlistsongPK) {
         this.playlistsongPK = playlistsongPK;
     }
 
+    @Column(name = "createDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createDate;
     public Date getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
@@ -84,6 +83,25 @@ public class Playlistsong implements Serializable {
     public String toString() {
         return "javaapplication2.Playlistsong[ playlistsongPK=" + playlistsongPK + " ]";
     }
-    
-}
 
+    @JoinColumn(name = "pid", referencedColumnName = "pid", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Playlist playlist;
+    public Playlist getPlaylist() {
+        return playlist;
+    }
+    public void setPlaylist(Playlist playlist) {
+        this.playlist = playlist;
+    }
+
+    @JoinColumn(name = "sid", referencedColumnName = "sid", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Song song;
+    public Song getSong() {
+        return song;
+    }
+    public void setSong(Song song) {
+        this.song = song;
+    }
+
+}

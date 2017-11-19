@@ -5,6 +5,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -26,12 +28,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Friend.findByCreateDate", query = "SELECT f FROM Friend f WHERE f.createDate = :createDate")})
 public class Friend implements Serializable {
 
+
     private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected FriendPK friendPK;
-    @Column(name = "createDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createDate;
 
     public Friend() {
     }
@@ -44,18 +42,21 @@ public class Friend implements Serializable {
         this.friendPK = new FriendPK(uemail, femail);
     }
 
+    @EmbeddedId
+    protected FriendPK friendPK;
     public FriendPK getFriendPK() {
         return friendPK;
     }
-
     public void setFriendPK(FriendPK friendPK) {
         this.friendPK = friendPK;
     }
 
+    @Column(name = "createDate")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createDate;
     public Date getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
@@ -84,5 +85,25 @@ public class Friend implements Serializable {
     public String toString() {
         return "javaapplication2.Friend[ friendPK=" + friendPK + " ]";
     }
-    
+
+    @JoinColumn(name = "uemail", referencedColumnName = "email", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private User user;
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    @JoinColumn(name = "femail", referencedColumnName = "email", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private User user1;
+    public User getUser1() {
+        return user1;
+    }
+    public void setUser1(User user1) {
+        this.user1 = user1;
+    }
+
 }

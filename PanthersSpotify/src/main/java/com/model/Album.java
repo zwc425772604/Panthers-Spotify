@@ -38,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Album.findAll", query = "SELECT a FROM Album a")
     , @NamedQuery(name = "Album.findByAid", query = "SELECT a FROM Album a WHERE a.aid = :aid")
     , @NamedQuery(name = "Album.findByAname", query = "SELECT a FROM Album a WHERE a.aname = :aname")
-    , @NamedQuery(name = "Album.findByDis", query = "SELECT a FROM Album a WHERE a.dis = :dis")
+    , @NamedQuery(name = "Album.findByDes", query = "SELECT a FROM Album a WHERE a.des = :des")
     , @NamedQuery(name = "Album.findByPhotoUrl", query = "SELECT a FROM Album a WHERE a.photoUrl = :photoUrl")
     , @NamedQuery(name = "Album.findByReleaseDate", query = "SELECT a FROM Album a WHERE a.releaseDate = :releaseDate")
     , @NamedQuery(name = "Album.findByTimelength", query = "SELECT a FROM Album a WHERE a.timelength = :timelength")
@@ -47,37 +47,6 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Album implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "aid", nullable = false)
-    private Integer aid;
-    @Size(max = 10)
-    @Column(name = "aname", length = 10)
-    private String aname;
-    @Size(max = 500)
-    @Column(name = "dis", length = 500)
-    private String dis;
-    @Size(max = 100)
-    @Column(name = "photoUrl", length = 100)
-    private String photoUrl;
-    @Column(name = "releaseDate")
-    @Temporal(TemporalType.DATE)
-    private Date releaseDate;
-    @Column(name = "timelength")
-    @Temporal(TemporalType.TIME)
-    private Date timelength;
-    @Column(name = "followers")
-    private Integer followers;
-    @Column(name = "nSongs")
-    private Integer nSongs;
-    @OneToMany(mappedBy = "albumId")
-    private Collection<Song> songCollection;
-//    @JoinColumn(name = "aowner", referencedColumnName = "email")
-//    @ManyToOne
-//    private User aowner;
-
     public Album() {
     }
 
@@ -85,75 +54,93 @@ public class Album implements Serializable {
         this.aid = aid;
     }
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "aid", nullable = false)
+    private Integer aid;
     public Integer getAid() {
         return aid;
     }
-
     public void setAid(Integer aid) {
         this.aid = aid;
     }
 
+    @Size(max = 10)
+    @Column(name = "aname", length = 10)
+    private String aname;
     public String getAname() {
         return aname;
     }
-
     public void setAname(String aname) {
         this.aname = aname;
     }
 
-    public String getDis() {
-        return dis;
+    @Size(max = 500)
+    @Column(name = "des", length = 500)
+    private String des;
+    public String getDes() {
+        return des;
+    }
+    public void setDes(String des) {
+        this.des = des;
     }
 
-    public void setDis(String dis) {
-        this.dis = dis;
-    }
-
+    @Size(max = 100)
+    @Column(name = "photoUrl", length = 100)
+    private String photoUrl;
     public String getPhotoUrl() {
         return photoUrl;
     }
-
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
 
+    @Column(name = "releaseDate")
+    @Temporal(TemporalType.DATE)
+    private Date releaseDate;
     public Date getReleaseDate() {
         return releaseDate;
     }
-
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 
+    @Column(name = "timelength")
+    @Temporal(TemporalType.TIME)
+    private Date timelength;
     public Date getTimelength() {
         return timelength;
     }
-
     public void setTimelength(Date timelength) {
         this.timelength = timelength;
     }
 
+    @Column(name = "followers")
+    private Integer followers;
     public Integer getFollowers() {
         return followers;
     }
-
     public void setFollowers(Integer followers) {
         this.followers = followers;
     }
 
+    @Column(name = "nSongs")
+    private Integer nSongs;
     public Integer getNSongs() {
         return nSongs;
     }
-
     public void setNSongs(Integer nSongs) {
         this.nSongs = nSongs;
     }
 
+    @OneToMany(mappedBy = "albumId")
+    private Collection<Song> songCollection;
     @XmlTransient
     public Collection<Song> getSongCollection() {
         return songCollection;
     }
-
     public void setSongCollection(Collection<Song> songCollection) {
         this.songCollection = songCollection;
     }
@@ -190,5 +177,5 @@ public class Album implements Serializable {
     public String toString() {
         return "com.model.Album[ aid=" + aid + " ]";
     }
-    
+
 }

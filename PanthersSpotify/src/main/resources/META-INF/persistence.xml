@@ -14,14 +14,18 @@
     <class>com.model.FollowplaylistPK</class>
     <class>com.model.Friend</class>
     <class>com.model.FriendPK</class>
+    <class>com.model.Songqueue_1</class>
+    <class>com.model.Customer</class>
+    <class>com.model.Artist</class>
+    <class>com.model.Userplaylist</class>
+    <class>com.model.Userplaylists</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
-     <properties>
-      
+    <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql2.cs.stonybrook.edu:3306/panthers?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="panthers"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value="changeit"/>
-     <!--  
+      <!--  
               <property name="hibernate.connection.pool_size" value="25"/>
         <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
         <property name="hibernate.connection.url" value="jdbc:mysql://mysql2.cs.stonybrook.edu:3306/panthers"/>

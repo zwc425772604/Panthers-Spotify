@@ -43,31 +43,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Payment implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "payid", nullable = false)
-    private Integer payid;
-    @Size(max = 20)
-    @Column(name = "hodlName", length = 20)
-    private String hodlName;
-    @Column(name = "cardNum")
-    private Integer cardNum;
-    @Column(name = "cvv")
-    private Integer cvv;
-    @Column(name = "expirationDate")
-    @Temporal(TemporalType.DATE)
-    private Date expirationDate;
-    @Size(max = 10)
-    @Column(name = "company", length = 10)
-    private String company;
-    @Size(max = 100)
-    @Column(name = "billingAddress", length = 100)
-    private String billingAddress;
-    @JoinColumn(name = "uemail", referencedColumnName = "email")
-    @ManyToOne
-    private User uemail;
 
     public Payment() {
     }
@@ -76,66 +51,83 @@ public class Payment implements Serializable {
         this.payid = payid;
     }
 
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "payid", nullable = false)
+    private Integer payid;
     public Integer getPayid() {
         return payid;
     }
-
     public void setPayid(Integer payid) {
         this.payid = payid;
     }
-    
+
+    @Size(max = 20)
+    @Column(name = "hodlName", length = 20)
+    private String hodlName;
     public String getHodlName() {
         return hodlName;
     }
-
     public void setHodlName(String hodlName) {
         this.hodlName = hodlName;
     }
 
+    @Column(name = "cardNum")
+    private Integer cardNum;
     public Integer getCardNum() {
         return cardNum;
     }
-
     public void setCardNum(Integer cardNum) {
         this.cardNum = cardNum;
     }
 
+    @Column(name = "cvv")
+    private Integer cvv;
     public Integer getCvv() {
         return cvv;
     }
-
     public void setCvv(Integer cvv) {
         this.cvv = cvv;
     }
 
+    @Column(name = "expirationDate")
+    @Temporal(TemporalType.DATE)
+    private Date expirationDate;
     public Date getExpirationDate() {
         return expirationDate;
     }
-
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
     }
 
+    @Size(max = 10)
+    @Column(name = "company", length = 10)
+    private String company;
     public String getCompany() {
         return company;
     }
-
     public void setCompany(String company) {
         this.company = company;
     }
 
+    @Size(max = 100)
+    @Column(name = "billingAddress", length = 100)
+    private String billingAddress;
     public String getBillingAddress() {
         return billingAddress;
     }
-
     public void setBillingAddress(String billingAddress) {
         this.billingAddress = billingAddress;
     }
 
+    @JoinColumn(name = "uemail", referencedColumnName = "email")
+    @ManyToOne
+    private User uemail;
     public User getUemail() {
         return uemail;
     }
-
     public void setUemail(User uemail) {
         this.uemail = uemail;
     }
@@ -164,5 +156,5 @@ public class Payment implements Serializable {
     public String toString() {
         return "com.model.Payment[ payid=" + payid + " ]";
     }
-    
+
 }

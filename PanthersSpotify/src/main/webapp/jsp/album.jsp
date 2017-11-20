@@ -160,7 +160,7 @@
 		      </div>
 		      <div class="medium-boxes-description">
 		        <h6><a href="#"> <span id = "album_name">${album.aname} </span></a></h6>
-		        <h6><a href="#"> <span id = "artist_name">${album.dis}</span></a> </h6>
+		        <h6><a href="#"> <span id = "artist_name">${album.des}</span></a> </h6>
 		      </div>
 		    </div>
 	   </c:forEach>

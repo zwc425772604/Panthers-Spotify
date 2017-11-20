@@ -182,6 +182,10 @@ function displayLeftNavbarContent(nav_name)
 	{
 	   $("#main-changing-content").load("jsp/artist.jsp");
 	}
+	else if (nav_name.localeCompare('recently_played') == 0)
+	{
+		   $("#main-changing-content").load("jsp/recentlyPlayed.jsp");
+		}
 	else if (nav_name.localeCompare('songs') == 0)
 	{
 

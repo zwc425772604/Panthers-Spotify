@@ -17,19 +17,13 @@ $(document).ready(function(){
 </script>
 <ul class="nav flex-column" >
             <!--First Section: browse and radio-->
-            <li class="nav-item">
-              <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('browse')">Browse</a>
-            </li>
             <li class="nav-item" id="extra-padding">
-              <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('radio')">Radio</a>
+              <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('browse')">Browse</a>
             </li>
             <!--Your Library Section-->
             <li>
               <p class="color-nav-header">YOUR LIBRARY</p>
               <ul class="nav nav-stacked flex-column">
-                <li class="nav-item">
-                  <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('your_daily_mix')">Your Daily Mix</a>
-                </li>
                 <li class="nav-item">
                   <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('recently_played')">Recently Played</a>
                 </li>
@@ -45,22 +39,12 @@ $(document).ready(function(){
                 <li class="nav-item" id="extra-padding">
                   <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('local_files')">Local Files</a>
                 </li>
-                <!-- <li class="nav-item">
-                  <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('stations')">Stations</a>
-                  </li>
-                  <li class="nav-item">
-                  <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('videos')">Videos</a>
-                  </li>
-                  <li class="nav-item" id="extra-padding">
-                  <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('podcasts')">Podcasts</a>
-                  </li>  -->
               </ul>
             </li>
-            <hr>
             <li class= "nav-item">
-              <button  class="unstyle-buttons btn btn-info btn-lg w3-blue" id="new_playlist_button" > New Playlist</button>
+              <button  class="unstyle-buttons btn btn-info btn-lg " id="new_playlist_button" style="width: auto;" >
+              <i class="fa fa-plus" aria-hidden="true" style="margin-right: 10%;"></i>New Playlist</button>
             </li>
-            
             <div id="dialog" title="Create Playlist" style="display:none;">
             
               <!-- create playlist -->
@@ -101,7 +85,7 @@ $(document).ready(function(){
                   </div>
                 </div>
 	            </form:form>
-	           </div>
+	        </div>
             <!-- end of dialog popup box -->
             <!-- Playlist Section-->
             <li>

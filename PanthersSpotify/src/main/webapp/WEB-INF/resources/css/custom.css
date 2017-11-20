@@ -261,7 +261,7 @@ p.color-nav-header:hover{
 
 .suggestion-topic{
     font-weight: bold;
-    width:20%;
+    width: auto;
 }
 
 .suggestion-top-page-button{
@@ -406,12 +406,25 @@ ul#playbar-center-icons li {
 .unstyle-buttons
 {
   border: none;
- padding: 0;
- background: none;
+  padding: 0;
+  background: transparent;
+  margin-top: 10%;
+  margin-left: 5%;
+  margin-bottom: 20%;
+  width: auto;
+  color: lightgrey!important;
 }
 .unstyle-buttons:hover
 {
-  background-color: gray;
+  background-color: transparent;
+  color: white !important;
+  border: none;
+}
+
+.unstyle-buttons:visited
+{
+
+  border: none;
 }
 
 .user-dropdown-button a

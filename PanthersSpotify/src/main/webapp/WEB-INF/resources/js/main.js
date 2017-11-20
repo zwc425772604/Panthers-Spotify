@@ -249,7 +249,7 @@ var currentPos;
 var maxduration;
 var percentage;
 
-audio.src = "data/audios/Faded.mp3";
+audio.src = "${cp}/../resources/data/audios/Artists/Jay-Z@gmail.com/Jay-Z,Alicia Keys - Empire State Of Mind.mp3";
 
 $("audio").on("loadedmetadata", function() {
 var t = secondsToTime(audio.duration);

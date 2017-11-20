@@ -51,10 +51,11 @@ public class Song implements Serializable {
     public Song() {
     }
 
-    public Song(String songTitle, Date songTime, Date releaseDay, String genre, String type, String url) {
+    public Song(String songTitle, Date songTime, Date releaseDay, int monthlyPlayed, String genre, String type, String url) {
     	this.stitle = songTitle;
     	this.stime = songTime;
     	this.releaseDay = releaseDay;
+        this.monthlyPlayed = monthlyPlayed;
     	this.gener = genre;
     	this.stype = type;
     	this.surl = url;

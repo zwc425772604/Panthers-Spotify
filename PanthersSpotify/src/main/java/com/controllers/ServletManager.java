@@ -91,7 +91,7 @@ public class ServletManager {
     	   User user = li.get(0);
     	   session.setAttribute("user", user);
     	   //user page
-    	   if (li.get(0).getUtype() == 0)
+    	   if (user.getUtype() == 0)
     	   {
     		   mav.addObject("username", user.getUname());
     		   List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
@@ -101,13 +101,18 @@ public class ServletManager {
     		   session.setAttribute("userFollowedPlaylists", follow_playlist);
     		   List<Playlist> userFollowingPlaylists = (List<Playlist>) user.getPlaylistCollection();
     		   System.out.println("number of following playlist : " + userFollowingPlaylists.size());
-               mav.setViewName("main");
+           mav.setViewName("main");
     	   }
+         else if (user.getUtype() == 2)
+         {
+           mav.addObject("username", user.getUname());
+           mav.setViewName("artistMainPage");
+         }
     	   //display admin page
-    	   if (li.get(0).getUtype() == 3)
+    	   if (user.getUtype() == 3)
     	   {
-    		   mav.addObject("username", li.get(0).getUname());
-               mav.setViewName("admin");
+    		   mav.addObject("username", user.getUname());
+           mav.setViewName("admin");
     	   }
 
        }
@@ -251,10 +256,10 @@ public class ServletManager {
 	   String releaseDay = request.getParameter("release_day");
 	   String songGenre = request.getParameter("song_genre");
 	   String songType = request.getParameter("song_type");
-	   String songUrl = request.getParameter("song_url");
+	   String songUrl = request.getParameter("song_file");
 
 	   //Song songTime and release Day to be Fixed
-	   Song song = new Song(songTitle, null,null, songGenre, songType, songUrl);
+	   Song song = new Song(songTitle, null,null, 0, songGenre, songType, songUrl);
 	   try {
 			song = songManager.add(song);
 		} catch (IOException e) {
@@ -297,7 +302,7 @@ public class ServletManager {
 	   System.out.println("loadAlbum" + albums.size());
   	   return "ok";
    }
-   
+
    @RequestMapping(value="/editUserAccount", method = RequestMethod.POST)
    public ModelAndView editUserAccount(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   User user = (User)session.getAttribute("user");
@@ -306,13 +311,13 @@ public class ServletManager {
 	   String middleName = request.getParameter("middleName");
 	   String lastName = request.getParameter("lastName");
 	   user = userManager.editUserAccount(user, gender, firstName, middleName, lastName);
-	   
+
 	   session.setAttribute("user", user);
 	   mav.setViewName("main");
 	   mav.addObject("username", user.getUname());
        return mav;
    }
-   
+
    @RequestMapping(value="/editUserPassword", method = RequestMethod.POST)
    public ModelAndView editUserPassword(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   User user = (User)session.getAttribute("user");
@@ -359,7 +364,7 @@ public class ServletManager {
 	   session.setAttribute("userFriendList", temp);
   	   return "ok";
    }
-   
+
    @RequestMapping(value = "/findFriend", method = RequestMethod.POST)
    public ModelAndView findFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
   			User user = (User) session.getAttribute("user");
@@ -375,7 +380,7 @@ public class ServletManager {
 	   		mav.addObject("username",user.getEmail());
             return mav;
    }
-   
+
    @RequestMapping(value = "/addFriend", method = RequestMethod.POST)
    public ModelAndView addFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   		System.out.println("HI");
@@ -394,7 +399,7 @@ public class ServletManager {
 	   		String femail = request.getParameter("femail");//friend email
 	   		System.out.println("Friend to be deleted" + femail);
 	   		boolean temp = userManager.deleteFriend(user.getEmail(),femail);
-	   		//remove the 
+	   		//remove the
 	   		List<User> newFriendlist = userManager.getFriend(user.getEmail());
 	 	    session.setAttribute("userFriendList", newFriendlist);
 	   		mav.setViewName("main");
@@ -543,6 +548,21 @@ public class ServletManager {
     }
 
 
+
+    @RequestMapping(value = "/submitSongForUploading", method = RequestMethod.POST)
+    public ModelAndView submitSongForUploading(ModelAndView mav,@RequestParam(value = "file") CommonsMultipartFile file, HttpServletRequest request, HttpSession session) throws ServletException, IOException {
+      User user = (User) session.getAttribute("user");
+      String songTitle = request.getParameter("song_title");
+      String songTime = request.getParameter("song_time");
+      String releaseDay = request.getParameter("release_day");
+      String songGenre = request.getParameter("song_genre");
+      String songType = request.getParameter("song_type");
+
+      songManager.uploadSong(user, songTitle, songTime, releaseDay, songGenre, songType, file);
+      
+      mav.setViewName("admin");
+      return mav;
+    }
 
 
 

@@ -10,6 +10,7 @@ package com.controllers;
 import com.model.User;
 import com.model.Album;
 import com.model.Playlist;
+import com.model.Releasesong;
 import com.model.Song;
 
 import java.io.File;
@@ -158,15 +159,13 @@ public class SongManager {
     
     int sid = song.getSid();
     String email = user.getEmail();
-    Query query = em.createQuery("INSERT INTO releasesong (uemail,sid,status) " + "VALUES(:email,:songID,:status)")
-    		.setParameter("email", email)
-    		.setParameter("songID", sid)
-    		.setParameter("status", "pending");
-//    query.setParameter(1, email);
-//    query.setParameter(2, sid);
-//    query.setParameter(3, "pending");
-   
-    query.executeUpdate();
+    Releasesong release = new Releasesong(email, sid);
+    release.setStatus("pending");
+    em.getTransaction().begin();
+    em.persist(release);
+    em.flush();
+    em.getTransaction().commit();
+    
     em.close();
     emf.close();
     return song;

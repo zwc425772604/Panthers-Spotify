@@ -560,7 +560,7 @@ public class ServletManager {
 
       songManager.uploadSong(user, songTitle, songTime, releaseDay, songGenre, songType, file);
       
-      mav.setViewName("admin");
+      mav.setViewName("artistMainPage");
       return mav;
     }
 

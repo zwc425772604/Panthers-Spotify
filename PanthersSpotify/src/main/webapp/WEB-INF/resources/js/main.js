@@ -212,6 +212,10 @@ function displayAccount(){
 	$("#main-changing-content").load("jsp/account.jsp");
 }
 
+function displayUserAccount(){
+	$("#main-changing-content").load("jsp/userAccount.jsp");
+}
+
 function openDialogBox()
 {
   //   $("#dialog").dialog();

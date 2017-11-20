@@ -71,19 +71,24 @@ public class UserManager {
 	    }
 
     public void remove(User user) {
-		em.getTransaction().begin();
-		em.remove(em.contains(user) ? user : em.merge(user));
-		em.getTransaction().commit();
+		em.remove(em.contains(user) ? user : em.merge(user));		
     }
+    
+    public User editUserAccount(User user, Character gender, String firstName, String middleName, String lastName) {
+    	user.setGender(gender);
+    	user.setFirstName(firstName);
+    	user.setMiddleName(middleName);
+    	user.setLastName(lastName);
+    	em.merge(user);
+    	return user;
+    }
+    
     /* More info to be added */
-    public User editUser(User user, String pwd)
+    public User editUserPassword(User user, String pwd)
     {
-		System.out.println("editUser");
-
-		em.getTransaction().begin();
+		System.out.println("editUser");		
 		user.setUpassword(pwd);
 		em.merge(user);
-		em.getTransaction().commit();
 		return user;
     }
 

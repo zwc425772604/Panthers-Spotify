@@ -297,14 +297,28 @@ public class ServletManager {
 	   System.out.println("loadAlbum" + albums.size());
   	   return "ok";
    }
-
+   
    @RequestMapping(value="/editUserAccount", method = RequestMethod.POST)
    public ModelAndView editUserAccount(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-	   System.out.println("editing user account");
+	   User user = (User)session.getAttribute("user");
+	   Character gender = request.getParameter("gender").charAt(0);
+	   String firstName = request.getParameter("firstName");
+	   String middleName = request.getParameter("middleName");
+	   String lastName = request.getParameter("lastName");
+	   user = userManager.editUserAccount(user, gender, firstName, middleName, lastName);
+	   
+	   session.setAttribute("user", user);
+	   mav.setViewName("main");
+	   mav.addObject("username", user.getUname());
+       return mav;
+   }
+   
+   @RequestMapping(value="/editUserPassword", method = RequestMethod.POST)
+   public ModelAndView editUserPassword(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	   User user = (User)session.getAttribute("user");
 	   String pwd = request.getParameter("password");
 	   String encPwd = Security.encryptPassword(pwd);
-	   user = userManager.editUser(user, encPwd);
+	   user = userManager.editUserPassword(user, encPwd);
 	   session.setAttribute("user", user);
 	   mav.setViewName("main");
 	   mav.addObject("username", user.getUname());

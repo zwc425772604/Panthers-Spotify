@@ -21,7 +21,6 @@
   
   function validateFormInputs()
   {
-	  console.log("HI");
     var password = $("#password").val();
     var password1 = $("#confirm_password").val();
     var password_matched = checkPassword(password,password1);
@@ -31,7 +30,7 @@
       $("#password_error").text("");
       $("#email_error").text("");
       $.ajax({
-        url: "${cp}/editUserAccount",
+        url: "${cp}/editUserPassword",
         type: "POST",
         data : {"password" : password },
         asyn: true,
@@ -71,7 +70,7 @@
   
   <div class="suggestion-container" id = "release-container" style="margin-top: 5%;">
 	  <div class="suggestion-container-top">
-	    <h3 class="suggestion-topic" style="font-size: 4em;">Accounts:</h3>
+	    <h3 class="suggestion-topic" style="font-size: 4em;">Change Password:</h3>
 	  </div>
 	  <div class="line"></div>
 	  

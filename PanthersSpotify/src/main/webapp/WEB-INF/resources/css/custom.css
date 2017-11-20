@@ -99,7 +99,7 @@ p.color-nav-header:hover{
 .scrolled-main{
     overflow-y: auto;
     overflow-x: hidden;
-    height: 91vh;
+    height: 75vh;
 }
 
 /* Main Page Top Tool: search, upgrade, login, etc */
@@ -514,4 +514,16 @@ th{
 {
     margin-top: 1%;
 
+}
+#advertisement
+{
+	height: 16uh;
+	text-align: center;
+	background-color: #3E3E3e;
+}
+#ad-close
+{
+	background-color:transparent;	
+	border: transparent;
+	color: white;
 }

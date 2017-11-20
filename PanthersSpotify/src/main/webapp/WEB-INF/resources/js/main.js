@@ -88,6 +88,10 @@ $(document).ready(function(){
 	     });
 	});
 	
+	$("#ad-close").click(function(){
+		$("#advertisement").hide();
+	})
+	
 	$("#findFriend").click(function(){	
 		var username = $(".addFriendUsername",this).text();
 		$.ajax({
@@ -150,6 +154,8 @@ $(document).on("click", ".playlist-item", function(){
         }
 	  });
 });
+
+
 
 
 function displayLeftNavbarContent(nav_name)

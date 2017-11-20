@@ -84,6 +84,10 @@
             </div>
             <!-- closed tag for scrolled-main -->
           </div>
+          <div id="advertisement">
+          <button id="ad-close"><i class="fa fa-times-circle" aria-hidden="true" style="margin-right: 10%;"></i></button>
+            <img height="150em" src="http://dsim.in/blog/wp-content/uploads/2017/01/samsung2.jpg">
+          </div>
         </main>
         <!--Right Most Column-->
         <div id="right-col">

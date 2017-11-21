@@ -22,7 +22,7 @@
 				  id="bootstrap-overrides-navbar">
 				  <ul class="navbar-nav mr-auto tab" id="navbar-ul">
 				    <li class="nav-item">
-				      <a class="nav-link tablinks" href="javascript:displayContent('songsTableDiv')">SONGS </a>
+				      <a class="nav-link tablinks" href="javascript:displayContent('songsPendingTableDiv')">SONGS </a>
 				    </li>
 				    <li class="nav-item">
 				      <a class="nav-link tablinks" href="javascript:displayContent('albumsTableDiv')">ALBUMS</a>
@@ -41,8 +41,23 @@
 				    </li>
 				  </ul>
 				</nav>
-				<div id="songsTableDiv" class="w3-container info-table">
-				  <h1>Song Table</h1>
+				<div id="songsPendingTableDiv" class="w3-container info-table">
+				  <h1><span id="num-of-pending-songs"></span> songs to be verified</h1>
+					<table class="w3-table-all w3-hoverable" id = "pending-songs-table">
+						<thead>
+							<tr class="w3-light-grey">
+								<th>Song ID</th>
+								<th>Song Title</th>
+								<th>Artist</th>
+								<th>Genre</th>
+								<%-- <th>Created Date</th> --%>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
 				</div>
 
 				<div id="albumsTableDiv" class="w3-container info-table" style="display:none">

@@ -101,11 +101,28 @@ public class SongManager {
     	return list;
     }
 
-    public Song getSong(int sid,EntityManager em)
+		public List<Releasesong> getAllSongsByStatus(String status)
+		{
+			EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+   	    EntityManager em = emf.createEntityManager();
+			TypedQuery<Releasesong> query1 = em.createNamedQuery("Releasesong.findByStatus", Releasesong.class)
+						.setParameter("status", status);
+				List<Releasesong> result = query1.getResultList();
+				em.close();
+				emf.close();
+				return result;
+		}
+
+
+    public Song getSong(int sid)
     {
-    	TypedQuery<Song> query1 = em.createNamedQuery("Song.findByPid", Song.class)
+			EntityManagerFactory emf =  Persistence.createEntityManagerFactory("pan");
+   	    EntityManager em = emf.createEntityManager();
+    	TypedQuery<Song> query1 = em.createNamedQuery("Song.findBySid", Song.class)
          		.setParameter("sid", sid);
   	    List<Song> result = query1.getResultList();
+				em.close();
+				emf.close();
   	    return result.get(0);
     }
 
@@ -140,7 +157,7 @@ public class SongManager {
 	  File pathToStore = new File(userDir, file.getOriginalFilename());
 	  try {
 	          file.transferTo(pathToStore);
-	          
+
 	      } catch (IllegalStateException e) {
 	            e.printStackTrace();
 	           System.out.println("failed to save the song to dir");
@@ -150,13 +167,13 @@ public class SongManager {
 	      }
 
     System.out.println("file name" + file.getOriginalFilename());
-    
-    	
+
+
     em.getTransaction().begin();
     em.persist(song);
     em.flush();
     em.getTransaction().commit();
-    
+
     int sid = song.getSid();
     String email = user.getEmail();
     Releasesong release = new Releasesong(email, sid);
@@ -165,7 +182,7 @@ public class SongManager {
     em.persist(release);
     em.flush();
     em.getTransaction().commit();
-    
+
     em.close();
     emf.close();
     return song;

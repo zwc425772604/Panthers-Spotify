@@ -26,6 +26,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Releasesong.findAll", query = "SELECT r FROM Releasesong r")
     , @NamedQuery(name = "Releasesong.findByUemail", query = "SELECT r FROM Releasesong r WHERE r.releasesongPK.uemail = :uemail")
     , @NamedQuery(name = "Releasesong.findBySid", query = "SELECT r FROM Releasesong r WHERE r.releasesongPK.sid = :sid")
+    , @NamedQuery(name = "Releasesong.findByStatusAndSid", query = "SELECT r FROM Releasesong r WHERE r.status = :status AND r.releasesongPK.sid = :sid")
     , @NamedQuery(name = "Releasesong.findByStatus", query = "SELECT r FROM Releasesong r WHERE r.status = :status")})
 public class Releasesong implements Serializable {
 
@@ -87,5 +88,5 @@ public class Releasesong implements Serializable {
     public String toString() {
         return "com.model.Releasesong[ releasesongPK=" + releasesongPK + " ]";
     }
-    
+
 }

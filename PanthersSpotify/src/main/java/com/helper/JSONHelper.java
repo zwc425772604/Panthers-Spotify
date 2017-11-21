@@ -1,5 +1,7 @@
 package com.helper;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -81,6 +83,23 @@ public class JSONHelper {
 			jsonObject.put("artistFirstName", u.getFirstName());
 			jsonObject.put("artistLastName", u.getLastName());
 			jsonObject.put("artistEmail", u.getEmail());
+			arr.put(jsonObject);
+		}
+		return arr.toString();
+	}
+
+	public static String pendingSongsToJSON(List<Song> songs, HashMap<Integer, ArrayList<String>> map) throws JSONException
+	{
+		JSONArray arr = new JSONArray();
+		JSONObject jsonObject;
+		for (Song s : songs)
+		{
+			jsonObject = new JSONObject();
+			int sid = s.getSid();
+			jsonObject.put("songID", sid);
+			jsonObject.put("songTitle", s.getStitle());
+			jsonObject.put("songGenre", s.getGener());
+			jsonObject.put("songArtist", map.get(sid));
 			arr.put(jsonObject);
 		}
 		return arr.toString();

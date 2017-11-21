@@ -56,6 +56,23 @@ $(document).ready(function(){
 		}
 	});
 
+	$.ajax({
+		url: "{cp}/../loadPendingSongs",
+		type: "POST",
+		asyn: false,
+		cache: false,
+		success : function(response)
+			{
+				console.log(response);
+				var actual_JSON = JSON.parse(response);
+				insertPendingSongsTables(actual_JSON);
+			},
+		error: function(e)
+		{
+			console.log(e);
+		}
+	});
+
 
 
 	 $.ajax({
@@ -65,7 +82,7 @@ $(document).ready(function(){
 	        cache: false,
 	        success : function(response)
 	        {
-	       
+
 	        //  $("#main-changing-content").load("jsp/album.jsp");
 	        },
 	        error: function(e)
@@ -172,6 +189,31 @@ function insertPlaylistTables(data)
 				  '<td><button class="unstyle-buttons delete-playlist-button"  data-toggle="tooltip-play" title="Remove this playlist"> <i class="material-icons">delete_forever</i></button></td>',
 				 '</tr>'
 			].join(''));
+		}
+}
+
+function insertPendingSongsTables(data)
+{
+	var num = data.length;
+	$("#num-of-playlist").html(num);
+	var songs = [];
+	for (var i = 0; i < num; i++)
+		{
+			if (songs.indexOf(data[i]['songID']) == -1) //check to see if there is duplicate songID
+			{
+				$("#pending-songs-table").find('tbody').append([
+					'<tr>',
+					  '<td>' + data[i]['songID'] + '</td>',
+					  '<td>' + data[i]['songTitle'] + '</td>',
+					  '<td>' + data[i]['songArtist'].join() + '</td>',
+					  '<td>' + data[i]['songGenre'] + '</td>',
+					  '<td><button class="unstyle-buttons delete-playlist-button"  data-toggle="tooltip-play" title="Approve this song"> <i class="material-icons">check</i></button></td>',
+					  '<td><button class="unstyle-buttons delete-playlist-button"  data-toggle="tooltip-play" title="Remove this song"> <i class="material-icons">close</i></button></td>',
+					 '</tr>'
+				].join(''));
+				songs.push(data[i]['songID']);
+			}
+
 		}
 }
 

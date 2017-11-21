@@ -9,6 +9,8 @@ import com.helper.JSONHelper;
 import com.helper.Security;
 import com.model.Album;
 import com.model.Playlist;
+import com.model.Releasesong;
+import com.model.ReleasesongPK;
 import com.model.Song;
 import com.model.User;
 
@@ -22,6 +24,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.json.JsonArray;
@@ -559,10 +562,35 @@ public class ServletManager {
       String songType = request.getParameter("song_type");
 
       songManager.uploadSong(user, songTitle, songTime, releaseDay, songGenre, songType, file);
-      
+
       mav.setViewName("artistMainPage");
       return mav;
     }
+
+    @RequestMapping(value="/loadPendingSongs", method = RequestMethod.POST)
+    public @ResponseBody String loadPendingSongs(HttpServletRequest request, HttpSession session) throws JSONException {
+        List<Releasesong> releaseSongs = songManager.getAllSongsByStatus("pending");
+        List<Song> songs = new ArrayList<Song>();
+        HashMap<Integer, ArrayList<String>> map = new HashMap<Integer, ArrayList<String>>();
+        for (Releasesong rs : releaseSongs)
+        {
+          ReleasesongPK rpk = rs.getReleasesongPK();
+          int sid = rpk.getSid();
+          Song s = songManager.getSong(sid);
+          songs.add(s);
+          //use hashmap<String, arraylist> to store the artist in a song
+          if (map.get(sid) == null)
+          {
+        	  map.put(sid, new ArrayList<String>());
+          }
+          map.get(sid).add(rpk.getUemail()); //add the artist email to the map
+        }
+        System.out.println("map size " + map.size());
+        System.out.println("map" + map.values());
+        String pendingSongsJsonArray = JSONHelper.pendingSongsToJSON(songs, map);
+        return pendingSongsJsonArray;
+    }
+
 
 
 

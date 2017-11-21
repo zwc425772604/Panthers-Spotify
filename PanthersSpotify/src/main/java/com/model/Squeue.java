@@ -1,51 +1,103 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.model;
 
-import java.time.LocalDateTime;
+import java.io.Serializable;
 import java.util.Date;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
 
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
+/**
+ *
+ * @author Weichao ZHao
+ */
+@Entity
+@Table(name = "squeue", catalog = "panthers", schema = "")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Squeue.findAll", query = "SELECT s FROM Squeue s")
+    , @NamedQuery(name = "Squeue.findByUemail", query = "SELECT s FROM Squeue s WHERE s.squeuePK.uemail = :uemail")
+    , @NamedQuery(name = "Squeue.findBySid", query = "SELECT s FROM Squeue s WHERE s.squeuePK.sid = :sid")
+    , @NamedQuery(name = "Squeue.findByAddedTime", query = "SELECT s FROM Squeue s WHERE s.squeuePK.addedTime = :addedTime")})
+public class Squeue implements Serializable {
 
-public class Squeue {
-	private String uemail;
-	private Integer sid;
-	private LocalDateTime addedTime;
-	
-	public Squeue() {}
-	public Squeue(String uemail) {
-		this.uemail = uemail;
-	}
-	
-	public String getUemail() {
-		return this.uemail;
-	}
-	
-	public void setUemail(String uemail) {
-		this.uemail = uemail;
-	}
-	
-	public Integer getSid() {
-		return this.sid;
-	}
-	
-	public void setSid(Integer sid) {
-		this.sid = sid;
-	}
-	
-	public LocalDateTime getAddedTime() {
-		return this.addedTime;
-	}
-	
-	public void setAddedTime(LocalDateTime add) {
-		this.addedTime = add;
-	}
-	
-	public int compareTo(Squeue sq) {
-		if (this.uemail.equals(sq.uemail)){
-			return this.addedTime.compareTo(sq.addedTime);
-		} 
-		else
-			return -1;
-	
-	}
-	
+    private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    protected SqueuePK squeuePK;
+    @JoinColumn(name = "uemail", referencedColumnName = "email", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private User user;
+    @JoinColumn(name = "sid", referencedColumnName = "sid", nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Song song;
+
+    public Squeue() {
+    }
+
+    public Squeue(SqueuePK squeuePK) {
+        this.squeuePK = squeuePK;
+    }
+
+    public Squeue(String uemail, int sid, Date addedTime) {
+        this.squeuePK = new SqueuePK(uemail, sid, addedTime);
+    }
+
+    public SqueuePK getSqueuePK() {
+        return squeuePK;
+    }
+
+    public void setSqueuePK(SqueuePK squeuePK) {
+        this.squeuePK = squeuePK;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Song getSong() {
+        return song;
+    }
+
+    public void setSong(Song song) {
+        this.song = song;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (squeuePK != null ? squeuePK.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Squeue)) {
+            return false;
+        }
+        Squeue other = (Squeue) object;
+        if ((this.squeuePK == null && other.squeuePK != null) || (this.squeuePK != null && !this.squeuePK.equals(other.squeuePK))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.model.Squeue[ squeuePK=" + squeuePK + " ]";
+    }
+    
 }

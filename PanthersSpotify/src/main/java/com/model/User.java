@@ -386,5 +386,5 @@ public class User implements Serializable {
     public void setSqueueCollection(Collection<Squeue> squeueCollection) {
         this.squeueCollection = squeueCollection;
     }
-
+	
 }

@@ -84,6 +84,17 @@ public class Songqueue_1 implements Serializable {
     public void setPid(Playlist pid) {
         this.pid = pid;
     }
+    
+    @Column(name = "nowPlayIn")
+    private boolean nowPlayIn;
+    // 0: song in playlist;
+    // 1: song in queue
+    public boolean getNowPlayIn() {
+    	return this.nowPlayIn;
+    }
+    public void setNowplayin(boolean nowplayin) {
+    	this.nowPlayIn = nowplayin;
+    }
 
     @Override
     public int hashCode() {

@@ -41,7 +41,7 @@ public class Songqueue implements Serializable {
     @Column(name = "uemail", nullable = false, length = 50)
     private String uemail;
     @Column(name = "nowPlayIn")
-    private Short nowPlayIn;   //0: IN PLYLIST, 1: IN QUEUE
+    private Short nowPlayIn;
     @JoinColumn(name = "uemail", referencedColumnName = "email", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
     private User user;

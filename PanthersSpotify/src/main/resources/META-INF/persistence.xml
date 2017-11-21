@@ -19,6 +19,9 @@
     <class>com.model.Artist</class>
     <class>com.model.Userplaylist</class>
     <class>com.model.Userplaylists</class>
+    <class>com.model.Songqueue</class>
+    <class>com.model.Squeue</class>
+    <class>com.model.SqueuePK</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql2.cs.stonybrook.edu:3306/panthers?zeroDateTimeBehavior=convertToNull"/>

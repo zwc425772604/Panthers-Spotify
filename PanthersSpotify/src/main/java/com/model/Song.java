@@ -212,5 +212,6 @@ public class Song implements Serializable {
     public void setSongqueueCollection(Collection<Songqueue_1> songqueueCollection) {
         this.songqueueCollection = songqueueCollection;
     }
+    
 
 }

@@ -363,14 +363,28 @@ public class User implements Serializable {
     public void setUserplaylistCollection1(Collection<Userplaylist> userplaylistCollection1) {
         this.userplaylistCollection1 = userplaylistCollection1;
     }
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Collection<Squeue> squeueCollection;
 
-		@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    private Songqueue_1 songqueue;
-    public Songqueue_1 getSongqueue() {
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    private Songqueue songqueue;
+
+    public Songqueue getSongqueue() {
         return songqueue;
     }
-    public void setSongqueue(Songqueue_1 songqueue) {
+
+    public void setSongqueue(Songqueue songqueue) {
         this.songqueue = songqueue;
     }
 
+    @XmlTransient
+    public Collection<Squeue> getSqueueCollection() {
+        return squeueCollection;
+    }
+
+    public void setSqueueCollection(Collection<Squeue> squeueCollection) {
+        this.squeueCollection = squeueCollection;
+    }
+	
 }

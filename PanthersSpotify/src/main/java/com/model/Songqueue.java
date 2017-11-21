@@ -28,72 +28,75 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "songqueue", catalog = "panthers", schema = "")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Songqueue_1.findAll", query = "SELECT s FROM Songqueue_1 s")
-    , @NamedQuery(name = "Songqueue_1.findByUemail", query = "SELECT s FROM Songqueue_1 s WHERE s.uemail = :uemail")})
-public class Songqueue_1 implements Serializable {
+    @NamedQuery(name = "Songqueue.findAll", query = "SELECT s FROM Songqueue s")
+    , @NamedQuery(name = "Songqueue.findByUemail", query = "SELECT s FROM Songqueue s WHERE s.uemail = :uemail")
+    , @NamedQuery(name = "Songqueue.findByNowPlayIn", query = "SELECT s FROM Songqueue s WHERE s.nowPlayIn = :nowPlayIn")})
+public class Songqueue implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    public Songqueue_1() {
-    }
-
-    public Songqueue_1(String uemail) {
-        this.uemail = uemail;
-    }
-
     @Id
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
     @Column(name = "uemail", nullable = false, length = 50)
     private String uemail;
+    @Column(name = "nowPlayIn")
+    private Short nowPlayIn;
+    @JoinColumn(name = "uemail", referencedColumnName = "email", nullable = false, insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private User user;
+    @JoinColumn(name = "nowPlay", referencedColumnName = "sid")
+    @ManyToOne
+    private Song nowPlay;
+    @JoinColumn(name = "pid", referencedColumnName = "pid")
+    @ManyToOne
+    private Playlist pid;
+
+    public Songqueue() {
+    }
+
+    public Songqueue(String uemail) {
+        this.uemail = uemail;
+    }
+
     public String getUemail() {
         return uemail;
     }
+
     public void setUemail(String uemail) {
         this.uemail = uemail;
     }
 
-    @JoinColumn(name = "uemail", referencedColumnName = "email", nullable = false, insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private User user;
+    public Short getNowPlayIn() {
+        return nowPlayIn;
+    }
+
+    public void setNowPlayIn(Short nowPlayIn) {
+        this.nowPlayIn = nowPlayIn;
+    }
+
     public User getUser() {
         return user;
     }
+
     public void setUser(User user) {
         this.user = user;
     }
 
-    @JoinColumn(name = "nowPlay", referencedColumnName = "sid")
-    @ManyToOne
-    private Song nowPlay;
     public Song getNowPlay() {
         return nowPlay;
     }
+
     public void setNowPlay(Song nowPlay) {
         this.nowPlay = nowPlay;
     }
 
-
-    @JoinColumn(name = "pid", referencedColumnName = "pid")
-    @ManyToOne
-    private Playlist pid;
     public Playlist getPid() {
         return pid;
     }
+
     public void setPid(Playlist pid) {
         this.pid = pid;
-    }
-    
-    @Column(name = "nowPlayIn")
-    private boolean nowPlayIn;
-    // 0: song in playlist;
-    // 1: song in queue
-    public boolean getNowPlayIn() {
-    	return this.nowPlayIn;
-    }
-    public void setNowplayin(boolean nowplayin) {
-    	this.nowPlayIn = nowplayin;
     }
 
     @Override
@@ -106,10 +109,10 @@ public class Songqueue_1 implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Songqueue_1)) {
+        if (!(object instanceof Songqueue)) {
             return false;
         }
-        Songqueue_1 other = (Songqueue_1) object;
+        Songqueue other = (Songqueue) object;
         if ((this.uemail == null && other.uemail != null) || (this.uemail != null && !this.uemail.equals(other.uemail))) {
             return false;
         }
@@ -118,7 +121,7 @@ public class Songqueue_1 implements Serializable {
 
     @Override
     public String toString() {
-        return "com.model.Songqueue_1[ uemail=" + uemail + " ]";
+        return "com.model.Songqueue[ uemail=" + uemail + " ]";
     }
-
+    
 }

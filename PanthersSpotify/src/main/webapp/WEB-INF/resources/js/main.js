@@ -193,6 +193,7 @@ function displayLeftNavbarContent(nav_name)
 	        cache: true,
 	        success : function(response)
 	        {
+	        	$("#main-changing-content").load("jsp/artist.jsp");
 	        },
 	        error: function(e)
 	        {
@@ -200,7 +201,7 @@ function displayLeftNavbarContent(nav_name)
 	          console.log(e);
 	        }
 	      });
-	   $("#main-changing-content").load("jsp/artist.jsp");
+	   
 	}
 	else if (nav_name.localeCompare('recently_played') == 0)
 	{
@@ -217,6 +218,7 @@ function displayLeftNavbarContent(nav_name)
 	        success : function(response)
 	        {
 	          console.log(response);
+	          $("#main-changing-content").load("jsp/songs.jsp");
 	        },
 	        error: function(e)
 	        {
@@ -224,7 +226,7 @@ function displayLeftNavbarContent(nav_name)
 	          console.log(e);
 	        }
 	      });
-		 $("#main-changing-content").load("jsp/songs.jsp");
+		
 	}
 	else
 	{

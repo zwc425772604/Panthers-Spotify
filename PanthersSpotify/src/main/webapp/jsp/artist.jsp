@@ -104,7 +104,10 @@
   <c:if test="${not empty artistsList}">
   <c:forEach var="artist" items="${artistsList}">
     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
-      <img class="w3-circle" src="https://spark.adobe.com/images/landing/examples/blizzard-album-cover.jpg" width=100% height=width  alt="Generic placeholder thumbnail">
+      <a class="artist-item">
+        <img class="w3-circle" id="loadArtistPage" src="https://spark.adobe.com/images/landing/examples/blizzard-album-cover.jpg" width=100% height=width  alt="Generic placeholder thumbnail">
+      	<span style="display:none;" class="artist-email">${artist.email}</span>
+      </a>
       <div class="medium-boxes-description" style="text-align:center;">
         <h6> <a href = "#"> <span id="artist_name">${artist.uname}</span> </a> </h6>
       </div>

@@ -598,5 +598,12 @@ public class ServletManager {
         return "ok";
     }
 
-
+    @RequestMapping(value="/getSpecificArtist", method = RequestMethod.POST)
+    public @ResponseBody String getSpecificArtist(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+ 	   String email = request.getParameter("email");
+ 	   List<User> users = userManager.getUser(email);
+ 	   User user = (users.size() != 0 )?users.get(0):null;
+ 	   session.setAttribute("selectedArtist", user);
+   	   return "ok";
+    }
 }

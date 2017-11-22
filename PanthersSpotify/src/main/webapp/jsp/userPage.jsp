@@ -11,8 +11,8 @@
 <link rel="stylesheet" href="${cp}/resources/css/userPage.css">
 <script src="${cp}/resources/js/userPage.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
 <div class="suggestion-container" id = "release-container" style="margin-top: 3%;">

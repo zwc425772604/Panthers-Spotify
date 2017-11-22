@@ -6,6 +6,7 @@
 package com.model;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -152,6 +153,16 @@ public class Album implements Serializable {
 //    public void setAowner(User aowner) {
 //        this.aowner = aowner;
 //    }
+    public Album(String aname,String des,String photoUrl,int followers,int nSongs,Date releaseDate,Time timelength) {
+		this.aname = aname;
+		this.des=des;
+		this.photoUrl=photoUrl;
+		this.followers=followers;
+		this.nSongs=nSongs;
+		this.releaseDate=releaseDate;
+		this.nSongs=nSongs;
+		this.timelength=timelength;
+}
 
     @Override
     public int hashCode() {

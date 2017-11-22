@@ -1,0 +1,18 @@
+package com.dao;
+
+import java.util.List;
+
+import com.model.User;
+
+public interface UserDAO {
+	public User addUser(User User);
+	public User updateUser(User User);
+	public void deleteUser(User User);
+	public User getUser(String email);
+	public List<User> getUsers();
+	public List<User> getFriend(String uemail);
+	public void addFriend(String uemail,String femail);
+	public void deleteFriend(String uemail,String femail);
+	public List<User> getUserByUserType(int usertype);
+	public List<User> getAllArtist();
+}

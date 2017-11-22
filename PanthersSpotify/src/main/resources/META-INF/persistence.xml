@@ -3,25 +3,6 @@
   <persistence-unit name="pan" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
     <!--    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>-->
-    <class>com.model.User</class>
-    <class>com.model.Payment</class>
-    <class>com.model.Playlist</class>
-    <class>com.model.Album</class>
-    <class>com.model.Location</class>
-    <class>com.model.Song</class>
-    <class>com.model.Concert</class>
-    <class>com.model.Followplaylist</class>
-    <class>com.model.FollowplaylistPK</class>
-    <class>com.model.Friend</class>
-    <class>com.model.FriendPK</class>
-    <class>com.model.Songqueue_1</class>
-    <class>com.model.Customer</class>
-    <class>com.model.Artist</class>
-    <class>com.model.Userplaylist</class>
-    <class>com.model.Userplaylists</class>
-    <class>com.model.Songqueue</class>
-    <class>com.model.Squeue</class>
-    <class>com.model.SqueuePK</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://mysql2.cs.stonybrook.edu:3306/panthers?zeroDateTimeBehavior=convertToNull"/>

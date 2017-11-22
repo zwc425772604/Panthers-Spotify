@@ -16,33 +16,42 @@ import javax.validation.constraints.Size;
  *
  * @author Weichao ZHao
  */
+
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+
+/**
+ *
+ * @author yangxiang
+ */
 @Embeddable
 public class UserplaylistsPK implements Serializable {
+
+    @Basic(optional = false)
+    @Column(name = "playlistId", nullable = false)
+    private int playlistId;
+    @Basic(optional = false)
+    @Column(name = "userEmail", nullable = false, length = 45)
+    private String userEmail;
 
     public UserplaylistsPK() {
     }
 
-    public UserplaylistsPK(int playid, String userEmail) {
-        this.playid = playid;
+    public UserplaylistsPK(int playlistId, String userEmail) {
+        this.playlistId = playlistId;
         this.userEmail = userEmail;
     }
 
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "playid", nullable = false)
-    private int playid;
-    public int getPlayid() {
-        return playid;
-    }
-    public void setPlayid(int playid) {
-        this.playid = playid;
+    public int getPlaylistId() {
+        return playlistId;
     }
 
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "userEmail", nullable = false, length = 45)
-    private String userEmail;
+    public void setPlaylistId(int playlistId) {
+        this.playlistId = playlistId;
+    }
+
     public String getUserEmail() {
         return userEmail;
     }
@@ -54,7 +63,7 @@ public class UserplaylistsPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) playid;
+        hash += (int) playlistId;
         hash += (userEmail != null ? userEmail.hashCode() : 0);
         return hash;
     }
@@ -66,7 +75,7 @@ public class UserplaylistsPK implements Serializable {
             return false;
         }
         UserplaylistsPK other = (UserplaylistsPK) object;
-        if (this.playid != other.playid) {
+        if (this.playlistId != other.playlistId) {
             return false;
         }
         if ((this.userEmail == null && other.userEmail != null) || (this.userEmail != null && !this.userEmail.equals(other.userEmail))) {
@@ -77,7 +86,8 @@ public class UserplaylistsPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.model.UserplaylistsPK[ playid=" + playid + ", userEmail=" + userEmail + " ]";
+        return "javaapplication2.UserplaylistsPK[ playlistId=" + playlistId + ", userEmail=" + userEmail + " ]";
     }
-
+    
 }
+

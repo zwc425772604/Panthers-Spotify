@@ -364,9 +364,11 @@ public class User implements Serializable {
         this.userplaylistCollection1 = userplaylistCollection1;
     }
     
+    /*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private Collection<Squeue> squeueCollection;
 
+    
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Songqueue songqueue;
 
@@ -386,5 +388,5 @@ public class User implements Serializable {
     public void setSqueueCollection(Collection<Squeue> squeueCollection) {
         this.squeueCollection = squeueCollection;
     }
-	
+	*/
 }

@@ -591,7 +591,12 @@ public class ServletManager {
         return pendingSongsJsonArray;
     }
 
-
+    @RequestMapping(value="/loadArtist", method = RequestMethod.POST)
+    public @ResponseBody String loadArtists(HttpServletRequest request, HttpSession session) throws JSONException {
+        List<User> artists = userManager.getAllArtist();
+        session.setAttribute("artistsList", artists);
+        return "ok";
+    }
 
 
 }

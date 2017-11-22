@@ -55,13 +55,7 @@
   	margin-top: -60%;
 
   }
-
-
-
-
-
-
-	</style>
+</style>
 </head>
 <script>
 function dropdownDisplay(song_div) {
@@ -98,7 +92,6 @@ $( "#filter_container" )
  $('#filter_keyword').css('color','#cccccc');
  $('#search_span').css('color','#cccccc');
 });
-
 //style for the filter keyword input tag
 $( "#filter_keyword" )
 .focus(function(){

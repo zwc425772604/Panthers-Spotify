@@ -47,7 +47,7 @@
               
               <div class="col-sm-3 col-sm-offset-3" id="top-tool-search">
                 <div class="input-group stylish-input-group"  id="top-tool-search">
-                <form:form action="search" method="POST">
+                  <form:form action="search" method="POST">
                 	<div class="row" >
 	                  <input type="text" class="w3-input" style="width: 75%;" placeholder="Search" name="search">
 	                  <span class="input-group-addon">
@@ -87,14 +87,18 @@
             </div>
             <!-- closed tag for scrolled-main -->
           </div>
-          <div id="advertisement">
-          <button id="ad-close"><i class="fa fa-times-circle" aria-hidden="true" style="margin-right: 10%;"></i></button>
-            <img height="100em" src="http://dsim.in/blog/wp-content/uploads/2017/01/samsung2.jpg">
-          </div>
+          <c:choose>
+	          <c:when test="${user.utype == 0}">
+		          <div id="advertisement">
+		          <button id="ad-close"><i class="fa fa-times-circle" aria-hidden="true" style="margin-right: 10%;"></i></button>
+		            <img height="100em" src="http://dsim.in/blog/wp-content/uploads/2017/01/samsung2.jpg">
+		          </div>
+	          </c:when>
+          </c:choose>
         </main>
         <!--Right Most Column-->
         <div id="right-col">
-         <%@ include file = "rightSidebar.jsp" %>
+        	<%@ include file = "rightSidebar.jsp" %>
         </div>
       </div>
     </div>

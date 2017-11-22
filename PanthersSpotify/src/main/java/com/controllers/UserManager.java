@@ -9,6 +9,7 @@ package com.controllers;
 import com.model.Album;
 import com.model.Friend;
 import com.model.Playlist;
+import com.model.Song;
 import com.model.User;
 
 import java.io.File;
@@ -193,5 +194,12 @@ public class UserManager {
     	return list;
     }
 
-
+    public List<User> getAllArtist(){
+    	List<User> list=  new ArrayList<User>();
+    	
+    	Query query = em.createQuery("SELECT user FROM User user WHERE user.utype = 2");
+    	list = (List<User>)query.getResultList();
+    	
+    	return list;
+    }
 }

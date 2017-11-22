@@ -1,5 +1,9 @@
 <!--  Container for DISCOVER -->
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
+<script src="${cp}/resources/js/artist.js"></script>
+
 <style type="text/css">
   #filter_keyword
   {
@@ -96,48 +100,16 @@
     </select>
   </div>
   <div class="line"></div>
-  <section class="row placeholders" style="margin-top: 3%;">
+  <section class="row placeholders" style="margin-top: 3%;" id="artist-page">
+  <c:if test="${not empty artistsList}">
+  <c:forEach var="artist" items="${artistsList}">
     <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
       <img class="w3-circle" src="https://spark.adobe.com/images/landing/examples/blizzard-album-cover.jpg" width=100% height=width  alt="Generic placeholder thumbnail">
       <div class="medium-boxes-description" style="text-align:center;">
-        <h6> <a href = "#"> <span id="artist_name"> Name </span> </a> </h6>
-        <div class="text-muted"> 10 songs </div>
+        <h6> <a href = "#"> <span id="artist_name">${artist.uname}</span> </a> </h6>
       </div>
     </div>
-    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
-      <img class="w3-circle" src="https://www.fuse.tv/image/56fe73a1e05e186b2000009b/768/512/the-boxer-rebellion-ocean-by-ocean-album-cover-full-size.jpg" width=100% height=width  alt="Generic placeholder thumbnail">
-      <div class="medium-boxes-description" style="text-align:center;">
-        <h6> <a href = "#"> <span id="artist_name"> Name </span> </a> </h6>
-        <div class="text-muted"> 6 songs </div>
-      </div>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
-      <img src="https://i.pinimg.com/736x/8d/e4/20/8de42050e671b93b1d6bad2f2764ba89--calm-graphic-design-sun-graphic.jpg" width=100% height=width class="w3-circle" alt="Generic placeholder thumbnail">
-      <div class="medium-boxes-description" style="text-align:center;">
-        <h6> <a href = "#"> <span id="artist_name"> Name </span> </a> </h6>
-        <div class="text-muted"> 14 songs </div>
-      </div>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2  placeholder medium-boxes">
-      <img src="https://peopledotcom.files.wordpress.com/2017/08/taylor-swift7.jpg?w=2000&h=2013" width=100% height=width class="w3-circle" alt="Generic placeholder thumbnail">
-      <div class="medium-boxes-description" style="text-align:center;">
-        <h6> <a href = "#"> <span id="artist_name"> Name </span> </a> </h6>
-        <div class="text-muted"> 12 songs </div>
-      </div>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
-      <img src="https://www.fuse.tv/image/56fe73a1e05e186b2000009b/768/512/the-boxer-rebellion-ocean-by-ocean-album-cover-full-size.jpg" width=100% height=width class="w3-circle" alt="Generic placeholder thumbnail">
-      <div class="medium-boxes-description" style="text-align:center;">
-        <h6> <a href = "#"> <span id="artist_name"> Name </span> </a> </h6>
-        <div class="text-muted"> 6 songs </div>
-      </div>
-    </div>
-    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
-      <img src="https://spark.adobe.com/images/landing/examples/blizzard-album-cover.jpg" width=100% height=width class="w3-circle" alt="Generic placeholder thumbnail">
-      <div class="medium-boxes-description" style="text-align:center;">
-        <h6> <a href = "#"> <span id="artist_name"> Name </span> </a> </h6>
-        <div class="text-muted"> 4 songs </div>
-      </div>
-    </div>
+    </c:forEach>
+   </c:if>
   </section>
 </div>

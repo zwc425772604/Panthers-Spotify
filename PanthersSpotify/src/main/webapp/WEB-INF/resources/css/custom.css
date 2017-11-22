@@ -137,10 +137,74 @@ p.color-nav-header:hover{
 }
 
 #top-tool-search{
-    margin-top:0.35%;
-    margin-left: 5%;
+    margin-left: 3%;
     position: relative;
-    height: 3.8vh;
+    height: auto;
+    width: 100%;
+    
+}
+
+#private-session{
+	margin-top: 0.65%;
+	margin-right: 1%;
+	margin-left: 37%;
+	color: white;
+}
+.switch {
+  margin-top: 0.15%;
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #0080ff;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #c0c0c0;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #0080ff;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
 
 .stylish-input-group .input-group-addon{
@@ -159,7 +223,7 @@ p.color-nav-header:hover{
 }
 
 #top-tool-upgrade-and-user{
-    margin-left: 40%;
+    margin-left: 3%;
     position: relative;
     margin-top: 0%;
     width: auto;

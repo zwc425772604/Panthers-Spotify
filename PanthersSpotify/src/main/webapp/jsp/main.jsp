@@ -44,15 +44,12 @@
           <div class="scrolled-main" id="style-1">
             <!--Top Tool Section-->
             <div class ="row" id="top-tool">
-              <div id="top-tool-page-change">
-                <button class="top-tool-page-button"><i class="fa fa-angle-left fa-2x" aria-hidden="true"></i></button>
-                <button class="top-tool-page-button"><i class="fa fa-angle-right fa-2x" aria-hidden="true"></i></button>
-              </div>
+              
               <div class="col-sm-3 col-sm-offset-3" id="top-tool-search">
                 <div class="input-group stylish-input-group"  id="top-tool-search">
                 <form:form action="search" method="POST">
                 	<div class="row" >
-	                  <input type="text" class="w3-input" style="width: 80%; height: 75%;" placeholder="Search" name="search">
+	                  <input type="text" class="w3-input" style="width: 75%;" placeholder="Search" name="search">
 	                  <span class="input-group-addon">
 	                  <button type="submit">
 	                  <i class="fa fa-search" aria-hidden="true" ></i>
@@ -62,6 +59,12 @@
                   </form:form>
                 </div>
               </div>
+              <p id="private-session">Private Session:</p>
+              <label class="switch">
+				<input type="checkbox" checked>
+				<span class="slider round"></span>
+		      </label>
+              
               <div id="top-tool-upgrade-and-user">
 
                 <div class="w3-dropdown-hover">
@@ -86,7 +89,7 @@
           </div>
           <div id="advertisement">
           <button id="ad-close"><i class="fa fa-times-circle" aria-hidden="true" style="margin-right: 10%;"></i></button>
-            <img height="150em" src="http://dsim.in/blog/wp-content/uploads/2017/01/samsung2.jpg">
+            <img height="100em" src="http://dsim.in/blog/wp-content/uploads/2017/01/samsung2.jpg">
           </div>
         </main>
         <!--Right Most Column-->

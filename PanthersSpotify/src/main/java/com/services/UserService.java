@@ -5,10 +5,11 @@ import java.util.List;
 import com.model.User;
 
 public interface UserService {
-	public User addUser(String username, String email,String encPwd,int utype,char gender,String firstName, String lastName);
+	public User addUser(String username, String email,String encPwd,int utype,char gender,String firstName, String middleName, String lastName, String dob);
 	public User updateUser(User user, String username, int utype,char gender,String firstName, String lastName);
 	public void removeUser(User user);
 	public User getUser(String email);
+	public boolean isEmailRegistered(String email);
 	public List<User> getAllUsers();
 	public User editUserPassword(User user, String pwd);
 	public List<User> getFriend(String uemail);

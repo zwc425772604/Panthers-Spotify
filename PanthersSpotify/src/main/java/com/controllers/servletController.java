@@ -43,28 +43,28 @@ public class servletController {
 	@Autowired(required=true)
 	@Qualifier("userService")
 	private UserService userService;
-	
+
 	@Autowired(required=true)
 	@Qualifier("songService")
 	private SongService songService;
-	
+
 	@Autowired(required=true)
 	@Qualifier("playlistService")
 	private PlaylistService playlistService;
-	
-	
+
+
 	@Autowired(required=true)
 	@Qualifier("albumService")
 	private AlbumService albumService;
-	
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	   public String index(ModelMap map) {
 
 	       return "index";
 	   }
-	
+
 //	public String index() {
-//	      
+//
 //	       return "index";
 //	}
 	/* user login */
@@ -73,13 +73,13 @@ public class servletController {
 		   String email = request.getParameter("email");
 		   String nonEncPwd = request.getParameter("password");
 		   String password = Security.encryptPassword(nonEncPwd);
-	       
+
 		   User user = userService.getUser(email);
 	      System.out.println("user is "+user.getFirstName());
-	       
+
 	       //case 0: if the email is not registered
 	       if (user.equals(null))
-	       {          
+	       {
 	            mav.setViewName("index");
 	    	   	mav.addObject("error_message", "This email does not register on our site!");
 	       }
@@ -102,7 +102,7 @@ public class servletController {
 	    		   mav.addObject("username", user.getUname());
 	               mav.setViewName("admin");
 	    	   }
-	          
+
 	       }
 	       //case 2: incorrect email or password
 	       else
@@ -113,17 +113,17 @@ public class servletController {
 	           mav.setViewName("index");
 	       }
 	       System.out.println("here");
-	       return mav;  
+	       return mav;
 	   }
-	   
-	   
+
+
 	   @RequestMapping(value = "/main", method = RequestMethod.GET)
 	   public ModelAndView mainPage(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		   mav.setViewName("main");
 		   return mav;
 	   }
-	   
-	   
+
+
 	   /* user logout */
 	   @RequestMapping(value = "/home", method = RequestMethod.GET)
 	   public ModelAndView userLogout(ModelAndView mav, HttpSession session) {
@@ -134,7 +134,7 @@ public class servletController {
 	            mav.setViewName("index");
 	            return mav;
 	   }
-	   
+
 	   /* display sign up page */
 	   @RequestMapping(value = "/signup", method = RequestMethod.GET)
 	   public ModelAndView displaySignUp(ModelAndView mav) {
@@ -142,28 +142,32 @@ public class servletController {
 	            mav.setViewName("SignUp");
 	            return mav;
 	   }
-	   
+
 	    /* user sign up */ /* user type: 0=basic 1=premium 2=artist 3=admin */
 	   @RequestMapping(value = "/userSignUp", method = RequestMethod.POST)
 	   public @ResponseBody String userSignUp(ModelAndView mav,
-	                  HttpServletRequest request, HttpSession session){ 
-	    String username = request.getParameter("username");
-		String password = request.getParameter("password");
-		// encrypt password
-		
-		String encPwd = Security.encryptPassword(password);
-		String email = request.getParameter("email");
-		char gender = request.getParameter("gender").charAt(0);
-		String first_name = request.getParameter("first_name");
-		String last_name = request.getParameter("last_name");
-		int utype = 0;
-		
-	    userService.addUser(username,email,encPwd,utype,gender,first_name,last_name);
-
-	    String message = "Congratulation, sign up successfully. Please return to homepage for login.";
-	    return message; //handle in SignUp.jsp
+	                  HttpServletRequest request, HttpSession session){
+	      String username = request.getParameter("username");
+		  String password = request.getParameter("password");
+		  String encPwd = Security.encryptPassword(password);
+		  String email = request.getParameter("email");
+		  boolean isEmailRegistered = userService.isEmailRegistered(email);
+		  System.out.println("isEmailRegistered value :" + isEmailRegistered);
+		  if (isEmailRegistered) {
+			  return "failed";
+		  }
+		  char gender = request.getParameter("gender").charAt(0);
+		  String firstName = request.getParameter("firstName");
+	      String middleName = request.getParameter("middleName");
+		  String lastName = request.getParameter("lastName");
+		  String dob = request.getParameter("dob");
+		  System.out.println("dob in userSignUp " + dob);
+		  int utype = 0;
+	      userService.addUser(username,email,encPwd,utype,gender,firstName,middleName,lastName, dob);
+	      String message = "Congratulation, sign up successfully. Please return to homepage for login.";
+	      return message; //handle in SignUp.jsp
 	   }
-	   
+
 	   /* create Playlist */
 	   @RequestMapping(value = "/createPlaylist", method = RequestMethod.POST)
 	   public ModelAndView createPlaylist(ModelAndView mav, @RequestParam(value = "file") CommonsMultipartFile file, HttpServletRequest request, HttpSession session) {
@@ -172,27 +176,27 @@ public class servletController {
 //		   		String pic = request.getParameter("pic");
 		   		//System.out.println("picture address is "+pic);
 		   		User user = (User) session.getAttribute("user");
-		          
+
 		   		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
 		   		java.sql.Time time = new java.sql.Time(Calendar.getInstance().getTimeInMillis());
 		   		List<Playlist> user_playlist = playlistService.addPlaylist(playlist_name,user,description,file,date);
-		   		
+
 	 		    mav.addObject("user_playlist", user_playlist);
 	 		    session.setAttribute("user_playlist", user_playlist);
 	            mav.setViewName("main");
 	            return mav;
 	   }
-	   
+
 	   /* edit specific playlist */
 	   @RequestMapping(value = "/editPlaylistDetails", method = RequestMethod.POST)
 	   public ModelAndView editPlaylist(ModelAndView mav, @RequestParam(value = "file") CommonsMultipartFile file, HttpServletRequest request, HttpSession session) {
-		   		
+
 		   		String playlist_name = request.getParameter("playlist_name");
 		   		String description = request.getParameter("playlist_description");
 		   		User user = (User) session.getAttribute("user");
-		         
+
 		        Playlist playlistOne = (Playlist)session.getAttribute("selected_playlist");
-		        //System.out.println(path+" "+filename);  
+		        //System.out.println(path+" "+filename);
 		   		//java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
 		   		int pid = playlistOne.getPid();
 		   		List<Playlist> user_playlist = playlistService.updatePlaylist(pid,description,file,playlist_name,user);
@@ -216,7 +220,7 @@ public class servletController {
 		   		System.out.println("remove success");
 	            return "ok";
 	   }
-	   
+
 	   /* get specific playlist */
 	   @RequestMapping(value = "/getSpecificPlaylist", method = RequestMethod.POST)
 	   public  @ResponseBody String getSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
@@ -242,7 +246,7 @@ public class servletController {
 		   String songGenre = request.getParameter("song_genre");
 		   String songType = request.getParameter("song_type");
 		   String songUrl = request.getParameter("song_file");
-		   
+
 		   Album album = albumService.getAlbum(0);
 		   //Song songTime and release Day to be Fixed
 		   Song song = new Song(songTitle, null,null, 0, songGenre, songType, songUrl);
@@ -250,18 +254,18 @@ public class servletController {
 		   mav.setViewName("admin");
 		   return mav;
 	   }
-	   
+
 	   /* Load song from database */
 	   @RequestMapping(value="/loadSong", method = RequestMethod.POST)
-	   public @ResponseBody String loadSongs(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+	   public @ResponseBody String loadSongs(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		   List<Song> songs = songService.getAllSongs();
 		   session.setAttribute("songs", songs);
 		   System.out.println("loadsongs" + songs.size());
 		   return "ok";
 	   }
-	   
+
 	   @RequestMapping(value="/loadAlbum", method = RequestMethod.POST)
-	   public @ResponseBody String loadAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+	   public @ResponseBody String loadAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		   List<Album> albums = albumService.getAllAlbums();
 		   session.setAttribute("album_list", albums);
 		   System.out.println("loadAlbum" + albums.size());
@@ -293,9 +297,9 @@ public class servletController {
 		   mav.addObject("username", user.getUname());
 	       return mav;
 	   }
-	   
+
 	   @RequestMapping(value="/deleteUserAccount", method = RequestMethod.POST)
-	   public ModelAndView deleteUserAccount(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+	   public ModelAndView deleteUserAccount(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		   System.out.println("deleting user account");
 		   User user = (User)session.getAttribute("user");
 		   if (session.getAttribute("user") != null)
@@ -308,19 +312,19 @@ public class servletController {
 	   }
 	   //errors in this method
 	   @RequestMapping(value="/getOverviewPlaylist", method = RequestMethod.POST)
-	   public ModelAndView getOverviewPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+	   public ModelAndView getOverviewPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		   //Get Top Follower Playlist
 		   int NUMBER_OF_TOP_FOLLOWED = 4;
-		   List<Playlist> userPlaylist = (List<Playlist>)(playlistService.getTopFollowedPlaylist(NUMBER_OF_TOP_FOLLOWED));	
-		   
-		   session.setAttribute("overviewPlaylist", userPlaylist);	   
+		   List<Playlist> userPlaylist = (List<Playlist>)(playlistService.getTopFollowedPlaylist(NUMBER_OF_TOP_FOLLOWED));
+
+		   session.setAttribute("overviewPlaylist", userPlaylist);
 		   mav.setViewName("main");
 		   return mav;
 	   }
-	   
+
 	   @RequestMapping(value="/getUserFriendList", method = RequestMethod.POST)
-	   public @ResponseBody String getUserFriendList(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
-		   
+	   public @ResponseBody String getUserFriendList(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+
 		   System.out.println("Getting user friendlist");
 		   User user = (User) session.getAttribute("user");
 		   List<User> temp=null;
@@ -342,7 +346,7 @@ public class servletController {
 		   }
 	  	   return "ok";
 	   }
-	   
+
 	   @RequestMapping(value = "/findFriend", method = RequestMethod.POST)
 	   public ModelAndView findFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	  			User user = (User) session.getAttribute("user");
@@ -369,7 +373,7 @@ public class servletController {
 	   		mav.addObject("username",user.getEmail());
            return mav;
 	   }
-	   
+
 	   @RequestMapping(value = "/deleteFriend", method = RequestMethod.POST)
 	   public ModelAndView deleteFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		   System.out.println("Delete Friend");
@@ -384,10 +388,10 @@ public class servletController {
 	   		mav.addObject("username",user.getUname());
            return mav;
 	   }
-	   
+
 	   @RequestMapping(value="/getUserPage", method = RequestMethod.POST)
-	   public @ResponseBody String getUserPage(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
-		   
+	   public @ResponseBody String getUserPage(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+
 		   String username = request.getParameter("username");
 		   String email = request.getParameter("userEmail");
 		   User user = userService.getUser(email);
@@ -395,9 +399,9 @@ public class servletController {
 		   session.setAttribute("selectedFriend", user);
 	  	   return "ok";
 	   }
-	   
 
-	   
+
+
 	   @RequestMapping(value="/followSpecificPlaylist", method=RequestMethod.POST)
 	   public @ResponseBody String followSpecificPlaylist(HttpServletRequest request, HttpSession session) {
 		   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
@@ -406,7 +410,7 @@ public class servletController {
 		   System.out.println("playlist id to be follow is : " + playlistID);
 		   return "ok";
 	   }
-	   
+
 	   @RequestMapping(value="/unfollowSpecificPlaylist", method=RequestMethod.POST)
 	   public @ResponseBody String unfollowSpecificPlaylist(HttpServletRequest request, HttpSession session) {
 		   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
@@ -416,8 +420,8 @@ public class servletController {
 		   System.out.println("playlist id to be unfollow is : " + playlistID);
 		   return "ok";
 	   }
-	   
-	   
+
+
 	   @RequestMapping(value="/addSongToPlaylist", method=RequestMethod.POST)
 	   public @ResponseBody String addSongToPlaylist(HttpServletRequest request, HttpSession session) {
 		   int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
@@ -512,17 +516,19 @@ public class servletController {
 	 //admin action, add artist
 	 @RequestMapping(value="/addArtistToDatabase", method = RequestMethod.POST)
 	    public ModelAndView addNewArtist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		    String artistName = request.getParameter("artist-name");
-	      String artistEmail = request.getParameter("artist-email");
-	      String artistPassword = request.getParameter("artist-password");
+		    String artistName = request.getParameter("artistName");
+	      String artistEmail = request.getParameter("artistEmail");
+	      String artistPassword = request.getParameter("artistPassword");
 	      String encPwd = Security.encryptPassword(artistPassword);
-	      String artistFirstName = request.getParameter("artist-first-name");
-	      String artistLastName = request.getParameter("artist-last-name");
-	      String artistBiography = request.getParameter("artist-biography"); //missing bio column in user table
+	      String artistFirstName = request.getParameter("artistFirstName");
+	      String artistMiddleName = request.getParameter("artistMiddleName");
+	      String artistLastName = request.getParameter("artistLastName");
+	      //String artistBiography = request.getParameter("artistBiography"); 
+	      String artistDOB = request.getParameter("artistDOB");
 	      char gender = request.getParameter("gender").charAt(0);
 	      int userType = 2;
-	      userService.addUser(artistName,artistEmail,encPwd,userType,gender,artistFirstName,artistLastName);
-	 	  	mav.setViewName("admin");
+	      userService.addUser(artistName,artistEmail,encPwd,userType,gender,artistFirstName,artistMiddleName, artistLastName,artistDOB);
+	 	  mav.setViewName("admin");
 	      System.out.println("adding artist successfully");
 	      return mav;
 	    }
@@ -574,9 +580,9 @@ public class servletController {
 	        String artistsArray = JSONHelper.artistListToJSON(artists);
 	        return artistsArray;
 	    }
-	   
+
 	    @RequestMapping(value="/getSpecificArtist", method = RequestMethod.POST)
-	    public @ResponseBody String getSpecificArtist(ModelAndView mav, HttpServletRequest request, HttpSession session) {	 
+	    public @ResponseBody String getSpecificArtist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 	 	   String email = request.getParameter("email");
 	 	   User user = userService.getUser(email);
 	 	   //User user = (users.size() != 0 )?users.get(0):null;
@@ -584,6 +590,6 @@ public class servletController {
 	   	   return "ok";
 	    }
 	   //---------------------------------------------------------------------------------------------
-	    
+
 
 }

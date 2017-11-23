@@ -1,9 +1,12 @@
 package com.services;
 
 import java.io.File;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -26,18 +29,26 @@ public class UserServiceImpl implements UserService {
 	private UserDAO UserDAO;
 	
 	@Transactional
-	public User addUser(String username, String email,String encPwd,int utype,char gender,String firstName, String lastName) {
+	public User addUser(String username, String email,String encPwd,int utype,char gender,String firstName, String middleName, String lastName, String dob) {
 		
 		System.out.println("User Service create invoked:"+username);
-		User User  = new User();
-		User.setEmail(email);
-		User.setUname(username);
-		User.setUpassword(encPwd);
-		User.setUtype(utype);
-		User.setGender(gender);
-		User.setFirstName(firstName);
-		User.setLastName(lastName);
-		
+		User user  = new User();
+		user.setEmail(email);
+		user.setUname(username);
+		user.setUpassword(encPwd);
+		user.setUtype(utype);
+		user.setGender(gender);
+		user.setFirstName(firstName);
+		user.setMiddleName(middleName);
+		user.setLastName(lastName);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd yyyy hh:mm:ss", Locale.US);
+		Date parsedBirthday = null;
+	    try { 
+	    	parsedBirthday = dateFormat.parse(dob);} 
+	    catch (ParseException e) {
+	        e.printStackTrace();
+	    }
+	    user.setDob(parsedBirthday);
 		final String dir = System.getProperty("user.dir");
         
         File f1 = new File(dir+"/Users");
@@ -48,8 +59,8 @@ public class UserServiceImpl implements UserService {
         File userDir = new File(f1, email);
         boolean userSuccess = userDir.mkdirs();
 		
-		User = UserDAO.addUser(User);
-		return User;
+		user = UserDAO.addUser(user);
+		return user;
 	}
 	@Transactional
 	public User updateUser(User user, String username, int utype,char gender,String firstName, String lastName) {
@@ -156,5 +167,11 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public List<User> getAllArtist(){
 		return UserDAO.getAllArtist();
+	}
+	
+	@Transactional
+	public boolean isEmailRegistered(String email) {
+		User user = UserDAO.getUser(email);
+		return (user == null) ?  false :  true;
 	}
 }

@@ -49,8 +49,8 @@ public class UserDAOImpl implements UserDAO{
           		.setParameter("email", email);
 
          List<User> results = query1.getResultList();
-         
-		return results.get(0);
+         return results.size() == 0 ? null : results.get(0);
+//		return results.get(0);
 	}
 	
 	@Transactional(readOnly=true)

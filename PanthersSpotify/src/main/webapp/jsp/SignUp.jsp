@@ -48,22 +48,23 @@
             return -1;
           }
       }
-      
+
       function validateFormInputs()
       {
-        var email = $("#email_login").val();
-        var email1 = $("#re_email_login").val();
-        var password = $("#user_password").val();
-        var password1 = $("#confirm_password").val();
-        var username = $("#username_login").val();
+        var email = $("#email").val();
+        var email1 = $("#reenteredEmail").val();
+        var password = $("#password").val();
+        var password1 = $("#confirmedPassword").val();
+        var username = $("#username").val();
         var gender = $("input[name='gender']:checked").val();
-        var dob = new Date($("#date_of_birth").val());
-        var first_name = $("#user_first_name").val();
-        var last_name= $("#user_last_name").val();
-        var correct_email = validateEmailFormat(email);
-        var password_matched = checkPassword(password,password1);
-        var email_matched = checkPassword(email,email1);
-        if (password_matched == 0 && correct_email && email_matched == 0)
+        var dob = new Date($("#dateOfBirth").val());
+        var firstName = $("#firstName").val();
+        var middleName = $("#middleName").val();
+        var lastName= $("#lastName").val();
+        var isCorrectEmailFormat = validateEmailFormat(email);
+        var isPasswordMatched = checkPassword(password,password1);
+        var isEmailMatched = checkPassword(email,email1);
+        if (isPasswordMatched == 0 && isCorrectEmailFormat && isEmailMatched == 0)
         {
           //ajax call to sign up
           $("#password_error").text("");
@@ -72,15 +73,27 @@
             url: "${cp}/userSignUp",
             type: "POST",
             data : {"username" : username, "email" : email, "password" : password, "dob" : dob,
-                    "first_name" : first_name, "last_name" : last_name, "gender" : gender},
-            asyn: true,
+                    "firstName" : firstName, "middleName" : middleName, "lastName" : lastName, "gender" : gender},
+            asyn: false,
             cache: false,
             success : function(response)
             {
               console.log(response);
-              $("#signup_message").empty();
-              $("#signup_message").css("color","green");
-              $("#signup_message").text(response);
+              if (response.localeCompare("failed")==0)
+            	  {
+            	      $("#signup_message").empty();
+                  $("#signup_message").css("color","red");
+                  $("#signup_message").text("This email is already registered");
+            	  }
+              else
+              {
+            	    $("#signup_message").empty();
+                $("#signup_message").css("color","green");
+                $("#signup_message").text(response);
+               /*  window.location.href = "http://localhost:8080/PanthersSpotify/"; */
+                window.open("home.html", "_self");
+              }
+             
             },
             error: function(e)
             {
@@ -89,12 +102,12 @@
               $("#signup_message").css("color","red");
               $("#signup_message").text("duplicate username");
             }
-      
+
           });
         }
         else
         {
-      
+
           if (password_matched == 0)
           {
             $("#password_error").text("");
@@ -119,9 +132,9 @@
           {
           	$("#email_error").text("Emails do not match");
           }
-      
+
         }
-      
+
       }
     </script>
   </head>
@@ -142,28 +155,30 @@
             <form:form class="w3-container" action="javascript:validateFormInputs()">
               <div class="w3-section">
                 <label> Username: </label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="maximum of 20 characters)" name="username" id = "username_login" required>
-                <p class = "input_error_message"  id = "username_error"></p>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="maximum of 20 characters" name="username" id = "username" required>
+                <p class = "inputErrorMessage"  id = "usernameError"></p>
                 <label>New Email address: </label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Email" name="email" id = "email_login" required>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Email" name="email" id = "email" required>
                 <label> Re-enter Email address: </label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Email" name="re-email" id = "re_email_login" required>
-                <p class = "input_error_message" id = "email_error"></p>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Email" name="reenteredEmail" id = "reenteredEmail" required>
+                <p class = "inputErrorMessage" id = "emailError"></p>
                 <label> Password: </label>
-                <input class="w3-input w3-border" type="password" placeholder="maximum of 20 characters" name="password" id = "user_password" required>
-                <p class = "input_error_message"></p>
+                <input class="w3-input w3-border" type="password" placeholder="maximum of 20 characters" name="password" id = "password" required>
+                <p class = "inputErrorMessage"></p>
                 <label> Re-enter your password: </label>
-                <input class="w3-input w3-border" type="password" placeholder="Confirm Password" name="confirm_password" id = "confirm_password" required>
-                <p class = "input_error_message" id="password_error"></p>
+                <input class="w3-input w3-border" type="password" placeholder="Confirm Password" name="confirmedPassword" id = "confirmedPassword" required>
+                <p class = "inputErrorMessage" id="passwordError"></p>
                 <label> First name: </label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="First name" name="first_name" id = "user_first_name" required>
-                <p class = "input_error_message"></p>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="First name" name="firstName" id = "firstName" required>
+                <p class = "inputErrorMessage"></p>
+                <label> Middle name: </label>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Middle name(optional)" name="middleName" id = "middleName">
                 <label> Last name: </label>
-                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Last name" name="last_name" id = "user_last_name" required>
-                <p class = "input_error_message"></p>
+                <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="Last name" name="lastName" id = "lastName" required>
+                <p class = "inputErrorMessage"></p>
                 <label> Date of Birth: </label>
-                <input class="w3-input w3-border" type="date" placeholder="Date of Birth (yyyy-mm-dd)" name="bob" id="date_of_birth" required>
-                <p class = "input_error_message"></p>
+                <input class="w3-input w3-border" type="date" placeholder="Date of Birth (mm/dd/yyyy)" name="DOB" id="dateOfBirth" required>
+                <p class = "inputErrorMessage"></p>
                 <div class="gender_radiobuttons">
                   <input class="w3-input w3-border" type="radio" name="gender" value="M"> <label class="gender_role">Male</label>
                   <input class="w3-input w3-border" type="radio" name="gender" value="F"> <label class="gender_role">Female</label>

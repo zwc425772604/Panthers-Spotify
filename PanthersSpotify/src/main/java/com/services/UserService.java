@@ -2,6 +2,7 @@ package com.services;
 
 import java.util.List;
 
+import com.model.Artist;
 import com.model.User;
 
 public interface UserService {
@@ -17,4 +18,7 @@ public interface UserService {
 	public List<User> deleteFriend(String uemail,String femail);
 	public List<User> getUsersByType(int usertype);
 	public List<User> getAllArtist();
+	public void followArtist(String artistEmail,User user);
+	public void unfollowArtist(String artistEmail,User user);
+	public List<Artist> getFollowArtists(User user);
 }

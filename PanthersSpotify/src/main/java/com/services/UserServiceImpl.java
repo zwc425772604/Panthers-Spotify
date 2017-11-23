@@ -19,6 +19,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.model.Artist;
+import com.model.Playlist;
 import com.model.User;
 
 @Service("userService")
@@ -173,5 +175,22 @@ public class UserServiceImpl implements UserService {
 	public boolean isEmailRegistered(String email) {
 		User user = UserDAO.getUser(email);
 		return (user == null) ?  false :  true;
+	}
+	@Transactional
+	public void followArtist(String artistEmail,User user)
+	  {
+		    UserDAO.followArtist(artistEmail, user.getEmail());
+		  	
+	  }
+	@Transactional
+	public void unfollowArtist(String artistEmail,User user)
+	  {
+		    UserDAO.unfollowArtist(artistEmail, user.getEmail());
+		  	
+	  }
+	@Transactional
+	public List<Artist> getFollowArtists(User user)
+	{
+		return UserDAO.getFollowArtists(user.getEmail());
 	}
 }

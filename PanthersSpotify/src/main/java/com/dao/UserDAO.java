@@ -2,6 +2,7 @@ package com.dao;
 
 import java.util.List;
 
+import com.model.Artist;
 import com.model.User;
 
 public interface UserDAO {
@@ -15,4 +16,8 @@ public interface UserDAO {
 	public void deleteFriend(String uemail,String femail);
 	public List<User> getUserByUserType(int usertype);
 	public List<User> getAllArtist();
+	public void unfollowArtist(String artistEmail,String userEmail) ;
+	public void followArtist(String artistEmail,String userEmail);
+	public List<Artist> getFollowArtists(String userEmail);
+	
 }

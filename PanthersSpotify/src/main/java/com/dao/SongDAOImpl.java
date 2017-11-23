@@ -83,4 +83,22 @@ public class SongDAOImpl implements SongDAO{
 			List<Releasesong> result = query1.getResultList();
 			return result;
 	}
+	
+	@Transactional(readOnly=false)
+	public void deleteRequestSong(int songId)
+	  {
+	  	  
+	  	TypedQuery<Song> query1 = entityManager.createNamedQuery("DELETE FROM Song WHERE sid=:sid;", Song.class)
+	       		.setParameter("sid", songId);
+	  }
+	
+	@Transactional(readOnly=false)
+	public void updateRequestSong(int songId,String uemail)
+	{
+	  	  
+	  	TypedQuery<Song> query1 = entityManager.createNamedQuery("UPDATE Song SET status = :status WHERE uemail = :uemail and sid=:sid;", Song.class)
+	  			.setParameter("status", "pass")
+	  			.setParameter("uemail", uemail)
+	  			.setParameter("sid", songId);
+	}
 }

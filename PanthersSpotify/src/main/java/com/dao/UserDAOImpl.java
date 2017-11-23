@@ -13,6 +13,9 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.model.Artist;
+import com.model.Followartist;
+import com.model.Followplaylist;
 import com.model.Friend;
 import com.model.Playlist;
 import com.model.User;
@@ -107,5 +110,31 @@ public class UserDAOImpl implements UserDAO{
 		Friend ret = new Friend(uemail, femail);
 		entityManager.remove(ret);
     }
+	
+	@Transactional(readOnly=false)
+	public void followArtist(String artistEmail,String userEmail) {
+		
+		Followartist followArtist = new Followartist(artistEmail,userEmail);
+		
+		entityManager.persist(followArtist);
+	}
+	
+	@Transactional(readOnly=false)
+	public void unfollowArtist(String artistEmail,String userEmail) {
+		
+		Followartist followArtist = new Followartist(artistEmail,userEmail);
+		
+		entityManager.remove(followArtist);
+	}
+	@Transactional(readOnly=true)
+	public List<Artist> getFollowArtists(String userEmail)
+	{
+		 
+		String queryString = "SELECT a FROM Artist a where a.artistEmail in (SELECT f.followartistPK.aemail from Followartist f where f.followartistPK.uemail=:uemail)";
+	    	Query query = entityManager.createQuery(queryString);
+	    	query.setParameter("uemail", userEmail);
+	    	List<Artist>	list = (List<Artist>)query.getResultList();
+	    	return list;
+	}
 	
 }

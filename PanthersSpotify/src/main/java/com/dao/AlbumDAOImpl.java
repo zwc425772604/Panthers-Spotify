@@ -53,7 +53,7 @@ public class AlbumDAOImpl implements AlbumDAO{
 
 	@Transactional(readOnly=true)
 	public List<Album> getAlbums() {
-		TypedQuery<Album> query1 = entityManager.createNamedQuery("User.findAll", Album.class);
+		TypedQuery<Album> query1 = entityManager.createNamedQuery("Album.findAll", Album.class);
 
 		List<Album> results = query1.getResultList();
 		return results;

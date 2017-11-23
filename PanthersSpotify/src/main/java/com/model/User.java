@@ -305,16 +305,7 @@ public class User implements Serializable {
         this.lastTimeLogin = lastTimeLogin;
     }
 
-    @Column(name = "signUpDate")
-    @Temporal(TemporalType.DATE)
-    private Date signUpDate;
-    public Date getSignUpDate() {
-        return signUpDate;
-    }
-    public void setSignUpDate(Date signUpDate) {
-        this.signUpDate = signUpDate;
-    }
-
+  
 		@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Artist artist;
     public Artist getArtist() {

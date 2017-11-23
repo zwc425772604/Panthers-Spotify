@@ -186,21 +186,7 @@ function displayLeftNavbarContent(nav_name)
 	}
 	else if (nav_name.localeCompare('artists') == 0)
 	{		
-		$.ajax({
-	        url: "${cp}/../loadArtist",
-	        type: "POST",
-	        asyn: false,
-	        cache: true,
-	        success : function(response)
-	        {
-	        	$("#main-changing-content").load("jsp/artist.jsp");
-	        },
-	        error: function(e)
-	        {
-
-	          console.log(e);
-	        }
-	      });
+		$("#main-changing-content").load("jsp/artist.jsp");
 	   
 	}
 	else if (nav_name.localeCompare('recently_played') == 0)

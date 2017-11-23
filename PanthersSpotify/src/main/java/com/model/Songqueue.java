@@ -22,15 +22,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Weichao ZHao
+ * @author weichaozhao
  */
 @Entity
 @Table(name = "songqueue", catalog = "panthers", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Songqueue.findAll", query = "SELECT s FROM Songqueue s")
-    , @NamedQuery(name = "Songqueue.findByUemail", query = "SELECT s FROM Songqueue s WHERE s.uemail = :uemail")
-    , @NamedQuery(name = "Songqueue.findByNowPlayIn", query = "SELECT s FROM Songqueue s WHERE s.nowPlayIn = :nowPlayIn")})
+    , @NamedQuery(name = "Songqueue.findByUemail", query = "SELECT s FROM Songqueue s WHERE s.uemail = :uemail")})
 public class Songqueue implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -40,8 +39,6 @@ public class Songqueue implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "uemail", nullable = false, length = 50)
     private String uemail;
-    @Column(name = "nowPlayIn")
-    private Short nowPlayIn;
     @JoinColumn(name = "uemail", referencedColumnName = "email", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
     private User user;
@@ -54,25 +51,25 @@ public class Songqueue implements Serializable {
 
     public Songqueue() {
     }
-
+    
     public Songqueue(String uemail) {
         this.uemail = uemail;
     }
-
+    
+    public Songqueue(String uemail, User user, Playlist playlist, Song nowPlay) {
+        this.uemail = uemail;
+        this.user = user;
+        this.pid = playlist;
+        this.nowPlay = nowPlay;
+    }
+    
     public String getUemail() {
         return uemail;
     }
+    
 
     public void setUemail(String uemail) {
         this.uemail = uemail;
-    }
-
-    public Short getNowPlayIn() {
-        return nowPlayIn;
-    }
-
-    public void setNowPlayIn(Short nowPlayIn) {
-        this.nowPlayIn = nowPlayIn;
     }
 
     public User getUser() {
@@ -121,7 +118,7 @@ public class Songqueue implements Serializable {
 
     @Override
     public String toString() {
-        return "com.model.Songqueue[ uemail=" + uemail + " ]";
+        return "jpa.Songqueue[ uemail=" + uemail + " ]";
     }
     
 }

@@ -202,17 +202,16 @@ public class Song implements Serializable {
     public void setPlaylistsongCollection(Collection<Playlistsong> playlistsongCollection) {
         this.playlistsongCollection = playlistsongCollection;
     }
-
-    	/*
-    @OneToMany(mappedBy = "nowPlay")
-    private Collection<Songqueue_1> songqueueCollection;
-    @XmlTransient
-    public Collection<Songqueue_1> getSongqueueCollection() {
+	
+	@OneToMany(mappedBy = "nowPlay")
+    private Collection<Songqueue> songqueueCollection;
+	@XmlTransient
+    public Collection<Songqueue> getSongqueueCollection() {
         return songqueueCollection;
     }
-    public void setSongqueueCollection(Collection<Songqueue_1> songqueueCollection) {
+
+    public void setSongqueueCollection(Collection<Songqueue> songqueueCollection) {
         this.songqueueCollection = songqueueCollection;
     }
-    */
 
 }

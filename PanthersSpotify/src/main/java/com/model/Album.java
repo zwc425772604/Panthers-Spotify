@@ -145,14 +145,7 @@ public class Album implements Serializable {
     public void setSongCollection(Collection<Song> songCollection) {
         this.songCollection = songCollection;
     }
-
-//    public User getAowner() {
-//        return aowner;
-//    }
-//
-//    public void setAowner(User aowner) {
-//        this.aowner = aowner;
-//    }
+	
     public Album(String aname,String des,String photoUrl,int followers,int nSongs,Date releaseDate,Time timelength) {
 		this.aname = aname;
 		this.des=des;

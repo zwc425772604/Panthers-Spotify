@@ -29,7 +29,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
@@ -355,29 +354,28 @@ public class User implements Serializable {
         this.userplaylistCollection1 = userplaylistCollection1;
     }
     
-    /*
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-    private Collection<Squeue> squeueCollection;
+	@JoinTable(name = "additionqueue", joinColumns = {
+        @JoinColumn(name = "uemail", referencedColumnName = "email", nullable = false)}, inverseJoinColumns = {
+        @JoinColumn(name = "sid", referencedColumnName = "sid", nullable = false)})
+    @ManyToMany
+    private Collection<Song> additionqueue;
+	@XmlTransient
+    public Collection<Song> getAdditionQueue() {
+        return this.additionqueue;
+    }
 
-    
+    public void setAdditionQueue(Collection<Song> songCollection) {
+        this.additionqueue = songCollection;
+    }
+	
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Songqueue songqueue;
-
-    public Songqueue getSongqueue() {
+	public Songqueue getSongqueue() {
         return songqueue;
     }
 
     public void setSongqueue(Songqueue songqueue) {
         this.songqueue = songqueue;
     }
-
-    @XmlTransient
-    public Collection<Squeue> getSqueueCollection() {
-        return squeueCollection;
-    }
-
-    public void setSqueueCollection(Collection<Squeue> squeueCollection) {
-        this.squeueCollection = squeueCollection;
-    }
-	*/
+	
 }

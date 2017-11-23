@@ -371,3 +371,35 @@ function displayCharts()
 $(document).on ("click", "#playbar-queue-button", function () {
 	$("#main-changing-content").load("queue.jsp");
 });
+
+var volumeDrag = false;
+$("#rangeinput").on('mousedown',function(e){
+	volumeDrag = true;
+	audio.muted = false;
+	updateVolume(e.main);
+	
+});
+
+function updateVolume(volume){
+	console.log(volume);
+	audio.volume = volume / 100;
+}
+
+var muted = false;
+function volumeMute(data){
+	var up = "<i id=\"volume-up\" class=\"material-icons\">volume_up</i>";
+	var mute = "<i id=\"volume-off\" class=\"material-icons\">volume_off</i>";
+	data.innerHTML = "";
+	if(muted){
+		data.innerHTML = up;
+		audio.volume = 0.5;
+		muted = false;
+		$("#rangeinput").val(50);
+	}else{
+		data.innerHTML = mute;
+		audio.volume = 0;
+		muted = true;
+		$("#rangeinput").val(0);
+	}
+	
+}

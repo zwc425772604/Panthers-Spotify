@@ -166,8 +166,8 @@
         <div class="col-md-3 col-sm-3" id="playbar-right">
           <ul id="playbar-right-icons">
             <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Queue" id="playbar-queue-button"/> <i class="material-icons">add_to_queue</i></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Mute"  id="playbar-mute-anchor-tag"/><i class="material-icons">volume_up</i></li>
-            <li><input class="bar" type="range" id="rangeinput" value="50" min = "0" max = "100" onchange="console.log(this.value);"/></li>
+            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Mute"  id="playbar-mute-anchor-tag"/ onclick="volumeMute(this)"><i id="volume-up" class="material-icons">volume_up</i></li>
+            <li><input class="bar" type="range" id="rangeinput" value="50" min = "0" max = "100" onchange="updateVolume(this.value);"/></li>
           </ul>
         </div>
       </div>

@@ -363,28 +363,16 @@ public class User implements Serializable {
         this.userplaylistCollection1 = userplaylistCollection1;
     }
     
-	@JoinTable(name = "additionqueue", joinColumns = {
-        @JoinColumn(name = "uemail", referencedColumnName = "email", nullable = false)}, inverseJoinColumns = {
-        @JoinColumn(name = "sid", referencedColumnName = "sid", nullable = false)})
-    @ManyToMany
-    private Collection<Song> additionqueue;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private Collection<Squeue> squeueCollection;
 	@XmlTransient
-    public Collection<Song> getAdditionQueue() {
-        return this.additionqueue;
-    }
+	public Collection<Squeue> getSqueueCollection() {
+	    return squeueCollection;
+	}
+	
+	public void setSqueueCollection(Collection<Squeue> squeueCollection) {
+	    this.squeueCollection = squeueCollection;
+	}
 
-    public void setAdditionQueue(Collection<Song> songCollection) {
-        this.additionqueue = songCollection;
-    }
-	/*
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
-    private Songqueue songqueue;
-	public Songqueue getSongqueue() {
-        return songqueue;
-    }
-
-    public void setSongqueue(Songqueue songqueue) {
-        this.songqueue = songqueue;
-    }
-	*/
+	
 }

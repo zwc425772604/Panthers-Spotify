@@ -6,7 +6,7 @@
 package com.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -18,25 +18,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Weichao ZHao
+ * @author HTC
  */
 @Entity
-@Table(name = "squeue", catalog = "panthers", schema = "")
+@Table(name = "squeue")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Squeue.findAll", query = "SELECT s FROM Squeue s")
     , @NamedQuery(name = "Squeue.findByUemail", query = "SELECT s FROM Squeue s WHERE s.squeuePK.uemail = :uemail")
     , @NamedQuery(name = "Squeue.findBySid", query = "SELECT s FROM Squeue s WHERE s.squeuePK.sid = :sid")
-    , @NamedQuery(name = "Squeue.findByAddedTime", query = "SELECT s FROM Squeue s WHERE s.squeuePK.addedTime = :addedTime")})
+    , @NamedQuery(name = "Squeue.findByIsPlay", query = "SELECT s FROM Squeue s WHERE s.isPlay = :isPlay")})
 public class Squeue implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected SqueuePK squeuePK;
-    @JoinColumn(name = "uemail", referencedColumnName = "email", nullable = false, insertable = false, updatable = false)
+    @Column(name = "isPlay")
+    private Boolean isPlay;
+    @JoinColumn(name = "uemail", referencedColumnName = "email", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private User user;
-    @JoinColumn(name = "sid", referencedColumnName = "sid", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "sid", referencedColumnName = "sid", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Song song;
 
@@ -47,8 +49,8 @@ public class Squeue implements Serializable {
         this.squeuePK = squeuePK;
     }
 
-    public Squeue(String uemail, int sid, Date addedTime) {
-        this.squeuePK = new SqueuePK(uemail, sid, addedTime);
+    public Squeue(String uemail, int sid) {
+        this.squeuePK = new SqueuePK(uemail, sid);
     }
 
     public SqueuePK getSqueuePK() {
@@ -57,6 +59,14 @@ public class Squeue implements Serializable {
 
     public void setSqueuePK(SqueuePK squeuePK) {
         this.squeuePK = squeuePK;
+    }
+
+    public Boolean getIsPlay() {
+        return isPlay;
+    }
+
+    public void setIsPlay(Boolean isPlay) {
+        this.isPlay = isPlay;
     }
 
     public User getUser() {
@@ -97,7 +107,7 @@ public class Squeue implements Serializable {
 
     @Override
     public String toString() {
-        return "com.model.Squeue[ squeuePK=" + squeuePK + " ]";
+        return "bad.Squeue[ squeuePK=" + squeuePK + " ]";
     }
     
 }

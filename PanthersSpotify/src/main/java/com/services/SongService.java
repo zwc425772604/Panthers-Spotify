@@ -2,6 +2,7 @@ package com.services;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -9,6 +10,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.model.Album;
 import com.model.Releasesong;
 import com.model.Song;
+import com.model.Squeue;
 import com.model.User;
 
 public interface SongService {
@@ -23,4 +25,11 @@ public interface SongService {
 	public List<Song> getHistorySongs(String userEmail);
 	public List<Song> addHistorySong(Song song,User user,Date date);
 	public List<Song> deleteHistorySong(Song song,User user);
+	public void addSongToQueue(Collection<Squeue> que, int sid, String email);
+	public void addPlaylistToQueue(Collection<Squeue> que, int pid, String email);
+	public Song setNowPlay(Collection<Squeue> que, int sid);
+	public Song nextSongInQueue(Collection<Squeue> que);
+	public Song preSongInQueue(Collection<Squeue> que);
+	public Collection<Squeue> shuffleQueue(Collection<Squeue> que);
+	public Collection<Squeue> removeAllQueue(Collection<Squeue> que, String email);
 }

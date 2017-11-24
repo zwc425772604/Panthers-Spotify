@@ -178,18 +178,7 @@ public class Playlist implements Serializable {
     public void setPowner(User powner) {
         this.powner = powner;
     }
-	/*
-	@OneToMany(mappedBy = "pid")
-    private Collection<Songqueue> songqueueCollection;
-    @XmlTransient
-    public Collection<Songqueue> getSongqueueCollection() {
-        return songqueueCollection;
-    }
-
-    public void setSongqueueCollection(Collection<Songqueue> songqueueCollection) {
-        this.songqueueCollection = songqueueCollection;
-    }
-    */
+	
     @Override
     public int hashCode() {
         int hash = 0;

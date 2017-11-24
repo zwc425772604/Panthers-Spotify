@@ -10,10 +10,6 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.model.Album;
-import com.model.Albumhistory;
-import com.model.Artist;
 import com.model.Followplaylist;
 import com.model.Playlist;
 import com.model.Playlisthistory;

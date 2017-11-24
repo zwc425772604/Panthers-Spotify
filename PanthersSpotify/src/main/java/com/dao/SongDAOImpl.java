@@ -1,11 +1,11 @@
 package com.dao;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -13,12 +13,10 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.model.Album;
-import com.model.Albumhistory;
-import com.model.Playlist;
 import com.model.Releasesong;
 import com.model.Song;
 import com.model.Songhistory;
+import com.model.Squeue;
 import com.model.User;
 
 @Repository("songDAO")
@@ -139,6 +137,37 @@ public class SongDAOImpl implements SongDAO{
 	    	query.setParameter("uemail", userEmail);
 	    	List<Song>	list = (List<Song>)query.getResultList();
 	    	return list;
+	}
+	
+	@Transactional(readOnly=false)
+	public Squeue addSongToQueue(int sid, String email) {
+		Squeue newSq = new Squeue(email,sid);
+		newSq.setIsPlay(false);
+		entityManager.persist(newSq);
+		return newSq;
+	}
+
+
+	@Transactional(readOnly=false)
+	public Song setNowPlay(Collection<Squeue> que, int sid) {
+		for (int i = 0; i<que.size(); i++) {
+			Squeue temp = ((ArrayList<Squeue>) que).get(i);
+			if (temp.getSqueuePK().getSid() == sid) {
+				((ArrayList<Squeue>) que).get(i).setIsPlay(true);
+				entityManager.merge(((ArrayList<Squeue>) que).get(i));
+			}else if(temp.getIsPlay() && temp.getSqueuePK().getSid() != sid) {
+				((ArrayList<Squeue>) que).get(i).setIsPlay(false);
+				entityManager.merge(((ArrayList<Squeue>) que).get(i));
+			}
+		}
+		return getSong(sid);
+		
+	}
+
+	@Transactional(readOnly=false)
+	public int removeAllQueue(String email) {
+		String 	query = "Delete from panthers.squeue where uemail="+email+";";
+		return entityManager.createQuery(query).executeUpdate();		
 	}
 	
 }

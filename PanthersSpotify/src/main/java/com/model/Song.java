@@ -202,16 +202,15 @@ public class Song implements Serializable {
     public void setPlaylistsongCollection(Collection<Playlistsong> playlistsongCollection) {
         this.playlistsongCollection = playlistsongCollection;
     }
-	/*
-	@OneToMany(mappedBy = "nowPlay")
-    private Collection<Songqueue> songqueueCollection;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "song")
+    private Collection<Squeue> squeueCollection;
 	@XmlTransient
-    public Collection<Songqueue> getSongqueueCollection() {
-        return songqueueCollection;
+    public Collection<Squeue> getSqueueCollection() {
+        return squeueCollection;
     }
 
-    public void setSongqueueCollection(Collection<Songqueue> songqueueCollection) {
-        this.songqueueCollection = songqueueCollection;
+    public void setSqueueCollection(Collection<Squeue> squeueCollection) {
+        this.squeueCollection = squeueCollection;
     }
-	*/
 }

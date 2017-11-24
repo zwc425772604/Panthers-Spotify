@@ -1,7 +1,7 @@
 package com.services;
 
 import java.io.File;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.dao.PlaylistDAO;
+import com.model.Album;
 import com.model.Followplaylist;
 import com.model.Playlist;
 import com.model.Playlistsong;
@@ -183,5 +184,23 @@ public class PlaylistServiceImpl implements PlaylistService {
 	public List<Playlist> findRelative(String input)
 	{
 		return PlaylistDAO.findRelative(input);
+	}
+	
+	@Transactional
+	public List<Playlist> getHistoryPlaylists(String userEmail)
+	{
+		return PlaylistDAO.getHistoryPlaylists(userEmail);
+	}
+	
+	@Transactional
+	public List<Playlist> addHistoryPlaylist(Playlist playlist,User user,Date date) {
+		PlaylistDAO.addPlaylistHistory(playlist, user, date);
+		return PlaylistDAO.getHistoryPlaylists(user.getEmail());
+	}
+	
+	@Transactional
+	public List<Playlist> deleteHistoryPlaylist(Playlist playlist,User user) {
+		PlaylistDAO.deletePlaylistHistory(playlist, user);
+		return PlaylistDAO.getHistoryPlaylists(user.getEmail());
 	}
 }

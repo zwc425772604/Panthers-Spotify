@@ -1,17 +1,20 @@
 package com.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.model.Album;
+import com.model.Albumhistory;
 import com.model.Song;
 import com.model.User;
 
@@ -78,4 +81,41 @@ public class AlbumDAOImpl implements AlbumDAO{
 	  	List<Album> result = query1.getResultList();
 	  	return result;
 	  }
+	
+	
+	@Transactional(readOnly=false)
+	public void addAlbumHistory(Album album,User user, Date date) {
+		Albumhistory albumHistroy = new Albumhistory(user.getEmail(),album.getAid());
+		albumHistroy.setCreateDay(date);
+		entityManager.persist(albumHistroy);
+	}
+	
+	@Transactional(readOnly=false)
+	public void deleteAlbumHistory(Album album,User user) {
+		Albumhistory albumHistroy = new Albumhistory(user.getEmail(),album.getAid());
+		if(entityManager.contains(albumHistroy))
+		{
+			entityManager.remove(albumHistroy);
+		}
+	}
+	
+	@Transactional(readOnly=false)
+	public void updateAlbumHistory(Album album,User user,Date date) {
+		Albumhistory albumHistroy = new Albumhistory(user.getEmail(),album.getAid());
+		albumHistroy.setCreateDay(date);
+		entityManager.merge(albumHistroy);
+	}
+	
+	@Transactional(readOnly=true)
+	public List<Album> getHistoryAlbums(String userEmail)
+	{
+		 
+		String queryString = "SELECT a FROM Album a where a.aid in (SELECT f.albumhistoryPK.pid from Albumhistory f where f.albumhistoryPK.uemail=:uemail)";
+	    	Query query = entityManager.createQuery(queryString);
+	    	query.setParameter("uemail", userEmail);
+	    	List<Album>	list = (List<Album>)query.getResultList();
+	    	return list;
+	}
+	
+	
 }

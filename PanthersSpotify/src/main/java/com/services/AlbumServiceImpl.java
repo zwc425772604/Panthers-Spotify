@@ -1,8 +1,8 @@
 package com.services;
 
 import java.io.File;
+import java.sql.Date;
 import java.sql.Time;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,5 +132,25 @@ public class AlbumServiceImpl implements AlbumService {
 	{
 		return albumDAO.findRelative(input);
 	}
+	
+	
+	@Transactional
+	public List<Album> getHistoryAlbums(String userEmail)
+	{
+		return albumDAO.getHistoryAlbums(userEmail);
+	}
+	
+	@Transactional
+	public List<Album> addHistoryAlbum(Album album,User user,Date date) {
+		albumDAO.addAlbumHistory(album, user, date);
+		return albumDAO.getHistoryAlbums(user.getEmail());
+	}
+	
+	@Transactional
+	public List<Album> deleteHistoryAlbum(Album album,User user) {
+		albumDAO.deleteAlbumHistory(album, user);
+		return albumDAO.getHistoryAlbums(user.getEmail());
+	}
+	
 }
 

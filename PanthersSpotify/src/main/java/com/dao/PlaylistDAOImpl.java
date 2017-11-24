@@ -1,16 +1,22 @@
 package com.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.model.Album;
+import com.model.Albumhistory;
+import com.model.Artist;
 import com.model.Followplaylist;
 import com.model.Playlist;
+import com.model.Playlisthistory;
 import com.model.Playlistsong;
 import com.model.User;
 
@@ -105,4 +111,39 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	  	List<Playlist> result = query1.getResultList();
 	  	return result;
 	  }
+	
+	
+	@Transactional(readOnly=false)
+	public void addPlaylistHistory(Playlist playlist,User user, Date date) {
+		Playlisthistory playlistHistroy = new Playlisthistory(user.getEmail(),playlist.getPid());
+		playlistHistroy.setCreateDay(date);
+		entityManager.persist(playlistHistroy);
+	}
+	
+	@Transactional(readOnly=false)
+	public void deletePlaylistHistory(Playlist playlist,User user) {
+		Playlisthistory playlistHistroy = new Playlisthistory(user.getEmail(),playlist.getPid());
+		if(entityManager.contains(playlistHistroy))
+		{
+			entityManager.remove(playlistHistroy);
+		}
+	}
+	
+	@Transactional(readOnly=false)
+	public void updatePlaylistHistory(Playlist playlist,User user,Date date) {
+		Playlisthistory playlistHistroy = new Playlisthistory(user.getEmail(),playlist.getPid());
+		playlistHistroy.setCreateDay(date);
+		entityManager.merge(playlistHistroy);
+	}
+	
+	@Transactional(readOnly=true)
+	public List<Playlist> getHistoryPlaylists(String userEmail)
+	{
+		 
+		String queryString = "SELECT p FROM Playlist p where p.pid in (SELECT f.playlisthistoryPK.pid from Playlisthistory f where f.playlisthistoryPK.uemail=:uemail)";
+	    	Query query = entityManager.createQuery(queryString);
+	    	query.setParameter("uemail", userEmail);
+	    	List<Playlist>	list = (List<Playlist>)query.getResultList();
+	    	return list;
+	}
 }

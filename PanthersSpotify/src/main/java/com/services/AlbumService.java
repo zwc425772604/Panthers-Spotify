@@ -1,6 +1,7 @@
 package com.services;
 
-import java.util.Date;
+
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -16,4 +17,7 @@ public interface AlbumService {
 	public List<Album> getAllAlbums();
 	public List<Album> getTopFollowedAlbum(int numberOfAlbum);
 	public List<Album> findRelative(String input);
+	public List<Album> addHistoryAlbum(Album album,User user,Date date);
+	public List<Album> deleteHistoryAlbum(Album album,User user);
+	public List<Album> getHistoryAlbums(String userEmail);
 }

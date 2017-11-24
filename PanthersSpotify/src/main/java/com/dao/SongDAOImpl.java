@@ -1,19 +1,24 @@
 package com.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.model.Album;
+import com.model.Albumhistory;
 import com.model.Playlist;
 import com.model.Releasesong;
 import com.model.Song;
+import com.model.Songhistory;
 import com.model.User;
 
 @Repository("songDAO")
@@ -102,5 +107,38 @@ public class SongDAOImpl implements SongDAO{
 	  			.setParameter("sid", songId);
 	}
 	
+	@Transactional(readOnly=false)
+	public void addSongHistory(Song song,User user, Date date) {
+		Songhistory songHistroy = new Songhistory(user.getEmail(),song.getSid());
+		songHistroy.setCreateDay(date);
+		entityManager.persist(songHistroy);
+	}
+	
+	@Transactional(readOnly=false)
+	public void deleteSongHistory(Song song,User user) {
+		Songhistory songHistroy = new Songhistory(user.getEmail(),song.getSid());
+		if(entityManager.contains(songHistroy))
+		{
+			entityManager.remove(songHistroy);
+		}
+	}
+	
+	@Transactional(readOnly=false)
+	public void updateSongHistory(Song song,User user,Date date) {
+		Songhistory songHistroy = new Songhistory(user.getEmail(),song.getSid());
+		songHistroy.setCreateDay(date);
+		entityManager.merge(songHistroy);
+	}
+	
+	@Transactional(readOnly=true)
+	public List<Song> getHistorySongs(String userEmail)
+	{
+		 
+		String queryString = "SELECT s FROM Song s where s.sid in (SELECT f.songhistoryPK.pid from Songhistory f where f.songhistoryPK.uemail=:uemail)";
+	    	Query query = entityManager.createQuery(queryString);
+	    	query.setParameter("uemail", userEmail);
+	    	List<Song>	list = (List<Song>)query.getResultList();
+	    	return list;
+	}
 	
 }

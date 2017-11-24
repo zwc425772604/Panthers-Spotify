@@ -2,8 +2,8 @@ package com.services;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.Time;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -138,5 +138,23 @@ public class SongServiceImpl implements SongService{
 	{
 		
 			return SongDAO.getAllSongsByStatus(status);
+	}
+	
+	@Transactional
+	public List<Song> getHistorySongs(String userEmail)
+	{
+		return SongDAO.getHistorySongs(userEmail);
+	}
+	
+	@Transactional
+	public List<Song> addHistorySong(Song song,User user,Date date) {
+		SongDAO.addSongHistory(song, user, date);
+		return SongDAO.getHistorySongs(user.getEmail());
+	}
+	
+	@Transactional
+	public List<Song> deleteHistorySong(Song song,User user) {
+		SongDAO.deleteSongHistory(song, user);
+		return SongDAO.getHistorySongs(user.getEmail());
 	}
 }

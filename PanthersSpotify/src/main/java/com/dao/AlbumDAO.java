@@ -1,8 +1,11 @@
 package com.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.model.Album;
+import com.model.Song;
+import com.model.User;
 
 public interface AlbumDAO {
 	public Album addAlbum(Album Album);
@@ -12,4 +15,8 @@ public interface AlbumDAO {
 	public List<Album> getAlbums();
 	public List<Album> getTopFollowedAlbum(int numberOfAlbum);
 	public List<Album> findRelative(String input);
+	public void addAlbumHistory(Album album,User user, Date date);
+	public void deleteAlbumHistory(Album album,User user);
+	public void updateAlbumHistory(Album album,User user, Date date);
+	public List<Album> getHistoryAlbums(String userEmail);
 }

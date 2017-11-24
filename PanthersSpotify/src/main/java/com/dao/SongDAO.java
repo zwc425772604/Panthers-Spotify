@@ -1,9 +1,11 @@
 package com.dao;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.model.Releasesong;
 import com.model.Song;
+import com.model.User;
 
 public interface SongDAO {
 	public Song addSong(Song Song);
@@ -14,4 +16,8 @@ public interface SongDAO {
 	public List<Song> findRelative(String input);
 	public Releasesong addRelease(Releasesong releaseSong);
 	public List<Releasesong> getAllSongsByStatus(String status);
+	public void addSongHistory(Song song,User user, Date date) ;
+	public void deleteSongHistory(Song song,User user);
+	public void updateSongHistory(Song song,User user, Date date);
+	public List<Song> getHistorySongs(String userEmail);
 }

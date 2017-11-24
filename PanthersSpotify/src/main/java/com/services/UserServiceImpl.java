@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
 		user.setFirstName(firstName);
 		user.setMiddleName(middleName);
 		user.setLastName(lastName);
+		user.setPublic(true);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd yyyy hh:mm:ss", Locale.US);
 		Date parsedBirthday = null;
 	    try { 
@@ -65,7 +66,7 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 	@Transactional
-	public User updateUser(User user, String username, int utype,char gender,String firstName, String lastName) {
+	public User updateUser(User user, String username, int utype,char gender,String firstName, String lastName,boolean isPublic) {
 		
 		System.out.println("Cusomer Service Update invoked:"+username);
 		//User User  = new User();
@@ -74,6 +75,7 @@ public class UserServiceImpl implements UserService {
 		user.setGender(gender);
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
+		user.setPublic(isPublic);
 		user = UserDAO.updateUser(user);
 		return user;
 	}

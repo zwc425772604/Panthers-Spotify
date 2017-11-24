@@ -278,7 +278,9 @@ public class servletController {
 		   String firstName = request.getParameter("firstName");
 		   //String middleName = request.getParameter("middleName"); Do we have to have middle name??????
 		   String lastName = request.getParameter("lastName");
-		   user = userService.updateUser(user,user.getUname(),user.getUtype(), gender, firstName, lastName);
+		   //String iPublic = request.getParameter("isPublic"); need this button
+		   boolean isPublic = true;
+		   user = userService.updateUser(user,user.getUname(),user.getUtype(), gender, firstName, lastName,isPublic);
 
 		   session.setAttribute("user", user);
 		   mav.setViewName("main");

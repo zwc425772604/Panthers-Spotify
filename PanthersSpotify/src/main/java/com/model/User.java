@@ -113,7 +113,7 @@ public class User implements Serializable {
         this.dob = dob;
     }
 
-		@Column(name = "utype")
+	@Column(name = "utype")
     private Integer utype;
     public Integer getUtype() {
         return utype;
@@ -121,11 +121,20 @@ public class User implements Serializable {
     public void setUtype(Integer utype) {
         this.utype = utype;
     }
+    
+    @Column(name = "isPublic")
+    private boolean isPublic;
+    public boolean getPublic() {
+        return isPublic;
+    }
+    public void setPublic(boolean isPublic) {
+        this.isPublic = isPublic;
+    }
 
 
-		@Column(name = "upgradDate")
-		@Temporal(TemporalType.DATE)
-		private Date upgradDate;
+	@Column(name = "upgradDate")
+	@Temporal(TemporalType.DATE)
+	private Date upgradDate;
     public Date getUpgradDate() {
         return upgradDate;
     }
@@ -367,7 +376,7 @@ public class User implements Serializable {
     public void setAdditionQueue(Collection<Song> songCollection) {
         this.additionqueue = songCollection;
     }
-	
+	/*
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Songqueue songqueue;
 	public Songqueue getSongqueue() {
@@ -377,5 +386,5 @@ public class User implements Serializable {
     public void setSongqueue(Songqueue songqueue) {
         this.songqueue = songqueue;
     }
-	
+	*/
 }

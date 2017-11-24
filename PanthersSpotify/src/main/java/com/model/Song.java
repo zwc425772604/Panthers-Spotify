@@ -202,7 +202,7 @@ public class Song implements Serializable {
     public void setPlaylistsongCollection(Collection<Playlistsong> playlistsongCollection) {
         this.playlistsongCollection = playlistsongCollection;
     }
-	
+	/*
 	@OneToMany(mappedBy = "nowPlay")
     private Collection<Songqueue> songqueueCollection;
 	@XmlTransient
@@ -213,5 +213,5 @@ public class Song implements Serializable {
     public void setSongqueueCollection(Collection<Songqueue> songqueueCollection) {
         this.songqueueCollection = songqueueCollection;
     }
-
+	*/
 }

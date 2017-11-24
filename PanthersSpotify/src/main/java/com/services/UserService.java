@@ -7,7 +7,7 @@ import com.model.User;
 
 public interface UserService {
 	public User addUser(String username, String email,String encPwd,int utype,char gender,String firstName, String middleName, String lastName, String dob);
-	public User updateUser(User user, String username, int utype,char gender,String firstName, String lastName);
+	public User updateUser(User user, String username, int utype,char gender,String firstName, String lastName,boolean isPublic);
 	public void removeUser(User user);
 	public User getUser(String email);
 	public boolean isEmailRegistered(String email);

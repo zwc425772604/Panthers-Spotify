@@ -480,27 +480,25 @@ public class servletController {
 		return "ok";
 	}
 
-	// Servlet
-	@RequestMapping(value = "/search", method = RequestMethod.POST)
-	public ModelAndView search(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		System.out.println("search");
-		User user = (User) session.getAttribute("user");
-		String input = request.getParameter("input");
-		List<Playlist> retPlaylist = playlistService.findRelative(input);
-		if (retPlaylist.isEmpty()) {
-			System.out.println("playlist is empty");
+	@RequestMapping(value="/search", method = RequestMethod.POST)
+		public @ResponseBody String  search(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+			User user = (User)session.getAttribute("user");
+			String input = request.getParameter("input");
+			List<Playlist> retPlaylist = playlistService.findRelative(input);		
+			List<Song> retSong = songService.findRelative(input);		
+			List<Album> retAlbum = albumService.findRelative(input);
+			String searchJson;
+			if((retPlaylist.isEmpty() && retSong.isEmpty() && retAlbum.isEmpty())){
+				searchJson = "empty";
+			}
+			else if(input.length() == 0) {
+				searchJson = "";
+			}
+			else {
+				searchJson = JSONHelper.searchToJSON(retSong, retAlbum, retPlaylist);
+			}
+			return searchJson;
 		}
-		List<Song> retSong = songService.findRelative(input);
-		if (retPlaylist.isEmpty()) {
-			System.out.println("song is empty");
-		}
-		List<Album> retAlbum = albumService.findRelative(input);
-		if (retPlaylist.isEmpty()) {
-			System.out.println("album is empty");
-		}
-		mav.setViewName("index");
-		return mav;
-	}
 
 	// admin action, add artist
 	@RequestMapping(value = "/addArtistToDatabase", method = RequestMethod.POST)

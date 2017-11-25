@@ -395,7 +395,6 @@ public class servletController {
 		session.setAttribute("selectedFriend", user);
 		return "ok";
 	}
-
 	@RequestMapping(value = "/followSpecificPlaylist", method = RequestMethod.POST)
 	public @ResponseBody String followSpecificPlaylist(HttpServletRequest request, HttpSession session) {
 		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
@@ -645,14 +644,15 @@ public class servletController {
 		session.setAttribute("squeue", que);
 		return "ok";
 	}
-	
-	    @RequestMapping(value="/getSpecificAlbum", method = RequestMethod.POST)
-	    public @ResponseBody String getSpecificAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-	 	    String albumIDString = request.getParameter("albumID");
-	 	    int albumID = Integer.parseInt(albumIDString);
-	 	    Album album = albumService.getAlbum(albumID);
-	 	    session.setAttribute("selectedAlbum",album);
-	    	return "ok";
-	    }
+
+    @RequestMapping(value="/getSpecificAlbum", method = RequestMethod.POST)
+    public @ResponseBody String getSpecificAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+ 	    String albumIDString = request.getParameter("albumID");
+ 	    int albumID = Integer.parseInt(albumIDString);
+ 	    Album album = albumService.getAlbum(albumID);
+ 	    session.setAttribute("selectedAlbum",album);
+    	return "ok";
+    }
 
 }
+

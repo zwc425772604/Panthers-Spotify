@@ -224,6 +224,232 @@ function displayAccount(){
 	$("#main-changing-content").load("jsp/account.jsp");
 }
 
+$(document).ready(function(){
+//hide all other containers in <div id= 'middle-content'> beside except overview_container
+//$("#overview_container").siblings().hide();
+	//Loading Friend List for the user
+	$.ajax({
+        url: "${cp}/../getUserFriendList",
+        type: "POST",
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+          //Template
+          //var photoUrl = response.url
+          //var playlistName = playlistName
+
+        },
+        error: function(e)
+        {
+          console.log(e);
+        }
+	});
+
+	//Loading top followed playlist
+	$.ajax({
+        url: "${cp}/../getOverviewPlaylist",
+        type: "POST",
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+          //Template
+          //var photoUrl = response.url
+          //var playlistName = playlistName
+          //var playlistDesc = playlistDesc
+          $("#main-changing-content").load("jsp/browse.jsp");
+        },
+        error: function(e)
+        {
+          console.log(e);
+        }
+	});
+
+	$(".playlist-item").click(function(){
+		var pid = $(".playlist_id", this).text(); //get the pid of the playlist
+		  $.ajax({
+	          url: "${cp}/../getSpecificPlaylist",
+	          type: "POST",
+	          data : {"playlist_id" : pid },
+	          asyn: true,
+	          cache: true,
+	          success : function(response)
+	          {
+	            console.log(response);
+	            $("#main-changing-content").load("jsp/playlist.jsp");
+	          },
+	          error: function(e)
+	          {
+	            console.log(e);
+	          }
+		  });
+	});
+
+	$("#new_playlist_button").click(function(){
+	 	 $('#dialog').dialog({
+	          //autoOpen: true,
+	          height: 400,
+	          width: 450,
+	          modal: true,
+	          resizable: false,
+	          color: black,
+	          //closeOnEscape: false,
+	          //open: function(event, ui) { $(".ui-dialog-titlebar-close", ui).hide(); }
+	          //closeOnEscape: false,
+	          //beforeclose: function (event, ui) { return false; },
+	          dialogClass: 'no-close'
+	     });
+	  //     window.open("browse.jsp","_blank");
+	});
+
+	$("#addFriendButton").click(function(){
+	 	 $('#addFriendDialog').dialog({
+	          //autoOpen: true,
+	          height: 550,
+	          width: 450,
+	          modal: true,
+	          resizable: false,
+	          dialogClass: 'no-close'
+	     });
+	});
+	
+	$("#ad-close").click(function(){
+		$("#advertisement").hide();
+	})
+	
+	$("#findFriend").click(function(){	
+		var username = $(".addFriendUsername",this).text();
+		$.ajax({
+	        url: "${cp}/../findFriend",
+	        type: "POST",
+	        data : {"username" : username },
+	        asyn: true,
+	        cache: true,
+	        success : function(response)
+	        {
+	          console.log(response);
+	          $("#main-changing-content").load("jsp/userPage.jsp");
+	        },
+	        error: function(e)
+	        {                	
+	          console.log(e);                 	
+	        }       
+		  });
+	});
+});
+
+
+$(document).on("click", ".right-col-friends-name", function(){
+		var username = $(".right-col-friends-name", this).text(); //get the pid of the playlist
+		var email = $(".friends-email",this).text();
+		  $.ajax({
+	        url: "${cp}/../getUserPage",
+	        type: "POST",
+	        data : {"username" : username, "userEmail" : email },
+	        asyn: true,
+	        cache: true,
+	        success : function(response)
+	        {
+	          console.log(response);
+	          $("#main-changing-content").load("jsp/userPage.jsp");
+	        },
+	        error: function(e)
+	        {
+	          console.log(e);
+	        }
+		  });
+});
+
+$(document).on("click", ".playlist-item", function(){
+	var pid = $(".playlist_id", this).text(); //get the pid of the playlist
+	  $.ajax({
+        url: "${cp}/../getSpecificPlaylist",
+        type: "POST",
+        data : {"playlist_id" : pid },
+        asyn: true,
+        cache: true,
+        success : function(response)
+        {
+          console.log(response);
+          $("#main-changing-content").load("jsp/playlist.jsp");
+        },
+        error: function(e)
+        {
+          console.log(e);
+        }
+	  });
+});
+
+
+
+
+function displayLeftNavbarContent(nav_name)
+{
+    //compare the string
+	if (nav_name.localeCompare('browse') == 0)
+	{
+	  $("#main-changing-content").load("jsp/browse.jsp");
+	}
+	else if (nav_name.localeCompare('albums') == 0)
+	{
+		$.ajax({
+	        url: "${cp}/../loadAlbum",
+	        type: "POST",
+	        asyn: false,
+	        cache: true,
+	        success : function(response)
+	        {
+	          console.log(response);
+	        },
+	        error: function(e)
+	        {
+
+	          console.log(e);
+	        }
+	      });
+	   $("#main-changing-content").load("jsp/album.jsp");
+	}
+	else if (nav_name.localeCompare('artists') == 0)
+	{		
+		$("#main-changing-content").load("jsp/artist.jsp");
+	   
+	}
+	else if (nav_name.localeCompare('recently_played') == 0)
+	{
+		   $("#main-changing-content").load("jsp/recentlyPlayed.jsp");
+		}
+	else if (nav_name.localeCompare('songs') == 0)
+	{
+
+		$.ajax({
+	        url: "${cp}/../loadSong",
+	        type: "POST",
+	        asyn: false,
+	        cache: true,
+	        success : function(response)
+	        {
+	          console.log(response);
+	          $("#main-changing-content").load("jsp/songs.jsp");
+	        },
+	        error: function(e)
+	        {
+
+	          console.log(e);
+	        }
+	      });
+		
+	}
+	else
+	{
+	   $("#main-changing-content").load("jsp/overview.jsp");
+	    }
+}
+
+function displayAccount(){
+	$("#main-changing-content").load("jsp/account.jsp");
+}
+
 function displayUserAccount(){
 	$("#main-changing-content").load("jsp/userAccount.jsp");
 }
@@ -402,4 +628,9 @@ function volumeMute(data){
 		$("#rangeinput").val(0);
 	}
 	
+}
+
+function search()
+{
+	$("#main-changing-content").load("jsp/search.jsp");	
 }

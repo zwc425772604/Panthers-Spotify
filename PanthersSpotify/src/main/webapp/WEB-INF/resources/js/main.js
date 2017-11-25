@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
 //hide all other containers in <div id= 'middle-content'> beside except overview_container
 //$("#overview_container").siblings().hide();
@@ -64,10 +63,11 @@ $(document).ready(function(){
 	$("#new_playlist_button").click(function(){
 	 	 $('#dialog').dialog({
 	          //autoOpen: true,
-	          height: 550,
+	          height: 400,
 	          width: 450,
 	          modal: true,
 	          resizable: false,
+	          color: black,
 	          //closeOnEscape: false,
 	          //open: function(event, ui) { $(".ui-dialog-titlebar-close", ui).hide(); }
 	          //closeOnEscape: false,
@@ -401,24 +401,5 @@ function volumeMute(data){
 		muted = true;
 		$("#rangeinput").val(0);
 	}
+	
 }
-
-//not finish
-$(document).on("click", ".playbar-prev-button", function(){	
-	$.ajax({
-		url: "${cp}/../preSong",
-        type: "POST",
-        asyn: false,
-        cache: true,
-        success : function(response)
-        {
-          console.log(response);
-        },
-        error: function(e)
-        {
-
-          console.log(e);
-        }
-      });
-});
-

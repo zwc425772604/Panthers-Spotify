@@ -47,7 +47,7 @@ public class AlbumDAOImpl implements AlbumDAO{
 	@Transactional(readOnly=true)
 	public Album getAlbum(int AlbumId) {
 		
-		TypedQuery<Album> query1 = entityManager.createNamedQuery("User.findByAid", Album.class)
+		TypedQuery<Album> query1 = entityManager.createNamedQuery("Album.findByAid", Album.class)
 				.setParameter("aid", AlbumId);
 
 		List<Album> results = query1.getResultList();

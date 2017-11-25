@@ -1,8 +1,11 @@
 package com.services;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.model.Artist;
+import com.model.Playlist;
+import com.model.Squeue;
 import com.model.User;
 
 public interface UserService {
@@ -21,4 +24,5 @@ public interface UserService {
 	public void followArtist(String artistEmail,User user);
 	public void unfollowArtist(String artistEmail,User user);
 	public List<Artist> getFollowArtists(User user);
+	public Collection<Squeue> getQueue(String email);
 }

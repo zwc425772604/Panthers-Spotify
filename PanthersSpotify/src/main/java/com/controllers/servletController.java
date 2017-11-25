@@ -3,6 +3,7 @@ package com.controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,6 +31,7 @@ import com.helper.JSONHelper;
 import com.helper.Security;
 import com.model.Album;
 import com.model.Song;
+import com.model.Squeue;
 import com.model.Playlist;
 import com.model.Releasesong;
 import com.model.ReleasesongPK;
@@ -75,8 +77,8 @@ public class servletController {
 		   String password = Security.encryptPassword(nonEncPwd);
 
 		   User user = userService.getUser(email);
-	      System.out.println("user is "+user.getFirstName());
-
+	       System.out.println("user is "+user.getFirstName());
+	       
 	       //case 0: if the email is not registered
 	       if (user.equals(null))
 	       {
@@ -88,6 +90,9 @@ public class servletController {
 	       else if (user.getUpassword().equals(password))
 	       {
 	    	   session.setAttribute("user", user);
+	    	   user.setSqueueCollection(userService.getQueue(email));
+	    	   Collection<Squeue> que = user.getSqueueCollection();
+	    	   session.setAttribute("Squeue", que);	    	   
 	    	   //user page
 	    	   if (user.getUtype() == 0)
 	    	   {
@@ -112,7 +117,6 @@ public class servletController {
 	           mav.addObject("error_message", "Incorrect email or password!");
 	           mav.setViewName("index");
 	       }
-	       System.out.println("here");
 	       return mav;
 	   }
 
@@ -602,3 +606,4 @@ public class servletController {
 	    }
 
 }
+

@@ -246,9 +246,36 @@ public class SongServiceImpl implements SongService{
 	public Collection<Squeue> removeAllQueue(Collection<Squeue> que, String email) {
 		int count = songDAO.removeAllQueue(email);
 		if (count==que.size()) {
-			que = new ArrayList<Squeue>();
-			return que;
+			return null;
 		}else
-			return que;
+			return null;
+	}
+	
+	@Transactional
+	public Song getNowPlay(Collection<Squeue> que) {
+		Iterator<Squeue> it = (Iterator<Squeue>)que.iterator();
+		while(it.hasNext()) {
+			Squeue temp = (Squeue)it.next();
+			if (temp.getIsPlay()) {
+				return temp.getSong();
+			}
+		}
+		return null;
+	}
+	
+	@Transactional
+	public Collection<Squeue> nextUp(Collection<Squeue> que) {
+		Collection<Squeue> collection = new ArrayList<Squeue>();
+		Iterator<Squeue> it = (Iterator<Squeue>)que.iterator();
+		while(it.hasNext()) {
+			Squeue temp = (Squeue)it.next();
+			if (temp.getIsPlay()) {
+				while(it.hasNext()) {
+					Squeue next = (Squeue)it.next();
+					collection.add(next);
+				}
+			}
+		}
+		return collection;
 	}
 }

@@ -9,24 +9,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--CSS ref-->
-
-  <link rel="stylesheet" href="${cp}/resources/css/bootstrap.css">
+    <link rel="stylesheet" href="${cp}/resources/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <!--js ref-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-   <script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>
+    <script src="
+    <c:url value="/resources/js/bootstrap.min.js" />
+    "></script>
     <script src="https://www.w3schools.com/lib/w3.js"></script> <!-- for include html in div tag -->
-   
-     <script src="${cp}/resources/js/main.js" /></script>
+    <script src="${cp}/resources/js/main.js" /></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-    $(document).on("click", "#playbar-queue-button", function () {
-    	$("#main-changing-content").load("jsp/queue.jsp");
-    });
+      $(document).on("click", "#playbar-queue-button", function () {
+      	$("#main-changing-content").load("jsp/queue.jsp");
+      });
     </script>
     <%-- <link href="<c:url value="/WEB-INF/resources/css/custom.css" />" rel="stylesheet"> --%>
     <%-- <style><%@include file="/WEB-INF/resources/css/custom.css"%></style> --%>
@@ -36,7 +36,7 @@
     <div class="container-fluid">
       <div class="row">
         <nav class="sidebar" id="left-sidebar">
-       		 <%@ include file = "leftSidebar.jsp" %>
+          <%@ include file = "leftSidebar.jsp" %>
         </nav>
         <!--Main Page-->
         <main class="main-page">
@@ -44,29 +44,26 @@
           <div class="scrolled-main" id="style-1">
             <!--Top Tool Section-->
             <div class ="row" id="top-tool">
-              
               <div class="col-sm-3 col-sm-offset-3" id="top-tool-search">
                 <div class="input-group stylish-input-group"  id="top-tool-search">
                   <form:form action="search" method="POST">
-                	<div class="row" >
-	                  <input type="text" class="w3-input" style="width: 75%;" placeholder="Search" name="search">
-	                  <span class="input-group-addon">
-	                  <button type="submit">
-	                  <i class="fa fa-search" aria-hidden="true" ></i>
-	                  </button>
-	                  </span>
-                  	</div>
+                    <div class="row" >
+                      <input type="text" class="w3-input" style="width: 75%;" placeholder="Search" name="search">
+                      <span class="input-group-addon">
+                      <button type="submit">
+                      <i class="fa fa-search" aria-hidden="true" ></i>
+                      </button>
+                      </span>
+                    </div>
                   </form:form>
                 </div>
               </div>
               <p id="private-session">Private Session:</p>
               <label class="switch">
-				<input type="checkbox" checked>
-				<span class="slider round"></span>
-		      </label>
-              
+              <input type="checkbox" checked>
+              <span class="slider round"></span>
+              </label>
               <div id="top-tool-upgrade-and-user">
-
                 <div class="w3-dropdown-hover">
                   <button class="w3-button w3-black" id="top-tool-profile">
                   <img width=25px height=25px class="rounded-circle" alt="Generic placeholder thumbnail" id="dropdown-img"  src="http://orig05.deviantart.net/f239/f/2011/089/3/3/jack_skellington_facebook_icon_by_valashard-d3cu1bt.jpg">
@@ -88,17 +85,17 @@
             <!-- closed tag for scrolled-main -->
           </div>
           <c:choose>
-	          <c:when test="${user.utype == 0}">
-		          <div id="advertisement">
-		          <button id="ad-close"><i class="fa fa-times-circle" aria-hidden="true" style="margin-right: 10%;"></i></button>
-		            <img height="100em" src="http://dsim.in/blog/wp-content/uploads/2017/01/samsung2.jpg">
-		          </div>
-	          </c:when>
+            <c:when test="${user.utype == 0}">
+              <div id="advertisement">
+                <button id="ad-close"><i class="fa fa-times-circle" aria-hidden="true" style="margin-right: 10%;"></i></button>
+                <img height="100em" src="http://dsim.in/blog/wp-content/uploads/2017/01/samsung2.jpg">
+              </div>
+            </c:when>
           </c:choose>
         </main>
         <!--Right Most Column-->
         <div id="right-col">
-        	<%@ include file = "rightSidebar.jsp" %>
+          <%@ include file = "rightSidebar.jsp" %>
         </div>
       </div>
     </div>

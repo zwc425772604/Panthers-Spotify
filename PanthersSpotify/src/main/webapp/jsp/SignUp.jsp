@@ -48,7 +48,7 @@
             return -1;
           }
       }
-
+      
       function validateFormInputs()
       {
         var email = $("#email").val();
@@ -102,12 +102,12 @@
               $("#signup_message").css("color","red");
               $("#signup_message").text("duplicate username");
             }
-
+      
           });
         }
         else
         {
-
+      
           if (password_matched == 0)
           {
             $("#password_error").text("");
@@ -132,9 +132,9 @@
           {
           	$("#email_error").text("Emails do not match");
           }
-
+      
         }
-
+      
       }
     </script>
   </head>

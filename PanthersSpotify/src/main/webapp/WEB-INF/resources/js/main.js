@@ -64,10 +64,11 @@ $(document).ready(function(){
 	$("#new_playlist_button").click(function(){
 	 	 $('#dialog').dialog({
 	          //autoOpen: true,
-	          height: 550,
+	          height: 400,
 	          width: 450,
 	          modal: true,
 	          resizable: false,
+	          color: black,
 	          //closeOnEscape: false,
 	          //open: function(event, ui) { $(".ui-dialog-titlebar-close", ui).hide(); }
 	          //closeOnEscape: false,

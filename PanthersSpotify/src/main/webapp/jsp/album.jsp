@@ -1,5 +1,6 @@
 <!--  Container for DISCOVER -->
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
 <script src="${cp}/resources/js/album.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -50,12 +51,26 @@
   <div class="line"></div>
   <!-- Saved albums section -->
   <section class="row placeholders" id = "infoContainer">
-	  <c:if test="${not empty album_list}">
-	     <c:forEach var="album" items="${album_list}">
-		    <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
-		      <div class = "hover-control album-item">
-		        <img src="https://s.discogs.com/images/default-release-cd.png" width=100% height=width class="img-rounded info-image" alt="Generic placeholder thumbnail">
-		        <!-- this div display when hover on the image of album/artist -->
+    <c:if test="${not empty album_list}">
+	  <c:forEach var="album" items="${album_list}">
+        <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
+		  <div class="hover-control album-item">
+		    <img src="https://s.discogs.com/images/default-release-cd.png" width=100% height=width class="img-rounded info-image" alt="Generic placeholder thumbnail">
+		    <span class="album-ID" style="display: none;">${album.aid}</span>
+		  </div>
+		  <div class="album-item medium-boxes-description">
+		      <h6>
+		        <a href="#"><span id = "album-name">${album.aname}</span></a>
+		        <span class="album-ID" style="display: none;">${album.aid}</span>
+		      </h6>
+		    <h6><a href="#"> <span id = "artist_name">${album.des}</span></a> </h6>
+		  </div>
+	    </div>
+	  </c:forEach>
+    </c:if>
+  </section>
+</div>
+<!-- this div display when hover on the image of album/artist -->
 		        <!--  <div class = "hover-buttons" style="display:none;">
 		          <ul class="left_sizebar">
 		            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add User"  id="playbar-prev-button"><i class="material-icons">add</i></button></li>
@@ -63,18 +78,3 @@
 		            <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete User" id="playbar-play-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
 		          </ul>
 		        </div>-->
-		      </div>
-		      <div class="album-item medium-boxes-description">
-		        <h6><a href="#">
-		          <span id = "album-name">${album.aname}</span></a>
-		          <span id = "album-ID" style="display: none;">${album.aid}</span>
-		        </h6>
-		        <h6><a href="#"> <span id = "artist_name">${album.des}</span></a> </h6>
-		      </div>
-		    </div>
-	   </c:forEach>
-    </c:if>
-    
-
-  </section>
-</div>

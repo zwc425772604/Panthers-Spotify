@@ -4,7 +4,9 @@ $(document).ready(function(){
 
 
 $(document).on("click", ".album-item", function(){
-	var albumId = $("#album-ID", this).text(); //get the pid of the playlist
+	var albumId = $(".album-ID", this).text(); //get the pid of the playlist
+	console.log(albumId);
+	
 	  $.ajax({
         url: "${cp}/../getSpecificAlbum",
         type: "POST",
@@ -13,7 +15,7 @@ $(document).on("click", ".album-item", function(){
         cache: true,
         success : function(response)
         {
-          $("#main-changing-content").load("jsp/artistInfo.jsp");
+          $("#main-changing-content").load("jsp/albumInfo.jsp");
         },
         error: function(e)
         {

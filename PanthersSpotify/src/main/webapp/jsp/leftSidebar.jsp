@@ -45,8 +45,7 @@ $(document).ready(function(){
               <button  class="unstyle-buttons btn btn-info btn-lg " id="new_playlist_button" style="width: auto;" >
               <i class="fa fa-plus" aria-hidden="true" style="margin-right: 10%;"></i>New Playlist</button>
             </li>
-            <div id="dialog" title="Create Playlist" style="display:none;">
-            
+            <div id="dialog" title="Create Playlist" style="display:none; color:black;">           
               <!-- create playlist -->
               <form:form action="createPlaylist" method="POST" enctype="multipart/form-data" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
                 <div class="w3-row w3-section">
@@ -61,11 +60,11 @@ $(document).ready(function(){
                     <input class="w3-input w3-border" type="file" name="file">
                   </div>
                 </div>
-                <div class="w3-row w3-section">
+                <!--<div class="w3-row w3-section">
                   <div class="w3-rest">
                     <img src ="https://pbs.twimg.com/profile_images/1642161716/music_logo.png" class="img-responsive" width="200px" height="200px">
                   </div>
-                </div>
+                </div>-->
                 <div class="w3-row w3-section">
                   <div class="w3-col" style="width:30px"><span style="font-size: 1.2em">Description</span></div>
                   <div class="w3-col" style="width:30px; float:right; margin-right: 30px;"><span style="font-size: 1.2em">1/100</span></div>

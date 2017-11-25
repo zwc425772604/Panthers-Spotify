@@ -21,7 +21,7 @@
       	<div class="albumInfoBoxes" style="width:70%">
       		<div id ="albumInfo" style="margin-top: 4%; margin-left:5%;">
       			<h5> Album Page </h5>
-          		<p style="font-size: 1.8em;"><c:out value="${selectedAlbum.uname}"></c:out>  </p>          		
+          		<p style="font-size: 1.8em;"><c:out value="${selectedAlbum.aname}"></c:out>  </p>          		
           		<div class="col-md-5" style="display:inline;">		            		            
 		        </div>
       		</div>

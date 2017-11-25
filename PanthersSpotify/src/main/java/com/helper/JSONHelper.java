@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.model.Album;
 import com.model.Playlist;
 import com.model.Song;
 import com.model.User;
@@ -100,11 +101,43 @@ public class JSONHelper {
 			jsonObject.put("songTitle", s.getStitle());
 			jsonObject.put("songGenre", s.getGener());
 			jsonObject.put("songArtist", map.get(sid));
-			arr.put(jsonObject);
+			
 		}
 		return arr.toString();
 	}
-
+	
+	public static String searchToJSON(List<Song> songs, List<Album> albums, List<Playlist> playlists) throws JSONException
+	{
+		JSONArray arr = new JSONArray();
+		JSONObject jsonObject;
+		JSONArray songArr = new JSONArray();
+		for(Song s : songs)
+		{
+			jsonObject = new JSONObject();
+			int sid = s.getSid();
+			jsonObject.put("songID", sid);
+			jsonObject.put("songTitle", s.getStitle());
+			songArr.put(jsonObject);
+		}		
+		arr.put(songArr);
+		JSONArray albumArr = new JSONArray();
+		for(Album a : albums)
+		{
+			jsonObject = new JSONObject();
+			jsonObject.put("albumTitle", a.getAname());
+			albumArr.put(jsonObject);
+		}
+		arr.put(albumArr);
+		JSONArray playlistArr = new JSONArray();
+		for(Playlist p :playlists)
+		{
+			jsonObject = new JSONObject();
+			jsonObject.put("playlistTitle", p.getPname());
+			playlistArr.put(jsonObject);
+		}
+		arr.put(playlistArr);
+		return arr.toString();
+	}
 
 
 }

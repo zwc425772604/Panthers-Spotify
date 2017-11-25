@@ -67,7 +67,7 @@ public class SongDAOImpl implements SongDAO{
 	public List<Song> findRelative(String input)
 	  {
 	  	  
-	  	TypedQuery<Song> query1 = entityManager.createNamedQuery("SELECT s from Song s WHERE s.stitle LIKE LOWER(CONCAT(:searchTerm, '%'))", Song.class)
+	  	TypedQuery<Song> query1 = entityManager.createQuery("SELECT s from Song s WHERE s.stitle LIKE LOWER(CONCAT(:searchTerm, '%'))", Song.class)
 	       		.setParameter("searchTerm", input);
 	  	List<Song> result = query1.getResultList();
 	  	return result;

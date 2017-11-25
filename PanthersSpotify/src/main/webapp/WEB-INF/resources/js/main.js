@@ -404,3 +404,8 @@ function volumeMute(data){
 	}
 	
 }
+
+function search()
+{
+	$("#main-changing-content").load("jsp/search.jsp");	
+}

@@ -45,17 +45,15 @@
             <!--Top Tool Section-->
             <div class ="row" id="top-tool">
               <div class="col-sm-3 col-sm-offset-3" id="top-tool-search">
-                <div class="input-group stylish-input-group"  id="top-tool-search">
-                  <form:form action="search" method="POST">
-                    <div class="row" >
-                      <input type="text" class="w3-input" style="width: 75%;" placeholder="Search" name="search">
-                      <span class="input-group-addon">
-                      <button type="submit">
-                      <i class="fa fa-search" aria-hidden="true" ></i>
-                      </button>
-                      </span>
-                    </div>
-                  </form:form>
+                <div class="input-group stylish-input-group"  id="top-tool-search">                  
+                  <div class="row" >
+                    <input type="text" class="w3-input" style="width: 75%;" placeholder="Search" name="search" id="search">
+                    <span class="input-group-addon">
+                    <button type="submit" onclick="search()">
+                    <i class="fa fa-search" aria-hidden="true" ></i>
+                    </button>
+                    </span>
+                  </div>
                 </div>
               </div>
               <p id="private-session">Private Session:</p>

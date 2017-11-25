@@ -76,13 +76,12 @@ public class AlbumDAOImpl implements AlbumDAO{
 	public List<Album> findRelative(String input)
 	  {
 	  	  
-	  	TypedQuery<Album> query1 = entityManager.createNamedQuery("SELECT s from Album s WHERE s.aname LIKE LOWER(CONCAT(:searchTerm, '%'))", Album.class)
+	  	TypedQuery<Album> query1 = entityManager.createQuery("SELECT s from Album s WHERE s.aname LIKE LOWER(CONCAT(:searchTerm, '%'))", Album.class)
 	       		.setParameter("searchTerm", input);
 	  	List<Album> result = query1.getResultList();
 	  	return result;
 	  }
-	
-	
+		
 	@Transactional(readOnly=false)
 	public void addAlbumHistory(Album album,User user, Date date) {
 		Albumhistory albumHistroy = new Albumhistory(user.getEmail(),album.getAid());

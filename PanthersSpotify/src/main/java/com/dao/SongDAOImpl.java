@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -143,7 +144,11 @@ public class SongDAOImpl implements SongDAO{
 	public Squeue addSongToQueue(int sid, String email) {
 		Squeue newSq = new Squeue(email,sid);
 		newSq.setIsPlay(false);
-		entityManager.persist(newSq);
+		try {
+			entityManager.persist(newSq);
+		}catch (Exception e){
+			return null;
+		}
 		return newSq;
 	}
 
@@ -166,8 +171,10 @@ public class SongDAOImpl implements SongDAO{
 
 	@Transactional(readOnly=false)
 	public int removeAllQueue(String email) {
-		String 	query = "Delete from panthers.squeue where uemail="+email+";";
-		return entityManager.createQuery(query).executeUpdate();		
+		Query query = entityManager.createNamedQuery("Squeue.deleteByUemail").setParameter("uemail", email);
+		//query.setParameter("uemail", email);
+		int count = query.executeUpdate();
+		return count;
+		//return query.executeUpdate();		
 	}
-	
 }

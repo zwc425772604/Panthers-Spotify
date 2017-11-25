@@ -27,9 +27,11 @@ public interface SongService {
 	public List<Song> deleteHistorySong(Song song,User user);
 	public void addSongToQueue(Collection<Squeue> que, int sid, String email);
 	public void addPlaylistToQueue(Collection<Squeue> que, int pid, String email);
+	public Song getNowPlay(Collection<Squeue> que);
 	public Song setNowPlay(Collection<Squeue> que, int sid);
 	public Song nextSongInQueue(Collection<Squeue> que);
 	public Song preSongInQueue(Collection<Squeue> que);
 	public Collection<Squeue> shuffleQueue(Collection<Squeue> que);
 	public Collection<Squeue> removeAllQueue(Collection<Squeue> que, String email);
+	public Collection<Squeue> nextUp(Collection<Squeue> que);
 }

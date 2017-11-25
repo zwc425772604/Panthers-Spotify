@@ -1,6 +1,7 @@
 package com.dao;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -18,6 +19,7 @@ import com.model.Followartist;
 import com.model.Followplaylist;
 import com.model.Friend;
 import com.model.Playlist;
+import com.model.Squeue;
 import com.model.User;
 
 @Repository("userDAO")
@@ -135,6 +137,14 @@ public class UserDAOImpl implements UserDAO{
 	    	query.setParameter("uemail", userEmail);
 	    	List<Artist>	list = (List<Artist>)query.getResultList();
 	    	return list;
+	}
+	
+	@Transactional(readOnly=true)
+	public Collection<Squeue> getSqueue(String email) {
+		Query query = entityManager.createNamedQuery("Squeue.findByUemail", Squeue.class);
+		query.setParameter("uemail", email);
+		List<Squeue> result = (ArrayList<Squeue>)query.getResultList();
+		return result;
 	}
 	
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.model.Artist;
 import com.model.Playlist;
+import com.model.Squeue;
 import com.model.User;
 
 @Service("userService")
@@ -28,7 +30,7 @@ import com.model.User;
 public class UserServiceImpl implements UserService {
 	@Autowired(required=true)
 	@Qualifier("userDAO")
-	private UserDAO UserDAO;
+	private UserDAO userDAO;
 	
 	@Transactional
 	public User addUser(String username, String email,String encPwd,int utype,char gender,String firstName, String middleName, String lastName, String dob) {
@@ -62,7 +64,7 @@ public class UserServiceImpl implements UserService {
         File userDir = new File(f1, email);
         boolean userSuccess = userDir.mkdirs();
 		
-		user = UserDAO.addUser(user);
+		user = userDAO.addUser(user);
 		return user;
 	}
 	@Transactional
@@ -76,7 +78,7 @@ public class UserServiceImpl implements UserService {
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
 		user.setPublic(isPublic);
-		user = UserDAO.updateUser(user);
+		user = userDAO.updateUser(user);
 		return user;
 	}
 	
@@ -86,22 +88,22 @@ public class UserServiceImpl implements UserService {
     {
 			
 		user.setUpassword(pwd);
-		user = UserDAO.updateUser(user);
+		user = userDAO.updateUser(user);
 		return user;
     }
 	@Transactional
 	public void removeUser(User user) {
-		UserDAO.deleteUser(user);
+		userDAO.deleteUser(user);
 		
 	}
 	
 
 	public User getUser(String email) {
-		return UserDAO.getUser(email);
+		return userDAO.getUser(email);
 	}
 
 	public List<User> getAllUsers() {
-		return UserDAO.getUsers();
+		return userDAO.getUsers();
 	}
 	
 	
@@ -110,7 +112,7 @@ public class UserServiceImpl implements UserService {
     {
        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
-    	List<User> results = UserDAO.getFriend(uemail);
+    	List<User> results = userDAO.getFriend(uemail);
     
   	    for(int i=0;i<results.size();i++)
   	    {
@@ -128,8 +130,8 @@ public class UserServiceImpl implements UserService {
     {
        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
-    		UserDAO.addFriend(uemail,femail);
-    		List<User> results = UserDAO.getFriend(uemail);
+    		userDAO.addFriend(uemail,femail);
+    		List<User> results = userDAO.getFriend(uemail);
     
   	    for(int i=0;i<results.size();i++)
   	    {
@@ -147,8 +149,8 @@ public class UserServiceImpl implements UserService {
     {
        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
-    		UserDAO.deleteFriend(uemail,femail);
-    		List<User> results = UserDAO.getFriend(uemail);
+    		userDAO.deleteFriend(uemail,femail);
+    		List<User> results = userDAO.getFriend(uemail);
     
   	    for(int i=0;i<results.size();i++)
   	    {
@@ -164,35 +166,40 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public List<User> getUsersByType(int usertype){
 	    	List<User> list = new ArrayList<User>();
-	    	list = UserDAO.getUserByUserType(usertype);
+	    	list = userDAO.getUserByUserType(usertype);
 	    	
 	    	return list;
     }
 	@Transactional
 	public List<User> getAllArtist(){
-		return UserDAO.getAllArtist();
+		return userDAO.getAllArtist();
 	}
 	
 	@Transactional
 	public boolean isEmailRegistered(String email) {
-		User user = UserDAO.getUser(email);
+		User user = userDAO.getUser(email);
 		return (user == null) ?  false :  true;
 	}
 	@Transactional
 	public void followArtist(String artistEmail,User user)
 	  {
-		    UserDAO.followArtist(artistEmail, user.getEmail());
+		    userDAO.followArtist(artistEmail, user.getEmail());
 		  	
 	  }
 	@Transactional
 	public void unfollowArtist(String artistEmail,User user)
 	  {
-		    UserDAO.unfollowArtist(artistEmail, user.getEmail());
+		    userDAO.unfollowArtist(artistEmail, user.getEmail());
 		  	
 	  }
 	@Transactional
 	public List<Artist> getFollowArtists(User user)
 	{
-		return UserDAO.getFollowArtists(user.getEmail());
+		return userDAO.getFollowArtists(user.getEmail());
+	}
+	
+	@Transactional
+	public Collection<Squeue> getQueue(String email) {
+		return userDAO.getSqueue(email);
 	}
 }

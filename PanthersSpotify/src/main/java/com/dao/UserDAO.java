@@ -1,8 +1,10 @@
 package com.dao;
 
+import java.util.Collection;
 import java.util.List;
 
 import com.model.Artist;
+import com.model.Squeue;
 import com.model.User;
 
 public interface UserDAO {
@@ -19,5 +21,5 @@ public interface UserDAO {
 	public void unfollowArtist(String artistEmail,String userEmail) ;
 	public void followArtist(String artistEmail,String userEmail);
 	public List<Artist> getFollowArtists(String userEmail);
-	
+	public Collection<Squeue> getSqueue(String email);
 }

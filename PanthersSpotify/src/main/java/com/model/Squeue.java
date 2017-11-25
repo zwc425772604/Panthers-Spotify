@@ -6,6 +6,8 @@
 package com.model;
 
 import java.io.Serializable;
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -14,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -25,11 +29,15 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Squeue.findAll", query = "SELECT s FROM Squeue s")
-    , @NamedQuery(name = "Squeue.findByUemail", query = "SELECT s FROM Squeue s WHERE s.squeuePK.uemail = :uemail")
+    , @NamedQuery(name = "Squeue.findByUemail", query = "SELECT s FROM Squeue s WHERE s.squeuePK.uemail = :uemail order by s.addedTime asc")
     , @NamedQuery(name = "Squeue.findBySid", query = "SELECT s FROM Squeue s WHERE s.squeuePK.sid = :sid")
-    , @NamedQuery(name = "Squeue.findByIsPlay", query = "SELECT s FROM Squeue s WHERE s.isPlay = :isPlay")})
+    , @NamedQuery(name = "Squeue.findByIsPlay", query = "SELECT s FROM Squeue s WHERE s.isPlay = :isPlay")
+    , @NamedQuery(name = "Squeue.deleteByUemail", query = "DELETE FROM Squeue s WHERE s.squeuePK.uemail = :uemail")})
 public class Squeue implements Serializable {
 
+	@Column(name = "addedTime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date addedTime;
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected SqueuePK squeuePK;
@@ -41,6 +49,8 @@ public class Squeue implements Serializable {
     @JoinColumn(name = "sid", referencedColumnName = "sid", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Song song;
+    
+    
 
     public Squeue() {
     }
@@ -107,7 +117,15 @@ public class Squeue implements Serializable {
 
     @Override
     public String toString() {
-        return "bad.Squeue[ squeuePK=" + squeuePK + " ]";
+        return "com.model.Squeue[ squeuePK=" + squeuePK + " ]";
+    }
+    
+    public Date getAddedTime() {
+        return addedTime;
+    }
+
+    public void setAddedTime(Date addedTime) {
+        this.addedTime = addedTime;
     }
     
 }

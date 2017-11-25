@@ -22,7 +22,7 @@ $(document).on("click", ".artist-item", function(){
         url: "${cp}/../getSpecificArtist",
         type: "POST",
         data : {"email" : email},
-        asyn: true,
+        asyn: false,
         cache: true,
         success : function(response)
         {

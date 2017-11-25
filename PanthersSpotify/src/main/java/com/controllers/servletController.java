@@ -592,6 +592,13 @@ public class servletController {
 	   	   return "ok";
 	    }
 	   //---------------------------------------------------------------------------------------------
-
+	    @RequestMapping(value="/getSpecificAlbum", method = RequestMethod.POST)
+	    public @ResponseBody String getSpecificAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	 	    String albumIDString = request.getParameter("albumID");
+	 	    int albumID = Integer.parseInt(albumIDString);
+	 	    Album album = albumService.getAlbum(albumID);
+	 	    session.setAttribute("selectedAlbum",album);
+	    	return "ok";
+	    }
 
 }

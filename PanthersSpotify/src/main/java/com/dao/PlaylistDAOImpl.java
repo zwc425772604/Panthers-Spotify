@@ -1,6 +1,8 @@
 package com.dao;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -141,5 +143,12 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	    	query.setParameter("uemail", userEmail);
 	    	List<Playlist>	list = (List<Playlist>)query.getResultList();
 	    	return list;
+	}
+
+	@Transactional(readOnly=true)
+	public Collection<Playlist> getUserPlaylists(String email) {
+		Query query = entityManager.createNamedQuery("Playlist.findByOwner").setParameter("email", email);
+		Collection<Playlist> result = (ArrayList<Playlist>)query.getResultList();
+		return result;
 	}
 }

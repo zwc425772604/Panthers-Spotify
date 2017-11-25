@@ -1,6 +1,7 @@
 package com.dao;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 import com.model.Playlist;
@@ -22,4 +23,5 @@ public interface PlaylistDAO {
 	public void deletePlaylistHistory(Playlist playlist,User user);
 	public void updatePlaylistHistory(Playlist playlist,User user, Date date);
 	public List<Playlist> getHistoryPlaylists(String userEmail);
+	public Collection<Playlist> getUserPlaylists(String email);
 }

@@ -157,3 +157,5 @@ $(document).on ("click", "#add-new-artist-button", function () {
 
 
 });
+
+

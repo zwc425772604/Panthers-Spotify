@@ -172,9 +172,13 @@ public class SongDAOImpl implements SongDAO{
 	@Transactional(readOnly=false)
 	public int removeAllQueue(String email) {
 		Query query = entityManager.createNamedQuery("Squeue.deleteByUemail").setParameter("uemail", email);
-		//query.setParameter("uemail", email);
 		int count = query.executeUpdate();
 		return count;
-		//return query.executeUpdate();		
+	}
+
+	@Transactional(readOnly=true)
+	public Collection<Releasesong> getSongArtists(Song song) {
+		Query query = entityManager.createNamedQuery("Releasesong.findBySid").setParameter("sid", song.getSid());
+		return (Collection<Releasesong>)query.getResultList();
 	}
 }

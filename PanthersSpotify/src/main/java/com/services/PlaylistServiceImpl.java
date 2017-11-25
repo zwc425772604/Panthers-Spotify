@@ -2,6 +2,7 @@ package com.services;
 
 import java.io.File;
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -28,7 +29,7 @@ import com.helper.UploadFile;
 public class PlaylistServiceImpl implements PlaylistService {
 	@Autowired(required=true)
 	@Qualifier("playlistDAO")
-	private PlaylistDAO PlaylistDAO;
+	private PlaylistDAO playlistDAO;
 	
 	@Transactional
 	public List<Playlist> addPlaylist(String playlistName,User user, String description,CommonsMultipartFile file,Date date) {
@@ -54,8 +55,8 @@ public class PlaylistServiceImpl implements PlaylistService {
 		Playlist playlist = new Playlist(playlistName,description,photoUrl,0,0,date,user);
 		System.out.println(photoUrl);
 		
-		Playlist = PlaylistDAO.addPlaylist(playlist);
-		return PlaylistDAO.getPlaylists();
+		Playlist = playlistDAO.addPlaylist(playlist);
+		return playlistDAO.getPlaylists();
 	}
 	@Transactional
 	public List<Playlist> updatePlaylist(int pid, String des,CommonsMultipartFile file, String pname, User user) {
@@ -64,7 +65,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 		
 		Playlist p=new Playlist();
 	  	String photoUrl=null;
-	  	int num=findPlaylist(pid,PlaylistDAO.getPlaylists());
+	  	int num=findPlaylist(pid,playlistDAO.getPlaylists());
 	  	if(des!=null)
 	  	{
 			p.setDes(des);
@@ -97,26 +98,26 @@ public class PlaylistServiceImpl implements PlaylistService {
 		
 		
 		
-		Playlist playlist = PlaylistDAO.updatePlaylist(p);
-		return PlaylistDAO.getPlaylists();
+		Playlist playlist = playlistDAO.updatePlaylist(p);
+		return playlistDAO.getPlaylists();
 	}
 	@Transactional
 	public List<Playlist> removePlaylist(Playlist Playlist) {
-		PlaylistDAO.deletePlaylist(Playlist);
-		return PlaylistDAO.getPlaylists();
+		playlistDAO.deletePlaylist(Playlist);
+		return playlistDAO.getPlaylists();
 	}
 	
 	@Transactional
 	 public List<Playlist> getTopFollowedPlaylist(int numberOfPlaylist){
-		  return PlaylistDAO.getTopFollowedPlaylist(numberOfPlaylist);
+		  return playlistDAO.getTopFollowedPlaylist(numberOfPlaylist);
 	  }
 
 	public Playlist getPlaylist(int pid) {
-		return PlaylistDAO.getPlaylist(pid);
+		return playlistDAO.getPlaylist(pid);
 	}
 
 	public List<Playlist> getAllPlaylists() {
-		return PlaylistDAO.getPlaylists();
+		return playlistDAO.getPlaylists();
 	}
 	
 	private int findPlaylist(int playlistId, List<Playlist> playlists)
@@ -142,9 +143,9 @@ public class PlaylistServiceImpl implements PlaylistService {
 	  	  {
 	  		  return false;
 	  	  }
-		    Playlist result = PlaylistDAO.getPlaylist(playlistId);
+		    Playlist result = playlistDAO.getPlaylist(playlistId);
 		    
-		    PlaylistDAO.followPlaylist(playlistId, user.getEmail());
+		    playlistDAO.followPlaylist(playlistId, user.getEmail());
 		  	user_playlist.add(result);
 		  	return true;
 	  }
@@ -160,8 +161,8 @@ public class PlaylistServiceImpl implements PlaylistService {
 	  	  }
 	  	  
 	  	  
-	  	  Playlist result = PlaylistDAO.getPlaylist(playlistId);
-	  	  PlaylistDAO.unfollowPlaylist(playlistId, user.getEmail());
+	  	  Playlist result = playlistDAO.getPlaylist(playlistId);
+	  	  playlistDAO.unfollowPlaylist(playlistId, user.getEmail());
 		  	
 		  	  
 		  	user_playlist.remove(result);
@@ -172,35 +173,40 @@ public class PlaylistServiceImpl implements PlaylistService {
 	@Transactional
 	  public void addSongToPlaylist(int playlistId,int songId)
 	  {
-			PlaylistDAO.addSongToPlaylist(playlistId, songId);
+			playlistDAO.addSongToPlaylist(playlistId, songId);
 	  }
 	
 	@Transactional
 	  public void removeSongFromPlaylist(int playlistId,int songId)
 	  {
-			PlaylistDAO.removeSongFromPlaylist(playlistId, songId);
+			playlistDAO.removeSongFromPlaylist(playlistId, songId);
 	  }
 	@Transactional
 	public List<Playlist> findRelative(String input)
 	{
-		return PlaylistDAO.findRelative(input);
+		return playlistDAO.findRelative(input);
 	}
 	
 	@Transactional
 	public List<Playlist> getHistoryPlaylists(String userEmail)
 	{
-		return PlaylistDAO.getHistoryPlaylists(userEmail);
+		return playlistDAO.getHistoryPlaylists(userEmail);
 	}
 	
 	@Transactional
 	public List<Playlist> addHistoryPlaylist(Playlist playlist,User user,Date date) {
-		PlaylistDAO.addPlaylistHistory(playlist, user, date);
-		return PlaylistDAO.getHistoryPlaylists(user.getEmail());
+		playlistDAO.addPlaylistHistory(playlist, user, date);
+		return playlistDAO.getHistoryPlaylists(user.getEmail());
 	}
 	
 	@Transactional
 	public List<Playlist> deleteHistoryPlaylist(Playlist playlist,User user) {
-		PlaylistDAO.deletePlaylistHistory(playlist, user);
-		return PlaylistDAO.getHistoryPlaylists(user.getEmail());
+		playlistDAO.deletePlaylistHistory(playlist, user);
+		return playlistDAO.getHistoryPlaylists(user.getEmail());
+	}
+	
+	@Transactional
+	public Collection<Playlist> getUserPlaylists(String email) {
+		return playlistDAO.getUserPlaylists(email);
 	}
 }

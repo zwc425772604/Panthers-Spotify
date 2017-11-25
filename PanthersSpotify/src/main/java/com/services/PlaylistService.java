@@ -1,6 +1,7 @@
 package com.services;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -23,5 +24,6 @@ public interface PlaylistService {
 	public List<Playlist> getHistoryPlaylists(String userEmail);
 	public List<Playlist> addHistoryPlaylist(Playlist playlist,User user,Date date);
 	public List<Playlist> deleteHistoryPlaylist(Playlist playlist,User user);
+	public Collection<Playlist> getUserPlaylists(String email);
 	
 }

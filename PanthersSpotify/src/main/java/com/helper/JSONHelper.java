@@ -1,6 +1,7 @@
 package com.helper;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.model.Playlist;
+import com.model.Releasesong;
 import com.model.Song;
 import com.model.User;
 
@@ -104,7 +106,47 @@ public class JSONHelper {
 		}
 		return arr.toString();
 	}
-
-
-
+	
+	public static String new_pendingSongsToJSON(List<Song> songs, Collection<User> users) throws JSONException
+	{
+		JSONArray arr = new JSONArray();
+		JSONObject jsonObject;
+		for (Song s : songs)
+		{
+			jsonObject = new JSONObject();
+			int sid = s.getSid();
+			jsonObject.put("songID", sid);
+			jsonObject.put("songTitle", s.getStitle());
+			jsonObject.put("songGenre", s.getGener());
+			JSONArray artists = new JSONArray();
+			for (User user : users) {
+				JSONObject ob = new JSONObject();
+				ob.put("name", user.getFullName());
+				ob.put("aemail",user.getEmail());
+				artists.put(ob);
+			}
+			jsonObject.put("songArtist", artists);
+			arr.put(jsonObject);
+		}
+		return arr.toString();
+	}
+	
+	public static String songToJSON(Song song, Collection<User> users) throws JSONException
+	{
+		JSONObject jsonObject = new JSONObject();
+		int sid = song.getSid();
+		jsonObject.put("songID", sid);
+		jsonObject.put("songTitle", song.getStitle());
+		jsonObject.put("songGenre", song.getGener());
+		JSONArray artists = new JSONArray();
+		for (User user : users) {
+			JSONObject ob = new JSONObject();
+			ob.put("name", user.getFullName());
+			ob.put("aemail",user.getEmail());
+			artists.put(ob);
+		}
+		jsonObject.put("songArtist", artists);
+		return jsonObject.toString();
+	}
+	
 }

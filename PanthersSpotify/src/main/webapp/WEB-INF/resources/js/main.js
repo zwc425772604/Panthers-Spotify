@@ -401,5 +401,24 @@ function volumeMute(data){
 		muted = true;
 		$("#rangeinput").val(0);
 	}
-	
 }
+
+//not finish
+$(document).on("click", ".playbar-prev-button", function(){	
+	$.ajax({
+		url: "${cp}/../preSong",
+        type: "POST",
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+          console.log(response);
+        },
+        error: function(e)
+        {
+
+          console.log(e);
+        }
+      });
+});
+

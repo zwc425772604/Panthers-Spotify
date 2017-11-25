@@ -92,18 +92,7 @@ public class servletController {
 	    	   session.setAttribute("user", user);
 	    	   user.setSqueueCollection(userService.getQueue(email));
 	    	   Collection<Squeue> que = user.getSqueueCollection();
-	    	   session.setAttribute("Squeue", que);
-	    	   Song s1 = songService.getNowPlay(que);
-	    	   System.out.println("now Song id= "+ s1.getSid());
-	    	   Collection<Squeue> nextUp = songService.nextUp(que);
-	    	   Song preSong = songService.nextSongInQueue(que);
-	    	   if (preSong!= null)
-	    		   System.out.println("preSong is: "+preSong.getSid());
-	    	   //Song nextSong = songService.nextSongInQueue(que);
-	    	  // songService.addSongToQueue(que, 148, email);
-	    	   
-	    	   System.out.println("LOL");
-	    	   songService.removeAllQueue(que, email);
+	    	   session.setAttribute("Squeue", que);	    	   
 	    	   //user page
 	    	   if (user.getUtype() == 0)
 	    	   {

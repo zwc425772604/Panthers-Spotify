@@ -16,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.model.Releasesong;
 import com.model.Song;
+import com.model.SongQueue;
 import com.model.Songhistory;
-import com.model.Squeue;
 import com.model.User;
 
 @Repository("songDAO")
@@ -28,28 +28,28 @@ public class SongDAOImpl implements SongDAO{
 	public EntityManager entityManager;
 
 	@Transactional(readOnly=false)
-	public Song addSong(Song Song) {
+	public Song addSong(Song song) {
 		
-		entityManager.persist(Song);
-		return Song;
+		entityManager.persist(song);
+		return song;
 	}
 
 	@Transactional(readOnly=false)
-	public Song updateSong(Song Song) {
-		entityManager.merge(Song);
-		return Song;
+	public Song updateSong(Song song) {
+		entityManager.merge(song);
+		return song;
 	}
 
 	@Transactional(readOnly=false)
-	public void deleteSong(Song Song) {
-		entityManager.remove(entityManager.contains(Song) ? Song : entityManager.merge(Song));
+	public void deleteSong(Song song) {
+		entityManager.remove(entityManager.contains(song) ? song : entityManager.merge(song));
 		
 	}
 
 	@Transactional(readOnly=true)
-	public Song getSong(int SongId) {
+	public Song getSong(int songId) {
 		TypedQuery<Song> query1 = entityManager.createNamedQuery("Song.findBySid", Song.class)
-          		.setParameter("sid", SongId);
+          		.setParameter("sid", songId);
 
          List<Song> results = query1.getResultList();
          return results.get(0);
@@ -141,8 +141,8 @@ public class SongDAOImpl implements SongDAO{
 	}
 	
 	@Transactional(readOnly=false)
-	public Squeue addSongToQueue(int sid, String email) {
-		Squeue newSq = new Squeue(email,sid);
+	public SongQueue addSongToQueue(int sid, String email) {
+		SongQueue newSq = new SongQueue(email,sid);
 		newSq.setIsPlay(false);
 		try {
 			entityManager.persist(newSq);
@@ -154,15 +154,15 @@ public class SongDAOImpl implements SongDAO{
 
 
 	@Transactional(readOnly=false)
-	public Song setNowPlay(Collection<Squeue> que, int sid) {
+	public Song setNowPlay(Collection<SongQueue> que, int sid) {
 		for (int i = 0; i<que.size(); i++) {
-			Squeue temp = ((ArrayList<Squeue>) que).get(i);
+			SongQueue temp = ((ArrayList<SongQueue>) que).get(i);
 			if (temp.getSqueuePK().getSid() == sid) {
-				((ArrayList<Squeue>) que).get(i).setIsPlay(true);
-				entityManager.merge(((ArrayList<Squeue>) que).get(i));
+				((ArrayList<SongQueue>) que).get(i).setIsPlay(true);
+				entityManager.merge(((ArrayList<SongQueue>) que).get(i));
 			}else if(temp.getIsPlay() && temp.getSqueuePK().getSid() != sid) {
-				((ArrayList<Squeue>) que).get(i).setIsPlay(false);
-				entityManager.merge(((ArrayList<Squeue>) que).get(i));
+				((ArrayList<SongQueue>) que).get(i).setIsPlay(false);
+				entityManager.merge(((ArrayList<SongQueue>) que).get(i));
 			}
 		}
 		return getSong(sid);
@@ -171,7 +171,7 @@ public class SongDAOImpl implements SongDAO{
 
 	@Transactional(readOnly=false)
 	public int removeAllQueue(String email) {
-		Query query = entityManager.createNamedQuery("Squeue.deleteByUemail").setParameter("uemail", email);
+		Query query = entityManager.createNamedQuery("SongQueue.deleteByUemail").setParameter("uemail", email);
 		int count = query.executeUpdate();
 		return count;
 	}

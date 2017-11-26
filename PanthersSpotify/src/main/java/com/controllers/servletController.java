@@ -31,7 +31,7 @@ import com.helper.JSONHelper;
 import com.helper.Security;
 import com.model.Album;
 import com.model.Song;
-import com.model.Squeue;
+import com.model.SongQueue;
 import com.model.Playlist;
 import com.model.Releasesong;
 import com.model.ReleasesongPK;
@@ -85,21 +85,21 @@ public class servletController {
 		}
 		// case 1: email and password match in database record
 		// if true - get the playlist, etc from the database and update the DOM
-		else if (user.getUpassword().equals(password)) {
+		else if (user.getUserPassword().equals(password)) {
 			session.setAttribute("user", user);
-			user.setSqueueCollection(userService.getQueue(email));
-			Collection<Squeue> que = user.getSqueueCollection();
-			session.setAttribute("squeue", que);
+			user.setSongQueueCollection(userService.getQueue(email));
+			Collection<SongQueue> que = user.getSongQueueCollection();
+			session.setAttribute("songQueue", que);
 			// user page
-			if (user.getUtype() == 0) {
-				mav.addObject("username", user.getUname());
+			if (user.getUserType() == 0) {
+				mav.addObject("username", user.getUserName());
 				List<Playlist> user_playlist = (List<Playlist>) (user.getUserPlaylistCollection());
 				session.setAttribute("user_playlist", user_playlist);
 				mav.setViewName("main");
 			}
 			// display admin page
-			if (user.getUtype() == 3) {
-				mav.addObject("username", user.getUname());
+			if (user.getUserType() == 3) {
+				mav.addObject("username", user.getUserName());
 				mav.setViewName("admin");
 			}
 
@@ -107,7 +107,7 @@ public class servletController {
 		// case 2: incorrect email or password
 		else {
 			System.out.println(password);
-			System.out.println(user.getUpassword());
+			System.out.println(user.getUserPassword());
 			mav.addObject("error_message", "Incorrect email or password!");
 			mav.setViewName("index");
 		}
@@ -143,7 +143,7 @@ public class servletController {
 	public @ResponseBody String userSignUp(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		String encPwd = Security.encryptPassword(password);
+		String encPassword = Security.encryptPassword(password);
 		String email = request.getParameter("email");
 		boolean isEmailRegistered = userService.isEmailRegistered(email);
 		System.out.println("isEmailRegistered value :" + isEmailRegistered);
@@ -156,8 +156,8 @@ public class servletController {
 		String lastName = request.getParameter("lastName");
 		String dob = request.getParameter("dob");
 		System.out.println("dob in userSignUp " + dob);
-		int utype = 0;
-		userService.addUser(username, email, encPwd, utype, gender, firstName, middleName, lastName, dob);
+		int userType = 0;
+		userService.addUser(username, email, encPassword, userType, gender, firstName, middleName, lastName, dob);
 		String message = "Congratulation, sign up successfully. Please return to homepage for login.";
 		return message; // handle in SignUp.jsp
 	}
@@ -281,11 +281,11 @@ public class servletController {
 		String lastName = request.getParameter("lastName");
 		// String iPublic = request.getParameter("isPublic"); need this button
 		boolean isPublic = true;
-		user = userService.updateUser(user, user.getUname(), user.getUtype(), gender, firstName, lastName, isPublic);
+		user = userService.updateUser(user, user.getUserName(), user.getUserType(), gender, firstName, lastName, isPublic);
 
 		session.setAttribute("user", user);
 		mav.setViewName("main");
-		mav.addObject("username", user.getUname());
+		mav.addObject("username", user.getUserName());
 		return mav;
 	}
 
@@ -297,7 +297,7 @@ public class servletController {
 		user = userService.editUserPassword(user, encPwd);
 		session.setAttribute("user", user);
 		mav.setViewName("main");
-		mav.addObject("username", user.getUname());
+		mav.addObject("username", user.getUserName());
 		return mav;
 	}
 
@@ -381,7 +381,7 @@ public class servletController {
 		List<User> newFriendlist = userService.deleteFriend(user.getEmail(), femail);
 		session.setAttribute("userFriendList", newFriendlist);
 		mav.setViewName("main");
-		mav.addObject("username", user.getUname());
+		mav.addObject("username", user.getUserName());
 		return mav;
 	}
 
@@ -578,9 +578,9 @@ public class servletController {
 
 	@RequestMapping(value = "/preSong", method = RequestMethod.POST)
 	public @ResponseBody String getPreSong(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		Collection<Squeue> que = (Collection<Squeue>) session.getAttribute("squeue");
+		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
 		Song song = songService.preSongInQueue(que);
-		session.setAttribute("squeue", que);
+		session.setAttribute("songQueue", que);
 		Collection<Releasesong> artists = songService.getSongArtists(song);
 		Collection<User> users = new ArrayList<User>();
 		for(Releasesong rs : artists) {
@@ -593,9 +593,9 @@ public class servletController {
 	
 	@RequestMapping(value = "/nextSong", method = RequestMethod.POST)
 	public @ResponseBody String getNextSong(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		Collection<Squeue> que = (Collection<Squeue>) session.getAttribute("squeue");
+		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
 		Song song = songService.nextSongInQueue(que);
-		session.setAttribute("squeue", que);
+		session.setAttribute("songQueue", que);
 		Collection<Releasesong> artists = songService.getSongArtists(song);
 		Collection<User> users = new ArrayList<User>();
 		for(Releasesong rs : artists) {
@@ -608,38 +608,38 @@ public class servletController {
 	
 	@RequestMapping(value = "/shuffle", method = RequestMethod.POST)
 	public @ResponseBody String shuffleQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		Collection<Squeue> que = (Collection<Squeue>) session.getAttribute("squeue");
+		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
 		que = songService.shuffleQueue(que);
-		session.setAttribute("squeue", que);
+		session.setAttribute("songQueue", que);
 		return "ok";
 	}
 	
 	@RequestMapping(value = "/playPlaylist", method = RequestMethod.GET)
-	public @ResponseBody String getNewSqueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		Collection<Squeue> orig = (Collection<Squeue>) session.getAttribute("squeue");
+	public @ResponseBody String getNewsongQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		Collection<SongQueue> orig = (Collection<SongQueue>) session.getAttribute("songQueue");
 		String email = ((User)session.getAttribute("user")).getEmail();
-		Collection<Squeue> newSq = songService.removeAllQueue(orig,email);
+		Collection<SongQueue> newSq = songService.removeAllQueue(orig,email);
 		songService.addPlaylistToQueue(newSq, Integer.parseInt(request.getParameter("pid")), email);
-		session.setAttribute("squeue", newSq);
+		session.setAttribute("songQueue", newSq);
 		return "ok";
 	}
 	
 	@RequestMapping(value = "/addSongToQueue", method = RequestMethod.GET)
 	public @ResponseBody String addSongToQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		Collection<Squeue> que = (Collection<Squeue>) session.getAttribute("squeue");
+		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
 		String email = ((User)session.getAttribute("user")).getEmail();
 		int sid = Integer.parseInt(request.getParameter("sid"));
 		songService.addSongToQueue(que, sid, email);
-		session.setAttribute("squeue", que);		
+		session.setAttribute("songQueue", que);		
 		return "ok";
 	}
 	
 	@RequestMapping(value = "/addPlaylistToQueue", method = RequestMethod.GET)
 	public @ResponseBody String addPlaylistToQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		Collection<Squeue> que = (Collection<Squeue>) session.getAttribute("squeue");
+		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
 		String email = ((User)session.getAttribute("user")).getEmail();
 		songService.addPlaylistToQueue(que, Integer.parseInt(request.getParameter("pid")), email);
-		session.setAttribute("squeue", que);
+		session.setAttribute("songQueue", que);
 		return "ok";
 	}
 

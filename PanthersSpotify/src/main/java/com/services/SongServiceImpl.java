@@ -9,25 +9,18 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.TypedQuery;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 import com.dao.PlaylistDAO;
 import com.dao.SongDAO;
 import com.model.Album;
 import com.model.Playlist;
 import com.model.Releasesong;
 import com.model.Song;
-import com.model.Squeue;
+import com.model.SongQueue;
 import com.model.User;
 
 @Service("songService")
@@ -165,13 +158,13 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Transactional
-	public void addSongToQueue(Collection<Squeue> que, int sid, String email) {
-		Squeue newSq = songDAO.addSongToQueue(sid, email);
+	public void addSongToQueue(Collection<SongQueue> que, int sid, String email) {
+		SongQueue newSq = songDAO.addSongToQueue(sid, email);
 		que.add(newSq);
 	}
 
 	@Transactional
-	public void addPlaylistToQueue(Collection<Squeue> que, int pid, String email) {
+	public void addPlaylistToQueue(Collection<SongQueue> que, int pid, String email) {
 		Playlist playlist = playlistDAO.getPlaylist(pid);
 		Collection<Song> songs = playlist.getSongCollection();
 		for (Song s : songs) {
@@ -180,15 +173,15 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Transactional
-	public Song setNowPlay(Collection<Squeue> que, int sid) {
+	public Song setNowPlay(Collection<SongQueue> que, int sid) {
 		return songDAO.setNowPlay(que, sid);
 	}
 
 	@Transactional
-	public Song nextSongInQueue(Collection<Squeue> que) {
-		Iterator<Squeue> it = (Iterator<Squeue>) que.iterator();
+	public Song nextSongInQueue(Collection<SongQueue> que) {
+		Iterator<SongQueue> it = (Iterator<SongQueue>) que.iterator();
 		while (it.hasNext()) {
-			Squeue temp = it.next();
+			SongQueue temp = it.next();
 			if (temp.getIsPlay()) {
 				if (it.hasNext())
 					return setNowPlay(que, it.next().getSong().getSid());
@@ -200,12 +193,12 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Transactional
-	public Song preSongInQueue(Collection<Squeue> que) {
+	public Song preSongInQueue(Collection<SongQueue> que) {
 		if (que.size() > 0) {
-			Iterator<Squeue> it = (Iterator<Squeue>) que.iterator();
-			Squeue preSong = it.next();
+			Iterator<SongQueue> it = (Iterator<SongQueue>) que.iterator();
+			SongQueue preSong = it.next();
 			while (it.hasNext()) {
-				Squeue temp = it.next();
+				SongQueue temp = it.next();
 				if (temp.getIsPlay()) {
 					return setNowPlay(que, preSong.getSong().getSid());
 				}
@@ -216,11 +209,11 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Transactional
-	public Collection<Squeue> shuffleQueue(Collection<Squeue> que) {
-		Collection<Squeue> collection = new ArrayList<Squeue>();
-		Iterator<Squeue> it = (Iterator<Squeue>) que.iterator();
+	public Collection<SongQueue> shuffleQueue(Collection<SongQueue> que) {
+		Collection<SongQueue> collection = new ArrayList<SongQueue>();
+		Iterator<SongQueue> it = (Iterator<SongQueue>) que.iterator();
 		while (it.hasNext()) {
-			Squeue temp = it.next();
+			SongQueue temp = it.next();
 			if (temp.getIsPlay()) {
 				collection.add(temp);
 				it.remove();
@@ -230,7 +223,7 @@ public class SongServiceImpl implements SongService {
 			it.remove();
 		}
 
-		ArrayList<Squeue> source = (ArrayList<Squeue>) que;
+		ArrayList<SongQueue> source = (ArrayList<SongQueue>) que;
 
 		while (source.size() > 0) {
 			int randomNum = ThreadLocalRandom.current().nextInt(0, source.size());
@@ -242,19 +235,19 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Transactional
-	public Collection<Squeue> removeAllQueue(Collection<Squeue> que, String email) {
+	public Collection<SongQueue> removeAllQueue(Collection<SongQueue> que, String email) {
 		int count = songDAO.removeAllQueue(email);
 		if (count == que.size()) {
-			return new ArrayList<Squeue>();
+			return new ArrayList<SongQueue>();
 		} else
-			return new ArrayList<Squeue>();
+			return new ArrayList<SongQueue>();
 	}
 
 	@Transactional
-	public Song getNowPlay(Collection<Squeue> que) {
-		Iterator<Squeue> it = (Iterator<Squeue>) que.iterator();
+	public Song getNowPlay(Collection<SongQueue> que) {
+		Iterator<SongQueue> it = (Iterator<SongQueue>) que.iterator();
 		while (it.hasNext()) {
-			Squeue temp = (Squeue) it.next();
+			SongQueue temp = (SongQueue) it.next();
 			if (temp.getIsPlay()) {
 				return temp.getSong();
 			}
@@ -263,14 +256,14 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Transactional
-	public Collection<Squeue> nextUp(Collection<Squeue> que) {
-		Collection<Squeue> collection = new ArrayList<Squeue>();
-		Iterator<Squeue> it = (Iterator<Squeue>) que.iterator();
+	public Collection<SongQueue> nextUp(Collection<SongQueue> que) {
+		Collection<SongQueue> collection = new ArrayList<SongQueue>();
+		Iterator<SongQueue> it = (Iterator<SongQueue>) que.iterator();
 		while (it.hasNext()) {
-			Squeue temp = (Squeue) it.next();
+			SongQueue temp = (SongQueue) it.next();
 			if (temp.getIsPlay()) {
 				while (it.hasNext()) {
-					Squeue next = (Squeue) it.next();
+					SongQueue next = (SongQueue) it.next();
 					collection.add(next);
 				}
 			}

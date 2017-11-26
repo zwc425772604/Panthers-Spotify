@@ -15,7 +15,7 @@ import javax.persistence.Embeddable;
  * @author HTC
  */
 @Embeddable
-public class SqueuePK implements Serializable {
+public class SongQueuePK implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "uemail")
@@ -24,28 +24,28 @@ public class SqueuePK implements Serializable {
     @Column(name = "sid")
     private int sid;
 
-    public SqueuePK() {
+    public SongQueuePK() {
     }
 
-    public SqueuePK(String uemail, int sid) {
-        this.uemail = uemail;
+    public SongQueuePK(String userEmail, int sid) {
+        this.uemail = userEmail;
         this.sid = sid;
     }
 
-    public String getUemail() {
+    public String getUserEmail() {
         return uemail;
     }
 
-    public void setUemail(String uemail) {
-        this.uemail = uemail;
+    public void setUserEmail(String userEmail) {
+        this.uemail = userEmail;
     }
 
     public int getSid() {
         return sid;
     }
 
-    public void setSid(int sid) {
-        this.sid = sid;
+    public void setSid(int songId) {
+        this.sid = songId;
     }
 
     @Override
@@ -59,10 +59,10 @@ public class SqueuePK implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SqueuePK)) {
+        if (!(object instanceof SongQueuePK)) {
             return false;
         }
-        SqueuePK other = (SqueuePK) object;
+        SongQueuePK other = (SongQueuePK) object;
         if ((this.uemail == null && other.uemail != null) || (this.uemail != null && !this.uemail.equals(other.uemail))) {
             return false;
         }
@@ -74,7 +74,7 @@ public class SqueuePK implements Serializable {
 
     @Override
     public String toString() {
-        return "bad.SqueuePK[ uemail=" + uemail + ", sid=" + sid + " ]";
+        return "com.model.SqueuePK[ usrEmail=" + uemail + ", sid=" + sid + " ]";
     }
     
 }

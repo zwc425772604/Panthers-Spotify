@@ -204,13 +204,13 @@ public class Song implements Serializable {
     }
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "song")
-    private Collection<Squeue> squeueCollection;
+    private Collection<SongQueue> squeueCollection;
 	@XmlTransient
-    public Collection<Squeue> getSqueueCollection() {
+    public Collection<SongQueue> getSqueueCollection() {
         return squeueCollection;
     }
 
-    public void setSqueueCollection(Collection<Squeue> squeueCollection) {
+    public void setSqueueCollection(Collection<SongQueue> squeueCollection) {
         this.squeueCollection = squeueCollection;
     }
 }

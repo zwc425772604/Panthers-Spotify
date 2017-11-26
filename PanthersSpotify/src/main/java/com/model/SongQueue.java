@@ -25,22 +25,22 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author HTC
  */
 @Entity
-@Table(name = "squeue")
+@Table(name = "songqueue")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Squeue.findAll", query = "SELECT s FROM Squeue s")
-    , @NamedQuery(name = "Squeue.findByUemail", query = "SELECT s FROM Squeue s WHERE s.squeuePK.uemail = :uemail order by s.addedTime asc")
-    , @NamedQuery(name = "Squeue.findBySid", query = "SELECT s FROM Squeue s WHERE s.squeuePK.sid = :sid")
-    , @NamedQuery(name = "Squeue.findByIsPlay", query = "SELECT s FROM Squeue s WHERE s.isPlay = :isPlay")
-    , @NamedQuery(name = "Squeue.deleteByUemail", query = "DELETE FROM Squeue s WHERE s.squeuePK.uemail = :uemail")})
-public class Squeue implements Serializable {
+    @NamedQuery(name = "SongQueue.findAll", query = "SELECT s FROM SongQueue s")
+    , @NamedQuery(name = "SongQueue.findByUemail", query = "SELECT s FROM SongQueue s WHERE s.songQueuePK.uemail = :uemail order by s.addedTime asc")
+    , @NamedQuery(name = "SongQueue.findBySid", query = "SELECT s FROM SongQueue s WHERE s.songQueuePK.sid = :songId")
+    , @NamedQuery(name = "SongQueue.findByIsPlay", query = "SELECT s FROM SongQueue s WHERE s.isPlay = :isPlay")
+    , @NamedQuery(name = "SongQueue.deleteByUserEmail", query = "DELETE FROM SongQueue s WHERE s.songQueuePK.uemail = :userEmail")})
+public class SongQueue implements Serializable {
 
 	@Column(name = "addedTime")
     @Temporal(TemporalType.TIMESTAMP)
     private Date addedTime;
     private static final long serialVersionUID = 1L;
     @EmbeddedId
-    protected SqueuePK squeuePK;
+    protected SongQueuePK songQueuePK;
     @Column(name = "isPlay")
     private Boolean isPlay;
     @JoinColumn(name = "uemail", referencedColumnName = "email", insertable = false, updatable = false)
@@ -52,23 +52,23 @@ public class Squeue implements Serializable {
     
     
 
-    public Squeue() {
+    public SongQueue() {
     }
 
-    public Squeue(SqueuePK squeuePK) {
-        this.squeuePK = squeuePK;
+    public SongQueue(SongQueuePK songQueuePK) {
+        this.songQueuePK = songQueuePK;
     }
 
-    public Squeue(String uemail, int sid) {
-        this.squeuePK = new SqueuePK(uemail, sid);
+    public SongQueue(String userEmail, int songId) {
+        this.songQueuePK = new SongQueuePK(userEmail, songId);
     }
 
-    public SqueuePK getSqueuePK() {
-        return squeuePK;
+    public SongQueuePK getSqueuePK() {
+        return songQueuePK;
     }
 
-    public void setSqueuePK(SqueuePK squeuePK) {
-        this.squeuePK = squeuePK;
+    public void setSongQueuePK(SongQueuePK songQueuePK) {
+        this.songQueuePK = songQueuePK;
     }
 
     public Boolean getIsPlay() {
@@ -98,18 +98,18 @@ public class Squeue implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (squeuePK != null ? squeuePK.hashCode() : 0);
+        hash += (songQueuePK != null ? songQueuePK.hashCode() : 0);
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Squeue)) {
+        if (!(object instanceof SongQueue)) {
             return false;
         }
-        Squeue other = (Squeue) object;
-        if ((this.squeuePK == null && other.squeuePK != null) || (this.squeuePK != null && !this.squeuePK.equals(other.squeuePK))) {
+        SongQueue other = (SongQueue) object;
+        if ((this.songQueuePK == null && other.songQueuePK != null) || (this.songQueuePK != null && !this.songQueuePK.equals(other.songQueuePK))) {
             return false;
         }
         return true;
@@ -117,7 +117,7 @@ public class Squeue implements Serializable {
 
     @Override
     public String toString() {
-        return "com.model.Squeue[ squeuePK=" + squeuePK + " ]";
+        return "com.model.Squeue[ squeuePK=" + songQueuePK + " ]";
     }
     
     public Date getAddedTime() {
@@ -126,6 +126,5 @@ public class Squeue implements Serializable {
 
     public void setAddedTime(Date addedTime) {
         this.addedTime = addedTime;
-    }
-    
+    }    
 }

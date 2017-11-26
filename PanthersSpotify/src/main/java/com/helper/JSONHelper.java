@@ -47,8 +47,8 @@ public class JSONHelper {
 		{
 			jsonObject = new JSONObject();
 			jsonObject.put("userID", u.getEmail());
-			jsonObject.put("username", u.getUname());
-			jsonObject.put("userType", u.getUtype());
+			jsonObject.put("username", u.getUserName());
+			jsonObject.put("userType", u.getUserType());
 			jsonObject.put("userFirstName", u.getFirstName());
 			jsonObject.put("userLastName", u.getLastName());
 			arr.put(jsonObject);
@@ -81,7 +81,7 @@ public class JSONHelper {
 		for (User u : users)
 		{
 			jsonObject = new JSONObject();
-			jsonObject.put("artistName", u.getUname());
+			jsonObject.put("artistName", u.getUserName());
 			jsonObject.put("artistFirstName", u.getFirstName());
 			jsonObject.put("artistLastName", u.getLastName());
 			jsonObject.put("artistEmail", u.getEmail());

@@ -8,21 +8,13 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-
 import com.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.model.Artist;
-import com.model.Playlist;
-import com.model.Squeue;
+import com.model.SongQueue;
 import com.model.User;
 
 @Service("userService")
@@ -33,14 +25,14 @@ public class UserServiceImpl implements UserService {
 	private UserDAO userDAO;
 	
 	@Transactional
-	public User addUser(String username, String email,String encPwd,int utype,char gender,String firstName, String middleName, String lastName, String dob) {
+	public User addUser(String userName, String email,String encPassword,int userType,char gender,String firstName, String middleName, String lastName, String dob) {
 		
-		System.out.println("User Service create invoked:"+username);
+		System.out.println("User Service create invoked:"+userName);
 		User user  = new User();
 		user.setEmail(email);
-		user.setUname(username);
-		user.setUpassword(encPwd);
-		user.setUtype(utype);
+		user.setUserName(userName);
+		user.setUserPassword(encPassword);
+		user.setUserType(userType);
 		user.setGender(gender);
 		user.setFirstName(firstName);
 		user.setMiddleName(middleName);
@@ -68,12 +60,12 @@ public class UserServiceImpl implements UserService {
 		return user;
 	}
 	@Transactional
-	public User updateUser(User user, String username, int utype,char gender,String firstName, String lastName,boolean isPublic) {
+	public User updateUser(User user, String userName, int userType,char gender,String firstName, String lastName,boolean isPublic) {
 		
-		System.out.println("Cusomer Service Update invoked:"+username);
+		System.out.println("Cusomer Service Update invoked:"+userName);
 		//User User  = new User();
-		user.setUname(username);
-		user.setUtype(utype);
+		user.setUserName(userName);
+		user.setUserType(userType);
 		user.setGender(gender);
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
@@ -87,7 +79,7 @@ public class UserServiceImpl implements UserService {
     public User editUserPassword(User user, String pwd)
     {
 			
-		user.setUpassword(pwd);
+		user.setUserPassword(pwd);
 		user = userDAO.updateUser(user);
 		return user;
     }
@@ -98,8 +90,8 @@ public class UserServiceImpl implements UserService {
 	}
 	
 
-	public User getUser(String email) {
-		return userDAO.getUser(email);
+	public User getUser(String userEmail) {
+		return userDAO.getUser(userEmail);
 	}
 
 	public List<User> getAllUsers() {
@@ -108,11 +100,11 @@ public class UserServiceImpl implements UserService {
 	
 	
 	@Transactional
-    public List<User> getFriend(String uemail)
+    public List<User> getFriend(String userEmail)
     {
        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
-    	List<User> results = userDAO.getFriend(uemail);
+    	List<User> results = userDAO.getFriend(userEmail);
     
   	    for(int i=0;i<results.size();i++)
   	    {
@@ -126,12 +118,12 @@ public class UserServiceImpl implements UserService {
     }
 	
 	@Transactional
-    public List<User> addFriend(String uemail,String femail)
+    public List<User> addFriend(String userEmail,String friendEmail)
     {
        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
-    		userDAO.addFriend(uemail,femail);
-    		List<User> results = userDAO.getFriend(uemail);
+    		userDAO.addFriend(userEmail,friendEmail);
+    		List<User> results = userDAO.getFriend(userEmail);
     
   	    for(int i=0;i<results.size();i++)
   	    {
@@ -145,12 +137,12 @@ public class UserServiceImpl implements UserService {
     }
 	
 	@Transactional
-    public List<User> deleteFriend(String uemail,String femail)
+    public List<User> deleteFriend(String userEmail,String friendEmail)
     {
        //  Query query1 =
         //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
-    		userDAO.deleteFriend(uemail,femail);
-    		List<User> results = userDAO.getFriend(uemail);
+    		userDAO.deleteFriend(userEmail,friendEmail);
+    		List<User> results = userDAO.getFriend(userEmail);
     
   	    for(int i=0;i<results.size();i++)
   	    {
@@ -176,8 +168,8 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Transactional
-	public boolean isEmailRegistered(String email) {
-		User user = userDAO.getUser(email);
+	public boolean isEmailRegistered(String userEmail) {
+		User user = userDAO.getUser(userEmail);
 		return (user == null) ?  false :  true;
 	}
 	@Transactional
@@ -199,7 +191,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Transactional
-	public Collection<Squeue> getQueue(String email) {
-		return userDAO.getSqueue(email);
+	public Collection<SongQueue> getQueue(String userEmail) {
+		return userDAO.getSongQueue(userEmail);
 	}
 }

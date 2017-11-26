@@ -39,16 +39,16 @@ import org.hibernate.annotations.FetchMode;
  */
 @Entity
 @Table(name = "user", catalog = "panthers", schema = "", uniqueConstraints = {
-		@UniqueConstraint(columnNames = { "uname" }) })
+		@UniqueConstraint(columnNames = { "userName" }) })
 @XmlRootElement
 @NamedQueries({ @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
-		@NamedQuery(name = "User.findByUname", query = "SELECT u FROM User u WHERE u.uname = :uname"),
+		@NamedQuery(name = "User.findByUserName", query = "SELECT u FROM User u WHERE u.userName = :userName"),
 		@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-		@NamedQuery(name = "User.findByUpassword", query = "SELECT u FROM User u WHERE u.upassword = :upassword"),
+		@NamedQuery(name = "User.findByUserPassword", query = "SELECT u FROM User u WHERE u.userPassword = :userPassword"),
 		@NamedQuery(name = "User.findByGender", query = "SELECT u FROM User u WHERE u.gender = :gender"),
 		@NamedQuery(name = "User.findByDob", query = "SELECT u FROM User u WHERE u.dob = :dob"),
-		@NamedQuery(name = "User.findByUtype", query = "SELECT u FROM User u WHERE u.utype = :utype"),
-		@NamedQuery(name = "User.findByUpgradDate", query = "SELECT u FROM User u WHERE u.upgradDate = :upgradDate") })
+		@NamedQuery(name = "User.findByUserType", query = "SELECT u FROM User u WHERE u.userType = :userType"),
+		@NamedQuery(name = "User.findByUpgradeDate", query = "SELECT u FROM User u WHERE u.upgradeDate = :upgradeDate") })
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -64,15 +64,15 @@ public class User implements Serializable {
 	}
 
 	@Size(max = 20)
-	@Column(name = "uname")
-	private String uname;
+	@Column(name = "userName")
+	private String userName;
 
-	public String getUname() {
-		return uname;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUname(String uname) {
-		this.uname = uname;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	@Id
@@ -91,15 +91,15 @@ public class User implements Serializable {
 	}
 
 	@Size(max = 20)
-	@Column(name = "upassword")
-	private String upassword;
+	@Column(name = "userPassword")
+	private String userPassword;
 
-	public String getUpassword() {
-		return upassword;
+	public String getUserPassword() {
+		return userPassword;
 	}
 
-	public void setUpassword(String upassword) {
-		this.upassword = upassword;
+	public void setUserPassword(String userPassword) {
+		this.userPassword = userPassword;
 	}
 
 	@Column(name = "gender")
@@ -125,15 +125,15 @@ public class User implements Serializable {
 		this.dob = dob;
 	}
 
-	@Column(name = "utype")
-	private Integer utype;
+	@Column(name = "userType")
+	private Integer userType;
 
-	public Integer getUtype() {
-		return utype;
+	public Integer getUserType() {
+		return userType;
 	}
 
-	public void setUtype(Integer utype) {
-		this.utype = utype;
+	public void setUserType(Integer userType) {
+		this.userType = userType;
 	}
 
 	@Column(name = "isPublic")
@@ -147,16 +147,16 @@ public class User implements Serializable {
 		this.isPublic = isPublic;
 	}
 
-	@Column(name = "upgradDate")
+	@Column(name = "upgradeDate")
 	@Temporal(TemporalType.DATE)
-	private Date upgradDate;
+	private Date upgradeDate;
 
-	public Date getUpgradDate() {
-		return upgradDate;
+	public Date getUpgradeDate() {
+		return upgradeDate;
 	}
 
-	public void setUpgradDate(Date upgradDate) {
-		this.upgradDate = upgradDate;
+	public void setUpgradeDate(Date upgradeDate) {
+		this.upgradeDate = upgradeDate;
 	}
 
 	@JoinTable(name = "followplaylist", joinColumns = {
@@ -171,8 +171,8 @@ public class User implements Serializable {
 		return followPlaylists;
 	}
 
-	public void setPlaylistCollection(Collection<Playlist> playlistCollection) {
-		this.followPlaylists = playlistCollection;
+	public void setPlaylistCollection(Collection<Playlist> followPlaylists) {
+		this.followPlaylists = followPlaylists;
 	}
 
 	@OneToMany(mappedBy = "powner", fetch = FetchType.EAGER)
@@ -420,15 +420,15 @@ public class User implements Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Collection<Squeue> squeueCollection;
+	private Collection<SongQueue> songQueueCollection;
 
 	@XmlTransient
-	public Collection<Squeue> getSqueueCollection() {
-		return squeueCollection;
+	public Collection<SongQueue> getSongQueueCollection() {
+		return songQueueCollection;
 	}
 
-	public void setSqueueCollection(Collection<Squeue> squeueCollection) {
-		this.squeueCollection = squeueCollection;
+	public void setSongQueueCollection(Collection<SongQueue> songQueueCollection) {
+		this.songQueueCollection = songQueueCollection;
 	}
 
 }

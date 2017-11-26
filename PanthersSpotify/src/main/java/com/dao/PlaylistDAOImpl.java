@@ -55,9 +55,7 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 
 	@Transactional(readOnly=true)
 	public List<Playlist> getPlaylists() {
-		
 		TypedQuery<Playlist> query1 = entityManager.createNamedQuery("Playlist.findAll", Playlist.class);
-
 		List<Playlist> results = query1.getResultList();
 		return results;
 	}

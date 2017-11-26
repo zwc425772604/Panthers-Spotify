@@ -67,7 +67,7 @@ $(document).ready(function(){
 	          width: 450,
 	          modal: true,
 	          resizable: false,
-	          color: black,
+	          //color: Black,
 	          //closeOnEscape: false,
 	          //open: function(event, ui) { $(".ui-dialog-titlebar-close", ui).hide(); }
 	          //closeOnEscape: false,

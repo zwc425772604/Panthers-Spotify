@@ -20,15 +20,16 @@ import com.model.User;
 @Service("userService")
 @Transactional
 public class UserServiceImpl implements UserService {
-	@Autowired(required=true)
+	@Autowired(required = true)
 	@Qualifier("userDAO")
 	private UserDAO userDAO;
-	
+
 	@Transactional
-	public User addUser(String userName, String email,String encPassword,int userType,char gender,String firstName, String middleName, String lastName, String dob) {
-		
-		System.out.println("User Service create invoked:"+userName);
-		User user  = new User();
+	public User addUser(String userName, String email, String encPassword, int userType, char gender, String firstName,
+			String middleName, String lastName, String dob) {
+
+		System.out.println("User Service create invoked:" + userName);
+		User user = new User();
 		user.setEmail(email);
 		user.setUserName(userName);
 		user.setUserPassword(encPassword);
@@ -40,30 +41,31 @@ public class UserServiceImpl implements UserService {
 		user.setPublic(true);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd yyyy hh:mm:ss", Locale.US);
 		Date parsedBirthday = null;
-	    try { 
-	    	parsedBirthday = dateFormat.parse(dob);} 
-	    catch (ParseException e) {
-	        e.printStackTrace();
-	    }
-	    user.setDob(parsedBirthday);
+		try {
+			parsedBirthday = dateFormat.parse(dob);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		user.setDob(parsedBirthday);
 		final String dir = System.getProperty("user.dir");
-        
-        File f1 = new File(dir+"/Users");
-        if(f1.exists())
-        {
-        		System.out.println("here");
-        }
-        File userDir = new File(f1, email);
-        boolean userSuccess = userDir.mkdirs();
-		
+
+		File f1 = new File(dir + "/Users");
+		if (f1.exists()) {
+			System.out.println("here");
+		}
+		File userDir = new File(f1, email);
+		boolean userSuccess = userDir.mkdirs();
+
 		user = userDAO.addUser(user);
 		return user;
 	}
+
 	@Transactional
-	public User updateUser(User user, String userName, int userType,char gender,String firstName, String lastName,boolean isPublic) {
-		
-		System.out.println("Cusomer Service Update invoked:"+userName);
-		//User User  = new User();
+	public User updateUser(User user, String userName, int userType, char gender, String firstName, String lastName,
+			boolean isPublic) {
+
+		System.out.println("Cusomer Service Update invoked:" + userName);
+		// User User = new User();
 		user.setUserName(userName);
 		user.setUserType(userType);
 		user.setGender(gender);
@@ -73,22 +75,21 @@ public class UserServiceImpl implements UserService {
 		user = userDAO.updateUser(user);
 		return user;
 	}
-	
+
 	/* More info to be added */
 	@Transactional
-    public User editUserPassword(User user, String pwd)
-    {
-			
+	public User editUserPassword(User user, String pwd) {
+
 		user.setUserPassword(pwd);
 		user = userDAO.updateUser(user);
 		return user;
-    }
+	}
+
 	@Transactional
 	public void removeUser(User user) {
 		userDAO.deleteUser(user);
-		
+
 	}
-	
 
 	public User getUser(String userEmail) {
 		return userDAO.getUser(userEmail);
@@ -97,99 +98,93 @@ public class UserServiceImpl implements UserService {
 	public List<User> getAllUsers() {
 		return userDAO.getUsers();
 	}
-	
-	
-	@Transactional
-    public List<User> getFriend(String userEmail)
-    {
-       //  Query query1 =
-        //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
-    	List<User> results = userDAO.getFriend(userEmail);
-    
-  	    for(int i=0;i<results.size();i++)
-  	    {
-  	    		System.out.println(results.get(i).getEmail());
-  	    }
-  	    if(results.size()==0)
-  	    {
-  	    		System.out.println("no friends");
-  	    }
-        return results;
-    }
-	
-	@Transactional
-    public List<User> addFriend(String userEmail,String friendEmail)
-    {
-       //  Query query1 =
-        //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
-    		userDAO.addFriend(userEmail,friendEmail);
-    		List<User> results = userDAO.getFriend(userEmail);
-    
-  	    for(int i=0;i<results.size();i++)
-  	    {
-  	    		System.out.println(results.get(i).getEmail());
-  	    }
-  	    if(results.size()==0)
-  	    {
-  	    		System.out.println("no friends");
-  	    }
-        return results;
-    }
-	
-	@Transactional
-    public List<User> deleteFriend(String userEmail,String friendEmail)
-    {
-       //  Query query1 =
-        //em.createQuery("SELECT u FROM User u WHERE u.email = :email").setParameter("email", email);
-    		userDAO.deleteFriend(userEmail,friendEmail);
-    		List<User> results = userDAO.getFriend(userEmail);
-    
-  	    for(int i=0;i<results.size();i++)
-  	    {
-  	    		System.out.println(results.get(i).getEmail());
-  	    }
-  	    if(results.size()==0)
-  	    {
-  	    		System.out.println("no friends");
-  	    }
-        return results;
-    }
 
 	@Transactional
-	public List<User> getUsersByType(int usertype){
-	    	List<User> list = new ArrayList<User>();
-	    	list = userDAO.getUserByUserType(usertype);
-	    	
-	    	return list;
-    }
+	public List<User> getFriend(String userEmail) {
+		// Query query1 =
+		// em.createQuery("SELECT u FROM User u WHERE u.email =
+		// :email").setParameter("email", email);
+		List<User> results = userDAO.getFriend(userEmail);
+
+		for (int i = 0; i < results.size(); i++) {
+			System.out.println(results.get(i).getEmail());
+		}
+		if (results.size() == 0) {
+			System.out.println("no friends");
+		}
+		return results;
+	}
+
 	@Transactional
-	public List<User> getAllArtist(){
+	public List<User> addFriend(String userEmail, String friendEmail) {
+		// Query query1 =
+		// em.createQuery("SELECT u FROM User u WHERE u.email =
+		// :email").setParameter("email", email);
+		userDAO.addFriend(userEmail, friendEmail);
+		List<User> results = userDAO.getFriend(userEmail);
+
+		for (int i = 0; i < results.size(); i++) {
+			System.out.println(results.get(i).getEmail());
+		}
+		if (results.size() == 0) {
+			System.out.println("no friends");
+		}
+		return results;
+	}
+
+	@Transactional
+	public List<User> deleteFriend(String userEmail, String friendEmail) {
+		// Query query1 =
+		// em.createQuery("SELECT u FROM User u WHERE u.email =
+		// :email").setParameter("email", email);
+		userDAO.deleteFriend(userEmail, friendEmail);
+		List<User> results = userDAO.getFriend(userEmail);
+
+		for (int i = 0; i < results.size(); i++) {
+			System.out.println(results.get(i).getEmail());
+		}
+		if (results.size() == 0) {
+			System.out.println("no friends");
+		}
+		return results;
+	}
+
+	@Transactional
+	public List<User> getUsersByType(int usertype) {
+		List<User> list = new ArrayList<User>();
+		list = userDAO.getUserByUserType(usertype);
+
+		return list;
+	}
+
+	@Transactional
+	public List<User> getAllArtist() {
 		return userDAO.getAllArtist();
 	}
-	
+
 	@Transactional
 	public boolean isEmailRegistered(String userEmail) {
 		User user = userDAO.getUser(userEmail);
-		return (user == null) ?  false :  true;
+		return (user == null) ? false : true;
 	}
+
 	@Transactional
-	public void followArtist(String artistEmail,User user)
-	  {
-		    userDAO.followArtist(artistEmail, user.getEmail());
-		  	
-	  }
+	public void followArtist(String artistEmail, User user) {
+		userDAO.followArtist(artistEmail, user.getEmail());
+
+	}
+
 	@Transactional
-	public void unfollowArtist(String artistEmail,User user)
-	  {
-		    userDAO.unfollowArtist(artistEmail, user.getEmail());
-		  	
-	  }
+	public void unfollowArtist(String artistEmail, User user) {
+		userDAO.unfollowArtist(artistEmail, user.getEmail());
+
+	}
+
 	@Transactional
-	public List<Artist> getFollowArtists(User user)
-	{
+	public List<Artist> getFollowArtists(User user) {
 		return userDAO.getFollowArtists(user.getEmail());
 	}
-	
+
 	@Transactional
 	public Collection<SongQueue> getQueue(String userEmail) {
 		return userDAO.getSongQueue(userEmail);

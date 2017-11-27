@@ -83,9 +83,6 @@ public class PlaylistServiceImpl implements PlaylistService {
 		{
 			playlist.setPname(pname);
 		}
-		
-		
-		
 		playlist = playlistDAO.updatePlaylist(playlist);
 		List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
 		return user_playlist;

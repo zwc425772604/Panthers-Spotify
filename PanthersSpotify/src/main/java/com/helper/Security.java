@@ -1,5 +1,8 @@
 package com.helper;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class Security {
@@ -23,4 +26,18 @@ public class Security {
 		return passwordEncoder.matches(password, encryptedPassword);
 	}
 	
+	public static String oldEncryptPassword(String pwd) {
+		String encPwd = null;
+		
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(pwd.getBytes(),0,pwd.length());
+			encPwd = new BigInteger(1,md.digest()).toString(16);
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+		}
+        
+		return encPwd.substring(0, 19);
+	}
 }

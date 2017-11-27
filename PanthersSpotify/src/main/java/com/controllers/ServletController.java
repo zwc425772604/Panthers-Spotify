@@ -82,7 +82,7 @@ public class ServletController {
 	public ModelAndView userLogin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		//String encryptPassword = Security.encryptPassword(password);
+		String encryptPassword = Security.oldEncryptPassword(password);
 		User user = userService.getUser(email);
 		int basicType = Integer.parseInt(environment.getProperty("user.basic"));
 		int premiumType = Integer.parseInt(environment.getProperty("user.premium"));
@@ -91,7 +91,7 @@ public class ServletController {
 		if (user.equals(null)) {
 			mav.setViewName("index");
 			mav.addObject("error_message", "This email does not register on our site!");
-		} else if (Security.matchPassword(password, user.getUserPassword())) {
+		} else if (Security.matchPassword(password, user.getUserPassword())||user.getUserPassword().equals(encryptPassword)) {
 			session.setAttribute("user", user);
 			if (user.getUserType() == basicType) {
 				user.setSongQueueCollection(userService.getQueue(email));
@@ -145,7 +145,7 @@ public class ServletController {
 	public @ResponseBody String userSignUp(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		String encPassword = Security.encryptPassword(password);
+		String encPassword = Security.oldEncryptPassword(password);
 		String email = request.getParameter("email");
 		boolean isEmailRegistered = userService.isEmailRegistered(email);
 		if (isEmailRegistered) {

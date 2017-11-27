@@ -68,8 +68,8 @@ public class Album implements Serializable {
         this.aid = aid;
     }
 
-    @Size(max = 10)
-    @Column(name = "aname", length = 10)
+    @Size(max = 40)
+    @Column(name = "aname", length = 40)
     private String aname;
     public String getAname() {
         return aname;

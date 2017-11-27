@@ -69,10 +69,6 @@ public class ServletController {
 		return "index";
 	}
 
-	// public String index() {
-	//
-	// return "index";
-	// }
 	/* user login */
 	@RequestMapping(value = "/main", method = RequestMethod.POST)
 	public ModelAndView userLogin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
@@ -169,7 +165,7 @@ public class ServletController {
 		String lastName = request.getParameter("lastName");
 		String dob = request.getParameter("dob");
 		System.out.println("dob in userSignUp " + dob);
-		int userType = 0;
+		int userType = Integer.parseInt(environment.getProperty("user.basic"));
 		userService.addUser(username, email, encPassword, userType, gender, firstName, middleName, lastName, dob);
 		String message = "Congratulation, sign up successfully. Please return to homepage for login.";
 		return message; // handle in SignUp.jsp
@@ -181,16 +177,11 @@ public class ServletController {
 			HttpServletRequest request, HttpSession session) {
 		String playlist_name = request.getParameter("playlist_name");
 		String description = request.getParameter("playlist_description");
-		// String pic = request.getParameter("pic");
-		// System.out.println("picture address is "+pic);
 		User user = (User) session.getAttribute("user");
-
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
-		java.sql.Time time = new java.sql.Time(Calendar.getInstance().getTimeInMillis());
-		List<Playlist> user_playlist = playlistService.addPlaylist(playlist_name, user, description, file, date);
-
-		mav.addObject("user_playlist", user_playlist);
-		session.setAttribute("user_playlist", user_playlist);
+		List<Playlist> userPlaylist = playlistService.addPlaylist(playlist_name, user, description, file, date);
+		mav.addObject("user_playlist", userPlaylist);
+		session.setAttribute("user_playlist", userPlaylist);
 		mav.setViewName("main");
 		return mav;
 	}

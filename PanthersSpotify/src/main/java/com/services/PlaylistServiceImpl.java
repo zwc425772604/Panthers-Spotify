@@ -50,16 +50,16 @@ public class PlaylistServiceImpl implements PlaylistService {
 	public List<Playlist> updatePlaylist(int pid, String des,CommonsMultipartFile file, String pname, User user) {
 		
 		
-		Playlist p=new Playlist();
+		Playlist playlist=new Playlist();
 	  	String photoUrl=null;
 	  	int num=findPlaylist(pid,playlistDAO.getPlaylists());
 	  	if(des!=null)
 	  	{
-			p.setDes(des);
+	  		playlist.setDes(des);
 	  	}
-	  	if(p.getPhotoUrl()!=null)
+	  	if(playlist.getPhotoUrl()!=null)
 	  	{
-	  		File deleteFile = new File(p.getPhotoUrl());
+	  		File deleteFile = new File(playlist.getPhotoUrl());
 	  		if(deleteFile.exists())
 	  		{
 	  			deleteFile.delete();
@@ -68,7 +68,6 @@ public class PlaylistServiceImpl implements PlaylistService {
 		if(file!=null)
 		{
 			File playlistFile = new File("Users/"+user.getEmail()+"/playlist"+num);
-			
 			String filename = file.getOriginalFilename();
 		  	if(!playlistFile.exists())
 		  	{
@@ -78,14 +77,16 @@ public class PlaylistServiceImpl implements PlaylistService {
 		  	{
 		  		photoUrl = UploadFile.upload("Users/"+user.getEmail()+"/playlist"+num,filename,file);
 		  	}
-			p.setPhotoUrl(photoUrl);
+		  	playlist.setPhotoUrl(photoUrl);
 		}	
 		if(pname!=null)
-				p.setPname(pname);
+		{
+			playlist.setPname(pname);
+		}
 		
 		
 		
-		Playlist playlist = playlistDAO.updatePlaylist(p);
+		playlist = playlistDAO.updatePlaylist(playlist);
 		List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
 		return user_playlist;
 	}

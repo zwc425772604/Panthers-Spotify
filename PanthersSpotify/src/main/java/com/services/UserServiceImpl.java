@@ -27,7 +27,6 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public User addUser(String userName, String email, String encPassword, int userType, char gender, String firstName,
 			String middleName, String lastName, String dob) {
-
 		System.out.println("User Service create invoked:" + userName);
 		User user = new User();
 		user.setEmail(email);
@@ -47,15 +46,10 @@ public class UserServiceImpl implements UserService {
 			e.printStackTrace();
 		}
 		user.setDob(parsedBirthday);
-		final String dir = System.getProperty("user.dir");
-
+		String dir = System.getProperty("user.dir");
 		File f1 = new File(dir + "/Users");
-		if (f1.exists()) {
-			System.out.println("here");
-		}
 		File userDir = new File(f1, email);
-		boolean userSuccess = userDir.mkdirs();
-
+		userDir.mkdirs();
 		user = userDAO.addUser(user);
 		return user;
 	}

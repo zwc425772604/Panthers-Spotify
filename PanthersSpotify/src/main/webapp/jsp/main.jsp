@@ -72,6 +72,7 @@
             </div>
             <!--Banner Image-->
             <div id = "main-changing-content">
+            	
             </div>
             <!-- closed tag for scrolled-main -->
           </div>

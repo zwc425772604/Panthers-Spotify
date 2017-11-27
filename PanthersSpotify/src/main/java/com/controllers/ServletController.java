@@ -41,7 +41,7 @@ import com.services.SongService;
 import com.services.UserService;
 
 @Controller
-public class servletController {
+public class ServletController {
 	@Autowired(required = true)
 	@Qualifier("userService")
 	private UserService userService;
@@ -134,7 +134,7 @@ public class servletController {
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public ModelAndView displaySignUp(ModelAndView mav) {
 		mav.addObject("signUpMessage", "Welcome to Panthers Spotify!");
-		mav.setViewName("SignUp");
+		mav.setViewName("signUp");
 		return mav;
 	}
 

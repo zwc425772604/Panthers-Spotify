@@ -21,7 +21,7 @@
       <div id ="userInfo" style="margin-top: 4%; margin-left:5%;">
         <h5> Artist Page </h5>
         <p style="font-size: 1.8em;" id="artist-name">
-          <c:out value="${selectedArtist.uname}"></c:out>
+          <c:out value="${selectedArtist.userName}"></c:out>
         </p>
         <div class="col-md-5" style="display:inline;">		            		            
         </div>

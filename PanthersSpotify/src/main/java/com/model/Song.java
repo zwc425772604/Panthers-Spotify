@@ -78,7 +78,7 @@ public class Song implements Serializable {
         this.sid = sid;
     }
 
-    @Size(max = 20)
+    @Size(max = 200)
     @Column(name = "stitle")
     private String stitle;
     public String getStitle() {

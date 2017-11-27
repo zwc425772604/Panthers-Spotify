@@ -31,7 +31,7 @@ import com.model.User;
 import com.helper.CheckPayment;
 import com.helper.JSONHelper;
 import com.helper.Security;
-import com.helper.StringToDateHelper;
+//import com.helper.StringToDateHelper;
 import com.model.Album;
 import com.model.Payment;
 import com.model.Song;
@@ -44,7 +44,7 @@ import com.services.PlaylistService;
 import com.services.SongService;
 import com.services.UserService;
 
-import card.services.VisaService;
+//import card.services.VisaService;
 
 @Controller
 public class ServletController {
@@ -64,9 +64,9 @@ public class ServletController {
 	@Qualifier("albumService")
 	private AlbumService albumService;
 
-	@Autowired(required = true)
-	@Qualifier("visaService")
-	private VisaService visaService;
+//	@Autowired(required = true)
+//	@Qualifier("visaService")
+//	private VisaService visaService;
 
 	@Autowired
 	private Environment environment;
@@ -665,39 +665,39 @@ public class ServletController {
 		return "rejected";
 	}
 
-	@RequestMapping(value = "/upgrade", method = RequestMethod.POST)
-	public @ResponseBody String upgrade(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		String cardNum = request.getParameter("cardNum");
-		boolean isValidCardNum = CheckPayment.verify(cardNum);
-		if (isValidCardNum) {
-			String holdName = request.getParameter("holdName");
-			int cvv = Integer.parseInt(request.getParameter("cvv"));
-			String expirationDate = request.getParameter("expirationDate");
-			java.util.Date expDate = StringToDateHelper.parseToMonthYear(expirationDate);
-			String company = request.getParameter("company");
-			String billingAddress = request.getParameter("billingAddress");
-			User user = (User) session.getAttribute("user");
-			Payment payment = new Payment(holdName, Integer.parseInt(cardNum), cvv, expDate, company, billingAddress,
-					user);
-			boolean charged = visaService.charge(payment, (float) 5.00); // have to change 5.00(magic number)
-			if (charged) {
-				userService.addPayment(payment);
-				userService.upgrade(user);
-				return "ok";
-			} else {
-				return "not enough money or infomation didn't match";
-			}
-		} else {
-			return "invalid card number";
-		}
-	}
-
-	@RequestMapping(value = "/downgrade", method = RequestMethod.POST)
-	public @ResponseBody String downgrade(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		// at the end of the month do it
-		User user = (User) session.getAttribute("user");
-		userService.downgrade(user);
-		return null;
-	}
+//	@RequestMapping(value = "/upgrade", method = RequestMethod.POST)
+//	public @ResponseBody String upgrade(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+//		String cardNum = request.getParameter("cardNum");
+//		boolean isValidCardNum = CheckPayment.verify(cardNum);
+//		if (isValidCardNum) {
+//			String holdName = request.getParameter("holdName");
+//			int cvv = Integer.parseInt(request.getParameter("cvv"));
+//			String expirationDate = request.getParameter("expirationDate");
+//			java.util.Date expDate = StringToDateHelper.parseToMonthYear(expirationDate);
+//			String company = request.getParameter("company");
+//			String billingAddress = request.getParameter("billingAddress");
+//			User user = (User) session.getAttribute("user");
+//			Payment payment = new Payment(holdName, Integer.parseInt(cardNum), cvv, expDate, company, billingAddress,
+//					user);
+//			boolean charged = visaService.charge(payment, (float) 5.00); // have to change 5.00(magic number)
+//			if (charged) {
+//				userService.addPayment(payment);
+//				userService.upgrade(user);
+//				return "ok";
+//			} else {
+//				return "not enough money or infomation didn't match";
+//			}
+//		} else {
+//			return "invalid card number";
+//		}
+//	}
+//
+//	@RequestMapping(value = "/downgrade", method = RequestMethod.POST)
+//	public @ResponseBody String downgrade(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+//		// at the end of the month do it
+//		User user = (User) session.getAttribute("user");
+//		userService.downgrade(user);
+//		return null;
+//	}
 
 }

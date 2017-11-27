@@ -42,7 +42,7 @@
     <div class="w3-third w3-container">
     </div>
     <div class="w3-third w3-container">
-      <button id="findFriend' class="w3-button w3-block w3-section w3-blue w3-ripple">Find</button>
+      <button id="findFriend" class="w3-button w3-block w3-section w3-blue w3-ripple">Find</button>
     </div>
   </div>
 </div>

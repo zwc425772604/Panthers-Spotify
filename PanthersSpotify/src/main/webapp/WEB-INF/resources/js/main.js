@@ -93,25 +93,6 @@ $(document).ready(function(){
 		$("#advertisement").hide();
 	})
 	
-	$("#findFriend").click(function(){	
-		var username = $(".addFriendUsername",this).text();
-		$.ajax({
-	        url: "${cp}/../findFriend",
-	        type: "POST",
-	        data : {"username" : username },
-	        asyn: true,
-	        cache: true,
-	        success : function(response)
-	        {
-	          console.log(response);
-	          $("#main-changing-content").load("jsp/userPage.jsp");
-	        },
-	        error: function(e)
-	        {                	
-	          console.log(e);                 	
-	        }       
-		  });
-	});
 });
 
 
@@ -159,6 +140,27 @@ $(document).on("click", ".playlist-item", function(){
 
 $(document).on("click", "#playbar-queue-button", function () {
   	$("#main-changing-content").load("jsp/queue.jsp");
+});
+
+$(document).on("click", "#findFriend", function () {
+	var username = $("#addFriendUsername").text();
+	$('#addFriendDialog').dialog('close');
+	$.ajax({
+        url: "${cp}/../findFriend",
+        type: "POST",
+        data : {"username" : username },
+        asyn: true,
+        cache: true,
+        success : function(response)
+        {
+         // console.log(response);
+          $("#main-changing-content").load("jsp/userPage.jsp");
+        },
+        error: function(e)
+        {                	
+          console.log(e);                 	
+        }       
+	  });
 });
 
 function displayLeftNavbarContent(nav_name)

@@ -4,7 +4,6 @@ import java.sql.Date;
 import java.util.List;
 
 import com.model.Album;
-import com.model.Song;
 import com.model.User;
 
 public interface AlbumDAO {

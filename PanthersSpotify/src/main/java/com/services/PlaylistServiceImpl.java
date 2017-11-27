@@ -56,7 +56,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 		System.out.println(photoUrl);
 		
 		Playlist = playlistDAO.addPlaylist(playlist);
-		return playlistDAO.getPlaylists();
+		return user_playlist;
 	}
 	@Transactional
 	public List<Playlist> updatePlaylist(int pid, String des,CommonsMultipartFile file, String pname, User user) {
@@ -99,7 +99,8 @@ public class PlaylistServiceImpl implements PlaylistService {
 		
 		
 		Playlist playlist = playlistDAO.updatePlaylist(p);
-		return playlistDAO.getPlaylists();
+		List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
+		return user_playlist;
 	}
 	@Transactional
 	public List<Playlist> removePlaylist(Playlist Playlist) {

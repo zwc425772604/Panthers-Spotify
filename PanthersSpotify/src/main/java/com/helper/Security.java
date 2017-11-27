@@ -13,6 +13,14 @@ public class Security {
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		
         encPwd = passwordEncoder.encode(password);
+        
 		return encPwd;
 	}
+	
+	public static boolean matchPassword(String password,String encryptedPassword)
+	{
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		return passwordEncoder.matches(password, encryptedPassword);
+	}
+	
 }

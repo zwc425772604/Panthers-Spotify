@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Payment.findAll", query = "SELECT p FROM Payment p")
     , @NamedQuery(name = "Payment.findByPayid", query = "SELECT p FROM Payment p WHERE p.payid = :payid")
-    , @NamedQuery(name = "Payment.findByHodlName", query = "SELECT p FROM Payment p WHERE p.hodlName = :hodlName")
+    , @NamedQuery(name = "Payment.findByHoldName", query = "SELECT p FROM Payment p WHERE p.holdName = :holdName")
     , @NamedQuery(name = "Payment.findByCardNum", query = "SELECT p FROM Payment p WHERE p.cardNum = :cardNum")
     , @NamedQuery(name = "Payment.findByCvv", query = "SELECT p FROM Payment p WHERE p.cvv = :cvv")
     , @NamedQuery(name = "Payment.findByExpirationDate", query = "SELECT p FROM Payment p WHERE p.expirationDate = :expirationDate")
@@ -51,7 +51,17 @@ public class Payment implements Serializable {
         this.payid = payid;
     }
 
-    @Id
+    public Payment(String holdName, int cardNum, int cvv, Date expirationDate, String company, String billingAddress, User user) {
+    	this.holdName = holdName;
+    	this.cardNum = cardNum;
+    	this.cvv = cvv;
+    	this.expirationDate = expirationDate;
+    	this.company = company;
+    	this.billingAddress = billingAddress;
+    	this.uemail = user;
+    }
+
+	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Basic(optional = false)
     @NotNull
@@ -65,13 +75,13 @@ public class Payment implements Serializable {
     }
 
     @Size(max = 20)
-    @Column(name = "hodlName", length = 20)
-    private String hodlName;
-    public String getHodlName() {
-        return hodlName;
+    @Column(name = "holdName", length = 20)
+    private String holdName;
+    public String getHoldName() {
+        return holdName;
     }
-    public void setHodlName(String hodlName) {
-        this.hodlName = hodlName;
+    public void setHoldName(String hodlName) {
+        this.holdName = hodlName;
     }
 
     @Column(name = "cardNum")

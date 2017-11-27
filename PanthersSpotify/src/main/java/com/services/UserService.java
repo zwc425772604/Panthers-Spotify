@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.model.Artist;
+import com.model.Payment;
 import com.model.SongQueue;
 import com.model.User;
 
@@ -41,4 +42,10 @@ public interface UserService {
 	public List<Artist> getFollowArtists(User user);
 
 	public Collection<SongQueue> getQueue(String userEmail);
+
+	public void addPayment(Payment payment);
+
+	public void upgrade(User user);
+
+	public void downgrade(User user);
 }

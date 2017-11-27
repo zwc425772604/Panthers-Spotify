@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.model.Artist;
+import com.model.Payment;
 import com.model.SongQueue;
 import com.model.User;
 
@@ -182,5 +183,20 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public Collection<SongQueue> getQueue(String userEmail) {
 		return userDAO.getSongQueue(userEmail);
+	}
+	
+	@Transactional
+	public void addPayment(Payment payment) {
+		userDAO.addPayment(payment);		
+	}
+
+	@Transactional
+	public void upgrade(User user) {
+		userDAO.upgrade(user);		
+	}
+
+	@Transactional
+	public void downgrade(User user) {
+		userDAO.downgrade(user);
 	}
 }

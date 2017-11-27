@@ -2,6 +2,7 @@ package com.dao;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -18,6 +19,7 @@ import com.model.Artist;
 import com.model.Followartist;
 import com.model.Followplaylist;
 import com.model.Friend;
+import com.model.Payment;
 import com.model.Playlist;
 import com.model.SongQueue;
 import com.model.User;
@@ -137,6 +139,25 @@ public class UserDAOImpl implements UserDAO {
 		query.setParameter("uemail", userEmail);
 		Collection<SongQueue> result = (ArrayList<SongQueue>) query.getResultList();
 		return result;
+	}
+	
+	@Transactional(readOnly = false)
+	public void addPayment(Payment payment) {
+		entityManager.persist(payment);		
+	}
+
+	@Transactional(readOnly = false)
+	public void upgrade(User user) {
+		user.setUserType(1);  //here magic number 1:preminume
+		Date date = new Date();
+		user.setUpgradeDate(date);
+		entityManager.merge(user);
+	}
+
+	@Transactional(readOnly = false)
+	public void downgrade(User user) {
+		user.setUserType(0); //here magic number 0:basic user
+		entityManager.merge(user);
 	}
 
 }

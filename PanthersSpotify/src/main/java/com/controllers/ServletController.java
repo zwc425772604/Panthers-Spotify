@@ -28,9 +28,12 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.model.User;
+import com.helper.CheckPayment;
 import com.helper.JSONHelper;
 import com.helper.Security;
+import com.helper.StringToDateHelper;
 import com.model.Album;
+import com.model.Payment;
 import com.model.Song;
 import com.model.SongQueue;
 import com.model.Playlist;
@@ -40,6 +43,8 @@ import com.services.AlbumService;
 import com.services.PlaylistService;
 import com.services.SongService;
 import com.services.UserService;
+
+import card.services.VisaService;
 
 @Controller
 public class ServletController {
@@ -58,10 +63,13 @@ public class ServletController {
 	@Autowired(required = true)
 	@Qualifier("albumService")
 	private AlbumService albumService;
-	
+
+	@Autowired(required = true)
+	@Qualifier("visaService")
+	private VisaService visaService;
+
 	@Autowired
 	private Environment environment;
-	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap map) {
@@ -80,16 +88,12 @@ public class ServletController {
 		int premiumType = Integer.parseInt(environment.getProperty("user.premium"));
 		int artistType = Integer.parseInt(environment.getProperty("user.artist"));
 		int adminType = Integer.parseInt(environment.getProperty("user.admin"));
-		if (user.equals(null)) 
-		{
+		if (user.equals(null)) {
 			mav.setViewName("index");
 			mav.addObject("error_message", "This email does not register on our site!");
-		}
-		else if (user.getUserPassword().equals(encryptPassword)) 
-		{
+		} else if (user.getUserPassword().equals(encryptPassword)) {
 			session.setAttribute("user", user);
-			if (user.getUserType() == basicType) 
-			{
+			if (user.getUserType() == basicType) {
 				user.setSongQueueCollection(userService.getQueue(email));
 				Collection<SongQueue> songQueue = user.getSongQueueCollection();
 				session.setAttribute("songQueue", songQueue);
@@ -97,21 +101,15 @@ public class ServletController {
 				session.setAttribute("user_playlist", userPlaylist);
 				mav.setViewName("main");
 				mav.addObject("username", user.getUserName());
-			}
-			else if (user.getUserType() == artistType) 
-			{
+			} else if (user.getUserType() == artistType) {
 				mav.addObject("username", user.getUserName());
 				mav.setViewName("artistMainPage");
-			}
-			else if (user.getUserType() == adminType) 
-			{
+			} else if (user.getUserType() == adminType) {
 				mav.addObject("username", user.getUserName());
 				mav.setViewName("admin");
 			}
 
-		}
-		else 
-		{
+		} else {
 			mav.addObject("error_message", "Incorrect email or password!");
 			mav.setViewName("index");
 		}
@@ -179,7 +177,7 @@ public class ServletController {
 		mav.setViewName("main");
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/followSpecificPlaylist", method = RequestMethod.POST)
 	public @ResponseBody String followSpecificPlaylist(HttpServletRequest request, HttpSession session) {
 		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
@@ -298,7 +296,8 @@ public class ServletController {
 		String lastName = request.getParameter("lastName");
 		// String iPublic = request.getParameter("isPublic"); need this button
 		boolean isPublic = true;
-		user = userService.updateUser(user, user.getUserName(), user.getUserType(), gender, firstName, lastName, isPublic);
+		user = userService.updateUser(user, user.getUserName(), user.getUserType(), gender, firstName, lastName,
+				isPublic);
 
 		session.setAttribute("user", user);
 		mav.setViewName("main");
@@ -412,7 +411,6 @@ public class ServletController {
 		session.setAttribute("selectedFriend", user);
 		return "ok";
 	}
-	
 
 	@RequestMapping(value = "/addSongToPlaylist", method = RequestMethod.POST)
 	public @ResponseBody String addSongToPlaylist(HttpServletRequest request, HttpSession session) {
@@ -480,25 +478,23 @@ public class ServletController {
 		return "ok";
 	}
 
-	@RequestMapping(value="/search", method = RequestMethod.POST)
-		public @ResponseBody String  search(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-			User user = (User)session.getAttribute("user");
-			String input = request.getParameter("input");
-			List<Playlist> retPlaylist = playlistService.findRelative(input);
-			List<Song> retSong = songService.findRelative(input);
-			List<Album> retAlbum = albumService.findRelative(input);
-			String searchJson;
-			if((retPlaylist.isEmpty() && retSong.isEmpty() && retAlbum.isEmpty())){
-				searchJson = "empty";
-			}
-			else if(input.length() == 0) {
-				searchJson = "";
-			}
-			else {
-				searchJson = JSONHelper.searchToJSON(retSong, retAlbum, retPlaylist);
-			}
-			return searchJson;
+	@RequestMapping(value = "/search", method = RequestMethod.POST)
+	public @ResponseBody String search(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		String input = request.getParameter("input");
+		List<Playlist> retPlaylist = playlistService.findRelative(input);
+		List<Song> retSong = songService.findRelative(input);
+		List<Album> retAlbum = albumService.findRelative(input);
+		String searchJson;
+		if ((retPlaylist.isEmpty() && retSong.isEmpty() && retAlbum.isEmpty())) {
+			searchJson = "empty";
+		} else if (input.length() == 0) {
+			searchJson = "";
+		} else {
+			searchJson = JSONHelper.searchToJSON(retSong, retAlbum, retPlaylist);
 		}
+		return searchJson;
+	}
 
 	// admin action, add artist
 	@RequestMapping(value = "/addArtistToDatabase", method = RequestMethod.POST)
@@ -583,7 +579,7 @@ public class ServletController {
 		session.setAttribute("songQueue", que);
 		Collection<Releasesong> artists = songService.getSongArtists(song);
 		Collection<User> users = new ArrayList<User>();
-		for(Releasesong rs : artists) {
+		for (Releasesong rs : artists) {
 			User user = new User();
 			user = userService.getUser(rs.getReleasesongPK().getUemail());
 			users.add(user);
@@ -598,7 +594,7 @@ public class ServletController {
 		session.setAttribute("songQueue", que);
 		Collection<Releasesong> artists = songService.getSongArtists(song);
 		Collection<User> users = new ArrayList<User>();
-		for(Releasesong rs : artists) {
+		for (Releasesong rs : artists) {
 			User user = new User();
 			user = userService.getUser(rs.getReleasesongPK().getUemail());
 			users.add(user);
@@ -617,8 +613,8 @@ public class ServletController {
 	@RequestMapping(value = "/playPlaylist", method = RequestMethod.GET)
 	public @ResponseBody String getNewsongQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		Collection<SongQueue> orig = (Collection<SongQueue>) session.getAttribute("songQueue");
-		String email = ((User)session.getAttribute("user")).getEmail();
-		Collection<SongQueue> newSq = songService.removeAllQueue(orig,email);
+		String email = ((User) session.getAttribute("user")).getEmail();
+		Collection<SongQueue> newSq = songService.removeAllQueue(orig, email);
 		songService.addPlaylistToQueue(newSq, Integer.parseInt(request.getParameter("pid")), email);
 		session.setAttribute("songQueue", newSq);
 		return "ok";
@@ -627,7 +623,7 @@ public class ServletController {
 	@RequestMapping(value = "/addSongToQueue", method = RequestMethod.GET)
 	public @ResponseBody String addSongToQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
-		String email = ((User)session.getAttribute("user")).getEmail();
+		String email = ((User) session.getAttribute("user")).getEmail();
 		int sid = Integer.parseInt(request.getParameter("sid"));
 		songService.addSongToQueue(que, sid, email);
 		session.setAttribute("songQueue", que);
@@ -637,35 +633,71 @@ public class ServletController {
 	@RequestMapping(value = "/addPlaylistToQueue", method = RequestMethod.GET)
 	public @ResponseBody String addPlaylistToQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
-		String email = ((User)session.getAttribute("user")).getEmail();
+		String email = ((User) session.getAttribute("user")).getEmail();
 		songService.addPlaylistToQueue(que, Integer.parseInt(request.getParameter("pid")), email);
 		session.setAttribute("songQueue", que);
 		return "ok";
 	}
 
-    @RequestMapping(value="/getSpecificAlbum", method = RequestMethod.POST)
-    public @ResponseBody String getSpecificAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {
- 	    String albumIDString = request.getParameter("albumID");
- 	    int albumID = Integer.parseInt(albumIDString);
- 	    Album album = albumService.getAlbum(albumID);
- 	    session.setAttribute("selectedAlbum",album);
-    	return "ok";
-    }
-		@RequestMapping(value="/approveSongByAdmin", method = RequestMethod.POST)
-		public @ResponseBody String approveSong(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-			int songID = Integer.parseInt(request.getParameter("songID").trim());
-			String status = "approved";
-			songService.updateReleaseSong(songID,status);
-			return "approved";
-		}
+	@RequestMapping(value = "/getSpecificAlbum", method = RequestMethod.POST)
+	public @ResponseBody String getSpecificAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		String albumIDString = request.getParameter("albumID");
+		int albumID = Integer.parseInt(albumIDString);
+		Album album = albumService.getAlbum(albumID);
+		session.setAttribute("selectedAlbum", album);
+		return "ok";
+	}
 
-		@RequestMapping(value="/removeSongByAdmin", method = RequestMethod.POST)
-		public @ResponseBody String removeSongByAdmin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-			int songID = Integer.parseInt(request.getParameter("songID").trim());
-			String status = "rejected";
-			songService.updateReleaseSong(songID,status);
-			//need to delete the song from file system
-			return "rejected";
+	@RequestMapping(value = "/approveSongByAdmin", method = RequestMethod.POST)
+	public @ResponseBody String approveSong(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		int songID = Integer.parseInt(request.getParameter("songID").trim());
+		String status = "approved";
+		songService.updateReleaseSong(songID, status);
+		return "approved";
+	}
+
+	@RequestMapping(value = "/removeSongByAdmin", method = RequestMethod.POST)
+	public @ResponseBody String removeSongByAdmin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		int songID = Integer.parseInt(request.getParameter("songID").trim());
+		String status = "rejected";
+		songService.updateReleaseSong(songID, status);
+		// need to delete the song from file system
+		return "rejected";
+	}
+
+	@RequestMapping(value = "/upgrade", method = RequestMethod.POST)
+	public @ResponseBody String upgrade(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		String cardNum = request.getParameter("cardNum");
+		boolean isValidCardNum = CheckPayment.verify(cardNum);
+		if (isValidCardNum) {
+			String holdName = request.getParameter("holdName");
+			int cvv = Integer.parseInt(request.getParameter("cvv"));
+			String expirationDate = request.getParameter("expirationDate");
+			java.util.Date expDate = StringToDateHelper.parseToMonthYear(expirationDate);
+			String company = request.getParameter("company");
+			String billingAddress = request.getParameter("billingAddress");
+			User user = (User) session.getAttribute("user");
+			Payment payment = new Payment(holdName, Integer.parseInt(cardNum), cvv, expDate, company, billingAddress,
+					user);
+			boolean charged = visaService.charge(payment, (float) 5.00); // have to change 5.00(magic number)
+			if (charged) {
+				userService.addPayment(payment);
+				userService.upgrade(user);
+				return "ok";
+			} else {
+				return "not enough money or infomation didn't match";
+			}
+		} else {
+			return "invalid card number";
 		}
+	}
+
+	@RequestMapping(value = "/downgrade", method = RequestMethod.POST)
+	public @ResponseBody String downgrade(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		// at the end of the month do it
+		User user = (User) session.getAttribute("user");
+		userService.downgrade(user);
+		return null;
+	}
 
 }

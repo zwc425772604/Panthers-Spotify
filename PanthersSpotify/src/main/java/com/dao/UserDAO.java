@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.model.Artist;
+import com.model.Payment;
 import com.model.SongQueue;
 import com.model.User;
 
@@ -22,4 +23,7 @@ public interface UserDAO {
 	public void followArtist(String artistEmail,String userEmail);
 	public List<Artist> getFollowArtists(String userEmail);
 	public Collection<SongQueue> getSongQueue(String userEmail);
+	public void addPayment(Payment payment);
+	public void upgrade(User user);
+	public void downgrade(User user);
 }

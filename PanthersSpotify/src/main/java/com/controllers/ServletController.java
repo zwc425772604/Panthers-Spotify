@@ -75,7 +75,6 @@ public class ServletController {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String encryptPassword = Security.encryptPassword(password);
-
 		User user = userService.getUser(email);
 		int basicType = Integer.parseInt(environment.getProperty("user.basic"));
 		int premiumType = Integer.parseInt(environment.getProperty("user.premium"));
@@ -86,25 +85,16 @@ public class ServletController {
 			mav.setViewName("index");
 			mav.addObject("error_message", "This email does not register on our site!");
 		}
-		// case 1: email and password match in database record
-		// if true - get the playlist, etc from the database and update the DOM
 		else if (user.getUserPassword().equals(encryptPassword)) 
 		{
 			session.setAttribute("user", user);
-			
-			// user page
 			if (user.getUserType() == basicType) 
 			{
 				user.setSongQueueCollection(userService.getQueue(email));
 				Collection<SongQueue> songQueue = user.getSongQueueCollection();
 				session.setAttribute("songQueue", songQueue);
-				
 				List<Playlist> userPlaylist = (List<Playlist>) (user.getUserPlaylistCollection());
-				List<Playlist> followPlaylist = (List<Playlist>) playlistService.getFollowPlaylists(user.getEmail());
-				userPlaylist.addAll(followPlaylist);
-				
 				session.setAttribute("user_playlist", userPlaylist);
-				
 				mav.setViewName("main");
 				mav.addObject("username", user.getUserName());
 			}
@@ -113,7 +103,6 @@ public class ServletController {
 				mav.addObject("username", user.getUserName());
 				mav.setViewName("artistMainPage");
 			}
-			// display admin page
 			else if (user.getUserType() == adminType) 
 			{
 				mav.addObject("username", user.getUserName());
@@ -121,7 +110,6 @@ public class ServletController {
 			}
 
 		}
-		// case 2: incorrect email or password
 		else 
 		{
 			mav.addObject("error_message", "Incorrect email or password!");
@@ -190,6 +178,25 @@ public class ServletController {
 		session.setAttribute("user_playlist", userPlaylist);
 		mav.setViewName("main");
 		return mav;
+	}
+	
+	@RequestMapping(value = "/followSpecificPlaylist", method = RequestMethod.POST)
+	public @ResponseBody String followSpecificPlaylist(HttpServletRequest request, HttpSession session) {
+		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
+		User user = (User) session.getAttribute("user");
+		boolean ret = playlistService.followPlaylist(playlistID, user);
+		System.out.println("playlist id to be follow is : " + playlistID);
+		return "ok";
+	}
+
+	@RequestMapping(value = "/unfollowSpecificPlaylist", method = RequestMethod.POST)
+	public @ResponseBody String unfollowSpecificPlaylist(HttpServletRequest request, HttpSession session) {
+		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
+		User user = (User) session.getAttribute("user");
+		boolean ret = playlistService.unfollowPlaylist(playlistID, user);
+		System.out.println("here is unfollow");
+		System.out.println("playlist id to be unfollow is : " + playlistID);
+		return "ok";
 	}
 
 	/* edit specific playlist */
@@ -405,24 +412,7 @@ public class ServletController {
 		session.setAttribute("selectedFriend", user);
 		return "ok";
 	}
-	@RequestMapping(value = "/followSpecificPlaylist", method = RequestMethod.POST)
-	public @ResponseBody String followSpecificPlaylist(HttpServletRequest request, HttpSession session) {
-		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
-		User user = (User) session.getAttribute("user");
-		boolean ret = playlistService.followPlaylist(playlistID, user);
-		System.out.println("playlist id to be follow is : " + playlistID);
-		return "ok";
-	}
-
-	@RequestMapping(value = "/unfollowSpecificPlaylist", method = RequestMethod.POST)
-	public @ResponseBody String unfollowSpecificPlaylist(HttpServletRequest request, HttpSession session) {
-		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
-		User user = (User) session.getAttribute("user");
-		boolean ret = playlistService.unfollowPlaylist(playlistID, user);
-		System.out.println("here is unfollow");
-		System.out.println("playlist id to be unfollow is : " + playlistID);
-		return "ok";
-	}
+	
 
 	@RequestMapping(value = "/addSongToPlaylist", method = RequestMethod.POST)
 	public @ResponseBody String addSongToPlaylist(HttpServletRequest request, HttpSession session) {

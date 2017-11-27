@@ -156,7 +156,9 @@ $(document).on("click", ".playlist-item", function(){
 });
 
 
-
+$(document).on("click", "#playbar-queue-button", function () {
+  	$("#main-changing-content").load("jsp/queue.jsp");
+});
 
 function displayLeftNavbarContent(nav_name)
 {

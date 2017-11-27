@@ -53,3 +53,15 @@ function validateFormInputs()
 	    }
   
   }
+
+function checkPassword(password, password_confirm)
+{
+  if (password.localeCompare(password_confirm) == 0)
+  {
+    return 0;
+  }
+  else {
+    return -1;
+  }
+}
+

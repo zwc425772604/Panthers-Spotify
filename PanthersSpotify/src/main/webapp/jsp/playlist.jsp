@@ -7,7 +7,7 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Insert title here</title>
+    <title>Playlist - Panthers Spotify</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-dark-grey.css">
     <link rel="stylesheet" href="${cp}/resources/css/playlist.css">
@@ -45,8 +45,7 @@
               Created by: 
               <a href="#">
                 <c:out value="${selectedPlaylist.powner.uname}"></c:out>
-              </a>
-              ⋅ 
+              </a>              ⋅ 
               <span id="num_song">
                 <c:out value="${selectedPlaylistNumSongs}"></c:out>
                 song 

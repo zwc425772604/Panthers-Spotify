@@ -1,20 +1,9 @@
-<%-- 
-  Document   : browse
-  Created on : Oct 19, 2017, 8:55:35 PM
-  Author     : Weichao ZHao
-  --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
+<script src="${cp}/resources/js/leftSidebar.js"></script>
 <!DOCTYPE html>
-<script>
-  $(document).ready(function(){
-      //hide all other containers in <div id= 'middle-content'> beside except overview_container
-      $("#overview_container").siblings().hide();
-     
-    });
-</script>
 <ul class="nav flex-column" >
   <!--First Section: browse and radio-->
   <li class="nav-item" id="extra-padding">
@@ -108,12 +97,3 @@
     </c:if>
   </li>
 </ul>
-<script>
-  w3.includeHTML();
-  function displayContainer(name)
-  {
-    var n = "#" + name;
-    $(n).siblings().hide();
-    $(n).show();
-  }
-</script>

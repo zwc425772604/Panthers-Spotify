@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="${cp}/resources/js/main.js"></script> 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="${cp}/resources/css/home.css">
@@ -26,11 +25,6 @@
         <div class="col-sm-4 col-md-4">
           <div id="bannerimage" style="background-image: url(https://pro.keepvid.com/images/en/spotify/spotify-logo2.jpg); no repeat"></div>
           <div id = "loginForm">
-            <!--                <div class="wrapper" style="margin-top:3%;">
-              <button type="button" class="btn formButton" id="facebookButton">LOG IN WITH FACEBOOK</button>
-              </div>
-              <br>
-              <p style="text-align:center; color: gray;font-size:1.5em;"> OR </p>-->
             <br>
             <div>
               <p id="error_message" style="color:#ff4d4d; font-size:2em; "> ${error_message}</p>

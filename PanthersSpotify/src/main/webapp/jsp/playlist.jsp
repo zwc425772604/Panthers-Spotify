@@ -44,8 +44,8 @@
             <p style="font-size: 1.1em;">
               Created by: 
               <a href="#">
-                <c:out value="${selectedPlaylist.powner.uname}"></c:out>
-              </a>              ⋅ 
+                <c:out value="${selectedPlaylist.powner.userName}"></c:out>
+              </a>
               <span id="num_song">
                 <c:out value="${selectedPlaylistNumSongs}"></c:out>
                 song 

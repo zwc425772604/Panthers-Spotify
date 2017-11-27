@@ -25,4 +25,5 @@ public interface PlaylistService {
 	public List<Playlist> addHistoryPlaylist(Playlist playlist,User user,Date date);
 	public List<Playlist> deleteHistoryPlaylist(Playlist playlist,User user);
 	public Collection<Playlist> getUserPlaylists(String email);
+	public Collection<Playlist> getFollowPlaylists(String userEmail);
 }

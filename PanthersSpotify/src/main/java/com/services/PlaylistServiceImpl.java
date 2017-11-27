@@ -122,8 +122,8 @@ public class PlaylistServiceImpl implements PlaylistService {
 	@Transactional
 	public boolean followPlaylist(int playlistId,User user)
 	  {
-		  List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
-	  	  int playlistIndex = findPlaylist(playlistId,user_playlist);
+		  List<Playlist> userPlaylist = (List<Playlist>)(user.getUserPlaylistCollection());
+	  	  int playlistIndex = findPlaylist(playlistId,userPlaylist);
 	  	  
 	  	  if(playlistIndex!=-1)
 	  	  {
@@ -132,7 +132,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 		    Playlist result = playlistDAO.getPlaylist(playlistId);
 		    
 		    playlistDAO.followPlaylist(playlistId, user.getEmail());
-		  	user_playlist.add(result);
+		  	userPlaylist.add(result);
 		  	return true;
 	  }
 	@Transactional
@@ -194,5 +194,10 @@ public class PlaylistServiceImpl implements PlaylistService {
 	@Transactional
 	public Collection<Playlist> getUserPlaylists(String email) {
 		return playlistDAO.getUserPlaylists(email);
+	}
+	
+	@Transactional
+	public Collection<Playlist> getFollowPlaylists(String userEmail) {
+		return playlistDAO.getFollowedPlaylist(userEmail);
 	}
 }

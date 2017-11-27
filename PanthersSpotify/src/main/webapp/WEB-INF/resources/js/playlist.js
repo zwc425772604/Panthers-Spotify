@@ -45,41 +45,43 @@ $(document).ready(function(){
   });
   
   
-  $(".followPlaylistButton").click(function(){
-		var status = $("#followingPlaylistStatus").text();
-		var pid = $("#playlistID").text();
-		
-		if (status.localeCompare('FOLLOW') == 0 )
-		{
-			$.ajax({
-				url: "followSpecificPlaylist",
-				type: "POST",
-				data: {"playlistID" : pid},
-				asyn: true,
-				cache: false,
-				success: function(response)
-				{
-					console.log(response);
-					$("#followingPlaylistStatus").html("UNFOLLOW");
-				}
-			});
-		}
-		else
-		{
-			$.ajax({
-				url: "unfollowSpecificPlaylist",
-				type: "POST",
-				data: {"playlistID" : pid},
-				asyn: true,
-				cache: false,
-				success: function(response)
-				{
-					console.log(response);
-					$("#followingPlaylistStatus").html("FOLLOW");
-				}
-			});
-		}
-	});
+});
+
+$(document).on ("click", ".followPlaylistButton", function () {
+	var status = $("#followingPlaylistStatus").text().trim();
+	var pid = $("#playlistID").text().trim();
+	console.log(status);
+	if (status.localeCompare('FOLLOW') == 0 )
+	{
+		$.ajax({
+			url: "followSpecificPlaylist",
+			type: "POST",
+			data: {"playlistID" : pid},
+			asyn: false,
+			cache: false,
+			success: function(response)
+			{
+				console.log(response);
+				$("#followingPlaylistStatus").html("UNFOLLOW");
+			}
+		});
+	}
+	else
+	{
+		$.ajax({
+			url: "unfollowSpecificPlaylist",
+			type: "POST",
+			data: {"playlistID" : pid},
+			asyn: false,
+			cache: false,
+			success: function(response)
+			{
+				console.log(response);
+				$("#followingPlaylistStatus").html("FOLLOW");
+			}
+		});
+	}
+
 });
 
 //style for the filter container

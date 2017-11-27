@@ -58,9 +58,6 @@
                 <c:if test="${selectedPlaylist.powner != user}">
                   <button class="w3-button w3-round-xxlarge formButton followPlaylistButton" >
                     <span id="followingPlaylistStatus" >
-                      <c:if test='${fn:contains(list, "two")}'>
-                        My list contains two <br/>
-                      </c:if>
                       <c:choose>
                         <c:when test="${fn:contains(userFollowedPlaylists,selectedPlaylist)}">
                           UNFOLLOW

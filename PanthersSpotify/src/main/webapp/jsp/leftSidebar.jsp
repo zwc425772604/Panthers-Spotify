@@ -3,6 +3,7 @@
 <c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <script src="${cp}/resources/js/leftSidebar.js"></script>
+<link rel="stylesheet" href="${cp}/resources/css/leftSidebar.css">
 <!DOCTYPE html>
 <ul class="nav flex-column" >
   <!--First Section: browse and radio-->
@@ -34,42 +35,47 @@
     <button  class="unstyle-buttons btn btn-info btn-lg " id="new_playlist_button" style="width: auto;" >
     <i class="fa fa-plus" aria-hidden="true" style="margin-right: 10%;"></i>New Playlist</button>
   </li>
-  <div id="dialog" title="Create Playlist" style="display:none; color:black;">
+  <div id="dialog" title="Create Playlist" style="display:none; background: #2f2f2f">
     <!-- create playlist -->
-    <form:form action="createPlaylist" method="POST" enctype="multipart/form-data" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
+    <form:form action="createPlaylist" method="POST" enctype="multipart/form-data">
       <div class="w3-row w3-section">
-        <div class="w3-col" style="width:50px"><span style="font-size: 14px">Name</span></div>
-        <div class="w3-rest">
+        <div style="width:50px"><span id="dialog-font">Name</span></div>
+        <div >
           <input class="w3-input w3-border" name="playlist_name" type="text" id="new_playlist_name" placeholder="Playlist name">
         </div>
       </div>
-      <div class="w3-row w3-section">
-        <div class="w3-col" style="width:50px"><span style="font-size: 14px">Image</span></div>
-        <div class="w3-rest">
-          <input class="w3-input w3-border" type="file" name="file">
-        </div>
+      <div class="w3-row">
+      	<div class="w3-col m5 l3" id="dialog-image-box">
+	      <div >
+	        <div><span id="dialog-font">Image</span></div>
+	        <div>
+	          <img id="dialog-file-image" src="http://xn--80adh8aedqi8b8f.xn--p1ai/uploads/images/d/a/v/david_guetta_ft_nicki_minaj_afrojack_hey_mama.jpg">
+	          <input class="w3-input" type="file" name="file" id="dialog-file-box">
+	        </div>
+	      </div>
+	    </div>
+	    <div class="w3-col m5 l8">
+	      <!--<div class="w3-row w3-section">
+	        <div class="w3-rest">
+	          <img src ="http://xn--80adh8aedqi8b8f.xn--p1ai/uploads/images/d/a/v/david_guetta_ft_nicki_minaj_afrojack_hey_mama.jpg" class="img-responsive" width="200px" height="200px">
+	        </div>
+	        </div>-->
+	      <div class="w3-row w3-section" id="dialog-textarea-header">
+	        <div class="w3-col" style="width:30px"><span id="dialog-font">Description</span></div>
+	        <div class="w3-col" style="width:30px; float:right; margin-right: 30px;"><span id="dialog-font">1/100</span></div>
+	      </div>
+	      <div class="w3-row w3-section">
+	        <textarea id="dialog-textarea" class="w3-input w3-border" rows="8" cols="70" name="playlist_description" placeholder="Give your playlist a catchy description"></textarea>
+	      </div>
+	    </div>
       </div>
-      <!--<div class="w3-row w3-section">
-        <div class="w3-rest">
-          <img src ="https://pbs.twimg.com/profile_images/1642161716/music_logo.png" class="img-responsive" width="200px" height="200px">
-        </div>
-        </div>-->
-      <div class="w3-row w3-section">
-        <div class="w3-col" style="width:30px"><span style="font-size: 1.2em">Description</span></div>
-        <div class="w3-col" style="width:30px; float:right; margin-right: 30px;"><span style="font-size: 1.2em">1/100</span></div>
-      </div>
-      <div class="w3-row w3-section">
-        <textarea class="w3-input w3-border" rows="4" cols="50" name="playlist_description" placeholder="Give your playlist a catchy description">
-        </textarea>
-      </div>
-      <div class="w3-row w3-section">
+      <div class="w3-row " id="dialog-buttons">
         <div class="w3-third w3-container">
-          <button onclick="event.preventDefault(); $('#dialog').dialog('close');" class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>
+          <button id="dialog-button-cancel" onclick="event.preventDefault(); $('#dialog').dialog('close');" class="w3-button w3-block w3-section w3-ripple">Cancel</button>
         </div>
-        <div class="w3-third w3-container">
-        </div>
-        <div class="w3-third w3-container">
-          <button type="submit" class="w3-button w3-block w3-section w3-blue w3-ripple">Create</button>
+        
+        <div class="w3-third w3-container" >
+          <button id="dialog-button" type="submit" class="w3-button w3-block w3-section w3-green w3-ripple">Create</button>
         </div>
       </div>
     </form:form>

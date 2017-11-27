@@ -1,0 +1,63 @@
+.ui-dialog{
+	background: #2f2f2f;
+	border: none !important;
+}
+.ui-dialog-titlebar{
+	background: #2f2f1f;
+	color: white;
+	border: none !important;
+	text-align: center;
+	margin-left: 5vw;
+}
+
+.ui-dialog-titlebar-close{
+	visibility: hidden !important;
+}
+#dialog{
+	background: #2f2f2f ;
+	color: white;
+	overflow:hidden;
+}
+
+#dialog-file-image{
+	height: 14vh;
+	margin-top: 6vh;
+	margin-left: 3.5vh;
+	margin-right: 3.5vh;
+	margin-bottom: 1vh;
+}
+
+#dialog-font{
+	color: white;
+}
+
+#dialog-textarea-header{
+	width: 36vw;
+}
+#dialog-textarea{
+	width: 34vw;
+}
+#dialog-image-box{
+	margin-top: 2.6%;
+	margin-right: 3%;
+}
+#dialog-file-box{
+	height: auto;
+	text-align: center;
+	border: none;
+}
+
+#dialog-buttons{
+	padding-left: 12vw;
+	margin: 0;
+}
+
+#dialog-button{
+	border-radius: 40px;
+}
+
+#dialog-button-cancel{
+	border-radius: 40px;
+	border: 1px solid white !important;
+	
+}

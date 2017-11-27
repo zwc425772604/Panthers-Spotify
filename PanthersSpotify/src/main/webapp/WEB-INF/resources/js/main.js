@@ -63,10 +63,11 @@ $(document).ready(function(){
 	$("#new_playlist_button").click(function(){
 	 	 $('#dialog').dialog({
 	          //autoOpen: true,
-	          height: 400,
-	          width: 450,
+	          height: 430,
+	          width: 700,
 	          modal: true,
 	          resizable: false,
+	          background: "#2f2f2f",
 	          //color: Black,
 	          //closeOnEscape: false,
 	          //open: function(event, ui) { $(".ui-dialog-titlebar-close", ui).hide(); }

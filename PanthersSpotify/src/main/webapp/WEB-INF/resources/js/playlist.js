@@ -1,7 +1,7 @@
 var hoverEnabled = true;
 $(document).ready(function(){
-  $(".more_action_list").hide(); //hide the ... button when page is loaded
-  $(".playbar-play-button").hide(); //hide the play button when page is loaded
+	$(".more_action_list").css('visibility','hidden'); //hide the ... button when page is loaded
+	   $(".playbar-play-button").css('visibility','hidden'); //hide the play button when page is loaded
   $("#remove_playlist_button").click(function(){
 
 	 	
@@ -119,23 +119,23 @@ $(".tracklist-save-button")
 
 
 $( ".song_info" ).bind({
-  mouseover: function() {
-    if (hoverEnabled)
-    {
-      $(".more_action_list",this).show();
-      $(".playbar-play-button",this).show();
-    }
-
-  },
-  mouseout: function() {
-    if (hoverEnabled)
-    {
-      $(".more_action_list",this).hide();
-      $(".playbar-play-button",this).hide();
-    }
-
-  }
-});
+	   mouseover: function() {
+	     if (hoverEnabled)
+	     {
+	       $(".more_action_list",this).css('visibility','visible');
+	       $(".playbar-play-button",this).css('visibility','visible');
+	     }
+	  
+	   },
+	   mouseout: function() {
+	     if (hoverEnabled)
+	     {
+	       $(".more_action_list",this).css('visibility','hidden');
+	       $(".playbar-play-button",this).css('visibility','hidden');
+	     }
+	  
+	   }
+	  });
 
 $(".more_button").click(function()
 {

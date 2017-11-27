@@ -5,6 +5,82 @@
     -webkit-appearance: searchfield-cancel-button;
   }
 
+#playlist-top-background{
+	background: -webkit-linear-gradient(top, #6b6969, #343a40);
+	margin-top: -5%;
+}
+.playlist-top{
+	color: white;
+	margin-top: 5%;
+	margin-left: 5%;
+	
+}
+
+.playlist_image_box{
+	margin-top: 5%;
+}
+.playlist-details-box{
+	margin-top: 5%;
+	margin-left: 2%;
+	width: 50vw;
+}
+
+#playlist-page-title{
+	margin-top: 4%;
+	margin-bottom: 0;
+	color: #d7d7d7;
+	font-size: 0.9em;
+}
+
+#playlist-name{
+	font-size: 2.5em;
+	margin-top:0;
+	margin-bottom: 1%;
+	
+}
+
+#playlist-des{
+	margin-top: 0;
+	font-size: 1em;
+	font-weight: light;
+	margin-bottom: 1.5%;
+	color: #d7d7d7;
+}
+
+#playlist-create{
+	margin-top: 0;
+	font-size: 1em;
+	font-weight: light;
+	margin-bottom: 2%;
+	color: #d7d7d7;
+}
+
+#play-button{
+	border-radius: 40px;
+	margin-right: 1%;
+	
+}
+
+#playlist-play-top{
+	width: auto;
+	margin-left: 2%;
+}
+
+#play-dropdown{
+	
+}
+#play-dropdown: hover{
+	background: transparent;
+}
+
+#playlist-follower{
+	float:right;
+}
+
+#playlist-song-collection{
+	margin-top: 7%;
+	width: 90%;
+}
   #search_span
   {
     background-color: #343a40;
@@ -61,4 +137,3 @@
   {
   	float: left;
   } 
-}

@@ -80,7 +80,7 @@
             <c:when test="${user.userType == 0}">
               <div id="advertisement">
                 <button id="ad-close"><i class="fa fa-times-circle" aria-hidden="true" style="margin-right: 10%;"></i></button>
-                <img height="100em" src="http://dsim.in/blog/wp-content/uploads/2017/01/samsung2.jpg">
+                <img height="75em" src="http://dsim.in/blog/wp-content/uploads/2017/01/samsung2.jpg">
               </div>
             </c:when>
           </c:choose>

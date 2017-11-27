@@ -15,7 +15,7 @@
       <c:forEach var="overviewPlaylist" items="${overviewPlaylist}">
         <div class="col-xs-6 col-sm-4 col-md-2 col-sm-2 placeholder medium-boxes">
           <a class="playlist-item">
-          <object width=100% height=width data="http://www.designformusic.com/wp-content/uploads/2015/10/insurgency-digital-album-cover-design.jpg" type="image/png">
+          <object width=100% height=width data="https://s.discogs.com/images/default-release-cd.png" type="image/png">
           <img src="${overviewPlaylist.photoUrl}"  class="img-rounded" alt="Generic placeholder thumbnail">
           </object>
           <span style="display:none;" class="playlist_id">${overviewPlaylist.pid}</span>

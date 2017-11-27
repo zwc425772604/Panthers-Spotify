@@ -593,7 +593,10 @@ th{
 {
 	height: 16uh;
 	text-align: center;
-	background-color: #3E3E3e;
+	background-color: #343a40;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	border-top: 0.025px solid #47505c;
 }
 #ad-close
 {

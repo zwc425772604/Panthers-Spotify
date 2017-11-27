@@ -6,6 +6,7 @@
 package com.model;
 
 import java.io.Serializable;
+import java.sql.Time;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -40,7 +41,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Song.findAll", query = "SELECT s FROM Song s")
     , @NamedQuery(name = "Song.findBySid", query = "SELECT s FROM Song s WHERE s.sid = :sid")
     , @NamedQuery(name = "Song.findByStitle", query = "SELECT s FROM Song s WHERE s.stitle = :stitle")
-    , @NamedQuery(name = "Song.findByStime", query = "SELECT s FROM Song s WHERE s.stime = :stime")
+    , @NamedQuery(name = "Song.findByDuration", query = "SELECT s FROM Song s WHERE s.duration = :duration")
     , @NamedQuery(name = "Song.findByReleaseDay", query = "SELECT s FROM Song s WHERE s.releaseDay = :releaseDay")
     , @NamedQuery(name = "Song.findByMonthlyPlayed", query = "SELECT s FROM Song s WHERE s.monthlyPlayed = :monthlyPlayed")
     , @NamedQuery(name = "Song.findByGener", query = "SELECT s FROM Song s WHERE s.gener = :gener")
@@ -51,9 +52,9 @@ public class Song implements Serializable {
     public Song() {
     }
 
-    public Song(String songTitle, Date songTime, Date releaseDay, int monthlyPlayed, String genre, String type, String url) {
+    public Song(String songTitle, Date duration, Date releaseDay, int monthlyPlayed, String genre, String type, String url) {
     	this.stitle = songTitle;
-    	this.stime = songTime;
+    	this.duration = duration;
     	this.releaseDay = releaseDay;
         this.monthlyPlayed = monthlyPlayed;
     	this.gener = genre;
@@ -88,14 +89,14 @@ public class Song implements Serializable {
         this.stitle = stitle;
     }
 
-    @Column(name = "stime")
+    @Column(name = "duration")
     @Temporal(TemporalType.TIME)
-    private Date stime;
-    public Date getStime() {
-        return stime;
+    private Date duration;
+    public Date getDuration() {
+        return duration;
     }
-    public void setStime(Date stime) {
-        this.stime = stime;
+    public void setDuration(Date duration) {
+        this.duration = duration;
     }
 
     @Column(name = "releaseDay")

@@ -363,8 +363,10 @@ public class ServletController {
 	@RequestMapping(value = "/findFriend", method = RequestMethod.POST)
 	public ModelAndView findFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		String username = request.getParameter("username");
-		User temp = userService.getUser(username);
+		String userEmail = request.getParameter("username");
+		System.out.println("userEmail is "+userEmail);
+		
+		User temp = userService.getUser(userEmail);
 		if (temp == null) {
 			System.out.println("GG");
 		} else {

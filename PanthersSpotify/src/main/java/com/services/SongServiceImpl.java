@@ -32,13 +32,13 @@ public class SongServiceImpl implements SongService {
 	private PlaylistDAO playlistDAO;
 
 	@Transactional
-	public Song addSong(String stitle, Time stime, Date releaseDate, Album aid, int monthlyPlayed, String genre,
+	public Song addSong(String stitle, Time duration, Date releaseDate, Album aid, int monthlyPlayed, String genre,
 			String stype, String surl) {
 
 		System.out.println("Song Service create invoked:" + stitle);
 		Song song = new Song();
 		song.setStitle(stitle);
-		song.setStime(stime);
+		song.setDuration(duration);
 		song.setReleaseDay(releaseDate);
 		song.setAlbumId(aid);
 		song.setMonthlyPlayed(monthlyPlayed);
@@ -60,13 +60,13 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Transactional
-	public Song updateSong(String stitle, Time stime, Date releaseDate, Album aid, int monthlyPlayed, String genre,
+	public Song updateSong(String stitle, Time duration, Date releaseDate, Album aid, int monthlyPlayed, String genre,
 			String stype, String surl) {
 
 		System.out.println("Cusomer Service Update invoked:" + stitle);
 		Song song = new Song();
 		song.setStitle(stitle);
-		song.setStime(stime);
+		song.setDuration(duration);
 		song.setReleaseDay(releaseDate);
 		song.setAlbumId(aid);
 		song.setMonthlyPlayed(monthlyPlayed);

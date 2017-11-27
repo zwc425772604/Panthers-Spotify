@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -57,6 +58,10 @@ public class ServletController {
 	@Autowired(required = true)
 	@Qualifier("albumService")
 	private AlbumService albumService;
+	
+	@Autowired
+	private Environment environment;
+	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap map) {
@@ -72,46 +77,51 @@ public class ServletController {
 	@RequestMapping(value = "/main", method = RequestMethod.POST)
 	public ModelAndView userLogin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String email = request.getParameter("email");
-		String nonEncPwd = request.getParameter("password");
-		String password = Security.encryptPassword(nonEncPwd);
+		String password = request.getParameter("password");
+		String encryptPassword = Security.encryptPassword(password);
 
 		User user = userService.getUser(email);
-		System.out.println("user is " + user.getFirstName());
-
-		// case 0: if the email is not registered
-		if (user.equals(null)) {
+		int basicType = Integer.parseInt(environment.getProperty("user.basic"));
+		int premiumType = Integer.parseInt(environment.getProperty("user.premium"));
+		int artistType = Integer.parseInt(environment.getProperty("user.artist"));
+		int adminType = Integer.parseInt(environment.getProperty("user.admin"));
+		if (user.equals(null)) 
+		{
 			mav.setViewName("index");
 			mav.addObject("error_message", "This email does not register on our site!");
 		}
 		// case 1: email and password match in database record
 		// if true - get the playlist, etc from the database and update the DOM
-		else if (user.getUserPassword().equals(password)) {
+		else if (user.getUserPassword().equals(encryptPassword)) 
+		{
 			session.setAttribute("user", user);
 			user.setSongQueueCollection(userService.getQueue(email));
 			Collection<SongQueue> que = user.getSongQueueCollection();
 			session.setAttribute("songQueue", que);
 			// user page
-			if (user.getUserType() == 0) {
+			if (user.getUserType() == basicType) 
+			{
 				mav.addObject("username", user.getUserName());
-				List<Playlist> user_playlist = (List<Playlist>) (user.getUserPlaylistCollection());
-				session.setAttribute("user_playlist", user_playlist);
+				List<Playlist> userPlaylist = (List<Playlist>) (user.getUserPlaylistCollection());
+				session.setAttribute("user_playlist", userPlaylist);
 				mav.setViewName("main");
 			}
-			if (user.getUserType() == 2) {
-			mav.addObject("username", user.getUserName());
-			mav.setViewName("artistMainPage");
+			else if (user.getUserType() == artistType) 
+			{
+				mav.addObject("username", user.getUserName());
+				mav.setViewName("artistMainPage");
 			}
 			// display admin page
-			if (user.getUserType() == 3) {
+			else if (user.getUserType() == adminType) 
+			{
 				mav.addObject("username", user.getUserName());
 				mav.setViewName("admin");
 			}
 
 		}
 		// case 2: incorrect email or password
-		else {
-			System.out.println(password);
-			System.out.println(user.getUserPassword());
+		else 
+		{
 			mav.addObject("error_message", "Incorrect email or password!");
 			mav.setViewName("index");
 		}
@@ -150,7 +160,6 @@ public class ServletController {
 		String encPassword = Security.encryptPassword(password);
 		String email = request.getParameter("email");
 		boolean isEmailRegistered = userService.isEmailRegistered(email);
-		System.out.println("isEmailRegistered value :" + isEmailRegistered);
 		if (isEmailRegistered) {
 			return "failed";
 		}

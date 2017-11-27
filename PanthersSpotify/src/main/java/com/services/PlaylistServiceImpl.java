@@ -32,36 +32,23 @@ public class PlaylistServiceImpl implements PlaylistService {
 	private PlaylistDAO playlistDAO;
 	
 	@Transactional
-	public List<Playlist> addPlaylist(String playlistName,User user, String description,CommonsMultipartFile file,Date date) {
-		
-		System.out.println("Playlist Service create invoked:"+playlistName);
-		Playlist Playlist  = new Playlist();
-		List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
-
-    	String filename = file.getOriginalFilename();
-    	File playlistFile = new File("Users/"+user.getEmail()+"/playlist"+user_playlist.size());
-    	if(!playlistFile.exists())
-    	{
-    		playlistFile.mkdirs();
-    	}
-    	else
-    	{
-    		System.out.println("exist fail");
-    	}
-    	
-    	System.out.println(playlistFile.getAbsolutePath());
-    	
-    	String photoUrl = UploadFile.upload("Users/"+user.getEmail()+"/playlist"+user_playlist.size(),filename,file);
+	public List<Playlist> addPlaylist(String playlistName,User user, String description,CommonsMultipartFile file,Date date) 
+	{
+		List<Playlist> userPlaylists = (List<Playlist>)(user.getUserPlaylistCollection());
+	    	String filename = file.getOriginalFilename();
+	    	File playlistFile = new File("Users/"+user.getEmail()+"/playlist"+userPlaylists.size());
+	    	playlistFile.mkdirs();
+	    	String photoUrl = UploadFile.upload(playlistFile.getAbsolutePath(),filename,file);
 		Playlist playlist = new Playlist(playlistName,description,photoUrl,0,0,date,user);
-		System.out.println(photoUrl);
-		
-		Playlist = playlistDAO.addPlaylist(playlist);
-		return user_playlist;
+		playlist = playlistDAO.addPlaylist(playlist);
+		userPlaylists.add(playlist);
+		return userPlaylists;
 	}
+	
+	
 	@Transactional
 	public List<Playlist> updatePlaylist(int pid, String des,CommonsMultipartFile file, String pname, User user) {
 		
-		System.out.println("Cusomer Service Update invoked:"+pid);
 		
 		Playlist p=new Playlist();
 	  	String photoUrl=null;

@@ -3,6 +3,8 @@ package com.config;
 import org.springframework.context.annotation.Bean;  
 import org.springframework.context.annotation.ComponentScan;  
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -17,6 +19,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 @ComponentScan("com")
 @EnableWebMvc   
 @EnableTransactionManagement
+@PropertySource("classpath:app.properties")
 public class Config extends WebMvcConfigurerAdapter {  
       
     @Bean  
@@ -51,5 +54,9 @@ public class Config extends WebMvcConfigurerAdapter {
         CommonsMultipartResolver resolver=new CommonsMultipartResolver();
         resolver.setDefaultEncoding("utf-8");
         return resolver;
+    }
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer placeHolderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
     }
 }  

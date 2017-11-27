@@ -41,7 +41,6 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	@Transactional(readOnly=false)
 	public void deletePlaylist(Playlist Playlist) {
 		entityManager.remove(entityManager.contains(Playlist) ? Playlist : entityManager.merge(Playlist));
-		
 	}
 
 	@Transactional(readOnly=true)
@@ -68,6 +67,16 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 		  List<Playlist> result = query.getResultList();
 		  
 		  return result;
+	  }
+	
+	@Transactional(readOnly=true)
+	 public List<Playlist> getFollowedPlaylist(String userEmail){
+	  	 String queryString = "SELECT playlist FROM Playlist playlist WHERE playlist.pid in(SELECT f.followplaylistPK.pid from Followplaylist f where f.followplaylistPK.uemail=:uemail)"; 	  
+	  	Query query = entityManager.createQuery(queryString);
+	  	query.setParameter("uemail", userEmail);
+    		List<Playlist>	list = (List<Playlist>)query.getResultList();
+		  
+		  return list;
 	  }
 	
 	@Transactional(readOnly=false)

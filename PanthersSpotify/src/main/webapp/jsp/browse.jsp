@@ -15,7 +15,9 @@
     $("#overview_container").siblings().hide();
   });
 </script>
-<div id="bannerimage" style="background-image: url(http://ep.id-t.com/dam/asset/pictures/website-content/newsitems/banner-sensation-spotify-playlist-.jpeg?uuid=6j3c6dvv5ncwviv4yuwizw7tfa);"></div>
+<div id="bannerimage">
+  <h1 class="suggestion-topic" id="browse-title">Browse</h1>
+</div>
 <!--NavBar-->
 <nav class="navbar navbar-expand-md bg-dark navbar-dark"
   id="bootstrap-overrides-navbar">

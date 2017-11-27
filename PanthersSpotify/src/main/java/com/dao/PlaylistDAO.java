@@ -24,4 +24,5 @@ public interface PlaylistDAO {
 	public void updatePlaylistHistory(Playlist playlist,User user, Date date);
 	public List<Playlist> getHistoryPlaylists(String userEmail);
 	public Collection<Playlist> getUserPlaylists(String email);
+	public List<Playlist> getFollowedPlaylist(String userEmail);
 }

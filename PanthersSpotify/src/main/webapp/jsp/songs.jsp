@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="${cp}/resources/css/songs.css">
 </head>
 <div class="suggestion-container" id = "release-container" style="margin-top: 3%;">
-  <div class="suggestion-container-top">
+  <div class="suggestion-container-top ">
     <h3 class="suggestion-topic" style="font-size: 4em;">Song</h3>
   </div>
   <div class = "">

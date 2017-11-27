@@ -91,16 +91,22 @@ public class ServletController {
 		else if (user.getUserPassword().equals(encryptPassword)) 
 		{
 			session.setAttribute("user", user);
-			user.setSongQueueCollection(userService.getQueue(email));
-			Collection<SongQueue> que = user.getSongQueueCollection();
-			session.setAttribute("songQueue", que);
+			
 			// user page
 			if (user.getUserType() == basicType) 
 			{
-				mav.addObject("username", user.getUserName());
+				user.setSongQueueCollection(userService.getQueue(email));
+				Collection<SongQueue> songQueue = user.getSongQueueCollection();
+				session.setAttribute("songQueue", songQueue);
+				
 				List<Playlist> userPlaylist = (List<Playlist>) (user.getUserPlaylistCollection());
+				List<Playlist> followPlaylist = (List<Playlist>) playlistService.getFollowPlaylists(user.getEmail());
+				userPlaylist.addAll(followPlaylist);
+				
 				session.setAttribute("user_playlist", userPlaylist);
+				
 				mav.setViewName("main");
+				mav.addObject("username", user.getUserName());
 			}
 			else if (user.getUserType() == artistType) 
 			{
@@ -175,11 +181,11 @@ public class ServletController {
 	@RequestMapping(value = "/createPlaylist", method = RequestMethod.POST)
 	public ModelAndView createPlaylist(ModelAndView mav, @RequestParam(value = "file") CommonsMultipartFile file,
 			HttpServletRequest request, HttpSession session) {
-		String playlist_name = request.getParameter("playlist_name");
+		String playlistName = request.getParameter("playlist_name");
 		String description = request.getParameter("playlist_description");
 		User user = (User) session.getAttribute("user");
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
-		List<Playlist> userPlaylist = playlistService.addPlaylist(playlist_name, user, description, file, date);
+		List<Playlist> userPlaylist = playlistService.addPlaylist(playlistName, user, description, file, date);
 		mav.addObject("user_playlist", userPlaylist);
 		session.setAttribute("user_playlist", userPlaylist);
 		mav.setViewName("main");

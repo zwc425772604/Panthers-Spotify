@@ -207,8 +207,9 @@ function insertPendingSongsTables(data)
 					  '<td>' + data[i]['songTitle'] + '</td>',
 					  '<td>' + data[i]['songArtist'].join() + '</td>',
 					  '<td>' + data[i]['songGenre'] + '</td>',
-					  '<td><button class="unstyle-buttons delete-playlist-button"  data-toggle="tooltip-play" title="Approve this song"> <i class="material-icons">check</i></button></td>',
-					  '<td><button class="unstyle-buttons delete-playlist-button"  data-toggle="tooltip-play" title="Remove this song"> <i class="material-icons">close</i></button></td>',
+						'<td>Pending</td>',
+ 					  '<td><button class="unstyle-buttons approveSongButton"  data-toggle="tooltip-play" title="Approve this song"> <i class="material-icons">check</i></button></td>',
+ 					  '<td><button class="unstyle-buttons removeSongButton"  data-toggle="tooltip-play" title="Remove this song"> <i class="material-icons">close</i></button></td>',
 					 '</tr>'
 				].join(''));
 				songs.push(data[i]['songID']);
@@ -260,6 +261,51 @@ $(document).on ("click", ".delete-playlist-button", function () {
 	        error: function(e)
 	        {
 
+	          console.log(e);
+	        }
+	      });
+});
+
+
+$(document).on ("click", ".approveSongButton", function () {
+	var songID = $(this).closest('tr').children('td:eq(0)').text();
+	var stat = $(this).closest('tr').children('td:eq(4)').text();
+	console.log("status is " + stat);
+	console.log("song id is " + songID);
+	 $.ajax({
+	        url: "{cp}/../approveSongByAdmin",
+	        data: {"songID" : songID},
+	        type: "POST",
+	        asyn: false,
+	        cache: false,
+	        success : function(response)
+	        {
+	          console.log(response);
+						$(this).closest('tr').children('td:eq(4)').text("Hello world!");
+	        },
+	        error: function(e)
+	        {
+
+	          console.log(e);
+	        }
+	      });
+					$(this).closest('tr').children('td:eq(4)').text("Hello world!");
+});
+
+$(document).on ("click", ".removeSongButton", function () {
+	var songID = $(this).closest('tr').children('td:eq(0)').text();
+	 $.ajax({
+	        url: "{cp}/../removeSongByAdmin",
+	        data: {"songID" : songID},
+	        type: "POST",
+	        asyn: false,
+	        cache: false,
+	        success : function(response)
+	        {
+	          console.log(response);
+	        },
+	        error: function(e)
+	        {
 	          console.log(e);
 	        }
 	      });

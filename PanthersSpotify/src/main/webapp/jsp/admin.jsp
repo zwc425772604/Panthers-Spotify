@@ -56,7 +56,7 @@
            x.className = x.className.replace(" w3-show", "");
        }
       }
-      
+
       function addUser(){
        $("#main-changing-content").load("jsp/adminAddUser.jsp");
       }
@@ -101,7 +101,7 @@
 									<span style="font-size: 0.8em">Artist Name</span>
 								</div>
 								<div class="w3-rest">
-									<input class="w3-input w3-border" name="artist-name"
+									<input class="w3-input w3-border" name="artistName"
 										type="text" placeholder="Artist's stage name">
 								</div>
 							</div>
@@ -111,7 +111,7 @@
 								</div>
 								<div class="w3-rest">
 									<input class="w3-input w3-border" type="email"
-										name="artist-email" placeholder="Artist Email Address">
+										name="artistEmail" placeholder="Artist Email Address">
 								</div>
 							</div>
 							<div class="w3-row w3-section">
@@ -119,7 +119,7 @@
 									<span style="font-size: 0.8em">Password</span>
 								</div>
 								<div class="w3-rest">
-									<input class="w3-input w3-border" name="artist-password"
+									<input class="w3-input w3-border" name="artistPassword"
 										type="password" placeholder="Password">
 								</div>
 							</div>
@@ -128,8 +128,17 @@
 									<span style="font-size: 0.8em">Artist First Name</span>
 								</div>
 								<div class="w3-rest">
-									<input class="w3-input w3-border" name="artist-first-name"
+									<input class="w3-input w3-border" name="artistFirstName"
 										type="text" placeholder="First name">
+								</div>
+							</div>
+							<div class="w3-row w3-section">
+								<div class="w3-col" style="width: 50px">
+									<span style="font-size: 0.8em">Artist Middle Name</span>
+								</div>
+								<div class="w3-rest">
+									<input class="w3-input w3-border" name="artistMiddleName"
+										type="text" placeholder="Last name">
 								</div>
 							</div>
 							<div class="w3-row w3-section">
@@ -137,7 +146,7 @@
 									<span style="font-size: 0.8em">Artist Last Name</span>
 								</div>
 								<div class="w3-rest">
-									<input class="w3-input w3-border" name="artist-last-name"
+									<input class="w3-input w3-border" name="artistLastName"
 										type="text" placeholder="Last name">
 								</div>
 							</div>
@@ -159,7 +168,7 @@
 									</div>
 									<div class="w3-rest">
 										<textarea class="form-control w3-border" rows="5"
-											name="artist-biography" placeholder="Artist Biography"></textarea>
+											name="artistBiography" placeholder="Artist Biography"></textarea>
 									</div>
 								</div>
 								<div class="w3-row w3-section">
@@ -168,7 +177,7 @@
 									</div>
 									<div class="w3-rest">
 										<input class="w3-input w3-border" type="date"
-											placeholder="Date of Birth (yyyy-mm-dd)" name="artist-dob"
+											placeholder="Date of Birth (yyyy-mm-dd)" name="artistDOB"
 											required>
 									</div>
 								</div>

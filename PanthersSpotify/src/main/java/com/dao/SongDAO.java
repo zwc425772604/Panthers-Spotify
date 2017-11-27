@@ -26,4 +26,6 @@ public interface SongDAO {
 	public SongQueue addSongToQueue(int sid, String userEmail);
 	public Song setNowPlay(Collection<SongQueue> que, int sid);
 	public int removeAllQueue(String userEmail);
+	public List<Releasesong> getAllSongsByID(int songID);
+	public void updateReleaseSong(Releasesong rs);
 }

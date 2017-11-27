@@ -96,7 +96,7 @@ public class JSONHelper {
 			jsonObject.put("songTitle", s.getStitle());
 			jsonObject.put("songGenre", s.getGener());
 			jsonObject.put("songArtist", map.get(sid));
-
+			arr.put(jsonObject);
 		}
 		return arr.toString();
 	}

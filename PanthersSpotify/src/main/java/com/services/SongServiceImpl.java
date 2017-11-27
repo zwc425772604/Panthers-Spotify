@@ -275,4 +275,15 @@ public class SongServiceImpl implements SongService {
 	public Collection<Releasesong> getSongArtists(Song song) {
 		return songDAO.getSongArtists(song);
 	}
+
+	@Transactional
+	public void updateReleaseSong(int songID, String status) {
+		List<Releasesong> releaseSong = songDAO.getAllSongsByID(songID);
+		for (Releasesong rs : releaseSong)
+		{
+			rs.setStatus(status);
+			songDAO.updateReleaseSong(rs);
+		}
+
+	}
 }

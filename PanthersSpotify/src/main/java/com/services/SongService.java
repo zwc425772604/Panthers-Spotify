@@ -35,4 +35,5 @@ public interface SongService {
 	public Collection<SongQueue> shuffleQueue(Collection<SongQueue> que);
 	public Collection<SongQueue> removeAllQueue(Collection<SongQueue> que, String email);
 	public Collection<SongQueue> nextUp(Collection<SongQueue> que);
+	public void updateReleaseSong(int songID, String status);
 }

@@ -175,4 +175,17 @@ public class SongDAOImpl implements SongDAO {
 		Query query = entityManager.createNamedQuery("Releasesong.findBySid").setParameter("sid", song.getSid());
 		return (Collection<Releasesong>) query.getResultList();
 	}
+	@Transactional(readOnly = true)
+	public List<Releasesong> getAllSongsByID(int songID) {
+		TypedQuery<Releasesong> query = entityManager.createNamedQuery("Releasesong.findBySid", Releasesong.class)
+				.setParameter("sid", songID);
+		List<Releasesong> result = query.getResultList();
+		return result;
+	}
+
+	@Transactional(readOnly = false)
+	public void updateReleaseSong(Releasesong rs) {
+		entityManager.merge(rs);
+
+	}
 }

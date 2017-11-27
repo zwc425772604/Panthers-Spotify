@@ -97,6 +97,10 @@ public class ServletController {
 				session.setAttribute("user_playlist", user_playlist);
 				mav.setViewName("main");
 			}
+			if (user.getUserType() == 2) {
+			mav.addObject("username", user.getUserName());
+			mav.setViewName("artistMainPage");
+			}
 			// display admin page
 			if (user.getUserType() == 3) {
 				mav.addObject("username", user.getUserName());
@@ -484,8 +488,8 @@ public class ServletController {
 		public @ResponseBody String  search(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 			User user = (User)session.getAttribute("user");
 			String input = request.getParameter("input");
-			List<Playlist> retPlaylist = playlistService.findRelative(input);		
-			List<Song> retSong = songService.findRelative(input);		
+			List<Playlist> retPlaylist = playlistService.findRelative(input);
+			List<Song> retSong = songService.findRelative(input);
 			List<Album> retAlbum = albumService.findRelative(input);
 			String searchJson;
 			if((retPlaylist.isEmpty() && retSong.isEmpty() && retAlbum.isEmpty())){
@@ -510,7 +514,7 @@ public class ServletController {
 		String artistFirstName = request.getParameter("artistFirstName");
 		String artistMiddleName = request.getParameter("artistMiddleName");
 		String artistLastName = request.getParameter("artistLastName");
-		// String artistBiography = request.getParameter("artistBiography");
+		String artistBiography = request.getParameter("artistBiography");
 		String artistDOB = request.getParameter("artistDOB");
 		char gender = request.getParameter("gender").charAt(0);
 		int userType = 2;
@@ -586,11 +590,11 @@ public class ServletController {
 		for(Releasesong rs : artists) {
 			User user = new User();
 			user = userService.getUser(rs.getReleasesongPK().getUemail());
-			users.add(user);			
+			users.add(user);
 		}
 		return JSONHelper.songToJSON(song, users);
 	}
-	
+
 	@RequestMapping(value = "/nextSong", method = RequestMethod.POST)
 	public @ResponseBody String getNextSong(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
@@ -601,11 +605,11 @@ public class ServletController {
 		for(Releasesong rs : artists) {
 			User user = new User();
 			user = userService.getUser(rs.getReleasesongPK().getUemail());
-			users.add(user);			
+			users.add(user);
 		}
 		return JSONHelper.songToJSON(song, users);
 	}
-	
+
 	@RequestMapping(value = "/shuffle", method = RequestMethod.POST)
 	public @ResponseBody String shuffleQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
@@ -613,7 +617,7 @@ public class ServletController {
 		session.setAttribute("songQueue", que);
 		return "ok";
 	}
-	
+
 	@RequestMapping(value = "/playPlaylist", method = RequestMethod.GET)
 	public @ResponseBody String getNewsongQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		Collection<SongQueue> orig = (Collection<SongQueue>) session.getAttribute("songQueue");
@@ -623,17 +627,17 @@ public class ServletController {
 		session.setAttribute("songQueue", newSq);
 		return "ok";
 	}
-	
+
 	@RequestMapping(value = "/addSongToQueue", method = RequestMethod.GET)
 	public @ResponseBody String addSongToQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
 		String email = ((User)session.getAttribute("user")).getEmail();
 		int sid = Integer.parseInt(request.getParameter("sid"));
 		songService.addSongToQueue(que, sid, email);
-		session.setAttribute("songQueue", que);		
+		session.setAttribute("songQueue", que);
 		return "ok";
 	}
-	
+
 	@RequestMapping(value = "/addPlaylistToQueue", method = RequestMethod.GET)
 	public @ResponseBody String addPlaylistToQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
@@ -651,6 +655,21 @@ public class ServletController {
  	    session.setAttribute("selectedAlbum",album);
     	return "ok";
     }
+		@RequestMapping(value="/approveSongByAdmin", method = RequestMethod.POST)
+		public @ResponseBody String approveSong(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+			int songID = Integer.parseInt(request.getParameter("songID").trim());
+			String status = "approved";
+			songService.updateReleaseSong(songID,status);
+			return "approved";
+		}
+
+		@RequestMapping(value="/removeSongByAdmin", method = RequestMethod.POST)
+		public @ResponseBody String removeSongByAdmin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+			int songID = Integer.parseInt(request.getParameter("songID").trim());
+			String status = "rejected";
+			songService.updateReleaseSong(songID,status);
+			//need to delete the song from file system
+			return "rejected";
+		}
 
 }
-

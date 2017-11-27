@@ -49,6 +49,7 @@
         <th>Song Title</th>
         <th>Artist</th>
         <th>Genre</th>
+        <th>Status</th>
         <%-- <th>Created Date</th> --%>
         <th></th>
         <th></th>

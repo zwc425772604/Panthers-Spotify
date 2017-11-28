@@ -6,6 +6,7 @@
 package com.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -18,6 +19,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -49,6 +51,8 @@ public class SongQueue implements Serializable {
     @JoinColumn(name = "sid", referencedColumnName = "sid", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private Song song;
+    @Transient
+    private Collection<User> artists;
     
     
 
@@ -126,5 +130,15 @@ public class SongQueue implements Serializable {
 
     public void setAddedTime(Date addedTime) {
         this.addedTime = addedTime;
-    }    
+    }
+
+    @Transient
+    public Collection<User> getArtistsCollection() {
+    	return this.artists;
+    }
+    
+    @Transient
+    public void setArtistsCollection(Collection<User> artists) {
+    	this.artists = artists;
+    }
 }

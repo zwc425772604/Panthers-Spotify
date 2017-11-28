@@ -28,4 +28,5 @@ public interface SongDAO {
 	public int removeAllQueue(String userEmail);
 	public List<Releasesong> getAllSongsByID(int songID);
 	public void updateReleaseSong(Releasesong rs);
+	public Collection<User> getSongArtists(Integer sid);
 }

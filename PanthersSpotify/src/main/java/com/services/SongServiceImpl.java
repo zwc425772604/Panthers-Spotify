@@ -38,7 +38,7 @@ public class SongServiceImpl implements SongService {
 		System.out.println("Song Service create invoked:" + stitle);
 		Song song = new Song();
 		song.setStitle(stitle);
-		song.setStime(stime);
+		song.setDuration(stime);
 		song.setReleaseDay(releaseDate);
 		song.setAlbumId(aid);
 		song.setMonthlyPlayed(monthlyPlayed);
@@ -66,7 +66,7 @@ public class SongServiceImpl implements SongService {
 		System.out.println("Cusomer Service Update invoked:" + stitle);
 		Song song = new Song();
 		song.setStitle(stitle);
-		song.setStime(stime);
+		song.setDuration(stime);
 		song.setReleaseDay(releaseDate);
 		song.setAlbumId(aid);
 		song.setMonthlyPlayed(monthlyPlayed);
@@ -284,6 +284,15 @@ public class SongServiceImpl implements SongService {
 			rs.setStatus(status);
 			songDAO.updateReleaseSong(rs);
 		}
+	}
 
+	@Transactional
+	public void setArtistsCollection(Collection<SongQueue> songQueue) {
+		Iterator<SongQueue> it = (Iterator<SongQueue>)songQueue.iterator();
+		while (it.hasNext()) {
+			SongQueue que = it.next();
+			Collection<User> artists = songDAO.getSongArtists(que.getSong().getSid());
+			que.setArtistsCollection(artists);
+		}
 	}
 }

@@ -44,7 +44,6 @@ import com.services.PlaylistService;
 import com.services.SongService;
 import com.services.UserService;
 
-import card.services.VisaService;
 
 @Controller
 public class ServletController {
@@ -63,10 +62,6 @@ public class ServletController {
 	@Autowired(required = true)
 	@Qualifier("albumService")
 	private AlbumService albumService;
-
-	@Autowired(required = true)
-	@Qualifier("visaService")
-	private VisaService visaService;
 
 	@Autowired
 	private Environment environment;
@@ -98,6 +93,7 @@ public class ServletController {
 				Collection<SongQueue> songQueue = user.getSongQueueCollection();
 				session.setAttribute("songQueue", songQueue);
 				List<Playlist> userPlaylist = (List<Playlist>) (user.getUserPlaylistCollection());
+				songService.setArtistsCollection(songQueue);
 				session.setAttribute("user_playlist", userPlaylist);
 				mav.setViewName("main");
 				mav.addObject("username", user.getUserName());
@@ -239,7 +235,6 @@ public class ServletController {
 	@RequestMapping(value = "/getSpecificPlaylist", method = RequestMethod.POST)
 	public @ResponseBody String getSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		int playlist_id = Integer.parseInt(request.getParameter("playlist_id"));
-
 		Playlist playlist = playlistService.getPlaylist(playlist_id);
 		String pname = playlist.getPname();
 		System.out.println("playlist name is :" + pname);
@@ -679,14 +674,9 @@ public class ServletController {
 			User user = (User) session.getAttribute("user");
 			Payment payment = new Payment(holdName, Integer.parseInt(cardNum), cvv, expDate, company, billingAddress,
 					user);
-			boolean charged = visaService.charge(payment, (float) 5.00); // have to change 5.00(magic number)
-			if (charged) {
-				userService.addPayment(payment);
-				userService.upgrade(user);
-				return "ok";
-			} else {
-				return "not enough money or infomation didn't match";
-			}
+			userService.addPayment(payment);
+			userService.upgrade(user);
+			return "ok";
 		} else {
 			return "invalid card number";
 		}

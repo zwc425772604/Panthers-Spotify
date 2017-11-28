@@ -118,6 +118,11 @@ public class ServletController {
 
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public ModelAndView mainPage(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		if (session.getAttribute("user") == null)
+		{
+			mav.setViewName("index");
+			return mav;
+		}
 		mav.setViewName("main");
 		return mav;
 	}
@@ -361,20 +366,20 @@ public class ServletController {
 	}
 
 	@RequestMapping(value = "/findFriend", method = RequestMethod.POST)
-	public ModelAndView findFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	public @ResponseBody String findFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		String userEmail = request.getParameter("username");
+		String userEmail = request.getParameter("userEmail");
 		System.out.println("userEmail is "+userEmail);
 		
 		User temp = userService.getUser(userEmail);
 		if (temp == null) {
 			System.out.println("GG");
+			return "null";
 		} else {
+			System.out.println("user found");
 			session.setAttribute("selectedFriend", temp);
 		}
-		mav.setViewName("main");
-		mav.addObject("username", user.getEmail());
-		return mav;
+		return "ok";
 	}
 
 	@RequestMapping(value = "/addFriend", method = RequestMethod.POST)

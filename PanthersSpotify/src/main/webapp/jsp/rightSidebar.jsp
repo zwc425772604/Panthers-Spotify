@@ -29,20 +29,23 @@
 </c:if>
 <button id="addFriendButton" class="w3-button right-col-button">FIND FRIENDS</button>
 <div id="addFriendDialog" title="Add Friend" style="display:none;">
-  <div class="w3-row w3-section">
-    <div class="w3-col" style="width:70px"><span style="font-size: 12px">Username</span></div>
-    <div class="w3-rest">
-      <input class="w3-input w3-border" name="addFriendUsername" type="text" id="addFriendUsername" placeholder="Username of your friend">
-    </div>
-  </div>
-  <div class="w3-row w3-section">
-    <div class="w3-third w3-container">
-      <button onclick="event.preventDefault(); $('#addFriendDialog').dialog('close');" class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>
-    </div>
-    <div class="w3-third w3-container">
-    </div>
-    <div class="w3-third w3-container">
-      <button id="findFriend" class="w3-button w3-block w3-section w3-blue w3-ripple">Find</button>
-    </div>
-  </div>
+ 	<form id="findFriendForm">
+	  <div class="w3-row w3-section">
+	    <div class="w3-col" style="width:70px"><span style="font-size: 12px">Username</span></div>
+	    <div class="w3-rest">
+	      <input class="w3-input w3-border" name="addFriendUserEmail" type="email" id="addFriendUserEmail" placeholder="Email of your friend">
+	    </div>
+	  </div>
+	  <div class="w3-row w3-section">
+	    <div class="w3-third w3-container">
+	      <button onclick="event.preventDefault(); $('#addFriendDialog').dialog('close');" class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>
+	    </div>
+	    <div class="w3-third w3-container">
+	    	<p id="findFriendMessage"></p>
+	    </div>
+	    <div class="w3-third w3-container">
+	      <input id="findFriend" type="submit" class="w3-button w3-block w3-section w3-blue w3-ripple">Find</button>
+	    </div>
+	  </div>
+	 </form>
 </div>

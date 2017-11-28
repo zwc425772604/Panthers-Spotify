@@ -156,9 +156,9 @@ $(".playbar-play-button").click(function(){
 });
 
 $(".AddFriendButton").click(function(){
-	var status = $("#friendStatus").text();
-	var email = $("#friendEmail",this).text();
-	
+	var status = $("#friendStatus").text().trim();
+	var email = $("#friendEmail",this).text().trim();
+	console.log("add friend button clicked");
 	if (status.localeCompare('Add Friend') == 0 )
 	{
 		$.ajax({

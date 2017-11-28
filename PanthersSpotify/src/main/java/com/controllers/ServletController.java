@@ -26,6 +26,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.model.User;
+import com.model.UserType;
 import com.helper.CheckPayment;
 import com.helper.JSONHelper;
 import com.helper.Security;
@@ -87,29 +88,55 @@ public class ServletController {
 			mav.addObject("error_message", "This email does not register on our site!");
 		} else if (Security.matchPassword(password, user.getUserPassword())||user.getUserPassword().equals(encryptPassword)) {
 			session.setAttribute("user", user);
-			if (user.getUserType() == basicType) {
+				int userTypeInt = user.getUserType();
+				UserType userType = UserType.BASIC;
+				UserType[] types = {UserType.BASIC, UserType.PREMIUM, UserType.ARTIST, UserType.ADMIN};
+				for (UserType type : types) {
+					if (type.getTypeCode() == userTypeInt) {
+						userType = type;
+					}
+				}
+				System.out.println("userType "+userType);
 				user.setSongQueueCollection(userService.getQueue(email));
 				Collection<SongQueue> songQueue = user.getSongQueueCollection();
-				songService.setArtistsCollection(songQueue);
-				session.setAttribute("songQueue", songQueue);
 				List<Playlist> userPlaylist = (List<Playlist>) (user.getUserPlaylistCollection());
-				songService.setArtistsCollection(songQueue);
-				session.setAttribute("user_playlist", userPlaylist);
-				mav.setViewName("main");
-				mav.addObject("username", user.getUserName());
-			} else if (user.getUserType() == artistType) {
-				mav.addObject("username", user.getUserName());
-				mav.setViewName("artistMainPage");
-			} else if (user.getUserType() == adminType) {
-				mav.addObject("username", user.getUserName());
-				mav.setViewName("admin");
+				switch (userType) {
+					case BASIC:
+						user.setSongQueueCollection(userService.getQueue(email));
+						songService.setArtistsCollection(songQueue);
+						session.setAttribute("songQueue", songQueue);
+						songService.setArtistsCollection(songQueue);
+						session.setAttribute("user_playlist", userPlaylist);
+						mav.setViewName("main");
+						mav.addObject("username", user.getUserName());
+						break;
+					case PREMIUM:
+						user.setSongQueueCollection(userService.getQueue(email));
+						songService.setArtistsCollection(songQueue);
+						session.setAttribute("songQueue", songQueue);
+						songService.setArtistsCollection(songQueue);
+						session.setAttribute("user_playlist", userPlaylist);
+						mav.setViewName("main");
+						mav.addObject("username", user.getUserName());
+						break;
+					case ARTIST:
+						mav.addObject("username", user.getUserName());
+						mav.setViewName("artistMainPage");
+						break;
+					case ADMIN:
+						mav.addObject("username", user.getUserName());
+						mav.setViewName("admin");
+						break;
+					default:
+						mav.addObject("error_message", "Incorrect email or password!");
+						mav.setViewName("index");
+						break;
+				}			
+			}else {
+				mav.addObject("error_message", "Incorrect email or password!");
+				mav.setViewName("index");
 			}
-
-		} else {
-			mav.addObject("error_message", "Incorrect email or password!");
-			mav.setViewName("index");
-		}
-		return mav;
+			return mav;
 	}
 
 	@RequestMapping(value = "/main", method = RequestMethod.GET)

@@ -17,7 +17,7 @@ $(document).ready(function(){
 	  $("#remove_playlist_modal").hide();
 	  var pid = $("#playlistID").text();
 	  $.ajax({
-          url: "${cp}/removeSpecificPlaylist",
+          url: "${cp}/../removeSpecificPlaylist",
           type: "POST",
           data : {"playlistID" : pid },
           asyn: true,
@@ -33,7 +33,6 @@ $(document).ready(function(){
             console.log(e);
          
           }
-    
         });
   });
   $("#cancel_delete_button").click(function(){

@@ -215,14 +215,5 @@ public class Playlist implements Serializable {
         this.playlistsongCollection = playlistsongCollection;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "playlist")
-    private Collection<Userplaylist> userplaylistCollection;
-    @XmlTransient
-    public Collection<Userplaylist> getUserplaylistCollection() {
-        return userplaylistCollection;
-    }
-    public void setUserplaylistCollection(Collection<Userplaylist> userplaylistCollection) {
-        this.userplaylistCollection = userplaylistCollection;
-    }
 
 }

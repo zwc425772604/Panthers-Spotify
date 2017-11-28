@@ -396,30 +396,6 @@ public class User implements Serializable {
 	}
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-	private Collection<Userplaylist> userplaylistCollection;
-
-	@XmlTransient
-	public Collection<Userplaylist> getUserplaylistCollection() {
-		return userplaylistCollection;
-	}
-
-	public void setUserplaylistCollection(Collection<Userplaylist> userplaylistCollection) {
-		this.userplaylistCollection = userplaylistCollection;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user1")
-	private Collection<Userplaylist> userplaylistCollection1;
-
-	@XmlTransient
-	public Collection<Userplaylist> getUserplaylistCollection1() {
-		return userplaylistCollection1;
-	}
-
-	public void setUserplaylistCollection1(Collection<Userplaylist> userplaylistCollection1) {
-		this.userplaylistCollection1 = userplaylistCollection1;
-	}
-
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Collection<SongQueue> songQueueCollection;
 
 	@XmlTransient

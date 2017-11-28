@@ -230,8 +230,8 @@ public class ServletController {
 		String playlist_name = request.getParameter("playlist_name");
 		String description = request.getParameter("playlist_description");
 		User user = (User) session.getAttribute("user");
-
-		Playlist playlistOne = (Playlist) session.getAttribute("selected_playlist");
+		
+		Playlist playlistOne = (Playlist) session.getAttribute("selectedPlaylist");
 		// System.out.println(path+" "+filename);
 		// java.sql.Date date = new
 		// java.sql.Date(Calendar.getInstance().getTimeInMillis());

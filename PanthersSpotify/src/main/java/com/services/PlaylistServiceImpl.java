@@ -50,8 +50,10 @@ public class PlaylistServiceImpl implements PlaylistService {
 	@Transactional
 	public List<Playlist> updatePlaylist(int pid, String des,CommonsMultipartFile file, String pname, User user) {
 		
+		List<Playlist> userPlaylist = (List<Playlist>)(user.getUserPlaylistCollection());
 		
-		Playlist playlist=new Playlist();
+		Playlist playlist=playlistDAO.getPlaylist(pid);
+		userPlaylist.remove(playlist);
 	  	String photoUrl=null;
 	  	int num=findPlaylist(pid,playlistDAO.getPlaylists());
 	  	if(des!=null)
@@ -85,8 +87,8 @@ public class PlaylistServiceImpl implements PlaylistService {
 			playlist.setPname(pname);
 		}
 		playlist = playlistDAO.updatePlaylist(playlist);
-		List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
-		return user_playlist;
+		userPlaylist.add(playlist);
+		return userPlaylist;
 	}
 	@Transactional
 	public List<Playlist> removePlaylist(Playlist Playlist) {

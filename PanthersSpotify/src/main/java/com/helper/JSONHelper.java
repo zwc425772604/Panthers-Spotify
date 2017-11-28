@@ -13,6 +13,7 @@ import com.model.Album;
 import com.model.Playlist;
 import com.model.Song;
 import com.model.User;
+import com.services.SongService;
 
 public class JSONHelper {
 	// public static String playlistToJSON(List<Playlist> playlist) throws
@@ -131,7 +132,7 @@ public class JSONHelper {
 		return arr.toString();
 	}
 
-	public static String new_pendingSongsToJSON(List<Song> songs, Collection<User> users) throws JSONException {
+	public static String new_pendingSongsToJSON(List<Song> songs, SongService songService) throws JSONException {
 		JSONArray arr = new JSONArray();
 		JSONObject jsonObject;
 		for (Song s : songs) {
@@ -141,6 +142,7 @@ public class JSONHelper {
 			jsonObject.put("songTitle", s.getStitle());
 			jsonObject.put("songGenre", s.getGener());
 			JSONArray artists = new JSONArray();
+			List<User> users = songService.getArtistsCollection(sid);
 			for (User user : users) {
 				JSONObject ob = new JSONObject();
 				ob.put("name", user.getFullName());

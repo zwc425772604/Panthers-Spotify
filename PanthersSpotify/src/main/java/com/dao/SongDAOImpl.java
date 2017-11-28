@@ -184,7 +184,7 @@ public class SongDAOImpl implements SongDAO {
 
 	}
 	
-	@Transactional(readOnly = false)
+	@Transactional(readOnly = true)
 	public Collection<User> getSongArtists(Integer sid) {
 		String queryString = "select u from User u where u.email in (SELECT r.releasesongPK.uemail FROM Releasesong r WHERE r.releasesongPK.sid = :sid)";
 		Query query = entityManager.createQuery(queryString).setParameter("sid", sid);

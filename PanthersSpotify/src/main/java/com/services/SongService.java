@@ -36,4 +36,5 @@ public interface SongService {
 	public Collection<SongQueue> nextUp(Collection<SongQueue> que);
 	public void updateReleaseSong(int songID, String status);
 	public void setArtistsCollection(Collection<SongQueue> songQueue);
+	public List<User> getArtistsCollection(int sid);
 }

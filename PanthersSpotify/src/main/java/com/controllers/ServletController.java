@@ -449,8 +449,8 @@ public class ServletController {
 		User user = (User) session.getAttribute("user");
 		playlistService.addSongToPlaylist(playlistID, songID);
 		List<Song> list = playlistService.getSongInPlaylist(playlistID);
-		session.setAttribute("songList", list);
-		return "ok";
+		String playlistSongJSON = JSONHelper.new_pendingSongsToJSON(list,songService);
+		return playlistSongJSON;
 	}
 
 	@RequestMapping(value = "/removeSongToPlaylist", method = RequestMethod.POST)
@@ -460,8 +460,8 @@ public class ServletController {
 		User user = (User) session.getAttribute("user");
 		playlistService.removeSongFromPlaylist(playlistID, songID);
 		List<Song> list = playlistService.getSongInPlaylist(playlistID);
-		session.setAttribute("songList", list);
-		return "ok";
+		String playlistSongJSON = JSONHelper.new_pendingSongsToJSON(list,songService);
+		return playlistSongJSON;
 	}
 
 	@RequestMapping(value = "/loadUserTables/{userType}", method = RequestMethod.POST)

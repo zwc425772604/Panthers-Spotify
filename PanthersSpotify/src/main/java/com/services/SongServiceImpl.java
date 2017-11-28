@@ -292,4 +292,10 @@ public class SongServiceImpl implements SongService {
 			que.setArtistsCollection(artists);
 		}
 	}
+	
+	
+	@Transactional
+	public List<User> getArtistsCollection(int sid) {
+		return (List<User>)songDAO.getSongArtists(sid);
+	}
 }

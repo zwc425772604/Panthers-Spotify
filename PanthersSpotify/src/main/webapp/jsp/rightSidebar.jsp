@@ -18,7 +18,7 @@
       <div><img src="http://weclipart.com/gimg/0A3C841B9FA4F2C6/13099629981030824019profile.svg.hi.png" class="rounded-circle right-col-image" alt="Generic placeholder thumbnail"></div>
       <div class="right-col-desp">
         <div class="right-col-friends-name">
-          ${friend.uname}	              	
+          ${friend.userName}	              	
           <span style="display:none;" class="friends-email">${friend.email}</span>              	
         </div>
         <!--  <div class="right-col-song-name">FRIEND SONG</div>

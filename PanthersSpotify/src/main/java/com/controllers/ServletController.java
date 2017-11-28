@@ -118,6 +118,11 @@ public class ServletController {
 
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public ModelAndView mainPage(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		if (session.getAttribute("user") == null)
+		{
+			mav.setViewName("index");
+			return mav;
+		}
 		mav.setViewName("main");
 		return mav;
 	}

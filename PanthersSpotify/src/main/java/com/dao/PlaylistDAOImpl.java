@@ -48,8 +48,8 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 		TypedQuery<Playlist> query1 = entityManager.createNamedQuery("Playlist.findByPid", Playlist.class)
           		.setParameter("pid", playlistId);
 
-         List<Playlist> results = query1.getResultList();
-		return results.get(0);
+         Playlist ret = query1.getSingleResult();
+		return ret;
 	}
 
 	@Transactional(readOnly=true)

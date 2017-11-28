@@ -18,7 +18,7 @@
       <div><img src="http://weclipart.com/gimg/0A3C841B9FA4F2C6/13099629981030824019profile.svg.hi.png" class="rounded-circle right-col-image" alt="Generic placeholder thumbnail"></div>
       <div class="right-col-desp">
         <div class="right-col-friends-name">
-          ${friend.uname}	              	
+          ${friend.userName}	              	
           <span style="display:none;" class="friends-email">${friend.email}</span>              	
         </div>
         <!--  <div class="right-col-song-name">FRIEND SONG</div>
@@ -42,7 +42,7 @@
     <div class="w3-third w3-container">
     </div>
     <div class="w3-third w3-container">
-      <button id="findFriend' class="w3-button w3-block w3-section w3-blue w3-ripple">Find</button>
+      <button id="findFriend" class="w3-button w3-block w3-section w3-blue w3-ripple">Find</button>
     </div>
   </div>
 </div>

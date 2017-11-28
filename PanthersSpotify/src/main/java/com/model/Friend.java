@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Friend.findAll", query = "SELECT f FROM Friend f")
     , @NamedQuery(name = "Friend.findByUemail", query = "SELECT f FROM Friend f WHERE f.friendPK.uemail = :uemail")
     , @NamedQuery(name = "Friend.findByFemail", query = "SELECT f FROM Friend f WHERE f.friendPK.femail = :femail")
+    , @NamedQuery(name = "Friend.findByUemailFemail", query = "SELECT f FROM Friend f WHERE f.friendPK.femail = :femail AND f.friendPK.uemail = :uemail")
     , @NamedQuery(name = "Friend.findByCreateDate", query = "SELECT f FROM Friend f WHERE f.createDate = :createDate")})
 public class Friend implements Serializable {
 

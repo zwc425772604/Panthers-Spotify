@@ -20,6 +20,7 @@
   </ul>
 </nav>
 <div id="queueDiv" class="w3-container info-table">
+ <div id = "nowPlayingSongDiv">
   <h3>Now Playing</h3>
   <table class="w3-table-all w3-hoverable" id="now-playing-table">
     <thead>
@@ -64,7 +65,9 @@
       </tr>
     </tbody>
   </table>
+</div>
   <br>
+<div id ="nextPlayingSongDiv">
   <h3>Next Up</h3>
   <table class="w3-table-all w3-hoverable" id="next-playing-table">
     <thead>
@@ -107,8 +110,10 @@
         </td>
         <td>2:15</td>
       </tr>
+      
     </tbody>
   </table>
+</div>
 </div>
 <div id="historyDiv" class="w3-container info-table"
   style="display: none">

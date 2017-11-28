@@ -22,7 +22,6 @@ public interface SongService {
 	public List<Song> findRelative(String input);
 	public Song uploadSong(User user, String songTitle, String songTime, String releaseDay, String songGenre, String songType, CommonsMultipartFile file);
 	public List<Releasesong> getAllSongsByStatus(String status);
-	public Collection<Releasesong> getSongArtists(Song song);
 	public List<Song> getHistorySongs(String userEmail);
 	public List<Song> addHistorySong(Song song,User user,Date date);
 	public List<Song> deleteHistorySong(Song song,User user);

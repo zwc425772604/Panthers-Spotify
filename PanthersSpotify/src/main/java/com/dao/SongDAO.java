@@ -18,7 +18,6 @@ public interface SongDAO {
 	public List<Song> findRelative(String input);
 	public Releasesong addRelease(Releasesong releaseSong);
 	public List<Releasesong> getAllSongsByStatus(String status);
-	public Collection<Releasesong> getSongArtists(Song song);
 	public void addSongHistory(Song song,User user, Date date) ;
 	public void deleteSongHistory(Song song,User user);
 	public void updateSongHistory(Song song,User user, Date date);

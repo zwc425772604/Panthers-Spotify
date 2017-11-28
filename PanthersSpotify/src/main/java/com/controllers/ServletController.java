@@ -32,6 +32,7 @@ import com.helper.CheckPayment;
 import com.helper.JSONHelper;
 import com.helper.Security;
 import com.helper.StringToDateHelper;
+//import com.helper.StringToDateHelper;
 import com.model.Album;
 import com.model.Payment;
 import com.model.Song;
@@ -68,7 +69,7 @@ public class ServletController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap map) {
-
+		
 		return "index";
 	}
 
@@ -77,7 +78,7 @@ public class ServletController {
 	public ModelAndView userLogin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String encryptPassword = Security.encryptPassword(password);
+		String encryptPassword = Security.oldEncryptPassword(password);
 		User user = userService.getUser(email);
 		int basicType = Integer.parseInt(environment.getProperty("user.basic"));
 		int premiumType = Integer.parseInt(environment.getProperty("user.premium"));
@@ -86,11 +87,12 @@ public class ServletController {
 		if (user.equals(null)) {
 			mav.setViewName("index");
 			mav.addObject("error_message", "This email does not register on our site!");
-		} else if (user.getUserPassword().equals(encryptPassword)) {
+		} else if (Security.matchPassword(password, user.getUserPassword())||user.getUserPassword().equals(encryptPassword)) {
 			session.setAttribute("user", user);
 			if (user.getUserType() == basicType) {
 				user.setSongQueueCollection(userService.getQueue(email));
 				Collection<SongQueue> songQueue = user.getSongQueueCollection();
+				songService.setArtistsCollection(songQueue);
 				session.setAttribute("songQueue", songQueue);
 				List<Playlist> userPlaylist = (List<Playlist>) (user.getUserPlaylistCollection());
 				songService.setArtistsCollection(songQueue);
@@ -114,6 +116,11 @@ public class ServletController {
 
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public ModelAndView mainPage(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		if (session.getAttribute("user") == null)
+		{
+			mav.setViewName("index");
+			return mav;
+		}
 		mav.setViewName("main");
 		return mav;
 	}
@@ -141,7 +148,7 @@ public class ServletController {
 	public @ResponseBody String userSignUp(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		String encPassword = Security.encryptPassword(password);
+		String encPassword = Security.oldEncryptPassword(password);
 		String email = request.getParameter("email");
 		boolean isEmailRegistered = userService.isEmailRegistered(email);
 		if (isEmailRegistered) {
@@ -358,8 +365,10 @@ public class ServletController {
 	@RequestMapping(value = "/findFriend", method = RequestMethod.POST)
 	public ModelAndView findFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		String username = request.getParameter("username");
-		User temp = userService.getUser(username);
+		String userEmail = request.getParameter("username");
+		System.out.println("userEmail is "+userEmail);
+		
+		User temp = userService.getUser(userEmail);
 		if (temp == null) {
 			System.out.println("GG");
 		} else {
@@ -572,14 +581,12 @@ public class ServletController {
 		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
 		Song song = songService.preSongInQueue(que);
 		session.setAttribute("songQueue", que);
-		Collection<Releasesong> artists = songService.getSongArtists(song);
-		Collection<User> users = new ArrayList<User>();
-		for (Releasesong rs : artists) {
-			User user = new User();
-			user = userService.getUser(rs.getReleasesongPK().getUemail());
-			users.add(user);
+		if (song==null)
+			return "end";
+		else {
+			session.setAttribute("nowPlay", song);
+			return "ok";
 		}
-		return JSONHelper.songToJSON(song, users);
 	}
 
 	@RequestMapping(value = "/nextSong", method = RequestMethod.POST)
@@ -587,14 +594,12 @@ public class ServletController {
 		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
 		Song song = songService.nextSongInQueue(que);
 		session.setAttribute("songQueue", que);
-		Collection<Releasesong> artists = songService.getSongArtists(song);
-		Collection<User> users = new ArrayList<User>();
-		for (Releasesong rs : artists) {
-			User user = new User();
-			user = userService.getUser(rs.getReleasesongPK().getUemail());
-			users.add(user);
+		if (song!=null) {
+			session.setAttribute("nowPlay", song);
+			return "ok";
+		}else {
+			return "end";
 		}
-		return JSONHelper.songToJSON(song, users);
 	}
 
 	@RequestMapping(value = "/shuffle", method = RequestMethod.POST)
@@ -689,5 +694,4 @@ public class ServletController {
 		userService.downgrade(user);
 		return null;
 	}
-
 }

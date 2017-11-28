@@ -51,8 +51,8 @@ public class SongDAOImpl implements SongDAO {
 		TypedQuery<Song> query1 = entityManager.createNamedQuery("Song.findBySid", Song.class).setParameter("sid",
 				songId);
 
-		List<Song> results = query1.getResultList();
-		return results.get(0);
+		Song ret = query1.getSingleResult();
+		return ret;
 	}
 
 	@Transactional(readOnly = true)
@@ -171,11 +171,6 @@ public class SongDAOImpl implements SongDAO {
 	}
 
 	@Transactional(readOnly = true)
-	public Collection<Releasesong> getSongArtists(Song song) {
-		Query query = entityManager.createNamedQuery("Releasesong.findBySid").setParameter("sid", song.getSid());
-		return (Collection<Releasesong>) query.getResultList();
-	}
-	@Transactional(readOnly = true)
 	public List<Releasesong> getAllSongsByID(int songID) {
 		TypedQuery<Releasesong> query = entityManager.createNamedQuery("Releasesong.findBySid", Releasesong.class)
 				.setParameter("sid", songID);
@@ -186,8 +181,9 @@ public class SongDAOImpl implements SongDAO {
 	@Transactional(readOnly = false)
 	public void updateReleaseSong(Releasesong rs) {
 		entityManager.merge(rs);
-	}
 
+	}
+	
 	@Transactional(readOnly = false)
 	public Collection<User> getSongArtists(Integer sid) {
 		String queryString = "select u from User u where u.email in (SELECT r.releasesongPK.uemail FROM Releasesong r WHERE r.releasesongPK.sid = :sid)";
@@ -195,4 +191,5 @@ public class SongDAOImpl implements SongDAO {
 		Collection<User> users = (ArrayList<User>)query.getResultList();
 		return users;
 	}
+
 }

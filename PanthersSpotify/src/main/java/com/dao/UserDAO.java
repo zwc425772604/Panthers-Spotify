@@ -26,4 +26,5 @@ public interface UserDAO {
 	public void addPayment(Payment payment);
 	public void upgrade(User user);
 	public void downgrade(User user);
+	public void setArtistRoylties(String artistEmail);
 }

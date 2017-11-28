@@ -22,16 +22,19 @@ import com.model.Friend;
 import com.model.FriendPK;
 import com.model.Payment;
 import com.model.Playlist;
+import com.model.Releasesong;
 import com.model.SongQueue;
 import com.model.User;
+import com.model.UserType;
 
 @Repository("userDAO")
 @Transactional
 public class UserDAOImpl implements UserDAO {
-
+	private SongDAO songDAO;
 	@PersistenceContext
 	public EntityManager entityManager;
 
+	
 	@Transactional(readOnly = false)
 	public User addUser(User User) {
 
@@ -151,7 +154,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Transactional(readOnly = false)
 	public void upgrade(User user) {
-		user.setUserType(1);  //here magic number 1:preminume
+		user.setUserType(UserType.PREMIUM.getTypeCode()); 
 		Date date = new Date();
 		user.setUpgradeDate(date);
 		entityManager.merge(user);
@@ -159,8 +162,17 @@ public class UserDAOImpl implements UserDAO {
 
 	@Transactional(readOnly = false)
 	public void downgrade(User user) {
-		user.setUserType(0); //here magic number 0:basic user
+		user.setUserType(UserType.BASIC.getTypeCode()); //here magic number 0:basic user
 		entityManager.merge(user);
+	}
+
+	@Transactional(readOnly = false)
+	public void setArtistRoylties(String artistEmail) {
+		Query query = entityManager.createNamedQuery("Releasesong.findByUemail").setParameter("uemail", artistEmail);
+		Collection<Releasesong> songs = query.getResultList();
+		for(Releasesong rs: songs) {
+			Collection<User> artists = songDAO.getSongArtists(rs.getReleasesongPK().getSid());
+		}
 	}
 
 }

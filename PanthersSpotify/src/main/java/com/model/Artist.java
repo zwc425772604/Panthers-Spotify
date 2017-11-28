@@ -6,6 +6,8 @@
 package com.model;
 
 import java.io.Serializable;
+import java.util.Collection;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +17,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -118,5 +121,15 @@ public class Artist implements Serializable {
     public String toString() {
         return "com.model.Artist[ artistEmail=" + artistEmail + " ]";
     }
-
+    
+    @Transient
+    private double royalties;
+    @Transient
+    public double getRoyalties() {
+    	return this.royalties;
+    }
+    @Transient
+    public void setRoyalties(double royalties) {
+    	this.royalties = royalties;
+    }
 }

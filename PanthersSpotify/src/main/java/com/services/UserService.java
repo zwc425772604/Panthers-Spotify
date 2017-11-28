@@ -48,4 +48,7 @@ public interface UserService {
 	public void upgrade(User user);
 
 	public void downgrade(User user);
+	
+	public double setArtistRoylties(String artistEmail);
+
 }

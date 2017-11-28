@@ -44,7 +44,6 @@ import com.services.PlaylistService;
 import com.services.SongService;
 import com.services.UserService;
 
-
 @Controller
 public class ServletController {
 	@Autowired(required = true)
@@ -68,7 +67,7 @@ public class ServletController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap map) {
-		
+
 		return "index";
 	}
 
@@ -82,65 +81,65 @@ public class ServletController {
 		if (user.equals(null)) {
 			mav.setViewName("index");
 			mav.addObject("error_message", "This email does not register on our site!");
-		} else if (Security.matchPassword(password, user.getUserPassword())||user.getUserPassword().equals(encryptPassword)) {
+		} else if (Security.matchPassword(password, user.getUserPassword())
+				|| user.getUserPassword().equals(encryptPassword)) {
 			session.setAttribute("user", user);
-				int userTypeInt = user.getUserType();
-				UserType userType = UserType.BASIC;
-				UserType[] types = {UserType.BASIC, UserType.PREMIUM, UserType.ARTIST, UserType.ADMIN};
-				for (UserType type : types) {
-					if (type.getTypeCode() == userTypeInt) {
-						userType = type;
-					}
+			int userTypeInt = user.getUserType();
+			UserType userType = UserType.BASIC;
+			UserType[] types = { UserType.BASIC, UserType.PREMIUM, UserType.ARTIST, UserType.ADMIN };
+			for (UserType type : types) {
+				if (type.getTypeCode() == userTypeInt) {
+					userType = type;
 				}
-				System.out.println("userType "+userType);
+			}
+			System.out.println("userType " + userType);
+			user.setSongQueueCollection(userService.getQueue(email));
+			Collection<SongQueue> songQueue = new ArrayList<SongQueue>();
+			Collection<Playlist> playlists = new ArrayList<Playlist>();
+			switch (userType) {
+			case BASIC:
 				user.setSongQueueCollection(userService.getQueue(email));
-				Collection<SongQueue> songQueue = new ArrayList<SongQueue>();
-				Collection<Playlist> playlists = new ArrayList<Playlist>();
-				switch (userType) {
-					case BASIC:
-						user.setSongQueueCollection(userService.getQueue(email));
-						songQueue = user.getSongQueueCollection();
-						songService.setArtistsCollection(songQueue);
-						playlists = user.getPlaylistCollection();
-						session.setAttribute("songQueue", songQueue);
-						session.setAttribute("user_playlist", playlists);
-						mav.setViewName("main");
-						mav.addObject("username", user.getUserName());
-						break;
-					case PREMIUM:
-						user.setSongQueueCollection(userService.getQueue(email));
-						songQueue = user.getSongQueueCollection();
-						songService.setArtistsCollection(songQueue);
-						playlists = user.getPlaylistCollection();
-						session.setAttribute("songQueue", songQueue);
-						session.setAttribute("user_playlist", playlists);
-						mav.setViewName("main");
-						mav.addObject("username", user.getUserName());
-						break;
-					case ARTIST:
-						mav.addObject("username", user.getUserName());
-						mav.setViewName("artistMainPage");
-						break;
-					case ADMIN:
-						mav.addObject("username", user.getUserName());
-						mav.setViewName("admin");
-						break;
-					default:
-						mav.addObject("error_message", "Incorrect email or password!");
-						mav.setViewName("index");
-						break;
-				}			
-			}else {
+				songQueue = user.getSongQueueCollection();
+				songService.setArtistsCollection(songQueue);
+				playlists = user.getUserPlaylistCollection();
+				session.setAttribute("songQueue", songQueue);
+				session.setAttribute("user_playlist", playlists);
+				mav.setViewName("main");
+				mav.addObject("username", user.getUserName());
+				break;
+			case PREMIUM:
+				user.setSongQueueCollection(userService.getQueue(email));
+				songQueue = user.getSongQueueCollection();
+				songService.setArtistsCollection(songQueue);
+				playlists = user.getUserPlaylistCollection();
+				session.setAttribute("songQueue", songQueue);
+				session.setAttribute("user_playlist", playlists);
+				mav.setViewName("main");
+				mav.addObject("username", user.getUserName());
+				break;
+			case ARTIST:
+				mav.addObject("username", user.getUserName());
+				mav.setViewName("artistMainPage");
+				break;
+			case ADMIN:
+				mav.addObject("username", user.getUserName());
+				mav.setViewName("admin");
+				break;
+			default:
 				mav.addObject("error_message", "Incorrect email or password!");
 				mav.setViewName("index");
+				break;
 			}
-			return mav;
+		} else {
+			mav.addObject("error_message", "Incorrect email or password!");
+			mav.setViewName("index");
+		}
+		return mav;
 	}
 
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public ModelAndView mainPage(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		if (session.getAttribute("user") == null)
-		{
+		if (session.getAttribute("user") == null) {
 			mav.setViewName("index");
 			return mav;
 		}
@@ -391,8 +390,8 @@ public class ServletController {
 	public @ResponseBody String findFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		String userEmail = request.getParameter("userEmail");
-		System.out.println("userEmail is "+userEmail);
-		
+		System.out.println("userEmail is " + userEmail);
+
 		User temp = userService.getUser(userEmail);
 		if (temp == null) {
 			System.out.println("GG");
@@ -447,7 +446,7 @@ public class ServletController {
 		User user = (User) session.getAttribute("user");
 		playlistService.addSongToPlaylist(playlistID, songID);
 		List<Song> list = playlistService.getSongInPlaylist(playlistID);
-		String playlistSongJSON = JSONHelper.new_pendingSongsToJSON(list,songService);
+		String playlistSongJSON = JSONHelper.new_pendingSongsToJSON(list, songService);
 		return playlistSongJSON;
 	}
 
@@ -458,7 +457,7 @@ public class ServletController {
 		User user = (User) session.getAttribute("user");
 		playlistService.removeSongFromPlaylist(playlistID, songID);
 		List<Song> list = playlistService.getSongInPlaylist(playlistID);
-		String playlistSongJSON = JSONHelper.new_pendingSongsToJSON(list,songService);
+		String playlistSongJSON = JSONHelper.new_pendingSongsToJSON(list, songService);
 		return playlistSongJSON;
 	}
 
@@ -609,7 +608,7 @@ public class ServletController {
 		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
 		Song song = songService.preSongInQueue(que);
 		session.setAttribute("songQueue", que);
-		if (song==null)
+		if (song == null)
 			return "end";
 		else {
 			session.setAttribute("nowPlay", song);
@@ -622,10 +621,10 @@ public class ServletController {
 		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
 		Song song = songService.nextSongInQueue(que);
 		session.setAttribute("songQueue", que);
-		if (song!=null) {
+		if (song != null) {
 			session.setAttribute("nowPlay", song);
 			return "ok";
-		}else {
+		} else {
 			return "end";
 		}
 	}

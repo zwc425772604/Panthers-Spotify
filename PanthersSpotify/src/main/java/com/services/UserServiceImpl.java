@@ -199,4 +199,10 @@ public class UserServiceImpl implements UserService {
 	public void downgrade(User user) {
 		userDAO.downgrade(user);
 	}
+
+	@Transactional
+	public double setArtistRoylties(String artistEmail) {
+		userDAO.setArtistRoylties(artistEmail);
+		return 0;
+	}
 }

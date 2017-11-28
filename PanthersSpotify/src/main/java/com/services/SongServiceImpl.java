@@ -293,7 +293,6 @@ public class SongServiceImpl implements SongService {
 		}
 	}
 	
-	
 	@Transactional
 	public List<User> getArtistsCollection(int sid) {
 		return (List<User>)songDAO.getSongArtists(sid);

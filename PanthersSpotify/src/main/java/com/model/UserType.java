@@ -10,6 +10,7 @@ public enum UserType {
 
 	UserType(int levelCode) {
         this.levelCode = levelCode;
+        //
     }
     
     public int getTypeCode() {

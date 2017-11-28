@@ -37,9 +37,10 @@ public class PlaylistServiceImpl implements PlaylistService {
 	{
 		List<Playlist> userPlaylists = (List<Playlist>)(user.getUserPlaylistCollection());
 	    	String filename = file.getOriginalFilename();
-	    	File playlistFile = new File("Users/"+user.getEmail()+"/playlist"+userPlaylists.size());
+	    	String playlistPath = "Users/"+user.getEmail()+"/playlist"+date.getTime();
+	    	File playlistFile = new File(playlistPath);
 	    	playlistFile.mkdirs();
-	    	String photoUrl = UploadFile.upload(playlistFile.getAbsolutePath(),filename,file);
+	    	String photoUrl = UploadFile.upload(playlistPath,filename,file);
 		Playlist playlist = new Playlist(playlistName,description,photoUrl,0,0,date,user);
 		playlist = playlistDAO.addPlaylist(playlist);
 		userPlaylists.add(playlist);

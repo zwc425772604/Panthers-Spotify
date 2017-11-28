@@ -23,7 +23,7 @@
       <div class="suggestion-container-top">
         <div class="playlist_image_box" style="width: 20%">
           <object width=100% height=width data="https://s.discogs.com/images/default-release-cd.png" type="image/png">
-            <img src=""  class="img-rounded" alt="Generic placeholder thumbnail">
+            <img src="${selectedPlaylist.photoUrl}"  class="img-rounded" alt="Generic placeholder thumbnail">
           </object>
         </div>
         <div class="playlist-details-box">

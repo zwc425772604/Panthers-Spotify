@@ -357,39 +357,41 @@ public class ServletController {
 		} else {
 			session.setAttribute("userFriendList", temp);
 		}
-		return "ok";
+		String friendsList = JSONHelper.userListToJSON(temp);
+		System.out.println("friendsList " + friendsList.length());
+		return friendsList;
 	}
 
 	@RequestMapping(value = "/findFriend", method = RequestMethod.POST)
-	public ModelAndView findFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	public @ResponseBody String findFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		String userEmail = request.getParameter("username");
+		String userEmail = request.getParameter("userEmail");
 		System.out.println("userEmail is "+userEmail);
 		
 		User temp = userService.getUser(userEmail);
 		if (temp == null) {
 			System.out.println("GG");
+			return "null";
 		} else {
+			System.out.println("user found");
 			session.setAttribute("selectedFriend", temp);
 		}
-		mav.setViewName("main");
-		mav.addObject("username", user.getEmail());
-		return mav;
+		return "ok";
 	}
 
 	@RequestMapping(value = "/addFriend", method = RequestMethod.POST)
-	public ModelAndView addFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	public @ResponseBody String addFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		System.out.println("HI");
 		User user = (User) session.getAttribute("user");
 		String femail = request.getParameter("femail");// friend email
 		List<User> temp = userService.addFriend(user.getEmail(), femail);
-		mav.setViewName("main");
-		mav.addObject("username", user.getEmail());
-		return mav;
+		session.setAttribute("userFriendList", temp);
+		String friendJSON = JSONHelper.userListToJSON(temp);
+		return friendJSON;
 	}
 
 	@RequestMapping(value = "/deleteFriend", method = RequestMethod.POST)
-	public ModelAndView deleteFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	public @ResponseBody String deleteFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		System.out.println("Delete Friend");
 		User user = (User) session.getAttribute("user");
 		String femail = request.getParameter("femail");// friend email
@@ -398,9 +400,8 @@ public class ServletController {
 		// remove the
 		List<User> newFriendlist = userService.deleteFriend(user.getEmail(), femail);
 		session.setAttribute("userFriendList", newFriendlist);
-		mav.setViewName("main");
-		mav.addObject("username", user.getUserName());
-		return mav;
+		String friendJSON = JSONHelper.userListToJSON(newFriendlist);
+		return friendJSON;
 	}
 
 	@RequestMapping(value = "/getUserPage", method = RequestMethod.POST)

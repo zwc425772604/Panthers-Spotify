@@ -25,7 +25,7 @@
         <div id ="userInfo" style="margin-top: 4%; margin-left:5%;">
           <h5> User Page </h5>
           <p style="font-size: 1.8em;">
-            <c:out value="${selectedFriend.uname}"></c:out>
+            <c:out value="${selectedFriend.userName}"></c:out>
           </p>
           <div class="col-md-5" style="display:inline;">
             <c:if test="${selectedFriend.email != user}">

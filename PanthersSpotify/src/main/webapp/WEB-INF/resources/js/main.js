@@ -9,10 +9,9 @@ $(document).ready(function(){
         cache: true,
         success : function(response)
         {
-          //Template
-          //var photoUrl = response.url
-          //var playlistName = playlistName
-
+        	console.log(response);
+        	var actual_JSON = JSON.parse(response);
+        	insertFriends(actual_JSON);
         },
         error: function(e)
         {
@@ -142,24 +141,32 @@ $(document).on("click", "#playbar-queue-button", function () {
   	$("#main-changing-content").load("jsp/queue.jsp");
 });
 
-$(document).on("click", "#findFriend", function () {
-	var username = $("#addFriendUsername").text();
-	$('#addFriendDialog').dialog('close');
+$(document).on("submit", "#findFriendForm", function (event) {
+	event.preventDefault();
+	var userEmail = $("#addFriendUserEmail").val();
+	console.log("userEmail in find friend is " + userEmail);
 	$.ajax({
         url: "${cp}/../findFriend",
         type: "POST",
-        data : {"username" : username },
-        asyn: true,
-        cache: true,
+        data : {"userEmail" : userEmail },
+        asyn: false,
+        cache: false,
         success : function(response)
         {
-         // console.log(response);
-          $("#main-changing-content").load("jsp/userPage.jsp");
+         	console.log(response);
+        	if (response.localeCompare("ok") == 0){
+        		$('#addFriendDialog').dialog('close');
+        		$("#main-changing-content").load("jsp/userPage.jsp");
+        	}else{
+        		$("#findFriendMessage").text("no user found");
+        		console.log("aha");
+        	}
+
         },
         error: function(e)
-        {                	
-          console.log(e);                 	
-        }       
+        {
+          console.log(e);
+        }
 	  });
 });
 

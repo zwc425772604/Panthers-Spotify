@@ -167,12 +167,21 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Transactional(readOnly = false)
-	public void setArtistRoylties(String artistEmail) {
-		Query query = entityManager.createNamedQuery("Releasesong.findByUemail").setParameter("uemail", artistEmail);
+	public Artist setArtistRoylties(Artist artist) {
+		Query query = entityManager.createNamedQuery("Releasesong.findByUemail").setParameter("uemail", artist.getArtistEmail());
+		artist.setRoyalties(0);
 		Collection<Releasesong> songs = query.getResultList();
 		for(Releasesong rs: songs) {
 			Collection<User> artists = songDAO.getSongArtists(rs.getReleasesongPK().getSid());
+			double royalties = artist.getRoyalties();
+			try {
+				royalties += (songDAO.getSong(rs.getReleasesongPK().getSid()).getMonthlyPlayed())/artists.size();
+				artist.setRoyalties(royalties);
+			}catch (Exception e) {
+				
+			}
 		}
+		return artist;
 	}
 
 }

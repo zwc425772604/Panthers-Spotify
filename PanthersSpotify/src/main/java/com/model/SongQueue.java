@@ -54,7 +54,6 @@ public class SongQueue implements Serializable {
     @Transient
     private Collection<User> artists;
     
-    
 
     public SongQueue() {
     }

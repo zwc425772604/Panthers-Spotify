@@ -201,8 +201,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	public double setArtistRoylties(String artistEmail) {
-		userDAO.setArtistRoylties(artistEmail);
-		return 0;
+	public Artist setArtistRoylties(Artist artist) {
+		return userDAO.setArtistRoylties(artist);
 	}
 }

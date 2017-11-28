@@ -271,8 +271,6 @@ public class SongServiceImpl implements SongService {
 		return collection;
 	}
 
-	
-
 	@Transactional
 	public void updateReleaseSong(int songID, String status) {
 		List<Releasesong> releaseSong = songDAO.getAllSongsByID(songID);

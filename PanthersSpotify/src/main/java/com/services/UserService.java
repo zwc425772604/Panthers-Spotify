@@ -49,6 +49,6 @@ public interface UserService {
 
 	public void downgrade(User user);
 	
-	public double setArtistRoylties(String artistEmail);
+	public Artist setArtistRoylties(Artist artist);
 
 }

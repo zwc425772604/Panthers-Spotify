@@ -3,22 +3,23 @@ $(document).ready(function(){
 //$("#overview_container").siblings().hide();
 	//Loading Friend List for the user
 	$.ajax({
-        url: "${cp}/../getUserFriendList",
-        type: "POST",
-        asyn: false,
-        cache: true,
-        success : function(response)
-        {
-          //Template
-          //var photoUrl = response.url
-          //var playlistName = playlistName
-
-        },
-        error: function(e)
-        {
-          console.log(e);
-        }
-	});
+	      url: "{cp}/../getUserFriendList",
+	      type: "POST",
+	      asyn: false,
+	      cache: false,
+	      success : function(response)
+	      {
+					console.log("get user friend list");
+	        console.log(response);
+	        var actual_JSON = JSON.parse(response);
+	        insertFriends(actual_JSON);
+	       // $("#main-changing-content").load("jsp/songs.jsp");
+	      },
+	      error: function(e)
+	      {
+	        console.log(e);
+	      }
+	    });
 
 	//Loading top followed playlist
 	$.ajax({
@@ -88,11 +89,11 @@ $(document).ready(function(){
 	          dialogClass: 'no-close'
 	     });
 	});
-	
+
 	$("#ad-close").click(function(){
 		$("#advertisement").hide();
 	})
-	
+
 });
 
 
@@ -162,12 +163,12 @@ $(document).on("submit", "#findFriendForm", function (event) {
         		$("#findFriendMessage").text("no user found");
         		console.log("aha");
         	}
-          
+
         },
         error: function(e)
-        {                	
-          console.log(e);                 	
-        }       
+        {
+          console.log(e);
+        }
 	  });
 });
 
@@ -203,9 +204,9 @@ function displayLeftNavbarContent(nav_name)
 	   $("#main-changing-content").load("jsp/album.jsp");
 	}
 	else if (nav_name.localeCompare('artists') == 0)
-	{		
+	{
 		$("#main-changing-content").load("jsp/artist.jsp");
-	   
+
 	}
 	else if (nav_name.localeCompare('recently_played') == 0)
 	{
@@ -230,7 +231,7 @@ function displayLeftNavbarContent(nav_name)
 	          console.log(e);
 	        }
 	      });
-		
+
 	}
 	else
 	{
@@ -395,7 +396,7 @@ $("#rangeinput").on('mousedown',function(e){
 	volumeDrag = true;
 	audio.muted = false;
 	updateVolume(e.main);
-	
+
 });
 
 function updateVolume(volume){
@@ -419,10 +420,10 @@ function volumeMute(data){
 		muted = true;
 		$("#rangeinput").val(0);
 	}
-	
+
 }
 
 function search()
 {
-	$("#main-changing-content").load("jsp/search.jsp");	
+	$("#main-changing-content").load("jsp/search.jsp");
 }

@@ -362,7 +362,9 @@ public class ServletController {
 		} else {
 			session.setAttribute("userFriendList", temp);
 		}
-		return "ok";
+		String friendsList = JSONHelper.userListToJSON(temp);
+		System.out.println("friendsList " + friendsList.length());
+		return friendsList;
 	}
 
 	@RequestMapping(value = "/findFriend", method = RequestMethod.POST)
@@ -383,14 +385,14 @@ public class ServletController {
 	}
 
 	@RequestMapping(value = "/addFriend", method = RequestMethod.POST)
-	public ModelAndView addFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	public @ResponseBody String addFriend(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		System.out.println("HI");
 		User user = (User) session.getAttribute("user");
 		String femail = request.getParameter("femail");// friend email
 		List<User> temp = userService.addFriend(user.getEmail(), femail);
-		mav.setViewName("main");
-		mav.addObject("username", user.getEmail());
-		return mav;
+		session.setAttribute("userFriendList", temp);
+		String friendJSON = JSONHelper.userListToJSON(temp);
+		return friendJSON;
 	}
 
 	@RequestMapping(value = "/deleteFriend", method = RequestMethod.POST)

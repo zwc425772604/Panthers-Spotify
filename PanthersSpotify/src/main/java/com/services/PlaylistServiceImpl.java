@@ -92,8 +92,13 @@ public class PlaylistServiceImpl implements PlaylistService {
 		return userPlaylist;
 	}
 	@Transactional
-	public List<Playlist> removePlaylist(Playlist Playlist) {
-		playlistDAO.deletePlaylist(Playlist);
+	public List<Playlist> removePlaylist(Playlist playlist) {
+		playlistDAO.deletePlaylist(playlist);
+		File deleteFile = new File(playlist.getPhotoUrl());
+  		if(deleteFile.exists())
+  		{
+  			deleteFile.delete();
+  		}
 		return playlistDAO.getPlaylists();
 	}
 	

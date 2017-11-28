@@ -79,10 +79,6 @@ public class ServletController {
 		String password = request.getParameter("password");
 		String encryptPassword = Security.oldEncryptPassword(password);
 		User user = userService.getUser(email);
-		int basicType = Integer.parseInt(environment.getProperty("user.basic"));
-		int premiumType = Integer.parseInt(environment.getProperty("user.premium"));
-		int artistType = Integer.parseInt(environment.getProperty("user.artist"));
-		int adminType = Integer.parseInt(environment.getProperty("user.admin"));
 		if (user.equals(null)) {
 			mav.setViewName("index");
 			mav.addObject("error_message", "This email does not register on our site!");
@@ -98,24 +94,26 @@ public class ServletController {
 				}
 				System.out.println("userType "+userType);
 				user.setSongQueueCollection(userService.getQueue(email));
-				Collection<SongQueue> songQueue = user.getSongQueueCollection();
-				List<Playlist> userPlaylist = (List<Playlist>) (user.getUserPlaylistCollection());
+				Collection<SongQueue> songQueue = new ArrayList<SongQueue>();
+				Collection<Playlist> playlists = new ArrayList<Playlist>();
 				switch (userType) {
 					case BASIC:
 						user.setSongQueueCollection(userService.getQueue(email));
+						songQueue = user.getSongQueueCollection();
 						songService.setArtistsCollection(songQueue);
+						playlists = user.getPlaylistCollection();
 						session.setAttribute("songQueue", songQueue);
-						songService.setArtistsCollection(songQueue);
-						session.setAttribute("user_playlist", userPlaylist);
+						session.setAttribute("user_playlist", playlists);
 						mav.setViewName("main");
 						mav.addObject("username", user.getUserName());
 						break;
 					case PREMIUM:
 						user.setSongQueueCollection(userService.getQueue(email));
+						songQueue = user.getSongQueueCollection();
 						songService.setArtistsCollection(songQueue);
+						playlists = user.getPlaylistCollection();
 						session.setAttribute("songQueue", songQueue);
-						songService.setArtistsCollection(songQueue);
-						session.setAttribute("user_playlist", userPlaylist);
+						session.setAttribute("user_playlist", playlists);
 						mav.setViewName("main");
 						mav.addObject("username", user.getUserName());
 						break;

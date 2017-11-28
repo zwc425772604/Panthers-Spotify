@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -58,7 +59,15 @@ public class UserDAOImpl implements UserDAO {
 	public User getUser(String userEmail) {
 		TypedQuery<User> query1 = entityManager.createNamedQuery("User.findByEmail", User.class).setParameter("email",
 				userEmail);
-		User ret = query1.getSingleResult();
+		User ret = null;
+		try
+		{
+			ret = query1.getSingleResult();
+		}
+		catch(NoResultException e)
+		{
+			return null;
+		}
 		return ret;
 	}
 

@@ -1,6 +1,8 @@
 package com.dao;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -116,4 +118,13 @@ public class AlbumDAOImpl implements AlbumDAO{
 	    	List<Album>	list = (List<Album>)query.getResultList();
 	    	return list;
 	}
+	/*
+	@Transactional(readOnly = true)
+	public Collection<User> getAlbumArtists(int aid) {
+		String queryString = "select u from User u where u.email in (SELECT r.releasesongPK.uemail FROM Releasesong r WHERE r.releasesongPK.sid = :sid)";
+		Query query = entityManager.createQuery(queryString).setParameter("sid", sid);
+		Collection<User> users = (ArrayList<User>)query.getResultList();
+		return users;
+	}
+	*/
 }

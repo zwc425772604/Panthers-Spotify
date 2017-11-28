@@ -171,5 +171,24 @@ public class JSONHelper {
 		jsonObject.put("songArtist", artists);
 		return jsonObject.toString();
 	}
+	/*
+	public static String albumInformation(Album album, SongService songService) throws JSONException {
+		JSONObject jsonObject = new JSONObject();
+		int aid = album.getAid();
+		jsonObject.put("albumID", aid);
+		jsonObject.put("albumName", album.getAname());
+		jsonObject.put("albumDes", album.getDes());
+		jsonObject.put("albumPhotoUrl", album.getPhotoUrl());
+		JSONArray artists = new JSONArray();
+		for (User user : users) {
+			JSONObject ob = new JSONObject();
+			ob.put("name", user.getFullName());
+			ob.put("aemail", user.getEmail());
+			artists.put(ob);
+		}
+		jsonObject.put("songArtist", artists);
+		return jsonObject.toString();
+	}
+	*/
 
 }

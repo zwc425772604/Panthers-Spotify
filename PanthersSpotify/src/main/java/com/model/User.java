@@ -395,6 +395,8 @@ public class User implements Serializable {
 		this.friendCollection1 = friendCollection1;
 	}
 
+	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Collection<SongQueue> songQueueCollection;
 

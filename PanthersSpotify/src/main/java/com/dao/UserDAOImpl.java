@@ -19,6 +19,7 @@ import com.model.Artist;
 import com.model.Followartist;
 import com.model.Followplaylist;
 import com.model.Friend;
+import com.model.FriendPK;
 import com.model.Payment;
 import com.model.Playlist;
 import com.model.SongQueue;
@@ -106,8 +107,12 @@ public class UserDAOImpl implements UserDAO {
 
 	@Transactional(readOnly = true)
 	public void deleteFriend(String userEmail, String friendEmail) {
-		Friend friend = new Friend(userEmail, friendEmail);
-		entityManager.remove(friend);
+		Query query = entityManager.createNamedQuery("Friend.findByUemailFemail")
+				.setParameter("uemail",userEmail)
+				.setParameter("femail",friendEmail);
+		Friend friend = (Friend)query.getSingleResult();
+		entityManager.remove(entityManager.contains(friend) ? friend : entityManager.merge(friend));
+		
 	}
 
 	@Transactional(readOnly = false)

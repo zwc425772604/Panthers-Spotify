@@ -149,13 +149,9 @@ public class PlaylistServiceImpl implements PlaylistService {
 	  	  {
 	  		  return false;
 	  	  }
-	  	  
-	  	  
 	  	  Playlist result = playlistDAO.getPlaylist(playlistId);
 	  	  playlistDAO.unfollowPlaylist(playlistId, user.getEmail());
-		  	
-		  	  
-		  	user_playlist.remove(result);
+		  user_playlist.remove(result);
 		  	return true;
 	  }
 	

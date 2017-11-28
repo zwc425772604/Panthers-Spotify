@@ -76,14 +76,13 @@ public class ServletController {
 	public ModelAndView userLogin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
-		String encryptPassword = Security.oldEncryptPassword(password);
 		User user = userService.getUser(email);
 		if (user.equals(null)) {
 			mav.setViewName("index");
 			mav.addObject("error_message", "This email does not register on our site!");
-		} else if (Security.matchPassword(password, user.getUserPassword())
-				|| user.getUserPassword().equals(encryptPassword)) {
+		} else if (Security.matchPassword(password, user.getUserPassword())) {
 			session.setAttribute("user", user);
+			
 			int userTypeInt = user.getUserType();
 			UserType userType = UserType.BASIC;
 			UserType[] types = { UserType.BASIC, UserType.PREMIUM, UserType.ARTIST, UserType.ADMIN };
@@ -92,7 +91,7 @@ public class ServletController {
 					userType = type;
 				}
 			}
-			System.out.println("userType " + userType);
+			
 			user.setSongQueueCollection(userService.getQueue(email));
 			Collection<SongQueue> songQueue = new ArrayList<SongQueue>();
 			Collection<Playlist> playlists = new ArrayList<Playlist>();
@@ -170,7 +169,7 @@ public class ServletController {
 	public @ResponseBody String userSignUp(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		String encPassword = Security.oldEncryptPassword(password);
+		String encPassword = Security.encryptPassword(password);
 		String email = request.getParameter("email");
 		boolean isEmailRegistered = userService.isEmailRegistered(email);
 		if (isEmailRegistered) {
@@ -181,7 +180,6 @@ public class ServletController {
 		String middleName = request.getParameter("middleName");
 		String lastName = request.getParameter("lastName");
 		String dob = request.getParameter("dob");
-		System.out.println("dob in userSignUp " + dob);
 		int userType = Integer.parseInt(environment.getProperty("user.basic"));
 		userService.addUser(username, email, encPassword, userType, gender, firstName, middleName, lastName, dob);
 		String message = "Congratulation, sign up successfully. Please return to homepage for login.";

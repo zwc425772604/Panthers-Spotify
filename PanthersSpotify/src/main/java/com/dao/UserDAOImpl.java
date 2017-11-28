@@ -56,9 +56,8 @@ public class UserDAOImpl implements UserDAO {
 		TypedQuery<User> query1 = entityManager.createNamedQuery("User.findByEmail", User.class).setParameter("email",
 				userEmail);
 
-		List<User> results = query1.getResultList();
-		return results.size() == 0 ? null : results.get(0);
-		// return results.get(0);
+		User ret = query1.getSingleResult();
+		return ret;
 	}
 
 	@Transactional(readOnly = true)

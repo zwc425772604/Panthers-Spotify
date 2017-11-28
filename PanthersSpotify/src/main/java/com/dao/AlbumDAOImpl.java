@@ -50,8 +50,8 @@ public class AlbumDAOImpl implements AlbumDAO{
 		TypedQuery<Album> query1 = entityManager.createNamedQuery("Album.findByAid", Album.class)
 				.setParameter("aid", AlbumId);
 
-		List<Album> results = query1.getResultList();
-		return results.get(0);
+		Album ret = query1.getSingleResult();
+		return ret;
 	}
 
 	@Transactional(readOnly=true)

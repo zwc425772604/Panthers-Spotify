@@ -1,6 +1,6 @@
 package com.model;
 
-public enum userType {
+public enum UserType {
 		BASIC (0),
 		PREMIUM (1),
 		ARTIST (2),
@@ -8,7 +8,7 @@ public enum userType {
 		;
 	private final int levelCode;
 
-	userType(int levelCode) {
+	UserType(int levelCode) {
         this.levelCode = levelCode;
     }
     

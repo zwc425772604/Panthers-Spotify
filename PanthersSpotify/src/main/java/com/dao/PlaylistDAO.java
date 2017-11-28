@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.model.Playlist;
+import com.model.Song;
 import com.model.User;
 
 public interface PlaylistDAO {
@@ -18,6 +19,7 @@ public interface PlaylistDAO {
 	public void unfollowPlaylist(int playlistId,String userEmail);
 	public void addSongToPlaylist(int playlistId,int songId);
 	public void removeSongFromPlaylist(int playlistId,int songId);
+	public List<Song> getSongInPlaylist(int playlistId);
 	public List<Playlist> findRelative(String input);
 	public void addPlaylistHistory(Playlist playlist,User user, Date date);
 	public void deletePlaylistHistory(Playlist playlist,User user);

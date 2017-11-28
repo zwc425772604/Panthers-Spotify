@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.model.Playlist;
+import com.model.Song;
 import com.model.User;
 
 public interface PlaylistService {
@@ -26,4 +27,5 @@ public interface PlaylistService {
 	public List<Playlist> deleteHistoryPlaylist(Playlist playlist,User user);
 	public Collection<Playlist> getUserPlaylists(String email);
 	public Collection<Playlist> getFollowPlaylists(String userEmail);
+	public List<Song> getSongInPlaylist(int playlistId);
 }

@@ -16,6 +16,7 @@ import com.model.Followplaylist;
 import com.model.Playlist;
 import com.model.Playlisthistory;
 import com.model.Playlistsong;
+import com.model.Song;
 import com.model.User;
 
 @Repository("playlistDAO")
@@ -105,6 +106,15 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 		Playlistsong playlistsong = new Playlistsong(playlistId, songId);
 		
 		entityManager.remove(playlistsong);
+	}
+	
+	@Transactional(readOnly=true)
+	public List<Song> getSongInPlaylist(int playlistId) {
+		 String queryString = "SELECT song FROM Song song WHERE song.sid in(SELECT f.playlistsongPK.sid from Playlistsong f where f.playlistsongPK.pid=:pid)"; 	  
+		  Query query = entityManager.createQuery(queryString);
+		  query.setParameter("pid", playlistId);
+		  List<Song>	list = (List<Song>)query.getResultList();
+		  return list;	
 	}
 	
 	@Transactional(readOnly=true)

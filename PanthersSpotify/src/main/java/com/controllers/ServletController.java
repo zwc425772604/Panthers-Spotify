@@ -421,6 +421,8 @@ public class ServletController {
 		int songID = Integer.parseInt(request.getParameter("songID").trim());
 		User user = (User) session.getAttribute("user");
 		playlistService.addSongToPlaylist(playlistID, songID);
+		List<Song> list = playlistService.getSongInPlaylist(playlistID);
+		session.setAttribute("songList", list);
 		return "ok";
 	}
 
@@ -430,6 +432,8 @@ public class ServletController {
 		int songID = Integer.parseInt(request.getParameter("songID").trim());
 		User user = (User) session.getAttribute("user");
 		playlistService.removeSongFromPlaylist(playlistID, songID);
+		List<Song> list = playlistService.getSongInPlaylist(playlistID);
+		session.setAttribute("songList", list);
 		return "ok";
 	}
 

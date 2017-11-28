@@ -21,6 +21,7 @@ import com.model.Album;
 import com.model.Followplaylist;
 import com.model.Playlist;
 import com.model.Playlistsong;
+import com.model.Song;
 import com.model.User;
 import com.helper.UploadFile;
 
@@ -167,6 +168,14 @@ public class PlaylistServiceImpl implements PlaylistService {
 	  {
 			playlistDAO.removeSongFromPlaylist(playlistId, songId);
 	  }
+	
+	@Transactional
+	  public List<Song> getSongInPlaylist(int playlistId)
+	  {
+			return playlistDAO.getSongInPlaylist(playlistId);
+	  }
+	
+	
 	@Transactional
 	public List<Playlist> findRelative(String input)
 	{

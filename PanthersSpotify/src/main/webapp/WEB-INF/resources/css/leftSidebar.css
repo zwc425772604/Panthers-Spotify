@@ -32,10 +32,10 @@
 }
 
 #dialog-textarea-header{
-	width: 36vw;
+	width: 100%;
 }
 #dialog-textarea{
-	width: 34vw;
+	width: 100%;
 }
 #dialog-image-box{
 	margin-top: 2.6%;

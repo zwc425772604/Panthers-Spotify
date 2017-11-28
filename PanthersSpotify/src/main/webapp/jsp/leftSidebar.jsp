@@ -65,7 +65,7 @@
 	        <div class="w3-col" style="width:30px; float:right; margin-right: 30px;"><span id="dialog-font">1/100</span></div>
 	      </div>
 	      <div class="w3-row w3-section">
-	        <textarea id="dialog-textarea" class="w3-input w3-border" rows="8" cols="70" name="playlist_description" placeholder="Give your playlist a catchy description"></textarea>
+	        <textarea id="dialog-textarea" class="w3-input w3-border" rows="8" cols="30" name="playlist_description" placeholder="Give your playlist a catchy description"></textarea>
 	      </div>
 	    </div>
       </div>

@@ -1,0 +1,50 @@
+#album-page-main{
+	color: white;
+}
+
+#top-background{
+	background: -webkit-linear-gradient(top, #6b6969, #343a40);
+
+}
+
+#top-container{
+	padding-top: 3%;
+	margin-left: 5%;
+}
+#playlist-song-collection{
+	margin-top: 3%;
+	margin-left: 5%;
+	width: 90%;
+}
+
+tr{
+	line-height: 14px; 
+}
+
+th{
+	width: auto;
+	margin-top: 2%;
+	margin-bottom: 2%;
+	height: auto !important;
+	padding: 0.5rem !important;
+}
+
+#th-play-button{
+	width: 7%;
+}
+
+#th-song-title{
+	width: 35%
+}
+
+#th-artist{
+	width: 15%;
+}
+
+#th-album{
+	width: 15%;
+}
+
+#th-date{
+	width: 15%;
+}

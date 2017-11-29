@@ -1,8 +1,3 @@
-$(document).ready(function(){
-	console.log("Loaded album page");
-});
-
-
 $(document).on("click", ".album-item", function(){
 	var albumId = $(".album-ID", this).text(); //get the pid of the playlist
 	console.log(albumId);

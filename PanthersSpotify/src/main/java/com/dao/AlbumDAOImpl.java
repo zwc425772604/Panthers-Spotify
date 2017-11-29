@@ -126,5 +126,4 @@ public class AlbumDAOImpl implements AlbumDAO{
 		Collection<User> users = (ArrayList<User>)query.getResultList();
 		return users;
 	}
-	
 }

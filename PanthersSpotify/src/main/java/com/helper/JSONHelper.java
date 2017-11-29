@@ -191,7 +191,7 @@ public class JSONHelper {
 		}
 		jsonObject.put("songArtist", artists);
 		JSONArray songsInAlbum = new JSONArray();
-		List<Song> songs = songService.getSongs(aid);
+		List<Song> songs = (List<Song>) album.getSongCollection();
 		for (Song song : songs) {
 			JSONObject ob = new JSONObject();
 			ob.put("songTitle", song.getStitle());

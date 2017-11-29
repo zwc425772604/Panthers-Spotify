@@ -58,7 +58,7 @@ public class SongDAOImpl implements SongDAO {
 	@Transactional(readOnly = true)
 	public List<Song> getSongs(int aid) {
 		TypedQuery<Song> query1 = entityManager
-				.createQuery("SELECT s from Song s WHERE s.aid=:aid", Song.class)
+				.createQuery("SELECT s FROM Song s WHERE s.aid=:aid", Song.class)
 				.setParameter("aid", aid);
 		List<Song> result = query1.getResultList();
 		return result;

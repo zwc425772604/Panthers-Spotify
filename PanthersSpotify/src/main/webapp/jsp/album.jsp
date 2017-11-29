@@ -93,5 +93,4 @@
 	<h6>
 		<a href="#"> <span id="artist_name">${album.des}</span></a>
 	</h6>
-	Add a comment to this line
 </div>

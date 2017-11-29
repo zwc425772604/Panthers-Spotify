@@ -747,4 +747,16 @@ public class ServletController {
 		userService.downgrade(user);
 		return null;
 	}
+	
+	@RequestMapping(value = "/getSpecificAlbumInfo", method = RequestMethod.POST)
+	public @ResponseBody String getSpecificAlbumInfo(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		Object albumObj = session.getAttribute("selectedAlbum");
+		String albumInfo = null;
+		if(albumObj != null) {
+			Album album = (Album) albumObj;
+			albumInfo = JSONHelper.albumInformation(album, albumService, songService);
+		}
+		System.out.println(albumInfo);
+		return albumInfo;
+	}
 }

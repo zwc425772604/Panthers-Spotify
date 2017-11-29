@@ -5,7 +5,7 @@
 <!--  Container for DISCOVER -->
 <div class="suggestion-container" id = "discover-container">
   <div class="suggestion-container-top">
-    <h3 class="suggestion-topic">Playlist Collections</h3>
+    <h3 class="suggestion-topic">Top Followed Playlists</h3>
     <button class="suggestion-top-page-button"><i class="fa fa-angle-left fa-2x" aria-hidden="true"></i></button>
     <button class="suggestion-top-page-button-right"><i class="fa fa-angle-right fa-2x" aria-hidden="true"></i></button>
   </div>

@@ -152,5 +152,10 @@ public class AlbumServiceImpl implements AlbumService {
 		return albumDAO.getHistoryAlbums(user.getEmail());
 	}
 	
+	@Transactional
+	public List<User> getArtistsCollection(int aid) {
+		return (List<User>)albumDAO.getAlbumArtists(aid);
+	}
+	
 }
 

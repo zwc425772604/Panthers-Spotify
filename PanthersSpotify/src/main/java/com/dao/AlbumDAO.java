@@ -1,6 +1,7 @@
 package com.dao;
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 import com.model.Album;
@@ -18,4 +19,5 @@ public interface AlbumDAO {
 	public void deleteAlbumHistory(Album album,User user);
 	public void updateAlbumHistory(Album album,User user, Date date);
 	public List<Album> getHistoryAlbums(String userEmail);
+	public Collection<User> getAlbumArtists(int aid);
 }

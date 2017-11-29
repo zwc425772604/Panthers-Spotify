@@ -6,6 +6,7 @@
    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
    <title>Album Page - Panthers Spotify</title>
    <link rel="stylesheet" href="${cp}/resources/css/songsFormat.css">  
+   <link rel="stylesheet" href="${cp}/resources/css/albumInfo.css">  
    <script src="${cp}/resources/js/albumInfo.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -23,8 +24,14 @@
 	      <div class="albumInfoBoxes" style="width:70%">
 	         <div id ="albumInfo" style="margin-top: 4%; margin-left:5%;">
 	            <h5> Album Page </h5>
-	            <p style="font-size: 1.8em;">
-	               <c:out value="${selectedAlbum.aname}"></c:out>
+	            <p>
+	               <div id="album-name-place"></div>
+	               <span id="album-hidden-id" style="display: none;"></span>
+	            </p>
+	            <p id="album-createdby">
+	            	<div>Created By</div>
+	            	<div id="album-artists">	            		
+	            	</div>
 	            </p>
 	            <div class="col-md-5" style="display:inline;">		            		            
 	            </div>
@@ -35,19 +42,13 @@
    </div>
    <div id="playlist-song-collection">
       <div class="table-responsive">
-        <table class="table">
+        <table class="table" id="song-table">
           <thead>
             <tr>
               <th id="th-play-button"></th>
               <!-- play/pause button -->
               <th id="th-song-title">
                 <p> TITLE </p>
-              </th>
-              <th id="th-album">
-                <p> ALBUM</p>
-              </th>
-              <th id="th-artist">
-                <p> ARTIST</p>
               </th>
               <th id="th-date">
                 <p> <i class="fa fa-calendar" aria-hidden="true"></i> </p>

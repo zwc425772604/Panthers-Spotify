@@ -632,6 +632,7 @@ public class ServletController {
 		User user = userService.getUser(email);
 		// User user = (users.size() != 0 )?users.get(0):null;
 		session.setAttribute("selectedArtist", user);
+		System.out.println(user.getUserName());
 		return "ok";
 	}
 
@@ -766,7 +767,6 @@ public class ServletController {
 			Album album = (Album) albumObj;
 			albumInfo = JSONHelper.albumInformation(album, albumService, songService);
 		}
-		System.out.println(albumInfo);
 		return albumInfo;
 	}
 }

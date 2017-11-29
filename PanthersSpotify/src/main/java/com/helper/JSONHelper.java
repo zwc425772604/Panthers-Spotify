@@ -207,7 +207,7 @@ public class JSONHelper {
 		
 		for (User user : users) {
 			JSONObject ob = new JSONObject();
-			ob.put("name", user.getFullName());
+			ob.put("name", user.getUserName());
 			ob.put("aemail", user.getEmail());
 			artists.put(ob);
 		}
@@ -218,7 +218,7 @@ public class JSONHelper {
 		for (Song song : songs) {
 			JSONObject ob = new JSONObject();
 			ob.put("songTitle", song.getStitle());
-			ob.put("songGenre", song.getGener());
+			ob.put("songId", song.getSid());
 			songsInAlbum.put(ob);
 		}
 		jsonObject.put("songsInAlbum", songsInAlbum);

@@ -21,12 +21,15 @@ tr{
 	line-height: 14px; 
 }
 
-th{
-	width: auto;
-	margin-top: 2%;
-	margin-bottom: 2%;
-	height: auto !important;
-	padding: 0.5rem !important;
+.table p{
+	margin-bottom: 0;
+}
+.table th, .table td{
+    padding: 1rem 0rem 1rem 0.5rem;
+    vertical-align: center;
+    border-top: 0.5px solid grey;
+    border-bottom: 0.5px solid grey !important;
+    margin: 0 !important;
 }
 
 #th-play-button{
@@ -34,15 +37,7 @@ th{
 }
 
 #th-song-title{
-	width: 35%
-}
-
-#th-artist{
-	width: 15%;
-}
-
-#th-album{
-	width: 15%;
+	width: 75%
 }
 
 #th-date{

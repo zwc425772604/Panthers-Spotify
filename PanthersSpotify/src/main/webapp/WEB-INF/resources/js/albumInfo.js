@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	console.log("HI");
 	$.ajax({
         url: "${cp}/../getSpecificAlbumInfo",
         type: "POST",
@@ -17,23 +18,66 @@ $(document).ready(function(){
 });
 
 
+$(document).on("click", ".artist-item", function(){
+	var email = $(".artist-email", this).text(); //get the pid of the playlist
+	  $.ajax({
+        url: "${cp}/../getSpecificArtist",
+        type: "POST",
+        data : {"email" : email},
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+          $("#main-changing-content").load("jsp/artistInfo.jsp");
+        },
+        error: function(e)
+        {
+          console.log(e);
+        }
+	  });
+});
+
 
 function insertSongsTable(data)
 {
-	var num = data.length;
+	console.log(data);
+	var num = data['songsInAlbum'].length;
+	var albumName = data['albumName'];
+	var albumID = data['albumID'];
+	$("#album-name-place").empty();
+	$("#album-hidden-id").empty();
+	$("#album-name-place").append(albumName);
+	$("#album-hidden-id").append(albumID);
+	var artistLength = data['songArtist'].length;
+	$("#album-artists").empty();
+	for (var i = 0; i < artistLength - 1; i++)
+		{			
+			$("#album-artists").append([
+				'<div class="artist-item">',
+					'<div id="artist-name">' + data['songArtist'][i]['name'] + ', ' + '</div>',
+					'<span class="artist-email" style="display:none;">' + data['songArtist'][i]['aemail'] + '</span>',
+				'</div>'
+				
+			].join(''));
+		}
+	$("#album-artists").append([
+		'<div class="artist-item">',
+		'<div id="artist-name">' + data['songArtist'][artistLength - 1]['name'] +  '</div>',
+		'<span class="artist-email" style="display:none;">' + data['songArtist'][artistLength - 1]['aemail'] + '</span>' + '</div>'
+	].join(''));
 	var songs = [];
 	for (var i = 0; i < num; i++)
 		{
-			if (songs.indexOf(data[i]['songID']) == -1) //check to see if there is duplicate songID
+			if (songs.indexOf(data['songsInAlbum'][i]['songID']) == -1) //check to see if there is duplicate songID
 			{
-				$("#pending-songs-table").find('tbody').append([
-					'<tr>',					  
-					  '<td>' + data[i]['songTitle'] + '</td>',
-					  '<td>' + data[i]['songArtist'].join() + '</td>',
-					  '<td>' + data[i]['songGenre'] + '</td>',
+				$("#song-table").find('tbody').append([
+					'<tr>',	
+					  '<td> </td>',
+					  '<td>' + data['songsInAlbum'][i]['songTitle'] + '</td>',
+					  '<td> </td>',
+					  '<td> </td>',
 					 '</tr>'
 				].join(''));
-				songs.push(data[i]['songID']);
 			}
 
 		}

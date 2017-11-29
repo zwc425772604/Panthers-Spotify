@@ -155,6 +155,28 @@ public class JSONHelper {
 		}
 		return arr.toString();
 	}
+	public static JSONArray new_pendingSongsToJSON1(List<Song> songs, SongService songService) throws JSONException {
+		JSONArray arr = new JSONArray();
+		JSONObject jsonObject;
+		for (Song s : songs) {
+			jsonObject = new JSONObject();
+			int sid = s.getSid();
+			jsonObject.put("songID", sid);
+			jsonObject.put("songTitle", s.getStitle());
+			jsonObject.put("songGenre", s.getGener());
+			JSONArray artists = new JSONArray();
+			List<User> users = songService.getArtistsCollection(sid);
+			for (User user : users) {
+				JSONObject ob = new JSONObject();
+				ob.put("name", user.getFullName());
+				ob.put("aemail", user.getEmail());
+				artists.put(ob);
+			}
+			jsonObject.put("songArtist", artists);
+			arr.put(jsonObject);
+		}
+		return arr;
+	}
 
 	public static String songToJSON(Song song, Collection<User> users) throws JSONException {
 		JSONObject jsonObject = new JSONObject();

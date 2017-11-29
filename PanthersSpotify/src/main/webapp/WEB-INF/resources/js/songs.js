@@ -120,7 +120,7 @@ function dropdownDisplay(song_div) {
   	var songID = $(".song-id", this).text();
   	var playlistID = $(".add-song-to-playlist-id",this).text();
   	  $.ajax({
-            url: "${cp}/addSongToPlaylist",
+            url: "${cp}/../addSongToPlaylist",
             type: "POST",
             data : {"playlistID" : playlistID, "songID" : songID },
             asyn: false,

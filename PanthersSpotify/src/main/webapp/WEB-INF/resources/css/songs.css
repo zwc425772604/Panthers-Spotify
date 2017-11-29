@@ -35,5 +35,11 @@
   .song_action_list
   {
   background-color: gray;
-  margin-left: 5%;
+  margin-left: -120%;
+  }
+  .add-to-playlists-section
+  {
+   background-color: gray;
+   margin-left: -100%;
+   margin-top: -30%;
   }

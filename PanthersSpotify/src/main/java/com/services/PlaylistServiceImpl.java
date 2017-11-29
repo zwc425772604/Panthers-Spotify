@@ -2,6 +2,7 @@ package com.services;
 
 import java.io.File;
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -37,10 +38,15 @@ public class PlaylistServiceImpl implements PlaylistService {
 	{
 		List<Playlist> userPlaylists = (List<Playlist>)(user.getUserPlaylistCollection());
 	    	String filename = file.getOriginalFilename();
-	    	String playlistPath = "Users/"+user.getEmail()+"/playlist"+date.getTime();
+	    	String dir = System.getProperty("user.dir");
+	    	String playlistPath = dir+"/Users/"+user.getEmail()+"/playlist"+date.getTime();
 	    	File playlistFile = new File(playlistPath);
 	    	playlistFile.mkdirs();
 	    	String photoUrl = UploadFile.upload(playlistPath,filename,file);
+	    	if(photoUrl==null)
+	    	{
+	    		playlistFile.delete();
+	    	}
 		Playlist playlist = new Playlist(playlistName,description,photoUrl,0,0,date,user);
 		playlist = playlistDAO.addPlaylist(playlist);
 		userPlaylists.add(playlist);
@@ -55,34 +61,45 @@ public class PlaylistServiceImpl implements PlaylistService {
 		
 		Playlist playlist=playlistDAO.getPlaylist(pid);
 		userPlaylist.remove(playlist);
-	  	String photoUrl=null;
-	  	int num=findPlaylist(pid,playlistDAO.getPlaylists());
+	  	String photoUrl=playlist.getPhotoUrl();
+	  	File playlistFile = null;
 	  	if(des!=null)
 	  	{
 	  		playlist.setDes(des);
 	  	}
-	  	if(playlist.getPhotoUrl()!=null)
+	  	if(photoUrl!=null)
 	  	{
-	  		File deleteFile = new File(playlist.getPhotoUrl());
+	  		File deleteFile = new File(photoUrl);
 	  		if(deleteFile.exists())
 	  		{
 	  			deleteFile.delete();
 	  		}
+	  		File photo = new File(photoUrl);
+		  	playlistFile = photo.getParentFile();
 	  	}
-		if(file!=null)
+	  	
+		if(file!=null&&playlistFile!=null)
 		{
-			File playlistFile = new File("Users/"+user.getEmail()+"/playlist"+num);
+			
 			String filename = file.getOriginalFilename();
-		  	if(!playlistFile.exists())
-		  	{
-		  		System.out.println("exist fail");
-		  	}
-		  	else
-		  	{
-		  		photoUrl = UploadFile.upload("Users/"+user.getEmail()+"/playlist"+num,filename,file);
-		  	}
+		  	System.out.println("it should be + "+playlistFile.getAbsolutePath());
+		  	photoUrl = UploadFile.upload(playlistFile.getAbsolutePath(),filename,file);
+		  	
 		  	playlist.setPhotoUrl(photoUrl);
-		}	
+		}
+		else if(file!=null&&playlistFile==null)
+		{
+			java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
+			String playlistPath = "Users/"+user.getEmail()+"/playlist"+date.getTime();
+			File playlistF = new File(playlistPath);
+	    		playlistF.mkdirs();
+	    		String filename = file.getOriginalFilename();
+	    		
+	    		photoUrl = UploadFile.upload(playlistF.getAbsolutePath(),filename,file);
+			  	
+			playlist.setPhotoUrl(photoUrl);
+		}
+		
 		if(pname!=null)
 		{
 			playlist.setPname(pname);
@@ -94,11 +111,16 @@ public class PlaylistServiceImpl implements PlaylistService {
 	@Transactional
 	public List<Playlist> removePlaylist(Playlist playlist) {
 		playlistDAO.deletePlaylist(playlist);
-		File deleteFile = new File(playlist.getPhotoUrl());
-  		if(deleteFile.exists())
-  		{
-  			deleteFile.delete();
-  		}
+		if(playlist.getPhotoUrl()!=null)
+		{
+			File deleteFile = new File(playlist.getPhotoUrl());
+			File deleteFileParent = deleteFile.getParentFile();
+	  		if(deleteFile.exists())
+	  		{
+	  			deleteFile.delete();
+	  		}
+	  		deleteFileParent.delete();
+		}
 		return playlistDAO.getPlaylists();
 	}
 	

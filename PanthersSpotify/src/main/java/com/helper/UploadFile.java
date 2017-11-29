@@ -10,8 +10,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 public class UploadFile {
 	public static String upload(String directory, String filename,CommonsMultipartFile file)
 	{
-		String dir = System.getProperty("user.dir");
-		String url = dir+"/"+directory+"/"+filename;
+		
+		String url = directory+"/"+filename;
 		try 
 		{
 	    		byte[] barr = file.getBytes();

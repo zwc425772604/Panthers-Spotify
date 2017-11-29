@@ -214,17 +214,6 @@ public class User implements Serializable {
 		this.locationCollection = locationCollection;
 	}
 
-	@OneToMany(mappedBy = "uemail")
-	private Collection<Payment> paymentCollection;
-
-	@XmlTransient
-	public Collection<Payment> getPaymentCollection() {
-		return paymentCollection;
-	}
-
-	public void setPaymentCollection(Collection<Payment> paymentCollection) {
-		this.paymentCollection = paymentCollection;
-	}
 
 	@Override
 	public int hashCode() {
@@ -382,6 +371,16 @@ public class User implements Serializable {
 	public void setFriendCollection(Collection<Friend> friendCollection) {
 		this.friendCollection = friendCollection;
 	}
+	
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    private Payment payment;
+	public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user1")
 	private Collection<Friend> friendCollection1;

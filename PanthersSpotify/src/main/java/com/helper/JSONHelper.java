@@ -10,6 +10,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.model.Album;
+import com.model.Artist;
 import com.model.Playlist;
 import com.model.Song;
 import com.model.User;
@@ -222,6 +223,29 @@ public class JSONHelper {
 			songsInAlbum.put(ob);
 		}
 		jsonObject.put("songsInAlbum", songsInAlbum);
+		return jsonObject.toString();
+	}
+	
+	public static String getOneArtistRoyalty(User artist)
+	{
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("artistName", artist.getFullName());
+		jsonObject.put("artistRoyalty", artist.getArtist().getRoyalty());
+		return jsonObject.toString();
+	}
+	
+	public static String getAllArtistRoyalty(List<User> artists)
+	{
+		JSONObject jsonObject = new JSONObject();
+		JSONArray artistsInfo = new JSONArray();
+		for (User artist : artists) {
+			JSONObject ob = new JSONObject();
+			jsonObject.put("artistName", artist.getFullName());
+			jsonObject.put("artistRoyalty", artist.getArtist().getRoyalty());
+			artistsInfo.put(ob);
+		}
+		jsonObject.put("allArtistRoyalty", artistsInfo);
+		
 		return jsonObject.toString();
 	}
 	

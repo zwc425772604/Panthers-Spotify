@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.model.Artist;
 import com.model.Payment;
+import com.model.Releasesong;
 import com.model.SongQueue;
 import com.model.User;
 
@@ -26,5 +27,9 @@ public interface UserDAO {
 	public void addPayment(Payment payment);
 	public void upgrade(User user);
 	public void downgrade(User user);
-	public Artist setArtistRoylties(Artist artist);
+	public void updatePayment(Payment payment);
+	public void removePayment(Payment payment);
+	public List<Releasesong> getArtistRelease(Artist artist);
+	public double getRoyalty(Artist artist);
+	public void setRoyalty(Artist artist,double royalty) ;
 }

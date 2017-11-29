@@ -64,7 +64,6 @@ public class SongServiceImpl implements SongService {
 	public Song updateSong(String stitle, Time duration, Date releaseDate, Album aid, int monthlyPlayed, String genre,
 			String stype, String surl) {
 
-		System.out.println("Cusomer Service Update invoked:" + stitle);
 		Song song = new Song();
 		song.setStitle(stitle);
 		song.setDuration(duration);
@@ -74,6 +73,14 @@ public class SongServiceImpl implements SongService {
 		song.setGener(genre);
 		song.setStype(stype);
 		song.setSurl(surl);
+		song = songDAO.updateSong(song);
+		return song;
+	}
+	
+	@Transactional
+	public Song updateMontlySong(int monthlyPlayed, Song song) {
+
+		song.setMonthlyPlayed(monthlyPlayed);
 		song = songDAO.updateSong(song);
 		return song;
 	}

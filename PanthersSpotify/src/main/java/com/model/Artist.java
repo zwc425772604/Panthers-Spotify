@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Artist.findAll", query = "SELECT a FROM Artist a")
     , @NamedQuery(name = "Artist.findByArtistEmail", query = "SELECT a FROM Artist a WHERE a.artistEmail = :artistEmail")
     , @NamedQuery(name = "Artist.findByBio", query = "SELECT a FROM Artist a WHERE a.bio = :bio")
-    , @NamedQuery(name = "Artist.findByMonthlyListener", query = "SELECT a FROM Artist a WHERE a.monthlyListener = :monthlyListener")
+    , @NamedQuery(name = "Artist.findByRoyalty", query = "SELECT a FROM Artist a WHERE a.royalty = :royalty")
     , @NamedQuery(name = "Artist.findByFollowers", query = "SELECT a FROM Artist a WHERE a.followers = :followers")})
 public class Artist implements Serializable {
 
@@ -69,13 +69,13 @@ public class Artist implements Serializable {
         this.bio = bio;
     }
 
-    @Column(name = "monthlyListener")
-    private Integer monthlyListener;
-    public Integer getMonthlyListener() {
-        return monthlyListener;
+    @Column(name = "royalty")
+    private double royalty;
+    public double getRoyalty() {
+        return royalty;
     }
-    public void setMonthlyListener(Integer monthlyListener) {
-        this.monthlyListener = monthlyListener;
+    public void setRoyalty(double royalty) {
+        this.royalty = royalty;
     }
 
     @Column(name = "followers")
@@ -122,14 +122,4 @@ public class Artist implements Serializable {
         return "com.model.Artist[ artistEmail=" + artistEmail + " ]";
     }
     
-    @Transient
-    private double royalties;
-    @Transient
-    public double getRoyalties() {
-    	return this.royalties;
-    }
-    @Transient
-    public void setRoyalties(double royalties) {
-    	this.royalties = royalties;
-    }
 }

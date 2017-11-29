@@ -8,6 +8,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import com.dao.SongDAO;
 import com.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -15,6 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.model.Artist;
 import com.model.Payment;
+import com.model.Playlist;
+import com.model.Releasesong;
+import com.model.Song;
 import com.model.SongQueue;
 import com.model.User;
 
@@ -24,6 +29,10 @@ public class UserServiceImpl implements UserService {
 	@Autowired(required = true)
 	@Qualifier("userDAO")
 	private UserDAO userDAO;
+	
+	@Autowired(required = true)
+	@Qualifier("songDAO")
+	private SongDAO songDAO;
 
 	@Transactional
 	public User addUser(String userName, String email, String encPassword, int userType, char gender, String firstName,
@@ -189,6 +198,16 @@ public class UserServiceImpl implements UserService {
 	public void addPayment(Payment payment) {
 		userDAO.addPayment(payment);		
 	}
+	
+	@Transactional
+	public void updatePayment(Payment payment) {
+		userDAO.updatePayment(payment);		
+	}
+	
+	@Transactional
+	public void removePayment(Payment payment) {
+		userDAO.removePayment(payment);		
+	}
 
 	@Transactional
 	public void upgrade(User user) {
@@ -201,7 +220,38 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Transactional
-	public Artist setArtistRoylties(Artist artist) {
-		return userDAO.setArtistRoylties(artist);
+	public void setArtistRoylties(Artist artist,double factor) {
+		
+		List<Releasesong> songs = userDAO.getArtistRelease(artist);
+		
+		for(Releasesong rs: songs) {
+			Collection<User> artists = songDAO.getSongArtists(rs.getReleasesongPK().getSid());
+			double royalties = artist.getRoyalty();
+			
+				royalties += (songDAO.getSong(rs.getReleasesongPK().getSid()).getMonthlyPlayed())/artists.size();
+				
+				royalties = royalties * factor;
+				
+				userDAO.setRoyalty(artist, royalties);
+		}
+		
+		
 	}
+	
+	@Transactional
+	public List<Song> getReleaseSong(Artist artist) {
+		
+		List<Releasesong> songs = userDAO.getArtistRelease(artist);
+		List<Song> retSongs = new ArrayList<Song>();
+		for(Releasesong rs: songs) {
+			
+			
+			retSongs.add(songDAO.getSong(rs.getReleasesongPK().getSid()))	;
+				
+		}
+		return retSongs;
+		
+	}
+	
+	
 }

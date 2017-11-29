@@ -724,6 +724,30 @@ public class ServletController {
 		// need to delete the song from file system
 		return "rejected";
 	}
+	
+	@RequestMapping(value = "/addPaymentForArtist", method = RequestMethod.POST)
+	public @ResponseBody String addPayment(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		String cardNum = request.getParameter("cardNum");
+		boolean isValidCardNum = CheckPayment.verify(cardNum);
+		if (isValidCardNum) {
+			String holderName = request.getParameter("holderName");
+			int cvv = Integer.parseInt(request.getParameter("cvv"));
+			String expirationDate = request.getParameter("expirationDate");
+			java.util.Date expDate = StringToDateHelper.parseToMonthYear(expirationDate);
+			User user = (User) session.getAttribute("user");
+			Payment payment = new Payment();
+			payment.setCardNum(cardNum);
+			payment.setCvv(cvv);
+			payment.setExpirationDate(expDate);
+			payment.setHoldName(holderName);
+			
+			userService.addPayment(payment);
+			return "ok";
+		} else {
+			return "invalid card number";
+		}
+		
+	}
 
 	@RequestMapping(value = "/upgrade", method = RequestMethod.POST)
 	public @ResponseBody String upgrade(ModelAndView mav, HttpServletRequest request, HttpSession session) {
@@ -735,15 +759,42 @@ public class ServletController {
 			int cvv = Integer.parseInt(request.getParameter("cvv"));
 			String expirationDate = request.getParameter("expirationDate");
 			java.util.Date expDate = StringToDateHelper.parseToMonthYear(expirationDate);
-			//String company = request.getParameter("company");
-			String company = "Chase";
-			//String billingAddress = request.getParameter("billingAddress");
-			String billingAddress = "111";
 			User user = (User) session.getAttribute("user");
-			Payment payment = new Payment(holderName, Integer.parseInt(cardNum), cvv, expDate, company, billingAddress,
-					user);		
+			Payment payment = new Payment();
+			payment.setCardNum(cardNum);
+			payment.setCvv(cvv);
+			payment.setExpirationDate(expDate);
+			payment.setHoldName(holderName);
+			
 			userService.addPayment(payment);
 			userService.upgrade(user);
+			return "ok";
+		} else {
+			return "invalid card number";
+		}
+		
+	}
+	
+	
+	
+	@RequestMapping(value = "/editPaymentAccount", method = RequestMethod.POST)
+	public @ResponseBody String editPaymentAccount(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		String cardNum = request.getParameter("cardNum");
+		System.out.println("cardNum is " + cardNum);
+		boolean isValidCardNum = CheckPayment.verify(cardNum);
+		if (isValidCardNum) {
+			String holderName = request.getParameter("holderName");
+			int cvv = Integer.parseInt(request.getParameter("cvv"));
+			String expirationDate = request.getParameter("expirationDate");
+			java.util.Date expDate = StringToDateHelper.parseToMonthYear(expirationDate);
+			User user = (User) session.getAttribute("user");
+			Payment payment = new Payment();
+			payment.setCardNum(cardNum);
+			payment.setCvv(cvv);
+			payment.setExpirationDate(expDate);
+			payment.setHoldName(holderName);
+			
+			userService.updatePayment(payment);
 			return "ok";
 		} else {
 			return "invalid card number";
@@ -755,6 +806,7 @@ public class ServletController {
 	public @ResponseBody String downgrade(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		// at the end of the month do it
 		User user = (User) session.getAttribute("user");
+		userService.removePayment(user.getPayment());// need to test
 		userService.downgrade(user);
 		return null;
 	}
@@ -769,4 +821,82 @@ public class ServletController {
 		}
 		return albumInfo;
 	}
+	
+	@RequestMapping(value = "/displayCheckRoyalty", method = RequestMethod.POST)
+	public @ResponseBody String checkRoyalty(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		
+		List<User> artists = userService.getAllArtist();
+		double factor = Double.parseDouble(environment.getProperty("artist.royalty.factor"));
+		for(int i=0;i<artists.size();i++)
+		{
+			userService.setArtistRoylties(artists.get(i).getArtist(), factor);
+		}
+		
+		String artistRoyaltyInfo = JSONHelper.getAllArtistRoyalty(artists);
+		return artistRoyaltyInfo;
+	}
+	
+	@RequestMapping(value = "/payOneCheckRoyalty", method = RequestMethod.POST)
+	public @ResponseBody String payOneCheckRoyalty(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		
+		User user = (User) session.getAttribute("user");//admin page only
+		String artistEmail = request.getParameter("artistEmail");
+		String artistRoyalty = request.getParameter("royalty");
+		double artistRoyal = Double.parseDouble(artistRoyalty);
+		List<User> artists = userService.getAllArtist();
+		
+		
+		User ar = userService.getUser(artistEmail);
+		Payment artistPayment = ar.getPayment();
+		artistPayment.setBalance(artistPayment.getBalance()+artistRoyal);
+		userService.updatePayment(artistPayment);
+		
+		Payment adminPayment = user.getPayment();
+		adminPayment.setBalance(adminPayment.getBalance()-artistRoyal);
+		userService.updatePayment(adminPayment);
+		
+		List<Song> songs = userService.getReleaseSong(ar.getArtist());
+		for(int i=0;i<songs.size();i++)
+		{
+			songService.updateMontlySong(0, songs.get(i));
+		}
+		for(int i=0;i<artists.size();i++)
+		{
+			if(artists.get(i).getArtist().getRoyalty()==0)
+			{
+				artists.remove(i);
+			}
+		}
+		
+		String artistRoyaltyInfo = JSONHelper.getAllArtistRoyalty(artists);
+		return artistRoyaltyInfo;
+	}
+	
+	@RequestMapping(value = "/payAllCheckRoyalty", method = RequestMethod.POST)
+	public @ResponseBody String payAllCheckRoyalty(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		
+		User user = (User) session.getAttribute("user");//admin page only
+		List<User> artists = userService.getAllArtist();
+		
+		for(int j=0;j<artists.size();j++)
+		{
+			User ar = artists.get(j);
+			Payment artistPayment = ar.getPayment();
+			artistPayment.setBalance(artistPayment.getBalance()+ar.getArtist().getRoyalty());
+			userService.updatePayment(artistPayment);
+			
+			Payment adminPayment = user.getPayment();
+			adminPayment.setBalance(adminPayment.getBalance()-ar.getArtist().getRoyalty());
+			userService.updatePayment(adminPayment);
+			
+			List<Song> songs = userService.getReleaseSong(ar.getArtist());
+			for(int i=0;i<songs.size();i++)
+			{
+				songService.updateMontlySong(0, songs.get(i));
+			}
+		}
+		//return main page
+		return "ok";
+	}
+	
 }

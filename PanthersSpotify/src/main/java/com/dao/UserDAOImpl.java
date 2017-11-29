@@ -160,6 +160,16 @@ public class UserDAOImpl implements UserDAO {
 	public void addPayment(Payment payment) {
 		entityManager.persist(payment);		
 	}
+	
+	@Transactional(readOnly = false)
+	public void updatePayment(Payment payment) {
+		entityManager.merge(payment);		
+	}
+	
+	@Transactional(readOnly = false)
+	public void removePayment(Payment payment) {
+		entityManager.remove(payment);		
+	}
 
 	@Transactional(readOnly = false)
 	public void upgrade(User user) {
@@ -175,22 +185,29 @@ public class UserDAOImpl implements UserDAO {
 		entityManager.merge(user);
 	}
 
-	@Transactional(readOnly = false)
-	public Artist setArtistRoylties(Artist artist) {
+	@Transactional(readOnly = true)
+	public List<Releasesong> getArtistRelease(Artist artist) {
 		Query query = entityManager.createNamedQuery("Releasesong.findByUemail").setParameter("uemail", artist.getArtistEmail());
-		artist.setRoyalties(0);
-		Collection<Releasesong> songs = query.getResultList();
-		for(Releasesong rs: songs) {
-			Collection<User> artists = songDAO.getSongArtists(rs.getReleasesongPK().getSid());
-			double royalties = artist.getRoyalties();
-			try {
-				royalties += (songDAO.getSong(rs.getReleasesongPK().getSid()).getMonthlyPlayed())/artists.size();
-				artist.setRoyalties(royalties);
-			}catch (Exception e) {
-				
-			}
-		}
-		return artist;
+		
+		List<Releasesong> songs = query.getResultList();
+			
+		return songs;
+	}
+	
+	@Transactional(readOnly = true)
+	public double getRoyalty(Artist artist) {
+		String queryString = "SELECT p.royalty from Artist p WHERE p.artistEmail=:artistEmail";
+		Query query = entityManager.createQuery(queryString);
+		query.setParameter("artistEmail", artist.getArtistEmail());
+		double royalty = (double)query.getSingleResult();
+			
+		return royalty;
+	}
+	
+	@Transactional(readOnly = false)
+	public void setRoyalty(Artist artist,double royalty) {
+		artist.setRoyalty(royalty);
+		entityManager.merge(artist);
 	}
 
 }

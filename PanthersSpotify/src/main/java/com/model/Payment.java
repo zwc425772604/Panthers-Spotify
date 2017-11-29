@@ -10,142 +10,121 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author weichaozhao
+ * @author yangxiang
  */
 @Entity
-@Table(name = "payment")
+@Table(name = "payment", catalog = "panthers", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Payment.findAll", query = "SELECT p FROM Payment p")
-    , @NamedQuery(name = "Payment.findByPayid", query = "SELECT p FROM Payment p WHERE p.payid = :payid")
     , @NamedQuery(name = "Payment.findByHoldName", query = "SELECT p FROM Payment p WHERE p.holdName = :holdName")
     , @NamedQuery(name = "Payment.findByCardNum", query = "SELECT p FROM Payment p WHERE p.cardNum = :cardNum")
     , @NamedQuery(name = "Payment.findByCvv", query = "SELECT p FROM Payment p WHERE p.cvv = :cvv")
     , @NamedQuery(name = "Payment.findByExpirationDate", query = "SELECT p FROM Payment p WHERE p.expirationDate = :expirationDate")
-    , @NamedQuery(name = "Payment.findByCompany", query = "SELECT p FROM Payment p WHERE p.company = :company")
-    , @NamedQuery(name = "Payment.findByBillingAddress", query = "SELECT p FROM Payment p WHERE p.billingAddress = :billingAddress")})
+    , @NamedQuery(name = "Payment.findByUemail", query = "SELECT p FROM Payment p WHERE p.uemail = :uemail")
+    , @NamedQuery(name = "Payment.findByBalance", query = "SELECT p FROM Payment p WHERE p.balance = :balance")})
 public class Payment implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Column(name = "holdName", length = 20)
+    private String holdName;
+    @Column(name = "cardNum", length = 20)
+    private String cardNum;
+    @Column(name = "cvv")
+    private Integer cvv;
+    @Column(name = "expirationDate")
+    @Temporal(TemporalType.DATE)
+    private Date expirationDate;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "uemail", nullable = false, length = 50)
+    private String uemail;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "balance", precision = 22)
+    private Double balance;
+    @JoinColumn(name = "uemail", referencedColumnName = "email", nullable = false, insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private User user;
 
     public Payment() {
     }
 
-    public Payment(Integer payid) {
-        this.payid = payid;
+    public Payment(String uemail) {
+        this.uemail = uemail;
     }
 
-    public Payment(String holdName, int cardNum, int cvv, Date expirationDate, String company, String billingAddress, User user) {
-    	this.holdName = holdName;
-    	this.cardNum = cardNum;
-    	this.cvv = cvv;
-    	this.expirationDate = expirationDate;
-    	this.company = company;
-    	this.billingAddress = billingAddress;
-    	this.uemail = user;
-    }
-
-	@Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "payid", nullable = false)
-    private Integer payid;
-    public Integer getPayid() {
-        return payid;
-    }
-    public void setPayid(Integer payid) {
-        this.payid = payid;
-    }
-
-    @Size(max = 20)
-    @Column(name = "holdName", length = 20)
-    private String holdName;
     public String getHoldName() {
         return holdName;
     }
-    public void setHoldName(String hodlName) {
-        this.holdName = hodlName;
+
+    public void setHoldName(String holdName) {
+        this.holdName = holdName;
     }
 
-    @Column(name = "cardNum")
-    private Integer cardNum;
-    public Integer getCardNum() {
+    public String getCardNum() {
         return cardNum;
     }
-    public void setCardNum(Integer cardNum) {
+
+    public void setCardNum(String cardNum) {
         this.cardNum = cardNum;
     }
 
-    @Column(name = "cvv")
-    private Integer cvv;
     public Integer getCvv() {
         return cvv;
     }
+
     public void setCvv(Integer cvv) {
         this.cvv = cvv;
     }
 
-    @Column(name = "expirationDate")
-    @Temporal(TemporalType.DATE)
-    private Date expirationDate;
     public Date getExpirationDate() {
         return expirationDate;
     }
+
     public void setExpirationDate(Date expirationDate) {
         this.expirationDate = expirationDate;
     }
 
-    @Size(max = 10)
-    @Column(name = "company", length = 10)
-    private String company;
-    public String getCompany() {
-        return company;
-    }
-    public void setCompany(String company) {
-        this.company = company;
-    }
-
-    @Size(max = 100)
-    @Column(name = "billingAddress", length = 100)
-    private String billingAddress;
-    public String getBillingAddress() {
-        return billingAddress;
-    }
-    public void setBillingAddress(String billingAddress) {
-        this.billingAddress = billingAddress;
-    }
-
-    @JoinColumn(name = "uemail", referencedColumnName = "email")
-    @ManyToOne
-    private User uemail;
-    public User getUemail() {
+    public String getUemail() {
         return uemail;
     }
-    public void setUemail(User uemail) {
+
+    public void setUemail(String uemail) {
         this.uemail = uemail;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (payid != null ? payid.hashCode() : 0);
+        hash += (uemail != null ? uemail.hashCode() : 0);
         return hash;
     }
 
@@ -156,7 +135,7 @@ public class Payment implements Serializable {
             return false;
         }
         Payment other = (Payment) object;
-        if ((this.payid == null && other.payid != null) || (this.payid != null && !this.payid.equals(other.payid))) {
+        if ((this.uemail == null && other.uemail != null) || (this.uemail != null && !this.uemail.equals(other.uemail))) {
             return false;
         }
         return true;
@@ -164,7 +143,7 @@ public class Payment implements Serializable {
 
     @Override
     public String toString() {
-        return "com.model.Payment[ payid=" + payid + " ]";
+        return "javaapplication2.Payment[ uemail=" + uemail + " ]";
     }
-
+    
 }

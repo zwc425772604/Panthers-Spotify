@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.model.Artist;
 import com.model.Payment;
+import com.model.Song;
 import com.model.SongQueue;
 import com.model.User;
 
@@ -49,6 +50,11 @@ public interface UserService {
 
 	public void downgrade(User user);
 	
-	public Artist setArtistRoylties(Artist artist);
-
+	public void setArtistRoylties(Artist artist,double factor);
+	
+	public void updatePayment(Payment payment);
+	
+	public void removePayment(Payment payment);
+	
+	public List<Song> getReleaseSong(Artist artist);
 }

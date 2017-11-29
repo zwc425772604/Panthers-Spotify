@@ -37,5 +37,5 @@ public interface SongService {
 	public void updateReleaseSong(int songID, String status);
 	public void setArtistsCollection(Collection<SongQueue> songQueue);
 	public List<User> getArtistsCollection(int sid);
-	public List<Song> getSongs(int aid);
+	public List<Song> getSongs(Album aid);
 }

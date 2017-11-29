@@ -89,8 +89,8 @@ public class SongServiceImpl implements SongService {
 		return songDAO.getSong(sid);
 	}
 	
-	public List<Song> getSongs(int aid) {
-		return songDAO.getSongs(aid);
+	public List<Song> getSongs(Album album) {
+		return songDAO.getSongs(album);
 	}
 
 	public List<Song> getAllSongs() {

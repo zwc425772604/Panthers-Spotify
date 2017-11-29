@@ -14,6 +14,7 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.model.Album;
 import com.model.Releasesong;
 import com.model.Song;
 import com.model.SongQueue;
@@ -56,10 +57,11 @@ public class SongDAOImpl implements SongDAO {
 	}
 	
 	@Transactional(readOnly = true)
-	public List<Song> getSongs(int aid) {
+	public List<Song> getSongs(Album album) {
 		TypedQuery<Song> query1 = entityManager
-				.createQuery("SELECT s FROM Song s WHERE s.aid=:aid", Song.class)
-				.setParameter("aid", aid);
+				.createQuery("SELECT s from Song s WHERE s.aid=:aid", Song.class)
+				.setParameter("aid", album);
+
 		List<Song> result = query1.getResultList();
 		return result;
 	}

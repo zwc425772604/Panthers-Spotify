@@ -11,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -279,16 +280,21 @@ public class ServletController {
 	/* get specific playlist */
 	@RequestMapping(value = "/getSpecificPlaylist", method = RequestMethod.POST)
 	public @ResponseBody String getSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		int playlist_id = Integer.parseInt(request.getParameter("playlist_id"));
-		Playlist playlist = playlistService.getPlaylist(playlist_id);
+		int playlistID = Integer.parseInt(request.getParameter("playlist_id"));
+		Playlist playlist = playlistService.getPlaylist(playlistID);
 		String pname = playlist.getPname();
 		System.out.println("playlist name is :" + pname);
 		System.out.println("playlist num songs :" + playlist.getNSongs());
 		session.setAttribute("selectedPlaylist", playlist);
 		session.setAttribute("selectedPlaylistNumSongs", playlist.getNSongs());
-		return "ok";
+		List<Song> list = playlistService.getSongInPlaylist(playlistID);
+		session.setAttribute("list", list);
+		String playlistSongJSON = JSONHelper.new_pendingSongsToJSON(list,songService);
+		JSONArray playlistSongJSON1 = JSONHelper.new_pendingSongsToJSON1(list,songService);
+		session.setAttribute("jsonList", playlistSongJSON1);
+		System.out.println("playlistSong json " + playlistSongJSON1);
+		return playlistSongJSON;
 	}
-
 	/* add song to database */
 
 	@RequestMapping(value = "/addSongToDatabase", method = RequestMethod.POST)
@@ -721,23 +727,27 @@ public class ServletController {
 	@RequestMapping(value = "/upgrade", method = RequestMethod.POST)
 	public @ResponseBody String upgrade(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String cardNum = request.getParameter("cardNum");
+		System.out.println("cardNum is " + cardNum);
 		boolean isValidCardNum = CheckPayment.verify(cardNum);
 		if (isValidCardNum) {
-			String holdName = request.getParameter("holdName");
+			String holderName = request.getParameter("holderName");
 			int cvv = Integer.parseInt(request.getParameter("cvv"));
 			String expirationDate = request.getParameter("expirationDate");
 			java.util.Date expDate = StringToDateHelper.parseToMonthYear(expirationDate);
-			String company = request.getParameter("company");
-			String billingAddress = request.getParameter("billingAddress");
+			//String company = request.getParameter("company");
+			String company = "Chase";
+			//String billingAddress = request.getParameter("billingAddress");
+			String billingAddress = "111";
 			User user = (User) session.getAttribute("user");
-			Payment payment = new Payment(holdName, Integer.parseInt(cardNum), cvv, expDate, company, billingAddress,
-					user);
+			Payment payment = new Payment(holderName, Integer.parseInt(cardNum), cvv, expDate, company, billingAddress,
+					user);		
 			userService.addPayment(payment);
 			userService.upgrade(user);
 			return "ok";
 		} else {
 			return "invalid card number";
 		}
+		
 	}
 
 	@RequestMapping(value = "/downgrade", method = RequestMethod.POST)

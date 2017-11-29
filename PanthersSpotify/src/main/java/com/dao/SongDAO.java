@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.Collection;
 import java.util.List;
 
+import com.model.Album;
 import com.model.Releasesong;
 import com.model.Song;
 import com.model.SongQueue;
@@ -28,5 +29,5 @@ public interface SongDAO {
 	public List<Releasesong> getAllSongsByID(int songID);
 	public void updateReleaseSong(Releasesong rs);
 	public Collection<User> getSongArtists(Integer sid);
-	public List<Song> getSongs(int aid);
+	public List<Song> getSongs(Album album);
 }

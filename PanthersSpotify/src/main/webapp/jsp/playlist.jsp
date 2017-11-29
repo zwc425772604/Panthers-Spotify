@@ -1,5 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@page import="org.json.JSONArray"%>
+<%@page import="org.json.JSONObject"%>
+<%@page import="org.json.JSONException"%>
+
 <c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
@@ -207,8 +211,17 @@
             </tr>
           </thead>
           <tbody>
-          <!--  
-            <tr class= "song_info">
+          <%
+          	JSONArray data = (JSONArray)session.getAttribute("jsonList");
+    		System.out.println("shhshada");
+            System.out.println("data length " + data.length());
+           
+            for (int i = 0; i < data.length(); i++)
+            {
+            	JSONObject obj = data.getJSONObject(i);
+            	
+           %>
+           	<tr class= "song_info">
               <td><button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">
                 <i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i></button>
               </td>
@@ -217,10 +230,21 @@
                 </button>
               </td>
               <td>
-                <p> HUMBLE. </p>
+                <p> <%= obj.get("songTitle") %> </p>
               </td>
               <td>
-                <p> <a href="#"> Kendrick Lamar </a> </p>
+                <p> 
+                	<% JSONArray artist = data.getJSONObject(i).getJSONArray("songArtist");
+                		for (int j = 0; j < artist.length(); j++)
+                		{
+                			JSONObject obj1 = artist.getJSONObject(j);
+                			%>
+                			<a href="{cp}/../getSpecificArtist/<%= obj1.getString("aemail")%>"> <%= obj1.getString("name") %> </a><br>
+                			<% 
+                		}
+                	%>
+          
+               </p>
               </td>
         
               <td>
@@ -244,7 +268,11 @@
                 </div>
               </td>
             </tr>
-        	-->
+           <%
+            }
+            %>
+          
+       
           </tbody>
         </table>
       </div>

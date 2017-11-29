@@ -127,7 +127,10 @@ $(document).on("click", ".playlist-item", function(){
         success : function(response)
         {
           console.log(response);
-          $("#main-changing-content").load("jsp/playlist.jsp");
+          //$("#main-changing-content").load("jsp/playlist.jsp");
+          $.get("jsp/playlist.jsp", function(data) {
+              $("#main-changing-content").html(data)
+          });
         },
         error: function(e)
         {
@@ -238,6 +241,10 @@ function displayAccount(){
 
 function displayUserAccount(){
 	$("#main-changing-content").load("jsp/userAccount.jsp");
+}
+function displayUpgradeForm()
+{
+	$("#main-changing-content").load("jsp/pay.jsp");
 }
 
 function openDialogBox()

@@ -173,7 +173,7 @@ public class JSONHelper {
 		return jsonObject.toString();
 	}
 	
-	public static String albumInformation(Album album, AlbumService albumService) throws JSONException {
+	public static String albumInformation(Album album, AlbumService albumService, SongService songService) throws JSONException {
 		JSONObject jsonObject = new JSONObject();
 		int aid = album.getAid();
 		jsonObject.put("albumID", aid);
@@ -182,6 +182,7 @@ public class JSONHelper {
 		jsonObject.put("albumPhotoUrl", album.getPhotoUrl());
 		JSONArray artists = new JSONArray();
 		List<User> users = albumService.getArtistsCollection(aid);
+		
 		for (User user : users) {
 			JSONObject ob = new JSONObject();
 			ob.put("name", user.getFullName());
@@ -189,6 +190,15 @@ public class JSONHelper {
 			artists.put(ob);
 		}
 		jsonObject.put("songArtist", artists);
+		JSONArray songsInAlbum = new JSONArray();
+		List<Song> songs = songService.getSongs(aid);
+		for (Song song : songs) {
+			JSONObject ob = new JSONObject();
+			ob.put("songTitle", song.getStitle());
+			ob.put("songGenre", song.getGener());
+			songsInAlbum.put(ob);
+		}
+		jsonObject.put("songsInAlbum", songsInAlbum);
 		return jsonObject.toString();
 	}
 	

@@ -84,7 +84,11 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	public void followPlaylist(int playlistId,String userEmail) {
 		Followplaylist followPlaylist = new Followplaylist(playlistId,userEmail);
 		
-		entityManager.persist(followPlaylist);
+		if(!entityManager.contains(followPlaylist))
+		{
+			System.out.println("here follow");
+			entityManager.persist(followPlaylist);
+		}
 	}
 	
 	@Transactional(readOnly=false)

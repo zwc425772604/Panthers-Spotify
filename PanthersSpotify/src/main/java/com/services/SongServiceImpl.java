@@ -88,6 +88,10 @@ public class SongServiceImpl implements SongService {
 	public Song getSong(int sid) {
 		return songDAO.getSong(sid);
 	}
+	
+	public List<Song> getSongs(int aid) {
+		return songDAO.getSongs(aid);
+	}
 
 	public List<Song> getAllSongs() {
 		return songDAO.getSongs();

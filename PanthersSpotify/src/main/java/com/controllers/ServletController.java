@@ -721,6 +721,7 @@ public class ServletController {
 	@RequestMapping(value = "/upgrade", method = RequestMethod.POST)
 	public @ResponseBody String upgrade(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String cardNum = request.getParameter("cardNum");
+		System.out.println("cardNum is " + cardNum);
 		boolean isValidCardNum = CheckPayment.verify(cardNum);
 		if (isValidCardNum) {
 			String holdName = request.getParameter("holdName");
@@ -738,6 +739,7 @@ public class ServletController {
 		} else {
 			return "invalid card number";
 		}
+		
 	}
 
 	@RequestMapping(value = "/downgrade", method = RequestMethod.POST)

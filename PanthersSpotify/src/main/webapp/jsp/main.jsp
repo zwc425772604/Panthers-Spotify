@@ -64,7 +64,7 @@
                   <div class="w3-dropdown-content w3-bar-block w3-border user-dropdown-button">
                     <a href="javascript:displayUserAccount()" class="w3-bar-item w3-button" id="dropdown-item">Account Setting</a>
                     <a href="javascript:displayAccount()" class="w3-bar-item w3-button" id="dropdown-item">Change Password </a>
-                    <a href="#" class="w3-bar-item w3-button" id="dropdown-item">Upgrade Your Account</a>
+                    <a href="javascript:displayUpgradeForm()" class="w3-bar-item w3-button" id="dropdown-item">Upgrade Your Account</a>
                     <a href="home" class="w3-bar-item w3-button" id="dropdown-item">Log Out</a>
                   </div>
                 </div>

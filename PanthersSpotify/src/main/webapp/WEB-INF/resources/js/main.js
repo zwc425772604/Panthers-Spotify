@@ -239,6 +239,10 @@ function displayAccount(){
 function displayUserAccount(){
 	$("#main-changing-content").load("jsp/userAccount.jsp");
 }
+function displayUpgradeForm()
+{
+	$("#main-changing-content").load("jsp/pay.jsp");
+}
 
 function openDialogBox()
 {

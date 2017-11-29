@@ -46,10 +46,11 @@ $(document).ready(function(){
   
 });
 
-$(document).on ("click", ".followPlaylistButton", function () {
+$(".followPlaylistButton").unbind('click').bind('click', function(){
 	var status = $("#followingPlaylistStatus").text().trim();
 	var pid = $("#playlistID").text().trim();
 	console.log(status);
+	console.log("follow playlist button clicked");
 	if (status.localeCompare('FOLLOW') == 0 )
 	{
 		$.ajax({
@@ -80,8 +81,8 @@ $(document).on ("click", ".followPlaylistButton", function () {
 			}
 		});
 	}
-
 });
+
 
 //style for the filter container
 $( "#filter_container" )

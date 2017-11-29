@@ -39,25 +39,25 @@ $(document).ready(function(){
         }
 	});
 
-	$(".playlist-item").click(function(){
-		var pid = $(".playlist_id", this).text(); //get the pid of the playlist
-		  $.ajax({
-	          url: "${cp}/../getSpecificPlaylist",
-	          type: "POST",
-	          data : {"playlist_id" : pid },
-	          asyn: true,
-	          cache: true,
-	          success : function(response)
-	          {
-	            console.log(response);
-	            $("#main-changing-content").load("jsp/playlist.jsp");
-	          },
-	          error: function(e)
-	          {
-	            console.log(e);
-	          }
-		  });
-	});
+//	$(".playlist-item").click(function(){
+//		var pid = $(".playlist_id", this).text(); //get the pid of the playlist
+//		  $.ajax({
+//	          url: "${cp}/../getSpecificPlaylist",
+//	          type: "POST",
+//	          data : {"playlist_id" : pid },
+//	          asyn: true,
+//	          cache: true,
+//	          success : function(response)
+//	          {
+//	            console.log(response);
+//	            $("#main-changing-content").load("jsp/playlist.jsp");
+//	          },
+//	          error: function(e)
+//	          {
+//	            console.log(e);
+//	          }
+//		  });
+//	});
 
 	$("#new_playlist_button").click(function(){
 	 	 $('#dialog').dialog({

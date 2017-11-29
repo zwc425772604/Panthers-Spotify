@@ -76,11 +76,12 @@ public class ServletController {
 	public ModelAndView userLogin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
+		String encPwd = Security.oldEncryptPassword(password);
 		User user = userService.getUser(email);
 		if (user.equals(null)) {
 			mav.setViewName("index");
 			mav.addObject("error_message", "This email does not register on our site!");
-		} else if (Security.matchPassword(password, user.getUserPassword())) {
+		} else if (Security.matchPassword(password, user.getUserPassword())|| user.getUserPassword().equals(encPwd)) {
 			session.setAttribute("user", user);
 			
 			int userTypeInt = user.getUserType();

@@ -724,15 +724,17 @@ public class ServletController {
 		System.out.println("cardNum is " + cardNum);
 		boolean isValidCardNum = CheckPayment.verify(cardNum);
 		if (isValidCardNum) {
-			String holdName = request.getParameter("holdName");
+			String holderName = request.getParameter("holderName");
 			int cvv = Integer.parseInt(request.getParameter("cvv"));
 			String expirationDate = request.getParameter("expirationDate");
 			java.util.Date expDate = StringToDateHelper.parseToMonthYear(expirationDate);
-			String company = request.getParameter("company");
-			String billingAddress = request.getParameter("billingAddress");
+			//String company = request.getParameter("company");
+			String company = "Chase";
+			//String billingAddress = request.getParameter("billingAddress");
+			String billingAddress = "111";
 			User user = (User) session.getAttribute("user");
-			Payment payment = new Payment(holdName, Integer.parseInt(cardNum), cvv, expDate, company, billingAddress,
-					user);
+			Payment payment = new Payment(holderName, Integer.parseInt(cardNum), cvv, expDate, company, billingAddress,
+					user);		
 			userService.addPayment(payment);
 			userService.upgrade(user);
 			return "ok";

@@ -1,10 +1,14 @@
 function submitUpgradeForm()
 {
 	var cardNum = $("#cardNumber").val();
+	var cvv = $("#cvv").val();
+	var holderName = $("#holderName").val();
+	var expirationDate = $("#expirationDate").val();
+	
 	$.ajax({
         url: "${cp}/../upgrade",
         type: "POST",
-        data: {"cardNum" : cardNum},
+        data: {"cardNum" : cardNum, "holderName" : holderName, "cvv" : cvv, "expirationDate" : expirationDate},
         asyn: false,
         cache: true,
         success : function(response)

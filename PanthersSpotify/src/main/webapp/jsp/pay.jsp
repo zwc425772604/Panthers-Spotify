@@ -27,7 +27,7 @@
              <div class="form-group row">
                <label for="staticEmail" class="col-md-4 col-form-label">Your Name:</label>
                <div class="col-md-8">
-                 <input type="text" class="form-control" id="staticEmail" placeholder="enter your name"required>
+                 <input type="text" class="form-control" id="holderName" placeholder="enter your name"required>
                </div>
              </div>
              <div class="form-group row">
@@ -52,10 +52,10 @@
                <label for="inputPassword" class="col-md-8 col-form-label">Expiration Date:</label>
                 <label for="inputPassword" class="col-md-4 col-form-label">CV Code:</label>
                <div class="col-md-8">
-                 <input type="text" class="form-control"  placeholder="MM/YY" required>
+                 <input type="text" class="form-control" id="expirationDate" placeholder="MM/YY" required>
                </div>
                <div class="col-md-4">
-                 <input type="text" class="form-control"  placeholder="CVC" required>
+                 <input type="text" class="form-control"  id="cvv" placeholder="CVV" required>
                </div>
              </div>
              <div class="form-group row">

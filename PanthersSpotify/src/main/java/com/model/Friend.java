@@ -12,6 +12,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -26,7 +27,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Friend.findByUemail", query = "SELECT f FROM Friend f WHERE f.friendPK.uemail = :uemail")
     , @NamedQuery(name = "Friend.findByFemail", query = "SELECT f FROM Friend f WHERE f.friendPK.femail = :femail")
     , @NamedQuery(name = "Friend.findByUemailFemail", query = "SELECT f FROM Friend f WHERE f.friendPK.femail = :femail AND f.friendPK.uemail = :uemail")
-    , @NamedQuery(name = "Friend.findByCreateDate", query = "SELECT f FROM Friend f WHERE f.createDate = :createDate")})
+    , @NamedQuery(name = "Friend.findByCreateDate", query = "SELECT f FROM Friend f WHERE f.createDate = :createDate")
+    , @NamedQuery(name = "Friend.findByStatus", query = "SELECT r FROM Friend r WHERE r.status = :status")})
 public class Friend implements Serializable {
 
 
@@ -60,6 +62,16 @@ public class Friend implements Serializable {
     }
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
+    }
+    
+    @Column(name = "status")
+    private String status;
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

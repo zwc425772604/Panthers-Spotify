@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.dao.PlaylistDAO;
 import com.dao.SongDAO;
+import com.helper.UploadFile;
 import com.model.Album;
 import com.model.Playlist;
 import com.model.Releasesong;
@@ -79,6 +80,7 @@ public class SongServiceImpl implements SongService {
 
 	@Transactional
 	public void removeSong(Song Song) {
+		
 		songDAO.deleteSong(Song);
 
 	}
@@ -101,27 +103,12 @@ public class SongServiceImpl implements SongService {
 			String songType, CommonsMultipartFile file) {
 
 		final String dir = System.getProperty("user.dir");
-		File f1 = new File(dir + "/src/main/webapp/WEB-INF/resources/data/audios/Artists");
-		if (f1.exists()) {
-			System.out.println("here");
-		}
-		File userDir = new File(f1, user.getEmail());
-		boolean userSuccess = userDir.mkdirs();
-
-		String songUrl = "resources/data/audios/Artists/" + user.getEmail() + "/" + file.getOriginalFilename();
+		char first = Character.toUpperCase(file.getOriginalFilename().charAt(0));
+		File f1 = new File(dir + "/song/"+first);
+		String songUrl = f1.getAbsolutePath()+"/"+file.getOriginalFilename();
 		Song song = new Song(songTitle, null, null, 0, songGenre, songType, songUrl);
 
-		File pathToStore = new File(userDir, file.getOriginalFilename());
-		try {
-			file.transferTo(pathToStore);
-
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-			System.out.println("failed to save the song to dir");
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("failed to load");
-		}
+		songUrl = UploadFile.upload(f1.getAbsolutePath(), file.getOriginalFilename(), file);
 
 		songDAO.addSong(song);
 

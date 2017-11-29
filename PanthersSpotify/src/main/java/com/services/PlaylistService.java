@@ -17,8 +17,8 @@ public interface PlaylistService {
 	public Playlist getPlaylist(int pid);
 	public List<Playlist> getAllPlaylists();
 	public List<Playlist> getTopFollowedPlaylist(int numberOfPlaylist);
-	public boolean followPlaylist(int playlistId,User user);
-	public boolean unfollowPlaylist(int playlistId,User user);
+	public Playlist followPlaylist(int playlistId,User user);
+	public Playlist unfollowPlaylist(int playlistId,User user);
 	public void addSongToPlaylist(int playlistId,int songId);
 	public void removeSongFromPlaylist(int playlistId,int songId);
 	public List<Playlist> findRelative(String input);
@@ -28,4 +28,5 @@ public interface PlaylistService {
 	public Collection<Playlist> getUserPlaylists(String email);
 	public Collection<Playlist> getFollowPlaylists(String userEmail);
 	public List<Song> getSongInPlaylist(int playlistId);
+	public void updateSpecificPlaylist(Playlist p);
 }

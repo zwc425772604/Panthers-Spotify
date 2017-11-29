@@ -125,6 +125,11 @@ public class PlaylistServiceImpl implements PlaylistService {
 	}
 	
 	@Transactional
+	 public void updateSpecificPlaylist(Playlist p){
+		  playlistDAO.updatePlaylist(p);
+	  }
+	
+	@Transactional
 	 public List<Playlist> getTopFollowedPlaylist(int numberOfPlaylist){
 		  return playlistDAO.getTopFollowedPlaylist(numberOfPlaylist);
 	  }
@@ -151,35 +156,42 @@ public class PlaylistServiceImpl implements PlaylistService {
 		  return num;
 	  }
 	@Transactional
-	public boolean followPlaylist(int playlistId,User user)
+	public Playlist followPlaylist(int playlistId,User user)
 	  {
 		  List<Playlist> userPlaylist = (List<Playlist>)(user.getUserPlaylistCollection());
 	  	  int playlistIndex = findPlaylist(playlistId,userPlaylist);
 	  	  
 	  	  if(playlistIndex!=-1)
 	  	  {
-	  		  return false;
+	  		  return null;
 	  	  }
 		    Playlist result = playlistDAO.getPlaylist(playlistId);
 		    
 		    playlistDAO.followPlaylist(playlistId, user.getEmail());
+		    
+		    result.setFollowers(result.getFollowers()+1);
+		    playlistDAO.updatePlaylist(result);
+		    
 		  	userPlaylist.add(result);
-		  	return true;
+		  	return result;
 	  }
 	@Transactional
-	public boolean unfollowPlaylist(int playlistId,User user)
+	public Playlist unfollowPlaylist(int playlistId,User user)
 	  {
 		  List<Playlist> user_playlist = (List<Playlist>)(user.getUserPlaylistCollection());
 	  	  int playlistIndex = findPlaylist(playlistId,user_playlist);
 	  	  
 	  	  if(playlistIndex==-1)
 	  	  {
-	  		  return false;
+	  		  return null;
 	  	  }
 	  	  Playlist result = playlistDAO.getPlaylist(playlistId);
 	  	  playlistDAO.unfollowPlaylist(playlistId, user.getEmail());
+	  	result.setFollowers(result.getFollowers()-1);
+	    playlistDAO.updatePlaylist(result);
+	    
 		  user_playlist.remove(result);
-		  	return true;
+		  	return result;
 	  }
 	
 	//add song to playlist

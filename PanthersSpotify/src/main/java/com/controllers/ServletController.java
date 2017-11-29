@@ -96,12 +96,16 @@ public class ServletController {
 			user.setSongQueueCollection(userService.getQueue(email));
 			Collection<SongQueue> songQueue = new ArrayList<SongQueue>();
 			Collection<Playlist> playlists = new ArrayList<Playlist>();
+			Collection<Playlist> followedPlaylist = new ArrayList<Playlist>();
 			switch (userType) {
 			case BASIC:
 				user.setSongQueueCollection(userService.getQueue(email));
 				songQueue = user.getSongQueueCollection();
 				songService.setArtistsCollection(songQueue);
+				
 				playlists = user.getUserPlaylistCollection();
+				followedPlaylist = playlistService.getFollowPlaylists(email);
+				playlists.addAll(followedPlaylist);
 				session.setAttribute("songQueue", songQueue);
 				session.setAttribute("user_playlist", playlists);
 				mav.setViewName("main");
@@ -112,6 +116,9 @@ public class ServletController {
 				songQueue = user.getSongQueueCollection();
 				songService.setArtistsCollection(songQueue);
 				playlists = user.getUserPlaylistCollection();
+				followedPlaylist = playlistService.getFollowPlaylists(email);
+				playlists.addAll(followedPlaylist);
+				
 				session.setAttribute("songQueue", songQueue);
 				session.setAttribute("user_playlist", playlists);
 				mav.setViewName("main");
@@ -206,7 +213,10 @@ public class ServletController {
 	public @ResponseBody String followSpecificPlaylist(HttpServletRequest request, HttpSession session) {
 		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
 		User user = (User) session.getAttribute("user");
-		boolean ret = playlistService.followPlaylist(playlistID, user);
+		Playlist ret = playlistService.followPlaylist(playlistID, user);
+		List<Playlist> userPlaylist = (List<Playlist>) (session.getAttribute("user_playlist"));
+		userPlaylist.add(ret);
+		session.setAttribute("user_playlist", userPlaylist);
 		System.out.println("playlist id to be follow is : " + playlistID);
 		return "ok";
 	}
@@ -215,7 +225,10 @@ public class ServletController {
 	public @ResponseBody String unfollowSpecificPlaylist(HttpServletRequest request, HttpSession session) {
 		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
 		User user = (User) session.getAttribute("user");
-		boolean ret = playlistService.unfollowPlaylist(playlistID, user);
+		Playlist ret = playlistService.unfollowPlaylist(playlistID, user);
+		List<Playlist> userPlaylist = (List<Playlist>) (session.getAttribute("user_playlist"));
+		userPlaylist.remove(ret);
+		session.setAttribute("user_playlist", userPlaylist);
 		System.out.println("here is unfollow");
 		System.out.println("playlist id to be unfollow is : " + playlistID);
 		return "ok";
@@ -445,7 +458,11 @@ public class ServletController {
 		User user = (User) session.getAttribute("user");
 		playlistService.addSongToPlaylist(playlistID, songID);
 		List<Song> list = playlistService.getSongInPlaylist(playlistID);
+		Playlist p = playlistService.getPlaylist(playlistID);
+		p.setNSongs(p.getNSongs()+1);
+		playlistService.updateSpecificPlaylist(p);
 		String playlistSongJSON = JSONHelper.new_pendingSongsToJSON(list, songService);
+		System.out.println("addsongtoplaylist");
 		return playlistSongJSON;
 	}
 
@@ -455,8 +472,14 @@ public class ServletController {
 		int songID = Integer.parseInt(request.getParameter("songID").trim());
 		User user = (User) session.getAttribute("user");
 		playlistService.removeSongFromPlaylist(playlistID, songID);
+		
+		Playlist p = playlistService.getPlaylist(playlistID);
+		p.setNSongs(p.getNSongs()-1);
+		playlistService.updateSpecificPlaylist(p);
+		
 		List<Song> list = playlistService.getSongInPlaylist(playlistID);
 		String playlistSongJSON = JSONHelper.new_pendingSongsToJSON(list, songService);
+		System.out.println("removesongtoplaylist");
 		return playlistSongJSON;
 	}
 

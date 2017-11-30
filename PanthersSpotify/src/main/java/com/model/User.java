@@ -48,6 +48,7 @@ import org.hibernate.annotations.FetchMode;
 		@NamedQuery(name = "User.findByGender", query = "SELECT u FROM User u WHERE u.gender = :gender"),
 		@NamedQuery(name = "User.findByDob", query = "SELECT u FROM User u WHERE u.dob = :dob"),
 		@NamedQuery(name = "User.findByUserType", query = "SELECT u FROM User u WHERE u.userType = :userType"),
+		@NamedQuery(name = "User.findByPhotoUrl", query = "SELECT u FROM User u WHERE u.photoUrl = :photoUrl"),
 		@NamedQuery(name = "User.findByUpgradeDate", query = "SELECT u FROM User u WHERE u.upgradeDate = :upgradeDate") })
 public class User implements Serializable {
 
@@ -247,6 +248,8 @@ public class User implements Serializable {
 	public String getFirstName() {
 		return firstName;
 	}
+	
+	
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
@@ -324,6 +327,16 @@ public class User implements Serializable {
 	public void setUserCollection1(Collection<User> userCollection1) {
 		this.userCollection1 = userCollection1;
 	}
+	
+	@Column(name = "photoUrl", length = 300)
+    private String photoUrl;
+	public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
 
 	@OneToMany(mappedBy = "uemail")
 	private Collection<Concert> concertCollection;

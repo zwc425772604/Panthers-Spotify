@@ -84,8 +84,6 @@ public class ServletController {
 			mav.setViewName("index");
 			mav.addObject("error_message", "This email does not register on our site!");
 		} else if (Security.matchPassword(password, user.getUserPassword())|| user.getUserPassword().equals(encPwd)) {
-			session.setAttribute("user", user);
-			
 			int userTypeInt = user.getUserType();
 			UserType userType = UserType.BASIC;
 			UserType[] types = { UserType.BASIC, UserType.PREMIUM, UserType.ARTIST, UserType.ADMIN };
@@ -94,36 +92,38 @@ public class ServletController {
 					userType = type;
 				}
 			}
-			
-			user.setSongQueueCollection(userService.getQueue(email));
 			Collection<SongQueue> songQueue = new ArrayList<SongQueue>();
 			Collection<Playlist> playlists = new ArrayList<Playlist>();
 			Collection<Playlist> followedPlaylist = new ArrayList<Playlist>();
+			JSONObject result = new JSONObject();
 			switch (userType) {
 			case BASIC:
-				user.setSongQueueCollection(userService.getQueue(email));
-				songQueue = user.getSongQueueCollection();
+				songQueue = userService.getQueue(email);
 				songService.setArtistsCollection(songQueue);
-				
 				playlists = user.getUserPlaylistCollection();
 				followedPlaylist = playlistService.getFollowPlaylists(email);
 				playlists.addAll(followedPlaylist);
-				session.setAttribute("songQueue", songQueue);
 				session.setAttribute("user_playlist", playlists);
-				session.setAttribute("userFollowedPlaylists", followedPlaylist);
+				user.setSongQueueCollection(songQueue);
+				session.setAttribute("user", user);
+				result = JSONHelper.songQueueToJSON(songQueue);
+				session.setAttribute("queueJSON", result);
+				System.out.println("Queue: "+result.toString());
 				mav.setViewName("main");
 				mav.addObject("username", user.getUserName());
 				break;
 			case PREMIUM:
-				user.setSongQueueCollection(userService.getQueue(email));
-				songQueue = user.getSongQueueCollection();
+				songQueue = userService.getQueue(email);
 				songService.setArtistsCollection(songQueue);
 				playlists = user.getUserPlaylistCollection();
 				followedPlaylist = playlistService.getFollowPlaylists(email);
 				playlists.addAll(followedPlaylist);
-				
-				session.setAttribute("songQueue", songQueue);
 				session.setAttribute("user_playlist", playlists);
+				user.setSongQueueCollection(songQueue);
+				result = JSONHelper.songQueueToJSON(songQueue);
+				System.out.println("Queue: "+result.toString());
+				session.setAttribute("queueJSON", result);
+				session.setAttribute("user", user);
 				mav.setViewName("main");
 				mav.addObject("username", user.getUserName());
 				break;
@@ -638,11 +638,16 @@ public class ServletController {
 
 	@RequestMapping(value = "/preSong", method = RequestMethod.POST)
 	public @ResponseBody String getPreSong(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
+		User user = (User)session.getAttribute("user");
+		Collection<SongQueue> que = user.getSongQueueCollection();
 		Song song = songService.preSongInQueue(que);
-		session.setAttribute("songQueue", que);
-		if (song == null)
-			return "end";
+		user.setSongQueueCollection(que);
+		session.setAttribute("user", user);
+		if (song == null) {
+			JSONObject result = JSONHelper.songQueueToJSON(que);
+			session.setAttribute("queueJSON", result);
+			return result.toString();
+		}
 		else {
 			session.setAttribute("nowPlay", song);
 			return "ok";
@@ -909,11 +914,14 @@ public class ServletController {
 	
 	@RequestMapping(value = "/getSongQueue", method = RequestMethod.POST)
 	public @ResponseBody String getSongQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		User user = (User) session.getAttribute("user");
+		/*User user = (User) session.getAttribute("user");
 		Collection<SongQueue> que = user.getSongQueueCollection();
 		JSONObject result = JSONHelper.songQueueToJSON(que);
 		session.setAttribute("queueJSON", result);
 		return result.toString();
+		*/
+		JSONObject obj = (JSONObject) session.getAttribute("queueJSON");
+		return obj.toString();
 	}
 
 }

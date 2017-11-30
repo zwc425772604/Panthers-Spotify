@@ -148,7 +148,7 @@ $(document).on("click", "#playbar-queue-button", function () {
         cache: false,
         success : function(response)
         {
-        	console.log(response);
+        	console.log("getSong queuee:  "+ response);
         	 $.get("jsp/queue.jsp", function(data) {
                  $("#main-changing-content").html(data)
              });
@@ -158,6 +158,8 @@ $(document).on("click", "#playbar-queue-button", function () {
           console.log(e);
         }
 	});
+	
+	//$("#main-changing-content").load("jsp/queue.jsp");
   	
 });
 
@@ -441,3 +443,26 @@ function search()
 	$("#main-changing-content").load("jsp/search.jsp");	
 }
 
+$(document).on("click", "#playbar-shuffle-button", function () {
+	$.ajax({
+        url: "${cp}/../shuffle",
+        type: "POST",
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+          console.log(response);
+          var queueJSP = document.getElementById("queueDiv");
+          if (queueJSP != null){
+        	  $.get("jsp/queue.jsp", function(data) {
+                  $("#main-changing-content").html(data)
+              });
+          }
+        },
+        error: function(e)
+        {
+
+          console.log(e);
+        }
+      });
+})

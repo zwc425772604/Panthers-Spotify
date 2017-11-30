@@ -9,9 +9,6 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%
 	JSONObject queue = (JSONObject)session.getAttribute("queueJSON");
-	JSONObject nowPlay = (JSONObject)queue.getJSONObject("nowPlay");  
-	JSONObject nowSong = (JSONObject)nowPlay.getJSONObject("song");
-	
  %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-dark-grey.css">
@@ -28,7 +25,19 @@
       href="javascript:displayContent('historyDiv')">HISTORY</a></li>
   </ul>
 </nav>
+
 <div id="queueDiv" class="w3-container info-table">
+<% if (queue.length()==0)
+	{
+	%>
+	<h3 align="center" style="color:white;">Your Queue is empty</h3>>
+	<%
+	}else
+	{
+		JSONObject nowPlay = queue.getJSONObject("nowPlay");
+		JSONObject nowSong = nowPlay.getJSONObject("song");
+		
+	%>
  <div id = "nowPlayingSongDiv">
   <h3>Now Playing</h3>
   <table class="w3-table-all w3-hoverable" id="now-playing-table">
@@ -163,6 +172,9 @@
   </table>
 </div>
 </div>
+<% 
+	}
+%>
 <div id="historyDiv" class="w3-container info-table"
   style="display: none">
   <table class="w3-table-all w3-hoverable" id="next-playing-table">

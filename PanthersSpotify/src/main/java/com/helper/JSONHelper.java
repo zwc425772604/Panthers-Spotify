@@ -256,24 +256,33 @@ public class JSONHelper {
 		Iterator<SongQueue> it = (Iterator<SongQueue>)que.iterator();
 		JSONObject nowPlay = new JSONObject();
 		JSONArray ary = new JSONArray();
-		while(it.hasNext()) {
-			SongQueue sq = it.next();
-			if (sq.getIsPlay()) {
-				nowPlay = queueToJSON(sq);
-				while(it.hasNext()) {
-					SongQueue temp = it.next();
-					JSONObject obj = new JSONObject();
-					obj = queueToJSON(temp);
-					ary.put(obj);
+		SongQueue preSong = new SongQueue();
+		if (it.hasNext()) {
+			while(it.hasNext()) {
+				SongQueue sq = it.next();
+				if (sq.getIsPlay()) {
+					nowPlay = queueToJSON(sq);
+					while(it.hasNext()) {
+						SongQueue temp = it.next();
+						JSONObject obj = new JSONObject();
+						obj = queueToJSON(temp);
+						ary.put(obj);
+					}
 				}
+				preSong = sq;
+			}
+			JSONObject pre = new JSONObject();
+			if (preSong.getUser() !=null) {
+				pre = queueToJSON(preSong);
+			}
+			jsonObject.put("previous", pre);
+			jsonObject.put("nowPlay", nowPlay);
+			jsonObject.put("nextUp", ary);
+			JSONObject test = jsonObject.getJSONObject("nowPlay");
+			if (test.length()==0) {
+				System.out.println("now play is null");
 			}
 		}
-		jsonObject.put("nowPlay", nowPlay);
-		jsonObject.put("nextUp", ary);
-		//JSONObject test = jsonObject.getJSONObject("nowPlay");
-		//if (test.length()==0) {
-		//	System.out.println("now play is null");
-		//}
 		return jsonObject;
 	}
 	

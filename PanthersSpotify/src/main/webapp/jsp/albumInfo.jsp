@@ -17,9 +17,6 @@
      <div id="top-container">
 	   <div class="suggestion-container-top">
 	      <div class="album-image-box" style="width: 20%">
-	         <object type="image/png" data="https://s.discogs.com/images/default-release-cd.png"  width=100% height=width>
-	         <img src="" class="img-rounded" alt="Generic placeholder thumbnail">
-	         </object>
 	      </div>
 	      <div class="albumInfoBoxes" style="width:70%">
 	         <div id ="albumInfo" style="margin-top: 4%; margin-left:5%;">

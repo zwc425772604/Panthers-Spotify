@@ -818,6 +818,7 @@ public class ServletController {
 			Album album = (Album) albumObj;
 			albumInfo = JSONHelper.albumInformation(album, albumService, songService);
 		}
+		System.out.print(System.getProperty("user.dir"));
 		return albumInfo;
 	}
 	

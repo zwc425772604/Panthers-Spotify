@@ -40,10 +40,16 @@ $(document).on("click", ".artist-item", function(){
 
 function insertSongsTable(data)
 {
-	console.log(data);
+	
 	var num = data['songsInAlbum'].length;
 	var albumName = data['albumName'];
 	var albumID = data['albumID'];
+	var albumPhotoUrl = data['albumPhotoUrl'];
+	$(".album-image-box").empty();
+	$(".album-image-box").append([		
+	           '<img src="${cp}/../resources/data' +albumPhotoUrl +'" width=100% class="img-rounded" alt="Generic placeholder thumbnail">'
+	].join(''));
+	console.log("loaded photo");
 	$("#album-name-place").empty();
 	$("#album-hidden-id").empty();
 	$("#album-name-place").append(albumName);

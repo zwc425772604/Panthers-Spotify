@@ -21,5 +21,5 @@ public interface AlbumService {
 	public List<Album> deleteHistoryAlbum(Album album,User user);
 	public List<Album> getHistoryAlbums(String userEmail);
 	public List<User> getArtistsCollection(int aid);
-	public List<Album> getGenreAlbum(String genre,int numAlbum);
+	public List<Album> getTopGenreAlbum(String genre,int numAlbum);
 }

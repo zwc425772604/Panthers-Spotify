@@ -129,7 +129,7 @@ public class AlbumDAOImpl implements AlbumDAO{
 	}
 	
 	@Transactional(readOnly=true)
-	 public List<Album> getGenreAlbum(String genre,int numAlbum){
+	 public List<Album> getTopGenreAlbum(String genre,int numAlbum){
 		
 		String queryString = "SELECT a FROM Album a where a.genre=:genre ORDER BY a.followers DESC";
 		Query query = entityManager.createQuery(queryString).setParameter("genre", genre);

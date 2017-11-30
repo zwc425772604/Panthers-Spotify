@@ -3,6 +3,7 @@ package com.helper;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -13,6 +14,7 @@ import com.model.Album;
 import com.model.Artist;
 import com.model.Playlist;
 import com.model.Song;
+import com.model.SongQueue;
 import com.model.User;
 import com.services.AlbumService;
 import com.services.SongService;
@@ -249,5 +251,52 @@ public class JSONHelper {
 		return jsonObject.toString();
 	}
 	
+	public static JSONObject songQueueToJSON(Collection<SongQueue> que) throws JSONException {
+		JSONObject jsonObject = new JSONObject();
+		Iterator<SongQueue> it = (Iterator<SongQueue>)que.iterator();
+		JSONObject nowPlay = new JSONObject();
+		JSONArray ary = new JSONArray();
+		while(it.hasNext()) {
+			SongQueue sq = it.next();
+			if (sq.getIsPlay()) {
+				nowPlay = queueToJSON(sq);
+				while(it.hasNext()) {
+					SongQueue temp = it.next();
+					JSONObject obj = new JSONObject();
+					obj = queueToJSON(temp);
+					ary.put(obj);
+				}
+			}
+		}
+		jsonObject.put("nowPlay", nowPlay);
+		jsonObject.put("nextUp", ary);
+		//JSONObject test = jsonObject.getJSONObject("nowPlay");
+		//if (test.length()==0) {
+		//	System.out.println("now play is null");
+		//}
+		return jsonObject;
+	}
+	
+	public static JSONObject queueToJSON(SongQueue que) throws JSONException {
+		JSONObject ob = new JSONObject();
+		JSONObject song = new JSONObject();
+		song.put("title", que.getSong().getStitle());
+		song.put("duration", que.getSong().getDuration());
+		song.put("sid", que.getSong().getSid());
+		ob.put("song",song);
+		JSONObject album = new JSONObject();
+		album.put("name", que.getSong().getAlbumId().getAname());
+		album.put("id",que.getSong().getAlbumId().getAid());
+		ob.put("album", album);
+		JSONArray artists = new JSONArray();
+		for (User u : que.getArtistsCollection()) {
+			JSONObject obj = new JSONObject();
+			obj.put("name", u.getUserName());
+			obj.put("email", u.getEmail());
+			artists.put(obj);
+		}
+		ob.put("artists", artists);
+		return ob;
+	}
 
 }

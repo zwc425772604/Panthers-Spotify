@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
@@ -904,6 +905,15 @@ public class ServletController {
 		albumService.getTopGenreAlbum(genre, 1);
 		playlistService.getTopGenrePlaylist(genre);
 		return "ok";
+	}
+	
+	@RequestMapping(value = "/getSongQueue", method = RequestMethod.POST)
+	public @ResponseBody String getSongQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		Collection<SongQueue> que = user.getSongQueueCollection();
+		JSONObject result = JSONHelper.songQueueToJSON(que);
+		session.setAttribute("queueJSON", result);
+		return result.toString();
 	}
 	
 }

@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Playlistsong.findAll", query = "SELECT p FROM Playlistsong p")
     , @NamedQuery(name = "Playlistsong.findByPid", query = "SELECT p FROM Playlistsong p WHERE p.playlistsongPK.pid = :pid")
     , @NamedQuery(name = "Playlistsong.findBySid", query = "SELECT p FROM Playlistsong p WHERE p.playlistsongPK.sid = :sid")
+    , @NamedQuery(name = "Playlistsong.findBySidPid", query = "SELECT f FROM Playlistsong f WHERE f.playlistsongPK.sid = :sid AND f.playlistsongPK.pid = :pid")
     , @NamedQuery(name = "Playlistsong.findByCreateDate", query = "SELECT p FROM Playlistsong p WHERE p.createDate = :createDate")})
 public class Playlistsong implements Serializable {
     private static final long serialVersionUID = 1L;

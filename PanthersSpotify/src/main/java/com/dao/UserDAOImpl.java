@@ -92,7 +92,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Transactional(readOnly = true)
 	public List<User> getFriend(String userEmail) {
-		System.out.println("user email is :" + userEmail);
+		
 		String queryString = "SELECT u FROM User u WHERE u.email in (SELECT f.friendPK.femail FROM Friend f WHERE f.friendPK.uemail=:uemail)";
 		Query query = entityManager.createQuery(queryString);
 		query.setParameter("uemail", userEmail);

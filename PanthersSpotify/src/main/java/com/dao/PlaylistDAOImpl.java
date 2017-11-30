@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.model.Album;
 import com.model.Followplaylist;
+import com.model.Friend;
 import com.model.Playlist;
 import com.model.Playlisthistory;
 import com.model.Playlistsong;
@@ -115,9 +116,12 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	
 	@Transactional(readOnly=false)
 	public void removeSongFromPlaylist(int playlistId,int songId) {
-		Playlistsong playlistsong = new Playlistsong(playlistId, songId);
 		
-		entityManager.remove(playlistsong);
+		Query query = entityManager.createNamedQuery("Playlistsong.findBySidPid")
+				.setParameter("sid",songId)
+				.setParameter("pid",playlistId);
+		Playlistsong playlistsong = (Playlistsong)query.getSingleResult();
+		entityManager.remove(entityManager.contains(playlistsong) ? playlistsong : entityManager.merge(playlistsong));
 	}
 	
 	@Transactional(readOnly=true)

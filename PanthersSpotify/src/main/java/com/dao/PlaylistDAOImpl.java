@@ -99,9 +99,12 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	
 	@Transactional(readOnly=false)
 	public void unfollowPlaylist(int playlistId,String userEmail) {
-		Followplaylist followPlaylist = new Followplaylist(playlistId,userEmail);
-		
-		entityManager.remove(followPlaylist);
+
+		Query query = entityManager.createNamedQuery("Followplaylist.findByUemailPid")
+				.setParameter("uemail",userEmail)
+				.setParameter("pid",playlistId);
+		Followplaylist followplaylist = (Followplaylist)query.getSingleResult();
+		entityManager.remove(entityManager.contains(followplaylist) ? followplaylist : entityManager.merge(followplaylist));
 	}
 	
 	@Transactional(readOnly=false)

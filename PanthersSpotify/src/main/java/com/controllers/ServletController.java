@@ -215,11 +215,8 @@ public class ServletController {
 	public @ResponseBody String followSpecificPlaylist(HttpServletRequest request, HttpSession session) {
 		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
 		User user = (User) session.getAttribute("user");
-		System.out.println("upper1");
-		System.out.println("upper2");
-		System.out.println("upper3");
 		Playlist ret = playlistService.followPlaylist(playlistID, user);
-		System.out.println("lower");
+		ret.setFollowers(ret.getFollowers()+1);
 		List<Playlist> userPlaylist = (List<Playlist>) (session.getAttribute("user_playlist"));
 		userPlaylist.add(ret);
 		session.setAttribute("user_playlist", userPlaylist);
@@ -232,6 +229,7 @@ public class ServletController {
 		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
 		User user = (User) session.getAttribute("user");
 		Playlist ret = playlistService.unfollowPlaylist(playlistID, user);
+		ret.setFollowers(ret.getFollowers()-1);
 		List<Playlist> userPlaylist = (List<Playlist>) (session.getAttribute("user_playlist"));
 		userPlaylist.remove(ret);
 		session.setAttribute("user_playlist", userPlaylist);

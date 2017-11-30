@@ -25,6 +25,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Followplaylist.findAll", query = "SELECT f FROM Followplaylist f")
     , @NamedQuery(name = "Followplaylist.findByPid", query = "SELECT f FROM Followplaylist f WHERE f.followplaylistPK.pid = :pid")
+    , @NamedQuery(name = "Followplaylist.findByUemailPid", query = "SELECT f FROM Followplaylist f WHERE f.followplaylistPK.uemail = :uemail AND f.followplaylistPK.pid = :pid")
     , @NamedQuery(name = "Followplaylist.findByUemail", query = "SELECT f FROM Followplaylist f WHERE f.followplaylistPK.uemail = :uemail")})
 public class Followplaylist implements Serializable {
 

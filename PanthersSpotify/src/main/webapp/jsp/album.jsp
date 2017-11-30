@@ -58,7 +58,7 @@
 				<div
 					class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
 					<div class="hover-control album-item">
-						<img src="https://s.discogs.com/images/default-release-cd.png"
+						<img src="${cp}/resources/data${album.photoUrl}"
 							width=100% height=width class="img-rounded info-image"
 							alt="Generic placeholder thumbnail"> <span class="album-ID"
 							style="display: none;">${album.aid}</span>
@@ -69,7 +69,7 @@
 								class="album-ID" style="display: none;">${album.aid}</span>
 						</h6>
 						<h6>
-							<a href="#"> <span id="artist_name">${album.des}</span></a>
+							<a href="#"> <span id="artist_name">${album.des.substring(0,50)}</span></a>
 						</h6>
 					</div>
 				</div>

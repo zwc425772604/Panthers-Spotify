@@ -903,6 +903,7 @@ public class ServletController {
 	public @ResponseBody String getSpecificGenre(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String genre = request.getParameter("genre");
 		albumService.getTopGenreAlbum(genre, 1);
+		playlistService.getTopGenrePlaylist(genre);
 		return "ok";
 	}
 	

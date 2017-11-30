@@ -12,6 +12,8 @@ import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.model.Album;
 import com.model.Followplaylist;
 import com.model.Playlist;
 import com.model.Playlisthistory;
@@ -178,4 +180,16 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 		Collection<Playlist> result = (ArrayList<Playlist>)query.getResultList();
 		return result;
 	}
+	
+	@Transactional(readOnly=true)
+	 public List<Playlist> getTopGenrePlaylist(String genre){
+		
+		String queryString = "SELECT a FROM Playlist a where a.genre=:genre ORDER BY a.followers DESC";
+		Query query = entityManager.createQuery(queryString).setParameter("genre", genre);
+		
+		//query.setMaxResults(numAlbum);
+		List<Playlist> playlists = (ArrayList<Playlist>)query.getResultList();
+		  
+		  return playlists;
+	  }
 }

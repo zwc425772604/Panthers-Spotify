@@ -29,4 +29,5 @@ public interface PlaylistService {
 	public Collection<Playlist> getFollowPlaylists(String userEmail);
 	public List<Song> getSongInPlaylist(int playlistId);
 	public void updateSpecificPlaylist(Playlist p);
+	public List<Playlist> getTopGenrePlaylist(String genre);
 }

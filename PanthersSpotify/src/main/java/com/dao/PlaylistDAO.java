@@ -27,4 +27,5 @@ public interface PlaylistDAO {
 	public List<Playlist> getHistoryPlaylists(String userEmail);
 	public Collection<Playlist> getUserPlaylists(String email);
 	public List<Playlist> getFollowedPlaylist(String userEmail);
+	public List<Playlist> getTopGenrePlaylist(String genre);
 }

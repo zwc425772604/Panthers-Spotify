@@ -247,4 +247,10 @@ public class PlaylistServiceImpl implements PlaylistService {
 	public Collection<Playlist> getFollowPlaylists(String userEmail) {
 		return playlistDAO.getFollowedPlaylist(userEmail);
 	}
+	
+	@Transactional
+	public List<Playlist> getTopGenrePlaylist(String genre)
+	{
+		return playlistDAO.getTopGenrePlaylist(genre);
+	}
 }

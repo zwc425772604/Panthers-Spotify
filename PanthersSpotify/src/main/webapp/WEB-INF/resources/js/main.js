@@ -126,7 +126,7 @@ $(document).on("click", ".playlist-item", function(){
         cache: true,
         success : function(response)
         {
-          console.log(response);
+          console.log("playlist reponse "+response);
           //$("#main-changing-content").load("jsp/playlist.jsp");
           $.get("jsp/playlist.jsp", function(data) {
               $("#main-changing-content").html(data)
@@ -141,7 +141,24 @@ $(document).on("click", ".playlist-item", function(){
 
 
 $(document).on("click", "#playbar-queue-button", function () {
-  	$("#main-changing-content").load("jsp/queue.jsp");
+	$.ajax({
+        url: "${cp}/../getSongQueue",
+        type: "POST",
+        asyn: false,
+        cache: false,
+        success : function(response)
+        {
+        	console.log(response);
+        	 $.get("jsp/queue.jsp", function(data) {
+                 $("#main-changing-content").html(data)
+             });
+        },
+        error: function(e)
+        {
+          console.log(e);
+        }
+	});
+  	
 });
 
 $(document).on("submit", "#findFriendForm", function (event) {
@@ -387,10 +404,6 @@ function displayCharts()
 // });
 
 
-$(document).on ("click", "#playbar-queue-button", function () {
-	$("#main-changing-content").load("queue.jsp");
-});
-
 var volumeDrag = false;
 $("#rangeinput").on('mousedown',function(e){
 	volumeDrag = true;
@@ -427,3 +440,4 @@ function search()
 {
 	$("#main-changing-content").load("jsp/search.jsp");	
 }
+

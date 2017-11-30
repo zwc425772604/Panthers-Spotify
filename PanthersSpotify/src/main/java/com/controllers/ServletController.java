@@ -109,6 +109,7 @@ public class ServletController {
 				playlists.addAll(followedPlaylist);
 				session.setAttribute("songQueue", songQueue);
 				session.setAttribute("user_playlist", playlists);
+				session.setAttribute("userFollowedPlaylists", followedPlaylist);
 				mav.setViewName("main");
 				mav.addObject("username", user.getUserName());
 				break;
@@ -476,7 +477,7 @@ public class ServletController {
 		return playlistSongJSON;
 	}
 
-	@RequestMapping(value = "/removeSongToPlaylist", method = RequestMethod.POST)
+	@RequestMapping(value = "/removeSongFromPlaylist", method = RequestMethod.POST)
 	public @ResponseBody String removeSongToPlaylist(HttpServletRequest request, HttpSession session) {
 		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
 		int songID = Integer.parseInt(request.getParameter("songID").trim());

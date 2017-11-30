@@ -195,5 +195,49 @@ $(".playbar-play-button").click(function(){
 });
 
 
+$(".remove-song-item").click(function(){
+	var songID = $(".song-id", this).text();
+	var playlistID = $(".playlist-id", this).text();
+	console.log("song id to remove is " + songID);
+	console.log("playlistID is " + playlistID);
+	 $.ajax({
+         url: "${cp}/../removeSongFromPlaylist",
+         type: "POST",
+         data : {"playlistID" : playlistID, "songID" : songID },
+         asyn: false,
+         cache: false,
+         success : function(response)
+         {
+           console.log(response);
+         },
+         error: function(e)
+         {
+           console.log(e);
+         }
+	  });
+});
+
+$(".add-to-playlist-item").click(function(){
+  	var songID = $(".song-id", this).text();
+  	var playlistID = $(".add-song-to-playlist-id",this).text();
+  	  $.ajax({
+            url: "${cp}/../addSongToPlaylist",
+            type: "POST",
+            data : {"playlistID" : playlistID, "songID" : songID },
+            asyn: false,
+            cache: false,
+            success : function(response)
+            {
+              console.log(response);
+  
+            },
+            error: function(e)
+            {
+              console.log(e);
+            }
+  	  });
+  });
+
+
 
 

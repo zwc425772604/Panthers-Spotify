@@ -113,11 +113,7 @@
         background-color:#00cc00;
         font-size: 12px;
   }
-  .song_action_list
-  {
-    background-color: gray;
-    margin-left: 5%;
-  }
+ 
   .playlist_action_dropdown
   {
     font-size: 10px;
@@ -127,6 +123,18 @@
   {
     max-height:350px;
     overflow:scroll;
+  }
+  
+   .song_action_list
+  {
+  background-color: gray;
+  margin-left: -120%;
+  }
+  .add-to-playlists-section
+  {
+   background-color: gray;
+   margin-left: -115%;
+   margin-top: -40%;
   }
   
   #filter_and_download .download_right

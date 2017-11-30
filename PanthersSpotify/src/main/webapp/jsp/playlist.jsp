@@ -262,7 +262,42 @@
                     <button onclick="" class="w3-bar-item w3-button">Go to Album</button>
                     <hr>
                     <button onclick="" class="w3-bar-item w3-button">Remove from Your Library</button>
-                    <button onclick="" class="w3-bar-item w3-button">Add to Playlist</button> 
+             
+                    <div class="w3-dropdown-hover">
+                     <button onclick="" class="w3-bar-item w3-button add-to-playlist-button dropdown1">Add to Playlist</button>
+                      <div class="w3-dropdown-content w3-bar-block w3-border add-to-playlists-section">
+                        <!--
+                          <button onclick="" class="w3-bar-item w3-button">Go to Song Radio</button>
+                                   <hr>
+                                   <button onclick="" class="w3-bar-item w3-button">Go to Artist</button>
+                                   <button onclick="" class="w3-bar-item w3-button">Go to Album</button>
+                                 -->
+                        <button onclick="" class="w3-bar-item w3-button">Create New Playlist</button>
+                        <hr>
+                        <c:if test="${not empty user_playlist}">
+                          <ul class="nav nav-stacked flex-column" >
+                            <c:forEach var="playlist" items="${user_playlist}">
+                              <c:if test="${playlist.powner == user}">
+                               <c:if test="${playlist != selectedPlaylist}">
+                                <div class="add-to-playlist-item">
+                                  <button onclick="" class="w3-bar-item w3-button">${playlist.pname}</button>
+                                  <span class="song-id" style="display:none;"><%= obj.getInt("songID") %></span>
+                                  <span class="add-song-to-playlist-id" style="display:none;">${playlist.pid}</span>
+                                </div>
+                                </c:if>
+                              </c:if>
+                            </c:forEach>
+                          </ul>
+                        </c:if>
+                      </div>
+                    </div>
+                    
+                    <div class="remove-song-item">
+                         <button onclick="" class="w3-bar-item w3-button removeSongInPlaylistButton">Remove from this playlist</button>
+                         <span class="song-id" style="display:none;"><%= obj.getInt("songID") %></span>
+                         <span class="playlist-id" style="display:none;">${selectedPlaylist.pid}</span>
+                     </div>
+      
                     <button onclick="" class="w3-bar-item w3-button">Share</button>
                   </div>
                 </div>

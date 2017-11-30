@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.model.Album;
 import com.model.Albumhistory;
+import com.model.Playlist;
 import com.model.Song;
 import com.model.User;
 
@@ -126,4 +127,16 @@ public class AlbumDAOImpl implements AlbumDAO{
 		Collection<User> users = (ArrayList<User>)query.getResultList();
 		return users;
 	}
+	
+	@Transactional(readOnly=true)
+	 public List<Album> getGenreAlbum(String genre,int numAlbum){
+		
+		String queryString = "SELECT a FROM Album a where a.genre=:genre ORDER BY a.followers DESC";
+		Query query = entityManager.createQuery(queryString).setParameter("genre", genre);
+		
+		query.setMaxResults(numAlbum);
+		List<Album> albums = (ArrayList<Album>)query.getResultList();
+		  
+		  return albums;
+	  }
 }

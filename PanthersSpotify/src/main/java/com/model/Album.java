@@ -44,7 +44,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Album.findByReleaseDate", query = "SELECT a FROM Album a WHERE a.releaseDate = :releaseDate")
     , @NamedQuery(name = "Album.findByTimelength", query = "SELECT a FROM Album a WHERE a.timelength = :timelength")
     , @NamedQuery(name = "Album.findByFollowers", query = "SELECT a FROM Album a WHERE a.followers = :followers")
-    , @NamedQuery(name = "Album.findByNSongs", query = "SELECT a FROM Album a WHERE a.nSongs = :nSongs")})
+    , @NamedQuery(name = "Album.findByNSongs", query = "SELECT a FROM Album a WHERE a.nSongs = :nSongs")
+    , @NamedQuery(name = "Album.findByGenre", query = "SELECT a FROM Album a WHERE a.genre = :genre")})
 public class Album implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -145,6 +146,16 @@ public class Album implements Serializable {
     public void setSongCollection(Collection<Song> songCollection) {
         this.songCollection = songCollection;
     }
+    
+    @Column(name = "genre", length = 45)
+    private String genre;
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
 	
     public Album(String aname,String des,String photoUrl,int followers,int nSongs,Date releaseDate,Time timelength) {
 		this.aname = aname;
@@ -176,6 +187,8 @@ public class Album implements Serializable {
         }
         return true;
     }
+    
+    
 
     @Override
     public String toString() {

@@ -47,7 +47,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Playlist.findByTimelength", query = "SELECT p FROM Playlist p WHERE p.timelength = :timelength")
     , @NamedQuery(name = "Playlist.findByFollowers", query = "SELECT p FROM Playlist p WHERE p.followers = :followers")
     , @NamedQuery(name = "Playlist.findByIspublic", query = "SELECT p FROM Playlist p WHERE p.ispublic = :ispublic")
-    , @NamedQuery(name = "Playlist.findByOwner", query = "SELECT p FROM Playlist p WHERE p.powner.email = :email order by p.createDate asc")})
+    , @NamedQuery(name = "Playlist.findByOwner", query = "SELECT p FROM Playlist p WHERE p.powner.email = :email order by p.createDate asc")
+    , @NamedQuery(name = "Playlist.findByGenre", query = "SELECT a FROM Playlist a WHERE a.genre = :genre")})
 public class Playlist implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -178,6 +179,16 @@ public class Playlist implements Serializable {
     }
     public void setPowner(User powner) {
         this.powner = powner;
+    }
+    
+    @Column(name = "genre", length = 45)
+    private String genre;
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
     }
 	
     @Override

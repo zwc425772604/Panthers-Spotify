@@ -70,6 +70,9 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 		  return result;
 	  }
 	
+	
+	
+	
 	@Transactional(readOnly=true)
 	 public List<Playlist> getFollowedPlaylist(String userEmail){
 	  	 String queryString = "SELECT playlist FROM Playlist playlist WHERE playlist.pid in(SELECT f.followplaylistPK.pid from Followplaylist f where f.followplaylistPK.uemail=:uemail)"; 	  

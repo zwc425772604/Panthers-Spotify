@@ -68,7 +68,7 @@ public class ServletController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap map) {
-
+		
 		return "index";
 	}
 
@@ -896,6 +896,13 @@ public class ServletController {
 			}
 		}
 		//return main page
+		return "ok";
+	}
+	
+	@RequestMapping(value = "/getSpecificGenre", method = RequestMethod.POST)
+	public @ResponseBody String getSpecificGenre(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		String genre = request.getParameter("genre");
+		albumService.getGenreAlbum(genre, 1);
 		return "ok";
 	}
 	

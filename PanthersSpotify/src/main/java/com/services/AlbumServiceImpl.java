@@ -157,5 +157,10 @@ public class AlbumServiceImpl implements AlbumService {
 		return (List<User>)albumDAO.getAlbumArtists(aid);
 	}
 	
+	@Transactional
+	public List<Album> getGenreAlbum(String genre,int numAlbum)
+	{
+		return albumDAO.getGenreAlbum(genre, numAlbum);
+	}
 }
 

@@ -21,4 +21,5 @@ public interface AlbumDAO {
 	public List<Album> getHistoryAlbums(String userEmail);
 	public Collection<User> getAlbumArtists(int aid);
 	public List<Album> getTopGenreAlbum(String genre,int numAlbum);
+	public List<Album> getNewsRelease(Date date);
 }

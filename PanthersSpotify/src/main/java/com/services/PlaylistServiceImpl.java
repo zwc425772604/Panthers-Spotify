@@ -39,7 +39,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 		List<Playlist> userPlaylists = (List<Playlist>)(user.getUserPlaylistCollection());
 	    	String filename = file.getOriginalFilename();
 	    	String dir = System.getProperty("user.dir");
-	    	String playlistPath = dir+"/Users/"+user.getEmail()+"/playlist"+date.getTime();
+	    	String playlistPath = dir+"/src/main/webapp/WEB-INF/resources/Users/"+user.getEmail()+"/playlist"+date.getTime();
 	    	File playlistFile = new File(playlistPath);
 	    	playlistFile.mkdirs();
 	    	String photoUrl = UploadFile.upload(playlistPath,filename,file);
@@ -90,7 +90,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 		else if(file!=null&&playlistFile==null)
 		{
 			java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
-			String playlistPath = "Users/"+user.getEmail()+"/playlist"+date.getTime();
+			String playlistPath = "src/main/webapp/WEB-INF/resources/Users/"+user.getEmail()+"/playlist"+date.getTime();
 			File playlistF = new File(playlistPath);
 	    		playlistF.mkdirs();
 	    		String filename = file.getOriginalFilename();

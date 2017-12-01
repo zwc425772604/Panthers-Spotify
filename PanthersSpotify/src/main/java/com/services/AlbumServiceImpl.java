@@ -162,5 +162,11 @@ public class AlbumServiceImpl implements AlbumService {
 	{
 		return albumDAO.getTopGenreAlbum(genre, numAlbum);
 	}
+	
+	@Transactional
+	public List<Album> getNewsRelease(Date date)
+	{
+		return albumDAO.getNewsRelease(date);
+	}
 }
 

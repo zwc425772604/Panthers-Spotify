@@ -907,8 +907,17 @@ public class ServletController {
 	@RequestMapping(value = "/getSpecificGenre", method = RequestMethod.POST)
 	public @ResponseBody String getSpecificGenre(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String genre = request.getParameter("genre");
-		albumService.getTopGenreAlbum(genre, 1);
-		playlistService.getTopGenrePlaylist(genre);
+		List<Album> retAlbums = albumService.getTopGenreAlbum(genre, 1);
+		List<Playlist> retPlaylist = playlistService.getTopGenrePlaylist(genre);
+		return "ok";
+	}
+	
+	@RequestMapping(value = "/getNewsRelease", method = RequestMethod.POST)
+	public @ResponseBody String getNewsRelease(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		Calendar cal = Calendar.getInstance();
+		  cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+		java.sql.Date date = new java.sql.Date(cal.getTimeInMillis());
+		List<Album> retAlbums = albumService.getNewsRelease(date);
 		return "ok";
 	}
 	

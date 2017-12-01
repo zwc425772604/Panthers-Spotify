@@ -139,4 +139,16 @@ public class AlbumDAOImpl implements AlbumDAO{
 		  
 		  return albums;
 	  }
+	
+	@Transactional(readOnly=true)
+	 public List<Album> getNewsRelease(Date date){
+		
+		String queryString = "SELECT a FROM Album a where a.releaseDate>:releaseDate order by a.followers desc";
+		Query query = entityManager.createQuery(queryString).setParameter("releaseDate", date);
+		
+		//query.setMaxResults(numAlbum);
+		List<Album> albums = (ArrayList<Album>)query.getResultList();
+		  
+		  return albums;
+	  }
 }

@@ -158,9 +158,9 @@ public class AlbumServiceImpl implements AlbumService {
 	}
 	
 	@Transactional
-	public List<Album> getTopGenreAlbum(String genre,int numAlbum)
+	public List<Album> getTopGenreAlbum(String genre)
 	{
-		return albumDAO.getTopGenreAlbum(genre, numAlbum);
+		return albumDAO.getTopGenreAlbum(genre);
 	}
 	
 	@Transactional

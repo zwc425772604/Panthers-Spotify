@@ -937,7 +937,7 @@ public class ServletController {
 	@RequestMapping(value = "/getSpecificGenre", method = RequestMethod.POST)
 	public @ResponseBody String getSpecificGenre(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String genre = request.getParameter("genre");
-		List<Album> retAlbums = albumService.getTopGenreAlbum(genre, 1);
+		List<Album> retAlbums = albumService.getTopGenreAlbum(genre);
 		List<Playlist> retPlaylist = playlistService.getTopGenrePlaylist(genre);
 		return "ok";
 	}

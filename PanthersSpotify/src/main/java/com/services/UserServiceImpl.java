@@ -238,17 +238,20 @@ public class UserServiceImpl implements UserService {
 	public void setArtistRoylties(Artist artist,double factor) {
 		
 		List<Releasesong> songs = userDAO.getArtistRelease(artist);
-		
+		System.out.println("song size is "+songs.size());
+		double royalties = 0;
 		for(Releasesong rs: songs) {
 			Collection<User> artists = songDAO.getSongArtists(rs.getReleasesongPK().getSid());
-			double royalties = artist.getRoyalty();
 			
+			System.out.println("artist number is "+artists.size());
+			System.out.println("song id is "+rs.getReleasesongPK().getSid());
 				royalties += (songDAO.getSong(rs.getReleasesongPK().getSid()).getMonthlyPlayed())/artists.size();
 				
-				royalties = royalties * factor;
 				
-				userDAO.setRoyalty(artist, royalties);
 		}
+		royalties = royalties * factor;
+		
+		userDAO.setRoyalty(artist, royalties);
 		
 		
 	}

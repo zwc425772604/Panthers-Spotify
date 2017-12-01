@@ -270,6 +270,9 @@ public class JSONHelper {
 					}
 				}
 				preSong = sq;
+				if(it.hasNext()==false) {
+					preSong = new SongQueue();
+				}
 			}
 			JSONObject pre = new JSONObject();
 			if (preSong.getUser() !=null) {

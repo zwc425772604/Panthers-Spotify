@@ -13,9 +13,7 @@
 <div class="suggestion-container" id = "release-container" style="margin-top: 3%;">
   <div class="suggestion-container-top">
     <div class="user_image_box" style="width: 20%">
-      <object type="image/png" data="http://weclipart.com/gimg/0A3C841B9FA4F2C6/13099629981030824019profile.svg.hi.png"  width=100% height=width>
-      <img src="" class="img-rounded" alt="Generic placeholder thumbnail">
-      </object>
+      <img src="${cp}/resources/data${selectedArtist.photoUrl}" width=100% class="img-rounded" alt="Generic placeholder thumbnail">
     </div>
     <div class="userInfoBoxes" style="width:70%">
       <div id ="userInfo" style="margin-top: 4%; margin-left:5%;">

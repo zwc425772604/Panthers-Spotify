@@ -59,7 +59,7 @@
         </nav>
         <!--Main Page-->
         <main class="main-page">
-        <h3 style="color:white;"><%= hasNowPlay %></h3>
+        <h3 style="color:white; display: none;"><%= hasNowPlay %></h3>
           <!--Scrollable Main Page Section-->          
           <div class="scrolled-main" id="style-1">
             <!--Top Tool Section-->

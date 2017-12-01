@@ -85,6 +85,7 @@ public class JSONHelper {
 			jsonObject.put("artistFirstName", u.getFirstName());
 			jsonObject.put("artistLastName", u.getLastName());
 			jsonObject.put("artistEmail", u.getEmail());
+			jsonObject.put("artistUrl", u.getPhotoUrl());
 			arr.put(jsonObject);
 		}
 		return arr.toString();

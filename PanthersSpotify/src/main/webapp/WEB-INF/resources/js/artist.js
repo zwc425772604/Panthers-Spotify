@@ -43,8 +43,7 @@ function insertArtistsPage(data)
 			$("#artist-page").append([
 				'<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">',
 		        '<div class="artist-item">',
-		      	  '<object class="w3-circle"  type="image/png" data="http://weclipart.com/gimg/0A3C841B9FA4F2C6/13099629981030824019profile.svg.hi.png" width=100% height=width >',
-		      		'<img src="" alt="Generic placeholder thumbnail">',
+		        '<img src="${cp}/../resources/data' + data[i]['artistUrl'] +'" width=100% class="img-rounded" alt="Generic placeholder thumbnail">',
 		      	  '</object>',
 		      	  '<span style="display:none;" class="artist-email">'+  data[i]['artistEmail'] +'</span>',
 		        '</div>',

@@ -1,8 +1,8 @@
 package com.dao;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -149,6 +149,8 @@ public class SongDAOImpl implements SongDAO {
 	@Transactional(readOnly = false)
 	public SongQueue addSongToQueue(int sid, String email) {
 		SongQueue newSq = new SongQueue(email, sid);
+		Date date = new Date();
+		newSq.setAddedTime(date);
 		newSq.setIsPlay(false);
 		try {
 			entityManager.persist(newSq);
@@ -176,7 +178,7 @@ public class SongDAOImpl implements SongDAO {
 
 	@Transactional(readOnly = false)
 	public int removeAllQueue(String email) {
-		Query query = entityManager.createNamedQuery("SongQueue.deleteByUemail").setParameter("uemail", email);
+		Query query = entityManager.createNamedQuery("SongQueue.deleteByUserEmail").setParameter("uemail", email);
 		int count = query.executeUpdate();
 		return count;
 	}

@@ -106,6 +106,7 @@ public class ServletController {
 				session.setAttribute("user_playlist", playlists);
 				user.setSongQueueCollection(songQueue);
 				session.setAttribute("user", user);
+				songService.setArtistsCollection(songQueue);
 				result = JSONHelper.songQueueToJSON(songQueue);
 				session.setAttribute("queueJSON", result);
 				System.out.println("Queue: "+result.toString());
@@ -692,32 +693,45 @@ public class ServletController {
 	}
 
 	@RequestMapping(value = "/playPlaylist", method = RequestMethod.GET)
-	public @ResponseBody String getNewsongQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		Collection<SongQueue> orig = (Collection<SongQueue>) session.getAttribute("songQueue");
-		String email = ((User) session.getAttribute("user")).getEmail();
+	public @ResponseBody String getNewSongQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		User user = (User)session.getAttribute("user");
+		Collection<SongQueue> orig = user.getSongQueueCollection();
+		String email = user.getEmail();
 		Collection<SongQueue> newSq = songService.removeAllQueue(orig, email);
 		songService.addPlaylistToQueue(newSq, Integer.parseInt(request.getParameter("pid")), email);
-		session.setAttribute("songQueue", newSq);
-		return "ok";
+		songService.setArtistsCollection(newSq);
+		user.setSongQueueCollection(newSq);
+		JSONObject result = JSONHelper.songQueueToJSON(newSq);
+		session.setAttribute("queueJSON", result);
+		session.setAttribute("user", user);
+		return result.toString();
 	}
 
 	@RequestMapping(value = "/addSongToQueue", method = RequestMethod.GET)
 	public @ResponseBody String addSongToQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
-		String email = ((User) session.getAttribute("user")).getEmail();
+		User user = (User)session.getAttribute("user");
+		Collection<SongQueue> que = user.getSongQueueCollection();
+		String email = user.getEmail();
 		int sid = Integer.parseInt(request.getParameter("sid"));
 		songService.addSongToQueue(que, sid, email);
-		session.setAttribute("songQueue", que);
-		return "ok";
+		user.setSongQueueCollection(que);
+		JSONObject result = JSONHelper.songQueueToJSON(que);
+		session.setAttribute("queueJSON", result);
+		session.setAttribute("user", user);
+		return result.toString();
 	}
 
 	@RequestMapping(value = "/addPlaylistToQueue", method = RequestMethod.GET)
 	public @ResponseBody String addPlaylistToQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
-		String email = ((User) session.getAttribute("user")).getEmail();
+		User user = (User)session.getAttribute("user");
+		Collection<SongQueue> que = user.getSongQueueCollection();
+		String email = user.getEmail();
 		songService.addPlaylistToQueue(que, Integer.parseInt(request.getParameter("pid")), email);
-		session.setAttribute("songQueue", que);
-		return "ok";
+		user.setSongQueueCollection(que);
+		JSONObject result = JSONHelper.songQueueToJSON(que);
+		session.setAttribute("queueJSON", result);
+		session.setAttribute("user", user);
+		return result.toString();
 	}
 
 	@RequestMapping(value = "/getSpecificAlbum", method = RequestMethod.POST)

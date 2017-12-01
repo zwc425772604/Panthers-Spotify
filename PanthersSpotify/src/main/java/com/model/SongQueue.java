@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "SongQueue.findByUemail", query = "SELECT s FROM SongQueue s WHERE s.songQueuePK.uemail = :uemail order by s.addedTime asc")
     , @NamedQuery(name = "SongQueue.findBySid", query = "SELECT s FROM SongQueue s WHERE s.songQueuePK.sid = :songId")
     , @NamedQuery(name = "SongQueue.findByIsPlay", query = "SELECT s FROM SongQueue s WHERE s.isPlay = :isPlay")
-    , @NamedQuery(name = "SongQueue.deleteByUserEmail", query = "DELETE FROM SongQueue s WHERE s.songQueuePK.uemail = :userEmail")})
+    , @NamedQuery(name = "SongQueue.deleteByUserEmail", query = "DELETE FROM SongQueue s WHERE s.songQueuePK.uemail = :uemail")})
 public class SongQueue implements Serializable {
 
 	@Column(name = "addedTime")

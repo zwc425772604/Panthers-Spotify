@@ -158,6 +158,8 @@ public class SongServiceImpl implements SongService {
 	@Transactional
 	public void addSongToQueue(Collection<SongQueue> que, int sid, String email) {
 		SongQueue newSq = songDAO.addSongToQueue(sid, email);
+		Collection<User> artists = songDAO.getSongArtists(newSq.getSong().getSid());
+		newSq.setArtistsCollection(artists);
 		que.add(newSq);
 	}
 

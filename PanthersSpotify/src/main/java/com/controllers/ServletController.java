@@ -643,6 +643,7 @@ public class ServletController {
 		Song song = songService.preSongInQueue(que);
 		user.setSongQueueCollection(que);
 		session.setAttribute("user", user);
+		/*
 		if (song == null) {
 			JSONObject result = JSONHelper.songQueueToJSON(que);
 			session.setAttribute("queueJSON", result);
@@ -652,27 +653,42 @@ public class ServletController {
 			session.setAttribute("nowPlay", song);
 			return "ok";
 		}
+		*/
+		JSONObject result = JSONHelper.songQueueToJSON(que);
+		session.setAttribute("queueJSON", result);
+		return result.toString();
 	}
 
 	@RequestMapping(value = "/nextSong", method = RequestMethod.POST)
 	public @ResponseBody String getNextSong(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
+		User user = (User)session.getAttribute("user");
+		Collection<SongQueue> que = user.getSongQueueCollection();
 		Song song = songService.nextSongInQueue(que);
-		session.setAttribute("songQueue", que);
+		user.setSongQueueCollection(que);
+		session.setAttribute("user", user);
+		/*
 		if (song != null) {
 			session.setAttribute("nowPlay", song);
 			return "ok";
 		} else {
 			return "end";
 		}
+		*/
+		JSONObject result = JSONHelper.songQueueToJSON(que);
+		session.setAttribute("queueJSON", result);
+		return result.toString();
 	}
 
 	@RequestMapping(value = "/shuffle", method = RequestMethod.POST)
 	public @ResponseBody String shuffleQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		Collection<SongQueue> que = (Collection<SongQueue>) session.getAttribute("songQueue");
+		User user = (User)session.getAttribute("user");
+		Collection<SongQueue> que = user.getSongQueueCollection();
 		que = songService.shuffleQueue(que);
-		session.setAttribute("songQueue", que);
-		return "ok";
+		user.setSongQueueCollection(que);
+		JSONObject result = JSONHelper.songQueueToJSON(que);
+		session.setAttribute("queueJSON", result);
+		session.setAttribute("user", user);
+		return result.toString();
 	}
 
 	@RequestMapping(value = "/playPlaylist", method = RequestMethod.GET)

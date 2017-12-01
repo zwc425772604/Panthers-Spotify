@@ -466,3 +466,72 @@ $(document).on("click", "#playbar-shuffle-button", function () {
         }
       });
 })
+
+$(document).on("click", "#playbar-prev-button", function () {
+	$.ajax({
+        url: "${cp}/../preSong",
+        type: "POST",
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+          //console.log("pre:  ..."+ response);
+          updatePlayerButton(response);
+          var queueJSP = document.getElementById("queueDiv");
+          if (queueJSP != null){
+        	  $.get("jsp/queue.jsp", function(data) {
+                  $("#main-changing-content").html(data)
+              });
+          }
+        },
+        error: function(e)
+        {
+
+          console.log(e);
+        }
+      });
+})
+
+$(document).on("click", "#playbar-next-button", function () {
+	$.ajax({
+        url: "${cp}/../nextSong",
+        type: "POST",
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+          //console.log("next:  "+response);
+          updatePlayerButton(response);
+          var queueJSP = document.getElementById("queueDiv");
+          if (queueJSP != null){
+        	  $.get("jsp/queue.jsp", function(data) {
+                  $("#main-changing-content").html(data)
+              });
+          }
+        },
+        error: function(e)
+        {
+
+          console.log(e);
+        }
+      });
+})
+
+function updatePlayerButton(data){
+	var json = JSON.parse(data);
+	if (json.nowPlay==null){
+		$("#playbar-play-button").prop("disabled",true);
+	}else{
+		$("#playbar-play-button").prop("disabled",false);
+	}
+	if (json.previous.song==null){
+		$("#playbar-prev-button").prop("disabled",true);
+	}else{
+		$("#playbar-prev-button").prop("disabled",false);
+	}
+	if (json.nextUp.length==0){
+		$("#playbar-next-button").prop("disabled",true);
+	}else{
+		$("#playbar-next-button").prop("disabled",false);
+	}
+}

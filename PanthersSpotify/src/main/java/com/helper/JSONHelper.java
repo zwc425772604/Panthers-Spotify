@@ -258,6 +258,16 @@ public class JSONHelper {
 		JSONObject nowPlay = new JSONObject();
 		JSONArray ary = new JSONArray();
 		SongQueue preSong = new SongQueue();
+		while(it.hasNext()) {
+			SongQueue sq = it.next();
+			if (sq.getIsPlay()) {
+				break;
+			}
+			preSong = sq;
+			if (it.hasNext()==false)
+				preSong = new SongQueue();
+		}
+		it = (Iterator<SongQueue>)que.iterator();
 		if (it.hasNext()) {
 			while(it.hasNext()) {
 				SongQueue sq = it.next();
@@ -269,10 +279,6 @@ public class JSONHelper {
 						obj = queueToJSON(temp);
 						ary.put(obj);
 					}
-				}
-				preSong = sq;
-				if(it.hasNext()==false) {
-					preSong = new SongQueue();
 				}
 			}
 			JSONObject pre = new JSONObject();

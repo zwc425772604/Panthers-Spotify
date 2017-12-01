@@ -937,7 +937,22 @@ public class ServletController {
 	@RequestMapping(value = "/getSpecificGenre", method = RequestMethod.POST)
 	public @ResponseBody String getSpecificGenre(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String genre = request.getParameter("genre");
-		List<Album> retAlbums = albumService.getTopGenreAlbum(genre);
+		String display = environment.getProperty("displayAmount");
+		int displayAmount = Integer.parseInt(display);
+		
+		List<Album> retAlbums = albumService.getTopGenreAlbum(genre,1,displayAmount);
+		List<Playlist> retPlaylist = playlistService.getTopGenrePlaylist(genre);
+		return "ok";
+	}
+	
+	@RequestMapping(value = "/getPageGenre", method = RequestMethod.POST)
+	public @ResponseBody String getPageGenre(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		String genre = request.getParameter("genre");
+		String pageNum = request.getParameter("pageNum");
+		String display = environment.getProperty("displayAmount");
+		int displayAmount = Integer.parseInt(display);
+		int pageNumInt = Integer.parseInt(pageNum);
+		List<Album> retAlbums = albumService.getTopGenreAlbum(genre,pageNumInt,displayAmount);
 		List<Playlist> retPlaylist = playlistService.getTopGenrePlaylist(genre);
 		return "ok";
 	}

@@ -20,6 +20,6 @@ public interface AlbumDAO {
 	public void updateAlbumHistory(Album album,User user, Date date);
 	public List<Album> getHistoryAlbums(String userEmail);
 	public Collection<User> getAlbumArtists(int aid);
-	public List<Album> getTopGenreAlbum(String genre);
+	public List<Album> getTopGenreAlbum(String genre,int pageNum,int numRet);
 	public List<Album> getNewsRelease(Date date);
 }

@@ -129,10 +129,9 @@
         <th>Display name</th>
         <th>First Name</th>
         <th>Last Name</th>
-        <th></th>
-        <!--  edit button -->
-        <th></th>
-        <!--  delete button -->
+        <th></th> <!-- edit -->
+        <th></th> <!-- delete  -->
+        <th></th> <!-- royalty -->
       </tr>
     </thead>
     <tbody>
@@ -171,6 +170,30 @@
           <button type="submit" class="w3-button w3-round-xxlarge w3-green" style="margin-left: 40px;">Save</button>
         </div>
       </form:form>
+    </div>
+  </div>
+</div>
+<div id="sendRoyalModal" class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content w3-card-4" style="height:250px; overflow:scroll;">
+    <header class="w3-container w3-theme-d3">
+      <span onclick="document.getElementById('sendRoyalModal').style.display='none'"
+        class="w3-button w3-large w3-display-topright">&times;</span>
+      <h5>Send Royalty Check</h5>
+    </header>
+    <div class="w3-container w3-theme-d4">
+      <form id="sendSingleRoyaltyForm">
+        <div class="w3-row w3-section">
+		    <div class="w3-col" style="width:70px"><span style="font-size: 12px">Money</span></div>
+		    <div class="w3-rest">
+		      <input class="w3-input w3-border" type="number" id="royalty" placeholder="$ send to the artist">
+		    </div>
+	  	</div>
+
+        <div style="text-align:center;margin-top: 4%;">
+          <button onclick="event.preventDefault(); $('#sendRoyalModal').hide();" class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>
+          <button type="submit" class="w3-button w3-block w3-section w3-blue w3-ripple">Send</button>
+        </div>
+      </form>
     </div>
   </div>
 </div>

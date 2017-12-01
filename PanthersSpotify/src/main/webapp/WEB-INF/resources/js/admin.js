@@ -167,6 +167,7 @@ function insertArtistTables(data)
 				  '<td>' + data[i]['artistLastName'] + '</td>',
 				  '<td><button class="unstyle-buttons edit_user_button"  data-toggle="tooltip-play" title="Edit This User Profiles"> <i class="material-icons">mode_edit</i></button></td>',
 				  '<td><button class="unstyle-buttons delete-user-button"  data-toggle="tooltip-play" title="Delete This User"> <i class="material-icons">delete_forever</i></button></td>',
+					'<td><button class="unstyle-buttons send-single-royalty-check"  data-toggle="tooltip-play" title="Send Royalty Check to this Artist"> <i class="material-icons">payment</i></button></td>',
 				 '</tr>'
 			].join(''));
 		}
@@ -266,6 +267,33 @@ $(document).on ("click", ".delete-playlist-button", function () {
 	      });
 });
 
+
+$(document).on ("click", ".send-single-royalty-check", function () {
+	var artistEmail = $(this).closest('tr').children('td:eq(0)').text();
+	console.log("artistEmail is : " + artistEmail);
+	$("#sendRoyalModal").show();
+	$(document).on("submit", "#sendSingleRoyaltyForm", function (event) {
+		event.preventDefault();
+		var royalty = $("#royalty").val();
+		console.log("royalty is " + royalty);
+		$.ajax({
+	        url: "${cp}/../payOneCheckRoyalty",
+	        type: "POST",
+	        data : {"artistEmail" : artistEmail, "royalty" : royalty },
+	        asyn: false,
+	        cache: false,
+	        success : function(response)
+	        {
+	         	console.log(response);
+	         	$("#sendRoyalModal").hide();
+	        },
+	        error: function(e)
+	        {
+	          console.log(e);
+	        }
+		  });
+	});
+});
 
 $(document).on ("click", ".approveSongButton", function () {
 	var songID = $(this).closest('tr').children('td:eq(0)').text();

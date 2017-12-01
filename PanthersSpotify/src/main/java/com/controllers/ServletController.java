@@ -934,6 +934,16 @@ public class ServletController {
 		return "ok";
 	}
 	
+	@RequestMapping(value = "/getGenre", method = RequestMethod.POST)
+	public @ResponseBody String getGenre(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		
+		String display = environment.getProperty("genre.type");
+		String[] splitted = display.split(",");
+		
+		String genres = JSONHelper.getGenres(splitted);
+		return genres;
+	}
+	
 	@RequestMapping(value = "/getSpecificGenre", method = RequestMethod.POST)
 	public @ResponseBody String getSpecificGenre(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String genre = request.getParameter("genre");
@@ -950,6 +960,7 @@ public class ServletController {
 		String genre = request.getParameter("genre");
 		String pageNum = request.getParameter("pageNum");
 		String display = environment.getProperty("displayAmount");
+		
 		int displayAmount = Integer.parseInt(display);
 		int pageNumInt = Integer.parseInt(pageNum);
 		List<Album> retAlbums = albumService.getTopGenreAlbum(genre,pageNumInt,displayAmount);

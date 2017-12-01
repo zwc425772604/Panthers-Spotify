@@ -295,6 +295,19 @@ public class JSONHelper {
 		}
 		return jsonObject;
 	}
+	public static String getGenres(String[] input) throws JSONException
+	{
+		JSONObject ob = new JSONObject();
+		JSONArray genres = new JSONArray();
+		for(int i=0;i<input.length;i++)
+		{
+			JSONObject obj = new JSONObject();
+			obj.put("genre"+i, input[i]);
+			genres.put(obj);
+		}
+		ob.put("genres", genres);
+		return ob.toString();
+	}
 	
 	public static JSONObject queueToJSON(SongQueue que) throws JSONException {
 		JSONObject ob = new JSONObject();

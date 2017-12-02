@@ -974,6 +974,7 @@ public class ServletController {
 		  cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
 		java.sql.Date date = new java.sql.Date(cal.getTimeInMillis());
 		List<Album> retAlbums = albumService.getNewsRelease(date);
+		session.setAttribute("album_list", retAlbums);
 		return "ok";
 	}
 	

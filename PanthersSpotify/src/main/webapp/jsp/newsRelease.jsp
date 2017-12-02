@@ -19,19 +19,16 @@
 			<c:forEach var="album" items="${album_list}">
 				<div
 					class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">
-					<div class="hover-control album-item" style="width: 15em;">
+					<div class="hover-control album-item">
 						<img src="${cp}/resources/data${album.photoUrl}"
 							width=100% height=width class="img-rounded info-image"
 							alt="Generic placeholder thumbnail"> <span class="album-ID"
 							style="display: none;">${album.aid}</span>
 					</div>
 					<div class="album-item medium-boxes-description">
-						<h6>
+						<h6 style="text-align: center;">
 							<a href="#"><span id="album-name">${album.aname}</span></a> <span
 								class="album-ID" style="display: none;">${album.aid}</span>
-						</h6>
-						<h6>
-							<a href="#"> <span id="artist_name">${album.des.substring(0,50)}</span></a>
 						</h6>
 					</div>
 				</div>

@@ -73,20 +73,3 @@
 		</c:if>
 	</section>
 </div>
-<!-- this div display when hover on the image of album/artist -->
-<!--  <div class = "hover-buttons" style="display:none;">
-   <ul class="left_sizebar">
-     <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add User"  id="playbar-prev-button"><i class="material-icons">add</i></button></li>
-     <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit User Information" id="playbar-shuffle-button"> <i class="material-icons">mode_edit</i></button></li>
-     <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Delete User" id="playbar-play-button" onclick="playSong()"> <i class="material-icons">delete_forever</i></button></li>
-   </ul>
-   </div>-->
-<div class="album-item medium-boxes-description">
-	<h6>
-		<a href="#"> <span id="album-name">${album.aname}</span></a> <span
-			id="album-ID" style="display: none;">${album.aid}</span>
-	</h6>
-	<h6>
-		<a href="#"> <span id="artist_name">${album.des}</span></a>
-	</h6>
-</div>

@@ -99,10 +99,16 @@ function insertArtistsPage(data)
 	var num = data.length;
 	for (var i = 0; i < num; i++)
 		{
+		    if(!data[i]['artistUrl']){
+		    	data[i]['artistUrl'] = "http://res.cloudinary.com/dn1agy1ea/image/upload/v1495644755/empty-album-cover_wvtnrn.png";
+		    }
+		    else{
+		    	data[i]['artistUrl'] = "${cp}/../resources/data" + data[i]['artistUrl'] 
+		    }
 			$("#artist-page").append([
 				'<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">',
 		        '<div class="artist-item">',
-		        '<img src="${cp}/../resources/data' + data[i]['artistUrl'] +'" width=100% class="img-rounded" alt="Generic placeholder thumbnail">',
+		        '<img src="' + data[i]['artistUrl'] +'" width=100% class="img-rounded" alt="Generic placeholder thumbnail">',
 		      	  '<span style="display:none;" class="artist-email">'+  data[i]['artistEmail'] +'</span>',
 		        '</div>',
 		        '<div class="artist-item medium-boxes-description" style="text-align:center;">',

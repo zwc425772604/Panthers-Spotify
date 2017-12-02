@@ -998,6 +998,8 @@ public class ServletController {
 		int pageNumInt = Integer.parseInt(pageNum);
 		List<Album> retAlbums = albumService.getTopGenreAlbum(genre,pageNumInt,displayAmount);
 		List<Playlist> retPlaylist = playlistService.getTopGenrePlaylist(genre);
+		session.setAttribute("album_list", retAlbums);
+		System.out.println(retAlbums.size());
 		return "ok";
 	}
 	

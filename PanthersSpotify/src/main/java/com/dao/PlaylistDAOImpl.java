@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.model.Album;
+import com.model.Albumhistory;
 import com.model.Followplaylist;
 import com.model.Friend;
 import com.model.Playlist;
@@ -159,7 +160,10 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	
 	@Transactional(readOnly=false)
 	public void deletePlaylistHistory(Playlist playlist,User user) {
-		Playlisthistory playlistHistroy = new Playlisthistory(user.getEmail(),playlist.getPid());
+		Query query = entityManager.createNamedQuery("Playlisthistory.findByPidUemail")
+				.setParameter("uemail",user.getEmail())
+				.setParameter("aid",playlist.getPid());
+		Playlisthistory playlistHistroy = (Playlisthistory)query.getSingleResult();
 		if(entityManager.contains(playlistHistroy))
 		{
 			entityManager.remove(playlistHistroy);
@@ -168,7 +172,10 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	
 	@Transactional(readOnly=false)
 	public void updatePlaylistHistory(Playlist playlist,User user,Date date) {
-		Playlisthistory playlistHistroy = new Playlisthistory(user.getEmail(),playlist.getPid());
+		Query query = entityManager.createNamedQuery("Playlisthistory.findByPidUemail")
+				.setParameter("uemail",user.getEmail())
+				.setParameter("aid",playlist.getPid());
+		Playlisthistory playlistHistroy = (Playlisthistory)query.getSingleResult();
 		playlistHistroy.setCreateDay(date);
 		entityManager.merge(playlistHistroy);
 	}

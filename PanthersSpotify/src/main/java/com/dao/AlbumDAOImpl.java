@@ -19,6 +19,7 @@ import com.model.Album;
 import com.model.Albumhistory;
 import com.model.Playlist;
 import com.model.Song;
+import com.model.Songhistory;
 import com.model.User;
 
 @Repository("albumDAO")
@@ -95,7 +96,10 @@ public class AlbumDAOImpl implements AlbumDAO{
 	
 	@Transactional(readOnly=false)
 	public void deleteAlbumHistory(Album album,User user) {
-		Albumhistory albumHistroy = new Albumhistory(user.getEmail(),album.getAid());
+		Query query = entityManager.createNamedQuery("Albumhistory.findByAidUemail")
+				.setParameter("uemail",user.getEmail())
+				.setParameter("aid",album.getAid());
+		Albumhistory albumHistroy = (Albumhistory)query.getSingleResult();
 		if(entityManager.contains(albumHistroy))
 		{
 			entityManager.remove(albumHistroy);
@@ -104,7 +108,10 @@ public class AlbumDAOImpl implements AlbumDAO{
 	
 	@Transactional(readOnly=false)
 	public void updateAlbumHistory(Album album,User user,Date date) {
-		Albumhistory albumHistroy = new Albumhistory(user.getEmail(),album.getAid());
+		Query query = entityManager.createNamedQuery("Albumhistory.findByAidUemail")
+				.setParameter("uemail",user.getEmail())
+				.setParameter("aid",album.getAid());
+		Albumhistory albumHistroy = (Albumhistory)query.getSingleResult();
 		albumHistroy.setCreateDay(date);
 		entityManager.merge(albumHistroy);
 	}

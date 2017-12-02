@@ -250,7 +250,7 @@ $("#play-playlist-button").click(function(){
 	console.log(song_json);
 	addToPlaybarPlaylist(song_json);
 //	  $.ajax({
-//          url: "${cp}/../playPlaylist",
+//          url: "${cp}/../ ",
 //          type: "POST",
 //          data : {"pid" : pid},
 //          asyn: false,

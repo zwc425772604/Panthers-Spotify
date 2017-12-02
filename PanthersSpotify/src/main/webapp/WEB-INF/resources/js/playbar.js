@@ -17,12 +17,13 @@ $(document).ready(function(){
 		autoBlur: false,
 		smoothPlayBar: true,
 		keyEnabled: true,
-		remainingDuration: true,
+		remainingDuration: false,
 		toggleDuration: true,
 		 cssSelectorAncestor: "",
 	        cssSelector: {
 	          play: "#playbar-play-button",
-	          pause: "#playbar-pause-button",
+//	          pause: "#playbar-pause-button",
+//                  repeat: "#playbar-repeat-button",
 //	          stop: "#stop",
 //	          mute: "#mute",
 //	          unmute: "#unmute",
@@ -32,9 +33,12 @@ $(document).ready(function(){
 	});
 	
 	player.on($.jPlayer.event.play, function(e){
-		 $(".play-pause-button").text("play_circle_filled");
-		
+		 $(".play-pause-button").text("pause_circle_filled");	
 	});
+        player.on($.jPlayer.event.pause, function(e){
+		 $(".play-pause-button").text("play_circle_filled");	
+	});
+ 
 });
 
 

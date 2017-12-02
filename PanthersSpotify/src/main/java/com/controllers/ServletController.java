@@ -69,8 +69,7 @@ public class ServletController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap map) {
-		List<Album> retAlbum = (List<Album>)albumService.getAllAlbumArtist("AXEL_ANTUNES@gmail.com");
-		System.out.println(retAlbum.size());
+		
 		return "index";
 	}
 

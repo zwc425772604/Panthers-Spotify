@@ -30,6 +30,9 @@ public class SongServiceImpl implements SongService {
 	@Autowired(required = true)
 	@Qualifier("songDAO")
 	private SongDAO songDAO;
+	
+	@Autowired(required = true)
+	@Qualifier("playlistDAO")
 	private PlaylistDAO playlistDAO;
 
 	@Transactional
@@ -157,16 +160,18 @@ public class SongServiceImpl implements SongService {
 
 	@Transactional
 	public void addSongToQueue(Collection<SongQueue> que, int sid, String email) {
+		//System.out.println(sid);
 		SongQueue newSq = songDAO.addSongToQueue(sid, email);
-		Collection<User> artists = songDAO.getSongArtists(newSq.getSong().getSid());
+		Collection<User> artists = songDAO.getSongArtists(sid);
 		newSq.setArtistsCollection(artists);
 		que.add(newSq);
 	}
 
 	@Transactional
 	public void addPlaylistToQueue(Collection<SongQueue> que, int pid, String email) {
-		Playlist playlist = playlistDAO.getPlaylist(pid);
-		Collection<Song> songs = playlist.getSongCollection();
+		System.out.println(pid);
+		List<Song> songs = playlistDAO.getSongInPlaylist(pid);
+		
 		for (Song s : songs) {
 			addSongToQueue(que, s.getSid(), email);
 		}

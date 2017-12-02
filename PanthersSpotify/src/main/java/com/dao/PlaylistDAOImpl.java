@@ -129,10 +129,13 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	
 	@Transactional(readOnly=true)
 	public List<Song> getSongInPlaylist(int playlistId) {
+		
 		 String queryString = "SELECT song FROM Song song WHERE song.sid in(SELECT f.playlistsongPK.sid from Playlistsong f where f.playlistsongPK.pid=:pid)"; 	  
 		  Query query = entityManager.createQuery(queryString);
+		  
 		  query.setParameter("pid", playlistId);
 		  List<Song>	list = (List<Song>)query.getResultList();
+		  
 		  return list;	
 	}
 	
@@ -199,4 +202,6 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 		  
 		  return playlists;
 	  }
+	
+	
 }

@@ -49,6 +49,10 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<link href="${cp}/resources/css/jplayer.blue.monday.min.css" rel="stylesheet" type="text/css" />
+	  <script type="text/javascript" src="${cp}/resources/js/jquery.min.js"></script>
+	  <script type="text/javascript" src="${cp}/resources/js/jquery.jplayer.min.js"></script>
+		<script src="${cp}/resources/js/playbar.js" /></script>
     <link rel="stylesheet" href="${cp}/resources/css/custom.css">
   </head>
   <body>
@@ -119,7 +123,7 @@
       </div>
     </div>
     <!--Footer Section-->
-    <footer class="fixed-bottom">
+    <footer class="fixed-bottom">		
       <div class="row">
         <div class="col-md-3 col-sm-3" id = "playbar-artist-info">
           <div class="media">
@@ -137,56 +141,55 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-sm-6" id="playbar-control">
-          <div class="row">
-            <div class="col-md-3">
-              <!-- offset -->
-            </div>
-            <div class="col-md-6" id = "playbar-center">
-              <ul id="playbar-center-icons">
-                <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Shuffle" id="playbar-shuffle-button" > <i class="material-icons">shuffle</i></button></li>
-                <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Previous"  id="playbar-prev-button" <%= hasPre ? "":"disabled" %>><i class="material-icons">skip_previous</i></button></li>
-                <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Play" id="playbar-play-button" onclick="playSong()" <%= hasNowPlay ? "":"disabled" %>> <i class="material-icons"><span class="play-pause-button">play_circle_filled</span></i></button></li>
-                <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Next"  id="playbar-next-button" <%= hasNextUp ? "":"disabled" %>><i class="material-icons">skip_next</i></button></li>
-                <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Repeat"  id="playbar-repeat-button" ><i class="material-icons"><span id="repeat-button-text">repeat</span></i></button></li>
-              </ul>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-3">
-              <!-- offset -->
-              <div class = "playback-bar-current-time" style="float:right; margin-right: 12px;"> <span id="currentPos"> 0:00 </span></div>
-            </div>
-            <div class="col-md-6 playback-bar">
-              <!-- <div class="progress" onseeked="testing(this.child);">
-                <div class="progress-bar"  id="progress_bar_play" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:10%">
-                  <span class="sr-only">70% Complete</span>
-                </div>
-                </div> -->
-              <div id="slider">
-                <div id="innerSlider" style="background-color:blue; width: 30px; left:30%;"></div>
-              </div>
-              <div class="audio-bar">
-                <!-- use javascript to play the songs -->
-                <audio id="myAudio" ontimeupdate="updateTime()">
-                  <source src="" type="audio/mpeg">
-                  Your browser does not support the audio element.
-                </audio>
-              </div>
-            </div>
-            <div class="col-md-3">
-              <div class="playback-bar-finish-time" style="margin-left: 12px;"> <span id="duration">  0:00 </span> </div>
-            </div>
-          </div>
+        <div class="col-md-6 col-sm-6">
+            <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+		<div id="jp_container_1" class="jp-audio" role="application" aria-label="media player" style="border-style: none;">
+                    <div class="jp-type-single" >
+			<div class="jp-gui jp-interface" style="background-color: #4E4E4E;"> 
+                            <div class="row">
+				<div class="" style="margin-left: 35%; ">
+                                    <ul id="playbar-center-icons">
+                                       <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Shuffle" id="playbar-shuffle-button" > <i class="material-icons">shuffle</i></button></li>
+                                       <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Previous"  id="playbar-prev-button" <%= hasPre ? "":"disabled" %>><i class="material-icons">skip_previous</i></button></li>
+                                       <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Play" id="playbar-play-button" <%= hasNowPlay ? "":"disabled" %>> <i class="material-icons"><span class="play-pause-button">play_circle_filled</span></i></button></li>
+                                       <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Next"  id="playbar-next-button" <%= hasNextUp ? "":"disabled" %>><i class="material-icons">skip_next</i></button></li>
+                                       <li><button class="unstyle-buttons" role="button" tabindex="0" data-toggle="tooltip-mute" title="Repeat"  id="playbar-repeat-button" ><i class="material-icons"><span id="repeat-button-text">repeat</span></i></button></li>
+                                    </ul>
+                                </div>
+                            </div>   
+				       		
+			    <div class="jp-progress" style="width:100%; margin-top: 5%;">
+				<div class="jp-seek-bar">
+                                    <div class="jp-play-bar"></div>
+				</div>
+			    </div>
+                            <div class="jp-time-holder" style="width:100%; margin-top: 5%;">
+				<div class="jp-current-time" role="timer" aria-label="time" style="color: black; font-size:1.2em;">&nbsp;</div>
+                                <div class="jp-duration" role="timer" aria-label="duration" style="color: black; font-size:1.2em;">&nbsp;</div>				
+                            </div>
+			</div>	
+                    </div>
+		</div>
         </div>
-        <div class="col-md-3 col-sm-3" id="playbar-right">
-          <ul id="playbar-right-icons">
-            <li><button class="unstyle-buttons" data-toggle="tooltip-lyric" title="Lyrics" id="playbar-lyrics-button" /> <i class="material-icons">queue_music</i></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Queue" id="playbar-queue-button"/> <i class="material-icons">add_to_queue</i></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Mute"  id="playbar-mute-anchor-tag"/ onclick="volumeMute(this)"><i id="volume-up" class="material-icons">volume_up</i></li>
-            <li><input class="bar" type="range" id="rangeinput" value="50" min = "0" max = "100" onchange="updateVolume(this.value);"/></li>
+        		
+            <div class="col-md-3 col-sm-3" id="playbar-right">
+              <ul id="playbar-right-icons" style="margin-top: 6%;">
+                  <li>
+                    
+                  </li>
+            <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Queue" id="playbar-queue-button"> <i class="material-icons">add_to_queue</i></button></li>
+<!--            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Mute"  id="playbar-mute-anchor-tag" onclick="volumeMute(this)"><i id="volume-up" class="material-icons">volume_up</i></li>-->
+           
+
           </ul>
+                <div class="jp-volume-controls" style="margin-left: -40%; margin-bottom: -5%;">
+                        <button class="jp-mute" role="button" tabindex="0">mute</button>
+			<button class="jp-volume-max" role="button" tabindex="0" style="margin-left: 80px;">max volume</button>
+			<div class="jp-volume-bar" style="width:120px;">
+                            <div class="jp-volume-bar-value"></div>
+			</div>
+		    </div>
         </div>
-      </div>
+      </div> 
     </footer>
   </body>

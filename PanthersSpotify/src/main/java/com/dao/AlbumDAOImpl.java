@@ -128,6 +128,14 @@ public class AlbumDAOImpl implements AlbumDAO{
 		return users;
 	}
 	
+	@Transactional(readOnly = true)
+	public Collection<Album> getAllAlbumArtist(String artistEmail) {
+		String queryString = "select u from Album u where u.aid in (SELECT r.releasealbumPK.aid FROM Releasealbum r WHERE r.releasealbumPK.uemail = :uemail)";
+		Query query = entityManager.createQuery(queryString).setParameter("uemail", artistEmail);
+		Collection<Album> users = (ArrayList<Album>)query.getResultList();
+		return users;
+	}
+	
 	@Transactional(readOnly=true)
 	 public List<Album> getTopGenreAlbum(String genre,int pageNum,int numRet){
 		

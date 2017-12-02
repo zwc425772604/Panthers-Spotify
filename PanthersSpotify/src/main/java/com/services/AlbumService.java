@@ -2,6 +2,7 @@ package com.services;
 
 
 import java.sql.Date;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -23,4 +24,5 @@ public interface AlbumService {
 	public List<User> getArtistsCollection(int aid);
 	public List<Album> getTopGenreAlbum(String genre,int pageNum,int numRet);
 	public List<Album> getNewsRelease(Date date);
+	public Collection<Album> getAllAlbumArtist(String artistEmail);
 }

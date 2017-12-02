@@ -75,6 +75,24 @@ public class JSONHelper {
 		}
 		return arr.toString();
 	}
+	
+	public static String albumListToJSON(List<Album> albums) throws JSONException {
+		JSONArray arr = new JSONArray();
+		JSONObject jsonObject;
+		for (Album p : albums) {
+			jsonObject = new JSONObject();
+			jsonObject.put("albumID", p.getAid());
+			jsonObject.put("albumName", p.getAname());
+			jsonObject.put("albumGenre", p.getGenre());
+			jsonObject.put("albumDescription", p.getDes());
+			jsonObject.put("albumNumFollowers", p.getFollowers());
+			jsonObject.put("albumReleaseDate", p.getReleaseDate());
+			jsonObject.put("albumNumberSongs", p.getNSongs());
+			jsonObject.put("albumTimeLength", p.getTimelength());
+			arr.put(jsonObject);
+		}
+		return arr.toString();
+	}
 
 	public static String artistListToJSON(List<User> users) throws JSONException {
 		JSONArray arr = new JSONArray();

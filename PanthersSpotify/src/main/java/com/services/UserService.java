@@ -57,4 +57,6 @@ public interface UserService {
 	public void removePayment(Payment payment);
 	
 	public List<Song> getReleaseSong(Artist artist);
+	
+	public Artist getArtistInfo(Artist artist);
 }

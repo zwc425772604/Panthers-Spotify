@@ -271,5 +271,12 @@ public class UserServiceImpl implements UserService {
 		
 	}
 	
+	@Transactional
+	public Artist getArtistInfo(Artist artist) {
+		
+		return userDAO.getArtist(artist);
+		
+	}
+	
 	
 }

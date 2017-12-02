@@ -990,5 +990,16 @@ public class ServletController {
 		JSONObject obj = (JSONObject) session.getAttribute("queueJSON");
 		return obj.toString();
 	}
+	
+	@RequestMapping(value = "/getArtistInfo", method = RequestMethod.POST)
+	public @ResponseBody String getArtistInfo(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		
+		String artistEmail = request.getParameter("artistEmail");
+		User user = userService.getUser(artistEmail);
+		
+		String retArtistInfo = JSONHelper.getArtistInfo(user.getArtist().getBio(),user.getArtist().getFollowers());
+		return retArtistInfo;
+	}
+	
 
 }

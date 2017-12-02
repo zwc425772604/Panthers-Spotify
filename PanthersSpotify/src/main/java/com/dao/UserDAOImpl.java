@@ -209,5 +209,15 @@ public class UserDAOImpl implements UserDAO {
 		artist.setRoyalty(royalty);
 		entityManager.merge(artist);
 	}
+	
+	@Transactional(readOnly = true)
+	public Artist getArtist(Artist artist) {
+		Query query = entityManager.createNamedQuery("Artist.findByArtistEmail").setParameter("artistEmail", artist.getArtistEmail());
+		
+		Artist retArtist = (Artist)query.getSingleResult();
+			
+		
+		return retArtist;
+	}
 
 }

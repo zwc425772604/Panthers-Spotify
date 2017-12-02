@@ -32,4 +32,5 @@ public interface UserDAO {
 	public List<Releasesong> getArtistRelease(Artist artist);
 	public double getRoyalty(Artist artist);
 	public void setRoyalty(Artist artist,double royalty) ;
+	public Artist getArtist(Artist artist);
 }

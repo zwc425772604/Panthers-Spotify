@@ -330,5 +330,13 @@ public class JSONHelper {
 		ob.put("artists", artists);
 		return ob;
 	}
+	
+	public static String getArtistInfo(String bio, int followers)
+	{
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("artistBio", bio);
+		jsonObject.put("artistFollowers", followers);
+		return jsonObject.toString();
+	}
 
 }

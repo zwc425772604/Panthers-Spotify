@@ -191,7 +191,7 @@ public class JSONHelper {
 			List<User> users = songService.getArtistsCollection(sid);
 			for (User user : users) {
 				JSONObject ob = new JSONObject();
-				ob.put("name", user.getFullName());
+				ob.put("name", user.getUserName());
 				ob.put("aemail", user.getEmail());
 				artists.put(ob);
 			}

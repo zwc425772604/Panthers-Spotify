@@ -1,16 +1,16 @@
 var hoverEnabled = true;
 $(document).ready(function(){
-	console.log("HI");
+	var email = $(".friends-email",this).text();
 	$.ajax({
         url: "${cp}/../getUserHistory",
         type: "POST",
         asyn: false,
+        data: {"email" : email},
         cache: true,
         success : function(response)
         {
         	var actual_JSON = JSON.parse(response);
         	insertSongsTable(actual_JSON);
-        	console.log(actual_JSON);
         },
         error: function(e)
         {
@@ -22,8 +22,18 @@ $(document).ready(function(){
 
 function insertSongsTable(data)
 {
-	
-	
+	var num = data.length;
+	for(i = 0; i < num; i++){
+		var songTitle = data[i]['songTitle'];
+		$("#song-table").find('tbody').append([
+			'<tr>',	
+			  '<td> </td>',
+			  '<td>' + songTitle + '</td>',
+			  '<td> </td>',
+			  '<td> </td>',
+			 '</tr>'
+		].join(''));
+	}
 }
 
 $(".AddFriendButton").click(function(){

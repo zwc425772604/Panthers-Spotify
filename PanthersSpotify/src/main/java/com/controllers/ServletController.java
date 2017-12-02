@@ -708,11 +708,14 @@ public class ServletController {
 		User user = (User)session.getAttribute("user");
 		Collection<SongQueue> orig = user.getSongQueueCollection();
 		String email = user.getEmail();
-		Collection<SongQueue> newSq = songService.removeAllQueue(orig, email);
+		List<SongQueue> newSq = (List<SongQueue>) songService.removeAllQueue(orig, email);
                 int pid = Integer.parseInt(request.getParameter("pid"));
                 System.out.println("playlist pid to play is " + pid);
 		songService.addPlaylistToQueue(newSq, pid, email);
-		songService.setArtistsCollection(newSq);
+		if(newSq.size()>0) {
+			songService.setNowPlay(newSq, newSq.get(0).getSong().getSid());
+			songService.setArtistsCollection(newSq);
+		}
 		user.setSongQueueCollection(newSq);
 		JSONObject result = JSONHelper.songQueueToJSON(newSq);
 		session.setAttribute("queueJSON", result);

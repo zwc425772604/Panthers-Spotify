@@ -85,8 +85,10 @@
 			
 		</td>
         <td>
-			<% JSONObject nalbum = nowPlay.getJSONObject("album"); %>
-				<a  style="color:black;" href="{cp}/../getSpecificArtist/<%= nalbum.get("id")%>"> <%= nalbum.get("name") %> </a><br>
+			<% JSONObject nalbum = nowPlay.getJSONObject("album");
+				boolean hasNalbum = (nalbum.length()==0);
+			%>
+				<a  style="color:black;" href="{cp}/../getSpecificArtist/<%= hasNalbum ? "" : nalbum.get("id")%>"> <%= hasNalbum ? "unknown" : nalbum.get("name") %> </a><br>
 		</td>
         <td>
           <button class="w3-button more_button">
@@ -154,8 +156,11 @@
 	    		}
 			%>
 		</td>
-        <td><% JSONObject album = nowPlay.getJSONObject("album"); %>
-				<a  style="color:black;" href="{cp}/../getSpecificArtist/<%= album.get("id")%>"> <%= album.get("name") %> </a><br>
+        <td><% JSONObject album = nowPlay.getJSONObject("album"); 
+        		boolean hasAlbum = (album.length()==0);
+        	%>
+				<a  style="color:black;" href=<%= hasAlbum ? "" : "{cp}/../getSpecificArtist/"+album.get("id") %>> <%= (album.length()==0) ? "unknown" : album.get("name") %> </a>
+				<br>
 		</td>
         <td>
           <button class="w3-button more_button">

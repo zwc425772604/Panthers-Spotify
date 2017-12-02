@@ -23,11 +23,8 @@
       <li class="nav-item">
         <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('albums')">Albums</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('artists')">Artists</a>
-      </li>
       <li class="nav-item" id="extra-padding">
-        <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('local_files')">Local Files</a>
+        <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('artists')">Artists</a>
       </li>
     </ul>
   </li>

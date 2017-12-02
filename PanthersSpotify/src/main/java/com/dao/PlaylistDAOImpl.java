@@ -162,7 +162,7 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	public void deletePlaylistHistory(Playlist playlist,User user) {
 		Query query = entityManager.createNamedQuery("Playlisthistory.findByPidUemail")
 				.setParameter("uemail",user.getEmail())
-				.setParameter("aid",playlist.getPid());
+				.setParameter("pid",playlist.getPid());
 		Playlisthistory playlistHistroy = (Playlisthistory)query.getSingleResult();
 		if(entityManager.contains(playlistHistroy))
 		{
@@ -174,7 +174,7 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	public void updatePlaylistHistory(Playlist playlist,User user,Date date) {
 		Query query = entityManager.createNamedQuery("Playlisthistory.findByPidUemail")
 				.setParameter("uemail",user.getEmail())
-				.setParameter("aid",playlist.getPid());
+				.setParameter("pid",playlist.getPid());
 		Playlisthistory playlistHistroy = (Playlisthistory)query.getSingleResult();
 		playlistHistroy.setCreateDay(date);
 		entityManager.merge(playlistHistroy);

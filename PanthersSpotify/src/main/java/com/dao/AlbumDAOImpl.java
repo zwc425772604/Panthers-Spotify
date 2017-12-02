@@ -120,7 +120,7 @@ public class AlbumDAOImpl implements AlbumDAO{
 	public List<Album> getHistoryAlbums(String userEmail)
 	{
 		 
-		String queryString = "SELECT a FROM Album a where a.aid in (SELECT f.albumhistoryPK.pid from Albumhistory f where f.albumhistoryPK.uemail=:uemail)";
+		String queryString = "SELECT a FROM Album a where a.aid in (SELECT f.albumhistoryPK.aid from Albumhistory f where f.albumhistoryPK.uemail=:uemail)";
 	    	Query query = entityManager.createQuery(queryString);
 	    	query.setParameter("uemail", userEmail);
 	    	List<Album>	list = (List<Album>)query.getResultList();

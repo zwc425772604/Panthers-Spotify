@@ -336,6 +336,7 @@ public class JSONHelper {
 		song.put("title", que.getSong().getStitle());
 		song.put("duration", que.getSong().getDuration());
 		song.put("sid", que.getSong().getSid());
+                song.put("songPath", que.getSong().getSurl());
 		ob.put("song",song);
 		JSONObject album = new JSONObject();
 		if(que.getSong().getAlbumId()!=null) {

@@ -62,40 +62,44 @@ function addToPlaybarPlaylist(song_json)
 {
 	myPlaylist = [];
 	numSong = song_json.length;
-	for (var i = 0; i < numSong; i++)
-		{
-			console.log(song_json[i]['songTitle']);
-			myPlaylist.push({mp3:"${cp}/../" + song_json[i]['songPath']});	
-		}
-	currentIndex = 0;
-	player.jPlayer("setMedia", myPlaylist[currentIndex]);
+	var songObject = song_json.nowPlay;
+	console.log("songObject is " + songObject.song['songPath']);
+//	for (var i = 0; i < numSong; i++)
+//		{
+//			console.log(song_json[i]['songTitle']);
+//			myPlaylist.push({mp3:"${cp}/../" + song_json[i]['songPath']});	
+//		}
+//	currentIndex = 0;
+	myPlaylist.push({mp3 : "${cp}/../" + songObject.song['songPath']});
+	player.jPlayer("setMedia", myPlaylist[0]);
 	player.jPlayer("play");
 }
 
 
-function playNextSong()
-{
-	if (currentIndex < numSong)
-		{
-			currentIndex += 1;
-			player.jPlayer("setMedia", myPlaylist[currentIndex]);
-			player.jPlayer("play");
-		}
-}
 
-function playPreviousSong()
-{
-	if (currentIndex > 0)
-	{
-		currentIndex -= 1;
-		player.jPlayer("setMedia", myPlaylist[currentIndex]);
-		player.jPlayer("play");
-	}
-	else
-	{
-		player.jPlayer("pause");
-	}
-}
+//function playNextSong()
+//{
+//	if (currentIndex < numSong)
+//		{
+//			currentIndex += 1;
+//			player.jPlayer("setMedia", myPlaylist[currentIndex]);
+//			player.jPlayer("play");
+//		}
+//}
+//
+//function playPreviousSong()
+//{
+//	if (currentIndex > 0)
+//	{
+//		currentIndex -= 1;
+//		player.jPlayer("setMedia", myPlaylist[currentIndex]);
+//		player.jPlayer("play");
+//	}
+//	else
+//	{
+//		player.jPlayer("pause");
+//	}
+//}
 
 $(document).on("click", "#playbar-shuffle-button", function () {
 	$.ajax({
@@ -123,71 +127,80 @@ $(document).on("click", "#playbar-shuffle-button", function () {
 
 /$(document).on("click", "#playbar-prev-button", function () {
 	console.log("play prev");
-	playPreviousSong();
-//	$.ajax({
-//        url: "${cp}/../preSong",
-//        type: "POST",
-//        asyn: false,
-//        cache: true,
-//        success : function(response)
-//        {
-//          //console.log("pre:  ..."+ response);
-//          updatePlayerButton(response);
-//          var queueJSP = document.getElementById("queueDiv");
-//          if (queueJSP != null){
-//        	  $.get("jsp/queue.jsp", function(data) {
-//                  $("#main-changing-content").html(data)
-//              });
-//          }
-//        },
-//        error: function(e)
-//        {
-//
-//          console.log(e);
-//        }
-//      });
+//	playPreviousSong();
+	$.ajax({
+        url: "${cp}/../preSong",
+        type: "POST",
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+          console.log("pre song in js response : "+ response);
+          var actual_json = JSON.parse(response);
+          addToPlaybarPlaylist(actual_json);
+          updatePlayerButton(response);
+          var queueJSP = document.getElementById("queueDiv");
+          if (queueJSP != null){
+        	  $.get("jsp/queue.jsp", function(data) {
+                  $("#main-changing-content").html(data)
+              });
+          }
+        },
+        error: function(e)
+        {
+
+          console.log(e);
+        }
+      });
 })
 
 $(document).on("click", "#playbar-next-button", function () {
 	console.log("play next");
-	playNextSong();
-//	$.ajax({
-//        url: "${cp}/../nextSong",
-//        type: "POST",
-//        asyn: false,
-//        cache: true,
-//        success : function(response)
-//        {
-//          //console.log("next:  "+response);
-//          updatePlayerButton(response);
-//          var queueJSP = document.getElementById("queueDiv");
-//          if (queueJSP != null){
-//        	  $.get("jsp/queue.jsp", function(data) {
-//                  $("#main-changing-content").html(data)
-//              });
-//          }
-//        },
-//        error: function(e)
-//        {
-//
-//          console.log(e);
-//        }
-//      });
+//	playNextSong();
+	$.ajax({
+        url: "${cp}/../nextSong",
+        type: "POST",
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+          //console.log("next:  "+response);
+          console.log("next button json response " + response );
+          var actual_json = JSON.parse(response);
+          console.log("next song js response " + actual_json);
+          addToPlaybarPlaylist(actual_json);
+          updatePlayerButton(actual_json);
+          var queueJSP = document.getElementById("queueDiv");
+          if (queueJSP != null){
+        	  $.get("jsp/queue.jsp", function(data) {
+                  $("#main-changing-content").html(data)
+              });
+          }
+        },
+        error: function(e)
+        {
+
+          console.log(e);
+        }
+      });
 })
 
-function updatePlayerButton(data){
-	var json = JSON.parse(data);
-	if (json.nowPlay==null){
+function updatePlayerButton(actual_json){
+	console.log("update player button " + actual_json);
+	console.log("update player button now play" + actual_json.nowPlay);
+	console.log("update player button previous song" + actual_json.previous.song);
+	console.log("update player button next song" + actual_json.nextUp.song);
+	if (actual_json.nowPlay==null){
 		$("#playbar-play-button").prop("disabled",true);
 	}else{
 		$("#playbar-play-button").prop("disabled",false);
 	}
-	if (json.previous.song==null){
+	if (actual_json.previous.song==null){
 		$("#playbar-prev-button").prop("disabled",true);
 	}else{
 		$("#playbar-prev-button").prop("disabled",false);
 	}
-	if (json.nextUp.length==0){
+	if (actual_json.nextUp.length==0){
 		$("#playbar-next-button").prop("disabled",true);
 	}else{
 		$("#playbar-next-button").prop("disabled",false);

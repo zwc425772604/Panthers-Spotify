@@ -240,16 +240,9 @@ $(".add-to-playlist-item").click(function(){
 
 
 $("#play-playlist-button").click(function(){
-	var pid = $("#playlistID").text().trim();
+    var pid = $("#playlistID").text().trim();
 	console.log("pid to play is " + pid);
-	
-//	var value = $.session.get('playlistSongJSON');
-	var playlistSongString = docCookies.getItem("playlistSongJSON");
-	console.log("playlist song json store in session is " + playlistSongString);
-	var song_json = JSON.parse(playlistSongString);
-	console.log(song_json);
-	addToPlaybarPlaylist(song_json);
-	  $.ajax({
+	 $.ajax({
           url: "${cp}/../playPlaylist ",
           type: "POST",
           data : {"pid" : pid},
@@ -260,7 +253,7 @@ $("#play-playlist-button").click(function(){
             console.log(response);
             var actual_json = JSON.parse(response);
             console.log(actual_json);
-            //need to add song into jquery player
+            addToPlaybarPlaylist(actual_json);
             //updateButtons()
           },
           error: function(e)

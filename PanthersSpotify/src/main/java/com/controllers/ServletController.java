@@ -35,6 +35,7 @@ import com.helper.Security;
 import com.helper.StringToDateHelper;
 //import com.helper.StringToDateHelper;
 import com.model.Album;
+import com.model.Artist;
 import com.model.Payment;
 import com.model.Song;
 import com.model.SongQueue;
@@ -70,6 +71,8 @@ public class ServletController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap map) {
 		
+	
+	
 		return "index";
 	}
 
@@ -874,14 +877,14 @@ public class ServletController {
 		double factor = Double.parseDouble(environment.getProperty("artist.royalty.factor"));
 		
 			userService.setArtistRoylties(user.getArtist(), factor);
-			List<Song> songs = userService.getReleaseSong(user.getArtist());
+			List<Song> songs = userService.getReleaseSong(userService.getArtistInfo(user));
 			for(int j=0;j<songs.size();j++)
 			{
 				songService.updateMontlySong(0, songs.get(j));
 			}
 		
 		
-		String artistRoyaltyInfo = JSONHelper.getOneArtistRoyalty(user);
+		String artistRoyaltyInfo = JSONHelper.getOneArtistRoyalty(user,userService);
 		return artistRoyaltyInfo;
 	}
 	
@@ -892,15 +895,15 @@ public class ServletController {
 		double factor = Double.parseDouble(environment.getProperty("artist.royalty.factor"));
 		for(int i=0;i<artists.size();i++)
 		{
-			userService.setArtistRoylties(artists.get(i).getArtist(), factor);
-			List<Song> songs = userService.getReleaseSong(artists.get(i).getArtist());
+			userService.setArtistRoylties(userService.getArtistInfo(artists.get(i)), factor);
+			List<Song> songs = userService.getReleaseSong(userService.getArtistInfo(artists.get(i)));
 			for(int j=0;j<songs.size();j++)
 			{
 				songService.updateMontlySong(0, songs.get(j));
 			}
 		}
 		
-		String artistRoyaltyInfo = JSONHelper.getAllArtistRoyalty(artists);
+		String artistRoyaltyInfo = JSONHelper.getAllArtistRoyalty(artists,userService);
 		return artistRoyaltyInfo;
 	}
 	
@@ -923,20 +926,20 @@ public class ServletController {
 		adminPayment.setBalance(adminPayment.getBalance()-artistRoyal);
 		userService.updatePayment(adminPayment);
 		
-		List<Song> songs = userService.getReleaseSong(ar.getArtist());
+		List<Song> songs = userService.getReleaseSong(userService.getArtistInfo(ar));
 		for(int i=0;i<songs.size();i++)
 		{
 			songService.updateMontlySong(0, songs.get(i));
 		}
 		for(int i=0;i<artists.size();i++)
 		{
-			if(artists.get(i).getArtist().getRoyalty()==0)
+			if(userService.getArtistInfo(artists.get(i)).getRoyalty()==0)
 			{
 				artists.remove(i);
 			}
 		}
 		
-		String artistRoyaltyInfo = JSONHelper.getAllArtistRoyalty(artists);
+		String artistRoyaltyInfo = JSONHelper.getAllArtistRoyalty(artists,userService);
 		return artistRoyaltyInfo;
 	}
 	

@@ -9,8 +9,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="${cp}/resources/css/album.css">
-<div class="suggestion-container" id="release-container"
-	style="margin-top: 10%;">
+<div class="album-top" id="release-container">
 	<div class="suggestion-container-top">
 		<h3 class="suggestion-topic" style="font-size: 4em;">Albums</h3>
 	</div>
@@ -43,12 +42,12 @@
 			<option value="Title">Title</option>
 			<option value="Recently Added">Recently Added</option>
 		</select>
-		<div style="display: inline; float: right; margin-right: 5%;">
+		<!-- <div style="display: inline; float: right; margin-right: 5%;">
 			<p style="display: inline; font-size: 18px;">Saved Albums Only</p>
 			<label class="switch" style="display: inline"> <input
 				type="checkbox" checked> <span class="slider round"></span>
 			</label>
-		</div>
+		</div> -->
 	</div>
 	<div class="line"></div>
 	<!-- Saved albums section -->
@@ -64,12 +63,9 @@
 							style="display: none;">${album.aid}</span>
 					</div>
 					<div class="album-item medium-boxes-description">
-						<h6>
+						<h6 style="padding-top: 100%; text-align: center;">
 							<a href="#"><span id="album-name">${album.aname}</span></a> <span
 								class="album-ID" style="display: none;">${album.aid}</span>
-						</h6>
-						<h6>
-							<a href="#"> <span id="artist_name">${album.des.substring(0,50)}</span></a>
 						</h6>
 					</div>
 				</div>

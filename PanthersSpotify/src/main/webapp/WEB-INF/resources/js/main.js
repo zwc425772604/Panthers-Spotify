@@ -100,7 +100,27 @@ function genre_page(){
 }
 
 function newrelease_page(){
-	$("#middle-container").load("jsp/newsRelease.jsp");
+	$.when(newReleaseAjax()).done(function(){
+		$("#middle-container").load("jsp/newsRelease.jsp");
+	});
+}
+
+function newReleaseAjax(){
+	return $.ajax({
+        url: "${cp}/../getNewsRelease",
+        type: "POST",
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+        	
+        	console.log(response);
+        },
+        error: function(e)
+        {
+          console.log(e);
+        }
+      });
 }
 
 function overview_page(){
@@ -222,22 +242,10 @@ function displayLeftNavbarContent(nav_name)
 	}
 	else if (nav_name.localeCompare('albums') == 0)
 	{
-		$.ajax({
-	        url: "${cp}/../loadAlbum",
-	        type: "POST",
-	        asyn: false,
-	        cache: true,
-	        success : function(response)
-	        {
-	          console.log(response);
-	        },
-	        error: function(e)
-	        {
-
-	          console.log(e);
-	        }
-	      });
-	   $("#main-changing-content").load("jsp/album.jsp");
+		$.when(loadAlbumAjax()).done(function(){
+			$("#main-changing-content").load("jsp/album.jsp");
+		});
+	   
 	}
 	else if (nav_name.localeCompare('artists') == 0)
 	{		
@@ -273,6 +281,24 @@ function displayLeftNavbarContent(nav_name)
 	{
 	   $("#main-changing-content").load("jsp/overview.jsp");
 	    }
+}
+
+function loadAlbumAjax(){
+	return $.ajax({
+        url: "${cp}/../loadAlbum",
+        type: "POST",
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+          console.log(response);
+        },
+        error: function(e)
+        {
+
+          console.log(e);
+        }
+      });
 }
 
 function displayAccount(){

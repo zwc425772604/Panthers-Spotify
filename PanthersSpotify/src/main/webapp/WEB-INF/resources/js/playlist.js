@@ -260,6 +260,7 @@ $("#play-playlist-button").click(function(){
             console.log(response);
             var actual_json = JSON.parse(response);
             console.log(actual_json);
+            //need to add song into jquery player
             //updateButtons()
           },
           error: function(e)

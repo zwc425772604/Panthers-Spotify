@@ -171,19 +171,23 @@
                     </div>
 		</div>
         </div>
-         		<div class="jp-volume-controls">
-				<button class="jp-mute" role="button" tabindex="0">mute</button>
-				<button class="jp-volume-max" role="button" tabindex="0">max volume</button>
-				<div class="jp-volume-bar">
-					<div class="jp-volume-bar-value"></div>
-				</div>
-			</div>
-        <div class="col-md-3 col-sm-3" id="playbar-right">
-          <ul id="playbar-right-icons">
+         		
+            <div class="col-md-3 col-sm-3" id="playbar-right">
+              <ul id="playbar-right-icons" style="margin-top: 6%;">
+                  <li>
+                    
+                  </li>
             <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Queue" id="playbar-queue-button"/> <i class="material-icons">add_to_queue</i></li>
-            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Mute"  id="playbar-mute-anchor-tag" onclick="volumeMute(this)"><i id="volume-up" class="material-icons">volume_up</i></li>
-            <li><input class="bar" type="range" id="rangeinput" value="50" min = "0" max = "100" onchange="updateVolume(this.value);"/></li>
+<!--            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Mute"  id="playbar-mute-anchor-tag" onclick="volumeMute(this)"><i id="volume-up" class="material-icons">volume_up</i></li>-->
+           
           </ul>
+                <div class="jp-volume-controls" style="margin-left: -40%; margin-bottom: -5%;">
+                        <button class="jp-mute" role="button" tabindex="0">mute</button>
+			<button class="jp-volume-max" role="button" tabindex="0" style="margin-left: 80px;">max volume</button>
+			<div class="jp-volume-bar" style="width:120px;">
+                            <div class="jp-volume-bar-value"></div>
+			</div>
+		    </div>
         </div>
       </div> 
     </footer>

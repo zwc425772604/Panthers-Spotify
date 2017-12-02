@@ -99,6 +99,10 @@ function genre_page(){
 	$("#middle-container").load("jsp/genre.jsp");
 }
 
+function newrelease_page(){
+	$("#middle-container").load("jsp/newsRelease.jsp");
+}
+
 $(document).on("click", ".right-col-friends-name", function(){
 		var username = $(".right-col-friends-name", this).text(); //get the pid of the playlist
 		var email = $(".friends-email",this).text();

@@ -32,7 +32,7 @@
       <a class="nav-link" href="javascript:genre_page()">GENRES &amp MOODS</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="javascript:displayContainer('new_releases_container')">NEW RELEASES</a>
+      <a class="nav-link" href="javascript:newrelease_page()">NEW RELEASES</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="javascript:displayContainer('discover_container')">DISCOVER</a>
@@ -49,7 +49,7 @@
   <div id = "overview_container" w3-include-html="jsp/overview.jsp"></div>
   <div id = "charts_container" w3-include-html="jsp/charts.jsp"></div>
   <div id = "genre_container" w3-include-html="jsp/genre.jsp"></div>
-  <div id = "new_releases_container" w3-include-html="jsp/NewsRelease.jsp"></div>
+  <div id = "new_releases_container" w3-include-html="jsp/newsRelease.jsp"></div>
   <div id = "discover_container" w3-include-html="jsp/discover.jsp"></div>
   <div id = "concerts_container" w3-include-html="jsp/charts.jsp"></div>
   <!-- <div id = "middle-content"></div> -->

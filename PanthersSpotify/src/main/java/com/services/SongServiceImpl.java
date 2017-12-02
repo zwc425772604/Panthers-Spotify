@@ -162,14 +162,16 @@ public class SongServiceImpl implements SongService {
 	public void addSongToQueue(Collection<SongQueue> que, int sid, String email) {
 		//System.out.println(sid);
 		SongQueue newSq = songDAO.addSongToQueue(sid, email);
+		
 		Collection<User> artists = songDAO.getSongArtists(sid);
+		newSq.setSong(songDAO.getSong(sid));//i think it should be this way
 		newSq.setArtistsCollection(artists);
 		que.add(newSq);
 	}
 
 	@Transactional
 	public void addPlaylistToQueue(Collection<SongQueue> que, int pid, String email) {
-		System.out.println(pid);
+		//System.out.println(pid);
 		List<Song> songs = playlistDAO.getSongInPlaylist(pid);
 		
 		for (Song s : songs) {

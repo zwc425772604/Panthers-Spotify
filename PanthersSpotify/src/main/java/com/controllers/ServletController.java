@@ -69,8 +69,7 @@ public class ServletController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap map) {
-		List<Album> retAlbum = (List<Album>)albumService.getAllAlbumArtist("AXEL_ANTUNES@gmail.com");
-		System.out.println(retAlbum.size());
+		
 		return "index";
 	}
 
@@ -293,6 +292,7 @@ public class ServletController {
 		JSONArray playlistSongJSON1 = JSONHelper.new_pendingSongsToJSON1(list,songService);
 		session.setAttribute("jsonList", playlistSongJSON1);
 		System.out.println("playlistSong json " + playlistSongJSON1);
+		session.setAttribute("playlistSongJSON", playlistSongJSON);
 		return playlistSongJSON;
 	}
 	/* add song to database */
@@ -700,13 +700,15 @@ public class ServletController {
 		return result.toString();
 	}
 
-	@RequestMapping(value = "/playPlaylist", method = RequestMethod.GET)
+	@RequestMapping(value = "/playPlaylist", method = RequestMethod.POST)
 	public @ResponseBody String getNewSongQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User)session.getAttribute("user");
 		Collection<SongQueue> orig = user.getSongQueueCollection();
 		String email = user.getEmail();
 		Collection<SongQueue> newSq = songService.removeAllQueue(orig, email);
-		songService.addPlaylistToQueue(newSq, Integer.parseInt(request.getParameter("pid")), email);
+                int pid = Integer.parseInt(request.getParameter("pid"));
+                System.out.println("playlist pid to play is " + pid);
+		songService.addPlaylistToQueue(newSq, pid, email);
 		songService.setArtistsCollection(newSq);
 		user.setSongQueueCollection(newSq);
 		JSONObject result = JSONHelper.songQueueToJSON(newSq);

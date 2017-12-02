@@ -19,6 +19,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="${cp}/resources/js/playlist.js"></script>
+   
   </head>
   <body>
     <!--  Container for DISCOVER -->
@@ -55,7 +56,7 @@
             </h5>
             <div class="row">
               <div id="playlist-play-top" style="display:inline;">
-                <button id="play-button" class="w3-button w3-round-xxlarge btn formButton" onclick="playSong();">  <span class="playingStatus">PLAY</span></button>
+                <button id="play-playlist-button" class="w3-button w3-round-xxlarge btn formButton">  <span class="playingStatus">PLAY</span></button>
                 <c:if test="${selectedPlaylist.powner != user}">
                   <button class="w3-button w3-round-xxlarge formButton followPlaylistButton" >
                     <span id="followingPlaylistStatus" >

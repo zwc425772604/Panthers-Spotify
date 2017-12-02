@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Songhistory.findAll", query = "SELECT s FROM Songhistory s")
     , @NamedQuery(name = "Songhistory.findByUemail", query = "SELECT s FROM Songhistory s WHERE s.songhistoryPK.uemail = :uemail")
     , @NamedQuery(name = "Songhistory.findBySid", query = "SELECT s FROM Songhistory s WHERE s.songhistoryPK.sid = :sid")
+    , @NamedQuery(name = "Songhistory.findBySidUemail", query = "SELECT s FROM Songhistory s WHERE s.songhistoryPK.sid = :sid and s.songhistoryPK.uemail=:uemail")
     , @NamedQuery(name = "Songhistory.findByCreateDay", query = "SELECT s FROM Songhistory s WHERE s.createDay = :createDay")})
 public class Songhistory implements Serializable {
 

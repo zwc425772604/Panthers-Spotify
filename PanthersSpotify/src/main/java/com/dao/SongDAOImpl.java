@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.model.Album;
+import com.model.Followplaylist;
 import com.model.Releasesong;
 import com.model.Song;
 import com.model.SongQueue;
@@ -123,23 +124,30 @@ public class SongDAOImpl implements SongDAO {
 
 	@Transactional(readOnly = false)
 	public void deleteSongHistory(Song song, User user) {
-		Songhistory songHistroy = new Songhistory(user.getEmail(), song.getSid());
-		if (entityManager.contains(songHistroy)) {
-			entityManager.remove(songHistroy);
+		Query query = entityManager.createNamedQuery("Songhistory.findBySidUemail")
+				.setParameter("uemail",user.getEmail())
+				.setParameter("sid",song.getSid());
+		Songhistory songHistory = (Songhistory)query.getSingleResult();
+		
+		if (entityManager.contains(songHistory)) {
+			entityManager.remove(songHistory);
 		}
 	}
 
 	@Transactional(readOnly = false)
 	public void updateSongHistory(Song song, User user, Date date) {
-		Songhistory songHistroy = new Songhistory(user.getEmail(), song.getSid());
-		songHistroy.setCreateDay(date);
-		entityManager.merge(songHistroy);
+		Query query = entityManager.createNamedQuery("Songhistory.findBySidUemail")
+				.setParameter("uemail",user.getEmail())
+				.setParameter("sid",song.getSid());
+		Songhistory songHistory = (Songhistory)query.getSingleResult();
+		songHistory.setCreateDay(date);
+		entityManager.merge(songHistory);
 	}
 
 	@Transactional(readOnly = true)
 	public List<Song> getHistorySongs(String userEmail) {
 
-		String queryString = "SELECT s FROM Song s where s.sid in (SELECT f.songhistoryPK.pid from Songhistory f where f.songhistoryPK.uemail=:uemail)";
+		String queryString = "SELECT s FROM Song s where s.sid in (SELECT f.songhistoryPK.sid from Songhistory f where f.songhistoryPK.uemail=:uemail)";
 		Query query = entityManager.createQuery(queryString);
 		query.setParameter("uemail", userEmail);
 		List<Song> list = (List<Song>) query.getResultList();

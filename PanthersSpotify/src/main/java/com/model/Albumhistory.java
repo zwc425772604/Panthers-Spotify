@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Albumhistory.findAll", query = "SELECT a FROM Albumhistory a")
+	, @NamedQuery(name = "Albumhistory.findByAidUemail", query = "SELECT a FROM Albumhistory a WHERE a.albumhistoryPK.uemail = :uemail and a.albumhistoryPK.aid = :aid")
     , @NamedQuery(name = "Albumhistory.findByUemail", query = "SELECT a FROM Albumhistory a WHERE a.albumhistoryPK.uemail = :uemail")
     , @NamedQuery(name = "Albumhistory.findByAid", query = "SELECT a FROM Albumhistory a WHERE a.albumhistoryPK.aid = :aid")
     , @NamedQuery(name = "Albumhistory.findByCreateDay", query = "SELECT a FROM Albumhistory a WHERE a.createDay = :createDay")})

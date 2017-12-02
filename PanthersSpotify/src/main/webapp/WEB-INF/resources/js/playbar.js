@@ -1,12 +1,13 @@
+
 $(document).ready(function(){
 
 	player = $("#jquery_jplayer_1").jPlayer({
 		ready: function (event) {
 			$(this).jPlayer("setMedia", {
-				title: "Bubble",
+//				title: "Bubble",
 				// m4a: "http://jplayer.org/audio/m4a/Miaow-07-Bubble.m4a",
 				// oga: "http://jplayer.org/audio/ogg/Miaow-07-Bubble.ogg",
-          mp3: "${cp}/../resources/data/audios/Artists/Jay-Z@gmail.com/Jay-Z,Alicia Keys - Empire State Of Mind.mp3"
+          //mp3: "${cp}/../resources/data/audios/Artists/Jay-Z@gmail.com/Jay-Z,Alicia Keys - Empire State Of Mind.mp3"
 
 			});
 		},
@@ -22,6 +23,7 @@ $(document).ready(function(){
 		 cssSelectorAncestor: "",
 	        cssSelector: {
 	          play: "#playbar-play-button",
+	          next: "#playbar-next-button",
 //	          pause: "#playbar-pause-button",
 //                  repeat: "#playbar-repeat-button",
 //	          stop: "#stop",
@@ -31,14 +33,164 @@ $(document).ready(function(){
 //	         duration: "#duration"
 	        },
 	});
+//	var cssSelector = { jPlayer: "#jquery_jplayer_1", cssSelectorAncestor: "#jp_container_1" };
+//	var playlist = []; // Empty playlist
+//	var options = { swfPath: "/js", supplied: "ogv, m4v, oga, mp3" };
+//	var myPlaylist = new jPlayerPlaylist(cssSelector, playlist, options);
 	
 	player.on($.jPlayer.event.play, function(e){
-		 $(".play-pause-button").text("pause_circle_filled");	
+		 $(".play-pause-button").text("pause_circle_filled");
+		 $(".playingStatus").text("PAUSE");
 	});
         player.on($.jPlayer.event.pause, function(e){
-		 $(".play-pause-button").text("play_circle_filled");	
+		 $(".play-pause-button").text("play_circle_filled");
+		 $(".playingStatus").text("PLAY");
 	});
- 
+        player.on($.jPlayer.event.ended, function(e){
+    	
+    			
+    				playNextSong();
+    			
+    	});
+        
 });
 
+var currentIndex;
+var numSong;
+var myPlaylist;
+function addToPlaybarPlaylist(song_json)
+{
+	myPlaylist = [];
+	numSong = song_json.length;
+	for (var i = 0; i < numSong; i++)
+		{
+			console.log(song_json[i]['songTitle']);
+			myPlaylist.push({mp3:"${cp}/../" + song_json[i]['songPath']});	
+		}
+	currentIndex = 0;
+	player.jPlayer("setMedia", myPlaylist[currentIndex]);
+	player.jPlayer("play");
+}
+
+
+function playNextSong()
+{
+	if (currentIndex < numSong)
+		{
+			currentIndex += 1;
+			player.jPlayer("setMedia", myPlaylist[currentIndex]);
+			player.jPlayer("play");
+		}
+}
+
+function playPreviousSong()
+{
+	if (currentIndex > 0)
+	{
+		currentIndex -= 1;
+		player.jPlayer("setMedia", myPlaylist[currentIndex]);
+		player.jPlayer("play");
+	}
+	else
+	{
+		player.jPlayer("pause");
+	}
+}
+
+$(document).on("click", "#playbar-shuffle-button", function () {
+	$.ajax({
+        url: "${cp}/../shuffle",
+        type: "POST",
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+          console.log(response);
+          var queueJSP = document.getElementById("queueDiv");
+          if (queueJSP != null){
+        	  $.get("jsp/queue.jsp", function(data) {
+                  $("#main-changing-content").html(data)
+              });
+          }
+        },
+        error: function(e)
+        {
+
+          console.log(e);
+        }
+      });
+})
+
+/$(document).on("click", "#playbar-prev-button", function () {
+	console.log("play prev");
+	playPreviousSong();
+//	$.ajax({
+//        url: "${cp}/../preSong",
+//        type: "POST",
+//        asyn: false,
+//        cache: true,
+//        success : function(response)
+//        {
+//          //console.log("pre:  ..."+ response);
+//          updatePlayerButton(response);
+//          var queueJSP = document.getElementById("queueDiv");
+//          if (queueJSP != null){
+//        	  $.get("jsp/queue.jsp", function(data) {
+//                  $("#main-changing-content").html(data)
+//              });
+//          }
+//        },
+//        error: function(e)
+//        {
+//
+//          console.log(e);
+//        }
+//      });
+})
+
+$(document).on("click", "#playbar-next-button", function () {
+	console.log("play next");
+	playNextSong();
+//	$.ajax({
+//        url: "${cp}/../nextSong",
+//        type: "POST",
+//        asyn: false,
+//        cache: true,
+//        success : function(response)
+//        {
+//          //console.log("next:  "+response);
+//          updatePlayerButton(response);
+//          var queueJSP = document.getElementById("queueDiv");
+//          if (queueJSP != null){
+//        	  $.get("jsp/queue.jsp", function(data) {
+//                  $("#main-changing-content").html(data)
+//              });
+//          }
+//        },
+//        error: function(e)
+//        {
+//
+//          console.log(e);
+//        }
+//      });
+})
+
+function updatePlayerButton(data){
+	var json = JSON.parse(data);
+	if (json.nowPlay==null){
+		$("#playbar-play-button").prop("disabled",true);
+	}else{
+		$("#playbar-play-button").prop("disabled",false);
+	}
+	if (json.previous.song==null){
+		$("#playbar-prev-button").prop("disabled",true);
+	}else{
+		$("#playbar-prev-button").prop("disabled",false);
+	}
+	if (json.nextUp.length==0){
+		$("#playbar-next-button").prop("disabled",true);
+	}else{
+		$("#playbar-next-button").prop("disabled",false);
+	}
+}
 

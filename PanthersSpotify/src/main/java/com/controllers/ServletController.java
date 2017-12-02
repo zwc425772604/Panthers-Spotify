@@ -700,13 +700,15 @@ public class ServletController {
 		return result.toString();
 	}
 
-	@RequestMapping(value = "/playPlaylist", method = RequestMethod.GET)
+	@RequestMapping(value = "/playPlaylist", method = RequestMethod.POST)
 	public @ResponseBody String getNewSongQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User)session.getAttribute("user");
 		Collection<SongQueue> orig = user.getSongQueueCollection();
 		String email = user.getEmail();
 		Collection<SongQueue> newSq = songService.removeAllQueue(orig, email);
-		songService.addPlaylistToQueue(newSq, Integer.parseInt(request.getParameter("pid")), email);
+                int pid = Integer.parseInt(request.getParameter("pid"));
+                System.out.println("playlist pid to play is " + pid);
+		songService.addPlaylistToQueue(newSq, pid, email);
 		songService.setArtistsCollection(newSq);
 		user.setSongQueueCollection(newSq);
 		JSONObject result = JSONHelper.songQueueToJSON(newSq);

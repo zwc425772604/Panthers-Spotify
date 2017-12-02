@@ -239,5 +239,25 @@ $(".add-to-playlist-item").click(function(){
   });
 
 
-
+$("#play-playlist-button").click(function(){
+	var pid = $("#playlistID").text().trim();
+	console.log("pid to play is " + pid);
+	  $.ajax({
+          url: "${cp}/../playPlaylist",
+          type: "POST",
+          data : {"pid" : pid},
+          asyn: false,
+          cache: false,
+          success : function(response)
+          {
+            console.log(response);
+            var actual_json = JSON.parse(response);
+            console.log(actual_json);
+          },
+          error: function(e)
+          {
+            console.log(e);
+          }
+	  });
+});
 

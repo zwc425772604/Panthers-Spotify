@@ -55,7 +55,7 @@
             </h5>
             <div class="row">
               <div id="playlist-play-top" style="display:inline;">
-                <button id="play-button" class="w3-button w3-round-xxlarge btn formButton" onclick="playSong();">  <span class="playingStatus">PLAY</span></button>
+                <button id="play-playlist-button" class="w3-button w3-round-xxlarge btn formButton">  <span class="playingStatus">PLAY</span></button>
                 <c:if test="${selectedPlaylist.powner != user}">
                   <button class="w3-button w3-round-xxlarge formButton followPlaylistButton" >
                     <span id="followingPlaylistStatus" >

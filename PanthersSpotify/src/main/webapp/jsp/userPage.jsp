@@ -14,8 +14,8 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </head>
-  <div class="suggestion-container" id = "release-container" style="margin-top: 3%;">
-    <div class="suggestion-container-top">
+  <div id ="userPage-main">
+    <div class="suggestion-container-top" >
       <div class="user_image_box" style="width: 20%">
         <object type="image/png" data="http://weclipart.com/gimg/0A3C841B9FA4F2C6/13099629981030824019profile.svg.hi.png"  width=100% height=width>
         <img src="" class="img-rounded" alt="Generic placeholder thumbnail">
@@ -49,4 +49,30 @@
         </div>
       </div>
     </div>
+    
+  
   </div>
+  <div id="song-collection">
+      <div class="table-responsive">
+        <table class="table" id="song-table">
+          <thead>
+            <tr>
+              <th id="th-play-button"></th>
+              <!-- play/pause button -->
+              <th id="th-song-title">
+                <p> TITLE </p>
+              </th>
+              <th id="th-date">
+                <p> <i class="fa fa-calendar" aria-hidden="true"></i> </p>
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+          
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  

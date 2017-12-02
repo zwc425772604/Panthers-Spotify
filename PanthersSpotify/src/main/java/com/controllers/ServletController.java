@@ -1020,5 +1020,16 @@ public class ServletController {
 		return "ok";
 	}
 	
-
+	@RequestMapping(value = "/getUserHistory", method = RequestMethod.POST)
+	public @ResponseBody String getUserHistory(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		
+		String email = request.getParameter("email");
+		List<Song> history = songService.getHistorySongs(email);
+		
+		String JSON = JSONHelper.new_pendingSongsToJSON(history, songService);
+		System.out.println(JSON);
+		
+		return "GG";
+	}
+	
 }

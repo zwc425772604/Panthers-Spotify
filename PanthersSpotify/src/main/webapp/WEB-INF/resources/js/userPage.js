@@ -1,8 +1,30 @@
 var hoverEnabled = true;
 $(document).ready(function(){
-
+	console.log("HI");
+	$.ajax({
+        url: "${cp}/../getUserHistory",
+        type: "POST",
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+        	var actual_JSON = JSON.parse(response);
+        	insertSongsTable(actual_JSON);
+        	console.log(actual_JSON);
+        },
+        error: function(e)
+        {
+          console.log(e);
+        }
+      });
 });
 
+
+function insertSongsTable(data)
+{
+	
+	
+}
 
 $(".AddFriendButton").click(function(){
 	var status = $("#friendStatus").text().trim();
@@ -60,3 +82,4 @@ function insertFriends(data)
     ].join(''));
   }
 }
+

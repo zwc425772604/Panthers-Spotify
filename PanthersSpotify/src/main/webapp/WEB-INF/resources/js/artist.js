@@ -16,6 +16,27 @@ $(document).ready(function(){
       });
 });
 
+$(document).on("click", ".album-item", function(){
+	var albumId = $(".album-ID", this).text(); //get the pid of the playlist
+	console.log(albumId);
+	
+	  $.ajax({
+        url: "${cp}/../getSpecificAlbum",
+        type: "POST",
+        data : {"albumID" : albumId},
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+          $("#main-changing-content").load("jsp/albumInfo.jsp");
+        },
+        error: function(e)
+        {
+          console.log(e);
+        }
+	  });
+});
+
 $(document).on("click", ".artist-item", function(){
 	var email = $(".artist-email", this).text(); //get the pid of the playlist
 	  $.ajax({
@@ -26,13 +47,28 @@ $(document).on("click", ".artist-item", function(){
         cache: true,
         success : function(response)
         {
-          $("#main-changing-content").load("jsp/artistInfo.jsp");
+       
         },
         error: function(e)
         {
           console.log(e);
         },
         complete : function(){
+        	$.ajax({
+                url: "${cp}/../getArtistAlbum",
+                type: "POST",
+                data : {"artistEmail" : email},
+                asyn: false,
+                cache: true,
+                success : function(response)
+                {
+                	$("#main-changing-content").load("jsp/artistInfo.jsp");
+                },
+                error: function(e)
+                {
+                  console.log(e);
+                }
+        	  });
         	$.ajax({
                 url: "${cp}/../getArtistInfo",
                 type: "POST",
@@ -41,10 +77,13 @@ $(document).on("click", ".artist-item", function(){
                 cache: true,
                 success : function(response)
                 {
-                	console.log(response);
+                  console.log(response);
                   var actual_JSON = JSON.parse(response);
-                  $("#artist-info").html(actual_JSON['artistBio']);
-                  $("#artist-follower").html(actual_JSON['artistFollowers'] + " Followers");
+                  if(!actual_JSON['artistBio']){
+                	  actual_JSON['artistBio'] = "This artist doesn't include a bio.";
+                  }
+                  $("#artist-info").append(actual_JSON['artistBio']);
+                  
                 },
                 error: function(e)
                 {

@@ -3,6 +3,7 @@ package com.services;
 import java.io.File;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -167,6 +168,12 @@ public class AlbumServiceImpl implements AlbumService {
 	public List<Album> getNewsRelease(Date date)
 	{
 		return albumDAO.getNewsRelease(date);
+	}
+	
+	@Transactional
+	public Collection<Album> getAllAlbumArtist(String artistEmail)
+	{
+		return albumDAO.getAllAlbumArtist(artistEmail);
 	}
 }
 

@@ -69,7 +69,8 @@ public class ServletController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap map) {
-		
+		List<Album> retAlbum = (List<Album>)albumService.getAllAlbumArtist("AXEL_ANTUNES@gmail.com");
+		System.out.println(retAlbum.size());
 		return "index";
 	}
 
@@ -284,8 +285,6 @@ public class ServletController {
 		int playlistID = Integer.parseInt(request.getParameter("playlist_id"));
 		Playlist playlist = playlistService.getPlaylist(playlistID);
 		String pname = playlist.getPname();
-		System.out.println("playlist name is :" + pname);
-		System.out.println("playlist num songs :" + playlist.getNSongs());
 		session.setAttribute("selectedPlaylist", playlist);
 		session.setAttribute("selectedPlaylistNumSongs", playlist.getNSongs());
 		List<Song> list = playlistService.getSongInPlaylist(playlistID);
@@ -329,7 +328,6 @@ public class ServletController {
 	public @ResponseBody String loadAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		List<Album> albums = albumService.getAllAlbums();
 		session.setAttribute("album_list", albums);
-		System.out.println("loadAlbum" + albums.size());
 		return "ok";
 	}
 
@@ -511,6 +509,16 @@ public class ServletController {
 		String playlistsJsonArray = JSONHelper.playlistListToJSON(playlists);
 		System.out.println("playlistJsonArray is :" + playlistsJsonArray);
 		return playlistsJsonArray;
+	}
+	
+	///----------------------------admin page display all albums
+	@RequestMapping(value = "/loadAllAlbum", method = RequestMethod.POST)
+	public @ResponseBody String loadAllAlbum(HttpServletRequest request, HttpSession session) throws JSONException {
+		List<Album> albums = albumService.getAllAlbums();
+		
+		String albumsJsonArray = JSONHelper.albumListToJSON(albums);
+		//System.out.println("playlistJsonArray is :" + albumsJsonArray);
+		return albumsJsonArray;
 	}
 
 	/* fire from admin.js admin action */
@@ -974,7 +982,7 @@ public class ServletController {
 		  cal.set(2017,6, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
 		java.sql.Date date = new java.sql.Date(cal.getTimeInMillis());
 		List<Album> retAlbums = albumService.getNewsRelease(date);
-		System.out.println(retAlbums.size());
+		//System.out.println(retAlbums.size());
 		session.setAttribute("album_list", retAlbums);
 		return "ok";
 	}
@@ -998,7 +1006,18 @@ public class ServletController {
 		User user = userService.getUser(artistEmail);
 		
 		String retArtistInfo = JSONHelper.getArtistInfo(user.getArtist().getBio(),user.getArtist().getFollowers());
+		
 		return retArtistInfo;
+	}
+	
+	@RequestMapping(value = "/getArtistAlbum", method = RequestMethod.POST)
+	public @ResponseBody String getArtistAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		
+		String artistEmail = request.getParameter("artistEmail");
+		List<Album> retAlbum = (List<Album>)albumService.getAllAlbumArtist(artistEmail);
+		
+		session.setAttribute("album_list", retAlbum);
+		return "ok";
 	}
 	
 

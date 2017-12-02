@@ -262,14 +262,15 @@ public class JSONHelper {
 		JSONArray artistsInfo = new JSONArray();
 		for (User artist : artists) {
 			JSONObject ob = new JSONObject();
-			jsonObject.put("artistName", artist.getFullName());
-			jsonObject.put("artistRoyalty", artist.getArtist().getRoyalty());
+			ob.put("artistName", artist.getFullName());
+			ob.put("artistRoyalty", artist.getArtist().getRoyalty());
 			artistsInfo.put(ob);
 		}
 		jsonObject.put("allArtistRoyalty", artistsInfo);
 		
 		return jsonObject.toString();
 	}
+	
 	
 	public static JSONObject songQueueToJSON(Collection<SongQueue> que) throws JSONException {
 		JSONObject jsonObject = new JSONObject();

@@ -867,6 +867,24 @@ public class ServletController {
 		return albumInfo;
 	}
 	
+	@RequestMapping(value = "/displayArtistCheckRoyalty", method = RequestMethod.POST)
+	public @ResponseBody String displayArtistCheckRoyalty(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		
+		double factor = Double.parseDouble(environment.getProperty("artist.royalty.factor"));
+		
+			userService.setArtistRoylties(user.getArtist(), factor);
+			List<Song> songs = userService.getReleaseSong(user.getArtist());
+			for(int j=0;j<songs.size();j++)
+			{
+				songService.updateMontlySong(0, songs.get(j));
+			}
+		
+		
+		String artistRoyaltyInfo = JSONHelper.getOneArtistRoyalty(user);
+		return artistRoyaltyInfo;
+	}
+	
 	@RequestMapping(value = "/displayCheckRoyalty", method = RequestMethod.POST)
 	public @ResponseBody String checkRoyalty(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		
@@ -875,6 +893,11 @@ public class ServletController {
 		for(int i=0;i<artists.size();i++)
 		{
 			userService.setArtistRoylties(artists.get(i).getArtist(), factor);
+			List<Song> songs = userService.getReleaseSong(artists.get(i).getArtist());
+			for(int j=0;j<songs.size();j++)
+			{
+				songService.updateMontlySong(0, songs.get(j));
+			}
 		}
 		
 		String artistRoyaltyInfo = JSONHelper.getAllArtistRoyalty(artists);

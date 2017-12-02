@@ -18,6 +18,7 @@ import com.model.SongQueue;
 import com.model.User;
 import com.services.AlbumService;
 import com.services.SongService;
+import com.services.UserService;
 
 public class JSONHelper {
 	// public static String playlistToJSON(List<Playlist> playlist) throws
@@ -248,22 +249,22 @@ public class JSONHelper {
 		return jsonObject.toString();
 	}
 	
-	public static String getOneArtistRoyalty(User artist)
+	public static String getOneArtistRoyalty(User artist,UserService userService)
 	{
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("artistName", artist.getFullName());
-		jsonObject.put("artistRoyalty", artist.getArtist().getRoyalty());
+		jsonObject.put("artistRoyalty", userService.getArtistInfo(artist).getRoyalty());
 		return jsonObject.toString();
 	}
 	
-	public static String getAllArtistRoyalty(List<User> artists)
+	public static String getAllArtistRoyalty(List<User> artists,UserService userService)
 	{
 		JSONObject jsonObject = new JSONObject();
 		JSONArray artistsInfo = new JSONArray();
 		for (User artist : artists) {
 			JSONObject ob = new JSONObject();
 			ob.put("artistName", artist.getFullName());
-			ob.put("artistRoyalty", artist.getArtist().getRoyalty());
+			ob.put("artistRoyalty", userService.getArtistInfo(artist).getRoyalty());
 			artistsInfo.put(ob);
 		}
 		jsonObject.put("allArtistRoyalty", artistsInfo);

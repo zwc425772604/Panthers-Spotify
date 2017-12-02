@@ -31,7 +31,6 @@ import com.model.UserType;
 @Repository("userDAO")
 @Transactional
 public class UserDAOImpl implements UserDAO {
-	private SongDAO songDAO;
 	@PersistenceContext
 	public EntityManager entityManager;
 
@@ -187,6 +186,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Transactional(readOnly = true)
 	public List<Releasesong> getArtistRelease(Artist artist) {
+		String a = artist.getArtistEmail();
 		Query query = entityManager.createNamedQuery("Releasesong.findByUemail").setParameter("uemail", artist.getArtistEmail());
 		
 		List<Releasesong> songs = query.getResultList();
@@ -211,8 +211,8 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	@Transactional(readOnly = true)
-	public Artist getArtist(Artist artist) {
-		Query query = entityManager.createNamedQuery("Artist.findByArtistEmail").setParameter("artistEmail", artist.getArtistEmail());
+	public Artist getArtist(User artist) {
+		Query query = entityManager.createNamedQuery("Artist.findByArtistEmail").setParameter("artistEmail", artist.getEmail());
 		
 		Artist retArtist = (Artist)query.getSingleResult();
 			

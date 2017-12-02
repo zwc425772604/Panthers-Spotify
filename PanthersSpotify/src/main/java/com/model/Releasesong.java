@@ -12,12 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author Weichao ZHao
+ * @author yangxiang
  */
 @Entity
 @Table(name = "releasesong", catalog = "panthers", schema = "")
@@ -26,14 +25,13 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Releasesong.findAll", query = "SELECT r FROM Releasesong r")
     , @NamedQuery(name = "Releasesong.findByUemail", query = "SELECT r FROM Releasesong r WHERE r.releasesongPK.uemail = :uemail")
     , @NamedQuery(name = "Releasesong.findBySid", query = "SELECT r FROM Releasesong r WHERE r.releasesongPK.sid = :sid")
-    , @NamedQuery(name = "Releasesong.findByStatusAndSid", query = "SELECT r FROM Releasesong r WHERE r.status = :status AND r.releasesongPK.sid = :sid")
+    , @NamedQuery(name = "Releasesong.findBySidAndStatus", query = "SELECT r FROM Releasesong r WHERE r.releasesongPK.sid = :sid and r.status = :status")
     , @NamedQuery(name = "Releasesong.findByStatus", query = "SELECT r FROM Releasesong r WHERE r.status = :status")})
 public class Releasesong implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected ReleasesongPK releasesongPK;
-    @Size(max = 45)
     @Column(name = "status", length = 45)
     private String status;
 
@@ -86,7 +84,7 @@ public class Releasesong implements Serializable {
 
     @Override
     public String toString() {
-        return "com.model.Releasesong[ releasesongPK=" + releasesongPK + " ]";
+        return "javaapplication2.Releasesong[ releasesongPK=" + releasesongPK + " ]";
     }
-
+    
 }

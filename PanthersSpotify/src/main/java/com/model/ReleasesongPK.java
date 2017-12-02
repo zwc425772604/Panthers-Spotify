@@ -9,23 +9,18 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
- * @author Weichao ZHao
+ * @author yangxiang
  */
 @Embeddable
 public class ReleasesongPK implements Serializable {
 
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 50)
     @Column(name = "uemail", nullable = false, length = 50)
     private String uemail;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "sid", nullable = false)
     private int sid;
 
@@ -79,7 +74,7 @@ public class ReleasesongPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.model.ReleasesongPK[ uemail=" + uemail + ", sid=" + sid + " ]";
+        return "javaapplication2.ReleasesongPK[ uemail=" + uemail + ", sid=" + sid + " ]";
     }
     
 }

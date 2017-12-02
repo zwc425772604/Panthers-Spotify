@@ -244,11 +244,11 @@ $("#play-playlist-button").click(function(){
 	console.log("pid to play is " + pid);
 	
 //	var value = $.session.get('playlistSongJSON');
-//	var playlistSongString = docCookies.getItem("playlistSongJSON");
-//	console.log("playlist song json store in session is " + playlistSongString);
-//	var song_json = JSON.parse(playlistSongString);
-//	console.log(song_json);
-//	addToPlaybarPlaylist(song_json);
+	var playlistSongString = docCookies.getItem("playlistSongJSON");
+	console.log("playlist song json store in session is " + playlistSongString);
+	var song_json = JSON.parse(playlistSongString);
+	console.log(song_json);
+	addToPlaybarPlaylist(song_json);
 	  $.ajax({
           url: "${cp}/../playPlaylist ",
           type: "POST",

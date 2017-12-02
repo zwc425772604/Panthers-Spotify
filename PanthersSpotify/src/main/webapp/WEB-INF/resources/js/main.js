@@ -330,6 +330,7 @@ function displayCharts()
 }
 
 
+
 var volumeDrag = false;
 $("#rangeinput").on('mousedown',function(e){
 	volumeDrag = true;
@@ -366,4 +367,10 @@ function search()
 {
 	$("#main-changing-content").load("jsp/search.jsp");	
 }
+});
+
+$(document).on("click","", function(){
+	
+	
+	
 });

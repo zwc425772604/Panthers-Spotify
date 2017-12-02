@@ -5,7 +5,6 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Artist Page - Panthers Spotify</title>
-  <script src="${cp}/resources/js/artist.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -21,9 +20,45 @@
         <p style="font-size: 1.8em;" id="artist-name">
           <c:out value="${selectedArtist.userName}"></c:out>
         </p>
-        <div class="col-md-5" style="display:inline;">		            		            
-        </div>
       </div>
     </div>
   </div>
+</div>
+<div class="suggestion-container row" style="margin-top:3%;">
+  <div style="width: 60%; margin: 2%;">
+    <div id="album-header" style="border-bottom: 1px solid white; margin-bottom: 2%;
+                                font-size: 1.5em;">
+      Albums
+    </div>
+    <section class="row placeholders" id="infoContainer" style="padding-left: 5%;">
+		<c:if test="${not empty album_list}">
+			<c:forEach var="album" items="${album_list}">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-3 placeholder medium-boxes">
+					<div class="hover-control album-item">
+						<img src="${cp}/resources/data${album.photoUrl}"
+							width=100% height=width class="img-rounded info-image"
+							alt="Generic placeholder thumbnail"> <span class="album-ID"
+							style="display: none;">${album.aid}</span>
+					</div>
+					<div class="album-item medium-boxes-description">
+						<h6 style="text-align: center;">
+							<a href="#"><span id="album-name">${album.aname}</span></a> <span
+								class="album-ID" style="display: none;">${album.aid}</span>
+						</h6>
+					</div>
+				</div>
+			</c:forEach>
+		</c:if>
+	</section>
+  </div>
+  <div id="bio-section" style="width: 30%; margin: 2%;">
+    <div id="bio-header" style="border-bottom: 1px solid white; margin-bottom: 2%;
+                                font-size: 1.5em;">
+      Bio
+    </div>
+    <div id="artist-info" style="padding: 3%;">
+    </div>
+  
+  </div>
+
 </div>

@@ -101,5 +101,5 @@
   <div class="line"></div>
   <section class="row placeholders" style="margin-top: 3%;" id="artist-page">
   </section>
-  
+</div>
 </div>

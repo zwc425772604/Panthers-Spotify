@@ -31,6 +31,26 @@ $(document).on("click", ".artist-item", function(){
         error: function(e)
         {
           console.log(e);
+        },
+        complete : function(){
+        	$.ajax({
+                url: "${cp}/../getArtistInfo",
+                type: "POST",
+                data : {"artistEmail" : email},
+                asyn: false,
+                cache: true,
+                success : function(response)
+                {
+                	console.log(response);
+                  var actual_JSON = JSON.parse(response);
+                  $("#artist-info").html(actual_JSON['artistBio']);
+                  $("#artist-follower").html(actual_JSON['artistFollowers'] + " Followers");
+                },
+                error: function(e)
+                {
+                  console.log(e);
+                }
+        	  });
         }
 	  });
 });

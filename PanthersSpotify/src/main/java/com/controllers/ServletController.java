@@ -1,3 +1,4 @@
+
 package com.controllers;
 
 import java.io.IOException;
@@ -1004,6 +1005,9 @@ public class ServletController {
 		int pageNumInt = Integer.parseInt(pageNum);
 		List<Album> retAlbums = albumService.getTopGenreAlbum(genre,pageNumInt,displayAmount);
 		List<Playlist> retPlaylist = playlistService.getTopGenrePlaylist(genre);
+		System.out.println(retAlbums.size());
+		session.setAttribute("album_list", retAlbums);
+		session.setAttribute("selectedGenre",genre);
 		return "ok";
 	}
 	
@@ -1062,4 +1066,5 @@ public class ServletController {
 		return JSON;
 	}
 	
+
 }

@@ -29,7 +29,7 @@
       <a class="nav-link tablinks" href="javascript:displayContainer('charts_container')">CHARTS</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="javascript:displayContainer('genre_container')">GENRES &amp MOODS</a>
+      <a class="nav-link" href="javascript:genre_page()">GENRES &amp MOODS</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="javascript:displayContainer('new_releases_container')">NEW RELEASES</a>

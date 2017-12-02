@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="${cp}/resources/css/album.css">
 <div class="album-top" id="release-container">
 	<div class="suggestion-container-top">
-		<h3 class="suggestion-topic" style="font-size: 4em;"></h3>
+		<h3 class="suggestion-topic" style="font-size: 4em;">${selectedGenre}</h3>
 	</div>
 	<div class="line"></div>
 	<!-- filter input div block -->

@@ -338,8 +338,11 @@ public class JSONHelper {
 		song.put("sid", que.getSong().getSid());
 		ob.put("song",song);
 		JSONObject album = new JSONObject();
+		if(que.getSong().getAlbumId()!=null) {
 		album.put("name", que.getSong().getAlbumId().getAname());
 		album.put("id",que.getSong().getAlbumId().getAid());
+			
+		}
 		ob.put("album", album);
 		JSONArray artists = new JSONArray();
 		for (User u : que.getArtistsCollection()) {

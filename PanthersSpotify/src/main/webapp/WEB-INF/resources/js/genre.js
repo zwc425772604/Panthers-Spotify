@@ -42,12 +42,12 @@ $(document).on("click", ".genre-item", function(){
         cache: true,
         success : function(response)
         {
-        	
+        	$("#main-changing-content").load("jsp/genreInfo.jsp");
         },
         error: function(e)
         {
           console.log(e);
         }
       });
-	$("#main-changing-content").load("jsp/genreInfo.jsp");
+	
 });

@@ -362,7 +362,7 @@ input:checked + .slider:before {
     margin: 0.5%;
     margin-left: 2%;
     margin-top: 2%;
-    margin-right: 4%;
+    margin-right: 2%;
 }
 
 .image-over-by-text{
@@ -442,7 +442,7 @@ input:checked + .slider:before {
 footer{
     width: 100%;
     background-color: #4E4E4E;
-    height:100px;
+    height:120px;
     overflow: hidden;
     overflow-x: hidden;
     white-space: nowrap;

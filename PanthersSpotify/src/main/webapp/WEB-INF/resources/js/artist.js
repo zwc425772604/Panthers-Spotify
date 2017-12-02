@@ -44,6 +44,7 @@ function insertArtistsPage(data)
 				'<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">',
 		        '<div class="artist-item">',
 		        '<img src="${cp}/../resources/data' + data[i]['artistUrl'] +'" width=100% class="img-rounded" alt="Generic placeholder thumbnail">',
+		      	  '</object>',
 		      	  '<span style="display:none;" class="artist-email">'+  data[i]['artistEmail'] +'</span>',
 		        '</div>',
 		        '<div class="artist-item medium-boxes-description" style="text-align:center;">',

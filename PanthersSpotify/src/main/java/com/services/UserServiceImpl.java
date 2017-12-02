@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 		}
 		user.setDob(parsedBirthday);
 		String dir = System.getProperty("user.dir");
-		File f1 = new File(dir + "/src/main/webapp/WEB-INF/resources/Users");
+		File f1 = new File(dir + "/src/main/webapp/WEB-INF/resources/data/Users");
 		File userDir = new File(f1, email);
 		userDir.mkdirs();
 		user = userDAO.addUser(user);
@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public void removeUser(User user) {
 		String dir = System.getProperty("user.dir");
-		File f1 = new File(dir + "/src/main/webapp/WEB-INF/resources/Users"+user.getEmail());
+		File f1 = new File(dir + "/src/main/webapp/WEB-INF/resources/data/Users"+user.getEmail());
 		if(f1.exists())
 		{
 			String[]entries = f1.list();

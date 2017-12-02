@@ -23,10 +23,10 @@
   id="bootstrap-overrides-navbar">
   <ul class="navbar-nav mr-auto tab" id="navbar-ul">
     <li class="nav-item">
-      <a class="nav-link tablinks" href="javascript:displayContainer('overview_container')">OVERVIEW </a>
+      <a class="nav-link tablinks" href="javascript:overview_page()">OVERVIEW </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link tablinks" href="javascript:displayContainer('charts_container')">CHARTS</a>
+      <a class="nav-link tablinks" href="javascript:chart_page()">CHARTS</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="javascript:genre_page()">GENRES &amp MOODS</a>
@@ -35,7 +35,7 @@
       <a class="nav-link" href="javascript:newrelease_page()">NEW RELEASES</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="javascript:displayContainer('discover_container')">DISCOVER</a>
+      <a class="nav-link" href="javascript:discover_page()">DISCOVER</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="javascript:displayContainer('concerts_container')">CONCERTS</a>

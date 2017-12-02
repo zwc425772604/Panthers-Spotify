@@ -971,10 +971,11 @@ public class ServletController {
 	@RequestMapping(value = "/getNewsRelease", method = RequestMethod.POST)
 	public @ResponseBody String getNewsRelease(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		Calendar cal = Calendar.getInstance();
-		  cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+		  cal.set(2017,6, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
 		java.sql.Date date = new java.sql.Date(cal.getTimeInMillis());
 		List<Album> retAlbums = albumService.getNewsRelease(date);
-		session.setAttribute("album_list",retAlbums);
+		System.out.println(retAlbums.size());
+		session.setAttribute("album_list", retAlbums);
 		return "ok";
 	}
 	

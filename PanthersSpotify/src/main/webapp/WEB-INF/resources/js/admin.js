@@ -364,3 +364,25 @@ $(document).on ("click", "#add-new-artist-button", function () {
 
 
 });
+
+
+$(document).on ("click", "#add-new-playlist-button", function () {
+
+	 	 $('#new-playlist-dialog').dialog({
+	          //autoOpen: true,
+	          height: 430,
+	          width: 700,
+	          modal: true,
+	          resizable: false,
+	          background: "#2f2f2f",
+	          //color: Black,
+	          //closeOnEscape: false,
+	          //open: function(event, ui) { $(".ui-dialog-titlebar-close", ui).hide(); }
+	          //closeOnEscape: false,
+	          //beforeclose: function (event, ui) { return false; },
+	          dialogClass: 'no-close'
+	     });
+	  //     window.open("browse.jsp","_blank");
+	});
+
+});

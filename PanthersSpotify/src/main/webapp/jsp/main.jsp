@@ -5,7 +5,7 @@
 <%@page import="org.json.JSONArray"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="org.json.JSONException"%>
-<%  
+<%
 	JSONObject queue = (JSONObject)session.getAttribute("queueJSON");
 	JSONObject preSong = new JSONObject();
 	JSONObject nowSong = new JSONObject();
@@ -60,12 +60,12 @@
         <!--Main Page-->
         <main class="main-page">
         <h3 style="color:white; display: none;"><%= hasNowPlay %></h3>
-          <!--Scrollable Main Page Section-->          
+          <!--Scrollable Main Page Section-->
           <div class="scrolled-main" id="style-1">
             <!--Top Tool Section-->
             <div class ="row" id="top-tool">
               <div class="col-sm-3 col-sm-offset-3" id="top-tool-search">
-                <div class="input-group stylish-input-group"  id="top-tool-search">                  
+                <div class="input-group stylish-input-group"  id="top-tool-search">
                   <div class="row" >
                     <input type="text" class="w3-input" style="width: 75%;" placeholder="Search" name="search" id="search">
                     <span class="input-group-addon">
@@ -99,7 +99,7 @@
             </div>
             <!--Banner Image-->
             <div id = "main-changing-content">
-            	
+
             </div>
             <!-- closed tag for scrolled-main -->
           </div>

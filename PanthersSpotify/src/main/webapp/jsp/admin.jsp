@@ -21,6 +21,9 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="
+	<c:url value="/resources/js/bootstrap.min.js" />
+	"></script>
 <script src="https://www.w3schools.com/lib/w3.js"></script>
 <!-- for include html in div tag -->
 .
@@ -31,7 +34,11 @@
 	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="${cp}/resources/css/custom.css">
 <link rel="stylesheet" href="${cp}/resources/css/admin.css">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="${cp}/resources/css/leftSidebar.css">
 <script>
       $(document).ready(function(){
         //hide all other containers in <div id= 'middle-content'> beside except overview_container
@@ -82,6 +89,63 @@
 							id="edit-user-button">
 							<i class="material-icons">mode_edit</i>
 						</button></li>
+				</ul>
+
+
+			</li>
+			<li>
+				<p class="color-nav-header">Playlist:</p>
+				<ul class="left_sizebar">
+					<li><button class="unstyle-buttons" data-toggle="tooltip-mute"
+							title="Add Artist" id="add-new-playlist-button">
+							<i class="material-icons">add</i>
+						</button></li>
+						<div id="new-playlist-dialog" title="Create Playlist" style="display:none; background: #2f2f2f">
+					    <!-- create playlist -->
+					    <form:form action="createPlaylist" method="POST" enctype="multipart/form-data">
+					      <div class="w3-row w3-section">
+					        <div style="width:50px"><span id="dialog-font">Name</span></div>
+					        <div >
+					          <input class="w3-input w3-border" name="playlist_name" type="text" id="new_playlist_name" placeholder="Playlist name">
+					        </div>
+					      </div>
+					      <div class="w3-row">
+					      	<div class="w3-col m5 l3" id="dialog-image-box">
+						      <div >
+						        <div><span id="dialog-font">Image</span></div>
+						        <div>
+						          <img id="dialog-file-image" src="http://xn--80adh8aedqi8b8f.xn--p1ai/uploads/images/d/a/v/david_guetta_ft_nicki_minaj_afrojack_hey_mama.jpg">
+						          <input class="w3-input" type="file" name="file" id="dialog-file-box">
+						        </div>
+						      </div>
+						    </div>
+						    <div class="w3-col m5 l8">
+						      <!--<div class="w3-row w3-section">
+						        <div class="w3-rest">
+						          <img src ="http://xn--80adh8aedqi8b8f.xn--p1ai/uploads/images/d/a/v/david_guetta_ft_nicki_minaj_afrojack_hey_mama.jpg" class="img-responsive" width="200px" height="200px">
+						        </div>
+						        </div>-->
+						      <div class="w3-row w3-section" id="dialog-textarea-header">
+						        <div class="w3-col" style="width:30px"><span id="dialog-font">Description</span></div>
+						        <div class="w3-col" style="width:30px; float:right; margin-right: 30px;"><span id="dialog-font">1/100</span></div>
+						      </div>
+						      <div class="w3-row w3-section">
+						        <textarea id="dialog-textarea" class="w3-input w3-border" rows="8" cols="30" name="playlist_description" placeholder="Give your playlist a catchy description"></textarea>
+						      </div>
+						    </div>
+					      </div>
+					      <div class="w3-row " id="dialog-buttons">
+					        <div class="w3-third w3-container">
+					          <button id="dialog-button-cancel" onclick="event.preventDefault(); $('#new-playlist-dialog').dialog('close');" class="w3-button w3-block w3-section w3-ripple">Cancel</button>
+					        </div>
+
+					        <div class="w3-third w3-container" >
+					          <button id="dialog-button" type="submit" class="w3-button w3-block w3-section w3-green w3-ripple">Create</button>
+					        </div>
+					      </div>
+					    </form:form>
+					  </div>
+					<!-- end of dialog popup box -->
 				</ul>
 			</li>
 			<li>

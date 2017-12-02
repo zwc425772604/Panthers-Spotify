@@ -50,9 +50,15 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<link href="${cp}/resources/css/jplayer.blue.monday.min.css" rel="stylesheet" type="text/css" />
+		
 	  <script type="text/javascript" src="${cp}/resources/js/jquery.min.js"></script>
+	   <script type="text/javascript" src="${cp}/resources/js/jquery.jplayer.js"></script>
 	  <script type="text/javascript" src="${cp}/resources/js/jquery.jplayer.min.js"></script>
+	   <script type="text/javascript" src="${cp}/resources/js/jplayer.playlist.js"></script>
+	
+	   	
 		<script src="${cp}/resources/js/playbar.js" /></script>
+		<script src="${cp}/resources/js/jquery.session.js" /></script>
     <link rel="stylesheet" href="${cp}/resources/css/custom.css">
   </head>
   <body>
@@ -150,9 +156,9 @@
 				<div class="" style="margin-left: 35%; ">
                                     <ul id="playbar-center-icons">
                                        <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Shuffle" id="playbar-shuffle-button" > <i class="material-icons">shuffle</i></button></li>
-                                       <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Previous"  id="playbar-prev-button" <%= hasPre ? "":"disabled" %>><i class="material-icons">skip_previous</i></button></li>
-                                       <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Play" id="playbar-play-button" <%= hasNowPlay ? "":"disabled" %>> <i class="material-icons"><span class="play-pause-button">play_circle_filled</span></i></button></li>
-                                       <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Next"  id="playbar-next-button" <%= hasNextUp ? "":"disabled" %>><i class="material-icons">skip_next</i></button></li>
+                                       <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Previous"  id="playbar-prev-button"><i class="material-icons">skip_previous</i></button></li>
+                                       <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Play" id="playbar-play-button"> <i class="material-icons"><span class="play-pause-button">play_circle_filled</span></i></button></li>
+                                       <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Next"  id="playbar-next-button"><i class="material-icons">skip_next</i></button></li>
                                        <li><button class="unstyle-buttons" role="button" tabindex="0" data-toggle="tooltip-mute" title="Repeat"  id="playbar-repeat-button" ><i class="material-icons"><span id="repeat-button-text">repeat</span></i></button></li>
                                     </ul>
                                 </div>

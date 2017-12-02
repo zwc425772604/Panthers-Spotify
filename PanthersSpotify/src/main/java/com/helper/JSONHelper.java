@@ -164,6 +164,7 @@ public class JSONHelper {
 			jsonObject.put("songID", sid);
 			jsonObject.put("songTitle", s.getStitle());
 			jsonObject.put("songGenre", s.getGener());
+			jsonObject.put("songPath", s.getSurl());
 			JSONArray artists = new JSONArray();
 			List<User> users = songService.getArtistsCollection(sid);
 			for (User user : users) {

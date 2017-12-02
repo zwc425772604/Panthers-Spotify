@@ -292,6 +292,7 @@ public class ServletController {
 		JSONArray playlistSongJSON1 = JSONHelper.new_pendingSongsToJSON1(list,songService);
 		session.setAttribute("jsonList", playlistSongJSON1);
 		System.out.println("playlistSong json " + playlistSongJSON1);
+		session.setAttribute("playlistSongJSON", playlistSongJSON);
 		return playlistSongJSON;
 	}
 	/* add song to database */

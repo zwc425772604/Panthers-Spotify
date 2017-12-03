@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.model.Album;
 import com.model.Followplaylist;
+import com.model.Playlisthistory;
 import com.model.Releasesong;
 import com.model.Song;
 import com.model.SongQueue;
@@ -117,9 +119,24 @@ public class SongDAOImpl implements SongDAO {
 
 	@Transactional(readOnly = false)
 	public void addSongHistory(Song song, User user, Date date) {
-		Songhistory songHistroy = new Songhistory(user.getEmail(), song.getSid());
-		songHistroy.setCreateDay(date);
-		entityManager.persist(songHistroy);
+		Query query = entityManager.createNamedQuery("Songhistory.findBySidUemail")
+				.setParameter("uemail",user.getEmail())
+				.setParameter("sid",song.getSid());
+		
+		
+		Songhistory songHistroy = null;
+		try
+		{
+			songHistroy = (Songhistory)query.getSingleResult();
+			songHistroy.setCreateDay(date);
+			entityManager.merge(songHistroy);
+		}
+		catch(NoResultException e)
+		{
+			songHistroy = new Songhistory(user.getEmail(), song.getSid());
+			songHistroy.setCreateDay(date);
+			entityManager.persist(songHistroy);
+		}
 	}
 
 	@Transactional(readOnly = false)

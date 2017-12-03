@@ -71,7 +71,7 @@ public class ServletController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap map) {
-		
+        
 		return "index";
 	}
 
@@ -734,8 +734,22 @@ public class ServletController {
 		Collection<SongQueue> orig = user.getSongQueueCollection();
 		String email = user.getEmail();
 		List<SongQueue> newSq = (List<SongQueue>) songService.removeAllQueue(orig, email);
-                int pid = Integer.parseInt(request.getParameter("pid"));
-                System.out.println("playlist pid to play is " + pid);
+        int pid = Integer.parseInt(request.getParameter("pid"));
+        
+        
+        
+      //----------------------------------------------------------------------------------------
+        Playlist p = playlistService.getPlaylist(pid);
+
+		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
+        playlistService.addHistoryPlaylist(p, user, date);
+        
+        List<Song> s = playlistService.getSongInPlaylist(pid);
+        Song specificSong = s.get(0);
+        songService.updateMontlySong(specificSong.getMonthlyPlayed()+1, specificSong);
+        //----------------------------------------------------------------------------------------
+        
+        
 		songService.addPlaylistToQueue(newSq, pid, email);
 		if(newSq.size()>0) {
 			songService.setNowPlay(newSq, newSq.get(0).getSong().getSid());

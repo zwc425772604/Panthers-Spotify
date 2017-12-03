@@ -382,13 +382,46 @@ public class ServletController {
 		// String middleName = request.getParameter("middleName"); Do we have to have
 		// middle name??????
 		String lastName = request.getParameter("lastName");
-		// String iPublic = request.getParameter("isPublic"); need this button
-		boolean isPublic = true;
-		user = userService.updateUser(user, user.getUserName(), user.getUserType(), gender, firstName, lastName,
+		String bio = null;
+		String selectedArtist = null;
+		if(user.getUserType()==2)
+		{
+			bio = request.getParameter("artistBio");
+			userService.editArtist(user, bio);
+			boolean isPublic = true;
+			user = userService.updateUser(user, user.getUserName(), user.getUserType(), gender, firstName, lastName,
 				isPublic);
-
+		}
+		else if(user.getUserType()==3)
+		{
+			bio = request.getParameter("artistBio");
+			selectedArtist = request.getParameter("artistEmail");
+			User selectedUser = userService.getUser(selectedArtist);
+			userService.editArtist(selectedUser, bio);
+			boolean isPublic = true;
+			user = userService.updateUser(selectedUser, selectedUser.getUserName(), selectedUser.getUserType(), gender, firstName, lastName,
+				isPublic);
+		}
+		else
+		{
+			boolean isPublic = true;
+			user = userService.updateUser(user, user.getUserName(), user.getUserType(), gender, firstName, lastName,
+				isPublic);
+		}
+		
 		session.setAttribute("user", user);
-		mav.setViewName("main");
+		if(user.getUserType()==2)
+		{
+			mav.setViewName("artist");
+		}
+		else if(user.getUserType()==3)
+		{
+			mav.setViewName("admin");
+		}
+		else
+		{
+			mav.setViewName("main");
+		}
 		mav.addObject("username", user.getUserName());
 		return mav;
 	}
@@ -1139,6 +1172,7 @@ public class ServletController {
 		
 		return JSON;
 	}
+	
 	
 
 }

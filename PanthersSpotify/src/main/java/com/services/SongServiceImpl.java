@@ -135,6 +135,23 @@ public class SongServiceImpl implements SongService {
 		return song;
 	}
 
+	
+	@Transactional
+	public void uploadRemoveSong(User user, int songId) {
+
+
+		Releasesong s = songDAO.getSongInRelease(songId, user.getEmail());
+		
+		s.setStatus("removePending");
+		songDAO.updateReleaseSong(s);
+	}
+	
+	@Transactional
+	public List<Song> getStatusSongs(String status) 
+	{
+		return songDAO.getRemoveRequestSongs(status);
+	}
+	
 	@Transactional
 	public List<Releasesong> getAllSongsByStatus(String status) {
 

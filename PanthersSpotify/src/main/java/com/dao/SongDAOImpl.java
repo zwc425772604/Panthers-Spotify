@@ -102,6 +102,15 @@ public class SongDAOImpl implements SongDAO {
 		return result;
 	}
 
+	@Transactional(readOnly = true)
+	public Releasesong getSongInRelease(int sid, String uemail) {
+		TypedQuery<Releasesong> query1 = entityManager.createNamedQuery("Releasesong.findBySidUemail", Releasesong.class)
+				.setParameter("uemail", uemail)
+				.setParameter("sid", sid);
+		Releasesong result = query1.getSingleResult();
+		return result;
+	}
+	
 	@Transactional(readOnly = false)
 	public void deleteRequestSong(int songId) {
 
@@ -167,6 +176,16 @@ public class SongDAOImpl implements SongDAO {
 		String queryString = "SELECT s FROM Song s where s.sid in (SELECT f.songhistoryPK.sid from Songhistory f where f.songhistoryPK.uemail=:uemail)";
 		Query query = entityManager.createQuery(queryString);
 		query.setParameter("uemail", userEmail);
+		List<Song> list = (List<Song>) query.getResultList();
+		return list;
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Song> getRemoveRequestSongs(String status) {
+
+		String queryString = "SELECT s FROM Song s where s.sid in (SELECT f.releasesongPK.sid from Releasesong f where f.status=:status)";
+		Query query = entityManager.createQuery(queryString);
+		query.setParameter("status", status);
 		List<Song> list = (List<Song>) query.getResultList();
 		return list;
 	}

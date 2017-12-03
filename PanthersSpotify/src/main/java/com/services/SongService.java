@@ -40,4 +40,6 @@ public interface SongService {
 	public List<Song> getSongs(Album aid);
 	public List<Song> getSongByArtist(String artistEmail);
 	public Song updateMontlySong(int monthlyPlayed, Song song);
+	public void uploadRemoveSong(User user, int songId);
+	public List<Song> getStatusSongs(String status);
 }

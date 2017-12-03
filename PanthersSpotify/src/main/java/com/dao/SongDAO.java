@@ -31,4 +31,6 @@ public interface SongDAO {
 	public Collection<User> getSongArtists(Integer sid);
 	public List<Song> getSongs(Album album);
 	public List<Song> getSongByArtist(String artistEmail);
+	public Releasesong getSongInRelease(int sid, String uemail);
+	public List<Song> getRemoveRequestSongs(String status);
 }

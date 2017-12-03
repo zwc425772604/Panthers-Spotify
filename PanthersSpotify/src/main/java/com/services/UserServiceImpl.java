@@ -280,8 +280,11 @@ public class UserServiceImpl implements UserService {
 		return userDAO.getArtist(artist);
 		
 	}
-	
-	
+	@Transactional
+	public Artist editArtist(User artist,String bio)
+	{
+		return userDAO.editArtist(artist, bio);
+	}
 	
 	
 }

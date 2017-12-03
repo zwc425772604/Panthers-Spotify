@@ -243,5 +243,16 @@ public class UserDAOImpl implements UserDAO {
 		
 		return retArtist;
 	}
+	
+	@Transactional(readOnly = true)
+	public Artist editArtist(User artist,String bio) {
+		Query query = entityManager.createNamedQuery("Artist.findByArtistEmail").setParameter("artistEmail", artist.getEmail());
+		
+		Artist retArtist = (Artist)query.getSingleResult();
+		retArtist.setBio(bio);
+		entityManager.merge(retArtist);
+		
+		return retArtist;
+	}
 
 }

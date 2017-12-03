@@ -1,6 +1,6 @@
 
 $(document).ready(function(){
-
+	
 	player = $("#jquery_jplayer_1").jPlayer({
 		ready: function (event) {
 			$(this).jPlayer("setMedia", {
@@ -47,11 +47,31 @@ $(document).ready(function(){
 		 $(".playingStatus").text("PLAY");
 	});
         player.on($.jPlayer.event.ended, function(e){
-    	
-    			
     				playNextSong();
-    			
     	});
+        
+        
+        $.ajax({
+            url: "${cp}/../getSongQueue",
+            type: "POST",
+            asyn: false,
+            cache: false,
+            success : function(response)
+            {
+            	console.log("getSong queuee:  "+ response);
+            	 $.get("jsp/queue.jsp", function(data) {
+                     $("#main-changing-content").html(data)
+                 });
+            	 var actual_json = JSON.parse(response);
+            	 addToPlaybarPlaylist(actual_json);
+            	 player.jPlayer("pause");
+            	 updatePlayerButton(actual_json);
+            },
+            error: function(e)
+            {
+              console.log(e);
+            }
+    	});    
         
 });
 
@@ -72,7 +92,7 @@ function addToPlaybarPlaylist(song_json)
 //	currentIndex = 0;
 	myPlaylist.push({mp3 : "${cp}/../" + songObject.song['songPath']});
 	player.jPlayer("setMedia", myPlaylist[0]);
-	player.jPlayer("play");
+	//player.jPlayer("play");
 }
 
 
@@ -138,7 +158,8 @@ $(document).on("click", "#playbar-shuffle-button", function () {
           console.log("pre song in js response : "+ response);
           var actual_json = JSON.parse(response);
           addToPlaybarPlaylist(actual_json);
-          updatePlayerButton(response);
+          updatePlayerButton(actual_json);
+          player.jPlayer("play");
           var queueJSP = document.getElementById("queueDiv");
           if (queueJSP != null){
         	  $.get("jsp/queue.jsp", function(data) {
@@ -153,6 +174,14 @@ $(document).on("click", "#playbar-shuffle-button", function () {
         }
       });
 })
+
+$(document).on("click","#playbar-play-button",function (){
+	
+	
+	
+})
+
+
 
 $(document).on("click", "#playbar-next-button", function () {
 	console.log("play next");
@@ -169,6 +198,7 @@ $(document).on("click", "#playbar-next-button", function () {
           var actual_json = JSON.parse(response);
           console.log("next song js response " + actual_json);
           addToPlaybarPlaylist(actual_json);
+          player.jPlayer("play");
           updatePlayerButton(actual_json);
           var queueJSP = document.getElementById("queueDiv");
           if (queueJSP != null){
@@ -188,9 +218,9 @@ $(document).on("click", "#playbar-next-button", function () {
 function updatePlayerButton(actual_json){
 	console.log("update player button " + actual_json);
 	console.log("update player button now play" + actual_json.nowPlay);
-	console.log("update player button previous song" + actual_json.previous.song);
-	console.log("update player button next song" + actual_json.nextUp.song);
-	if (actual_json.nowPlay==null){
+	console.log("update player button previous song" + actual_json.previous);
+	console.log("update player button next song" + actual_json.nextUp);
+	if (actual_json.nowPlay.song==null){
 		$("#playbar-play-button").prop("disabled",true);
 	}else{
 		$("#playbar-play-button").prop("disabled",false);
@@ -200,10 +230,12 @@ function updatePlayerButton(actual_json){
 	}else{
 		$("#playbar-prev-button").prop("disabled",false);
 	}
-	if (actual_json.nextUp.length==0){
+	if ((actual_json.nextUp).length==0){
 		$("#playbar-next-button").prop("disabled",true);
 	}else{
 		$("#playbar-next-button").prop("disabled",false);
 	}
 }
+
+
 

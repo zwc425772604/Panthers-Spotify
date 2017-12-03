@@ -204,7 +204,11 @@ public class ServletController {
 		List<Playlist> userPlaylist = playlistService.addPlaylist(playlistName, user, description, file, date);
 		mav.addObject("user_playlist", userPlaylist);
 		session.setAttribute("user_playlist", userPlaylist);
-		mav.setViewName("main");
+		if(user.getUserType()==0||user.getUserType()==1)
+			mav.setViewName("main");
+		else if(user.getUserType()==3)
+			mav.setViewName("admin");
+			
 		return mav;
 	}
 
@@ -334,6 +338,18 @@ public class ServletController {
 		mav.setViewName("admin");
 		return mav;
 	}
+	
+	///----------admin delete song from database-----------------------------
+	@RequestMapping(value = "/deleteSongToDatabase", method = RequestMethod.POST)
+	public ModelAndView deleteSongToDatabase(ModelAndView mav, HttpServletRequest request, HttpSession session)
+			throws ServletException, IOException {
+		String songtmp = request.getParameter("songId");
+		int songId = Integer.parseInt(songtmp);
+		Song deleteSong = songService.getSong(songId);
+		songService.removeSong(deleteSong);
+		mav.setViewName("admin");
+		return mav;
+	}
 
 	/* Load song from database */
 	@RequestMapping(value = "/loadSong", method = RequestMethod.POST)
@@ -359,13 +375,46 @@ public class ServletController {
 		// String middleName = request.getParameter("middleName"); Do we have to have
 		// middle name??????
 		String lastName = request.getParameter("lastName");
-		// String iPublic = request.getParameter("isPublic"); need this button
-		boolean isPublic = true;
-		user = userService.updateUser(user, user.getUserName(), user.getUserType(), gender, firstName, lastName,
+		String bio = null;
+		String selectedArtist = null;
+		if(user.getUserType()==2)
+		{
+			bio = request.getParameter("artistBio");
+			userService.editArtist(user, bio);
+			boolean isPublic = true;
+			user = userService.updateUser(user, user.getUserName(), user.getUserType(), gender, firstName, lastName,
 				isPublic);
-
+		}
+		else if(user.getUserType()==3)
+		{
+			bio = request.getParameter("artistBio");
+			selectedArtist = request.getParameter("artistEmail");
+			User selectedUser = userService.getUser(selectedArtist);
+			userService.editArtist(selectedUser, bio);
+			boolean isPublic = true;
+			user = userService.updateUser(selectedUser, selectedUser.getUserName(), selectedUser.getUserType(), gender, firstName, lastName,
+				isPublic);
+		}
+		else
+		{
+			boolean isPublic = true;
+			user = userService.updateUser(user, user.getUserName(), user.getUserType(), gender, firstName, lastName,
+				isPublic);
+		}
+		
 		session.setAttribute("user", user);
-		mav.setViewName("main");
+		if(user.getUserType()==2)
+		{
+			mav.setViewName("artist");
+		}
+		else if(user.getUserType()==3)
+		{
+			mav.setViewName("admin");
+		}
+		else
+		{
+			mav.setViewName("main");
+		}
 		mav.addObject("username", user.getUserName());
 		return mav;
 	}
@@ -557,6 +606,10 @@ public class ServletController {
 	public @ResponseBody String deleteSelectedUserPlaylist(ModelAndView mav, HttpServletRequest request,
 			HttpSession session) {
 		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
+		Playlist playlist = playlistService.getPlaylist(playlistID);
+		playlistService.removePlaylist(playlist);
+		List<Playlist> playlists = playlistService.getAllPlaylists();
+		String playlistsJsonArray = JSONHelper.playlistListToJSON(playlists);
 		// Playlist playlist = playlistManager.getPlaylist(playlistID);
 		// User user = (User) session.getAttribute("user");
 		// playlistManager.removePlaylist(playlistID,user);
@@ -567,7 +620,7 @@ public class ServletController {
 		// session.setAttribute("user_playlist", user_playlist);
 		// mav.addObject("user_playlist", user_playlist);
 		// System.out.println("remove success");
-		return "ok";
+		return playlistsJsonArray;
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
@@ -798,14 +851,20 @@ public class ServletController {
 		return "approved";
 	}
 
+	//--------------edit delete song from database---admin-----
 	@RequestMapping(value = "/removeSongByAdmin", method = RequestMethod.POST)
 	public @ResponseBody String removeSongByAdmin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		int songID = Integer.parseInt(request.getParameter("songID").trim());
+		
 		String status = "rejected";
 		songService.updateReleaseSong(songID, status);
+		
+		Song deleteSong = songService.getSong(songID);
+		songService.removeSong(deleteSong);
 		// need to delete the song from file system
 		return "rejected";
 	}
+	
 	
 	@RequestMapping(value = "/addPaymentForArtist", method = RequestMethod.POST)
 	public @ResponseBody String addPayment(ModelAndView mav, HttpServletRequest request, HttpSession session) {
@@ -1109,6 +1168,7 @@ public class ServletController {
 		
 		return JSON;
 	}
+	
 	
 
 }

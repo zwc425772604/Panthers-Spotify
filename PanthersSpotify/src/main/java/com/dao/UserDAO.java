@@ -33,4 +33,5 @@ public interface UserDAO {
 	public double getRoyalty(Artist artist);
 	public void setRoyalty(Artist artist,double royalty) ;
 	public Artist getArtist(User artist);
+	public Artist editArtist(User artist,String bio);
 }

@@ -59,4 +59,6 @@ public interface UserService {
 	public List<Song> getReleaseSong(Artist artist);
 	
 	public Artist getArtistInfo(User artist);
+	
+	public Artist editArtist(User artist,String bio);
 }

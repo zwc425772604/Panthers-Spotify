@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.model.Album;
 import com.model.Albumhistory;
 import com.model.Playlist;
+import com.model.Playlisthistory;
 import com.model.Song;
 import com.model.Songhistory;
 import com.model.User;
@@ -89,9 +91,23 @@ public class AlbumDAOImpl implements AlbumDAO{
 	
 	@Transactional(readOnly=false)
 	public void addAlbumHistory(Album album,User user, Date date) {
-		Albumhistory albumHistroy = new Albumhistory(user.getEmail(),album.getAid());
-		albumHistroy.setCreateDay(date);
-		entityManager.persist(albumHistroy);
+		Query query = entityManager.createNamedQuery("Albumhistory.findByAidUemail")
+				.setParameter("uemail",user.getEmail())
+				.setParameter("aid",album.getAid());
+		Albumhistory albumHistroy = null;
+		
+		try
+		{
+			albumHistroy = (Albumhistory)query.getSingleResult();
+			albumHistroy.setCreateDay(date);
+			entityManager.merge(albumHistroy);
+		}
+		catch(NoResultException e)
+		{
+			albumHistroy = new Albumhistory(user.getEmail(),album.getAid());
+			albumHistroy.setCreateDay(date);
+			entityManager.persist(albumHistroy);
+		}
 	}
 	
 	@Transactional(readOnly=false)
@@ -99,10 +115,15 @@ public class AlbumDAOImpl implements AlbumDAO{
 		Query query = entityManager.createNamedQuery("Albumhistory.findByAidUemail")
 				.setParameter("uemail",user.getEmail())
 				.setParameter("aid",album.getAid());
-		Albumhistory albumHistroy = (Albumhistory)query.getSingleResult();
-		if(entityManager.contains(albumHistroy))
+		Albumhistory albumHistroy = null;
+		try
 		{
+			albumHistroy = (Albumhistory)query.getSingleResult();
 			entityManager.remove(albumHistroy);
+		}
+		catch(NoResultException e)
+		{
+			System.out.println("error message");
 		}
 	}
 	

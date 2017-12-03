@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -153,9 +154,23 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	
 	@Transactional(readOnly=false)
 	public void addPlaylistHistory(Playlist playlist,User user, Date date) {
-		Playlisthistory playlistHistroy = new Playlisthistory(user.getEmail(),playlist.getPid());
-		playlistHistroy.setCreateDay(date);
-		entityManager.persist(playlistHistroy);
+		Query query = entityManager.createNamedQuery("Playlisthistory.findByPidUemail")
+				.setParameter("uemail",user.getEmail())
+				.setParameter("pid",playlist.getPid());
+		Playlisthistory playlistHistroy=null;
+		try
+		{
+			playlistHistroy = (Playlisthistory)query.getSingleResult();
+			playlistHistroy.setCreateDay(date);
+			entityManager.merge(playlistHistroy);
+		}
+		catch(NoResultException e)
+		{
+			playlistHistroy = new Playlisthistory(user.getEmail(),playlist.getPid());
+			playlistHistroy.setCreateDay(date);
+			entityManager.persist(playlistHistroy);
+		}
+		
 	}
 	
 	@Transactional(readOnly=false)
@@ -163,10 +178,15 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 		Query query = entityManager.createNamedQuery("Playlisthistory.findByPidUemail")
 				.setParameter("uemail",user.getEmail())
 				.setParameter("pid",playlist.getPid());
-		Playlisthistory playlistHistroy = (Playlisthistory)query.getSingleResult();
-		if(entityManager.contains(playlistHistroy))
+		Playlisthistory playlistHistroy = null;
+		try
 		{
+			playlistHistroy = (Playlisthistory)query.getSingleResult();
 			entityManager.remove(playlistHistroy);
+		}
+		catch(NoResultException e)
+		{
+			System.out.println("error message");
 		}
 	}
 	

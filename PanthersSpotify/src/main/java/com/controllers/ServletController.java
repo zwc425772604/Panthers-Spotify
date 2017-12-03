@@ -715,6 +715,20 @@ public class ServletController {
 		String pendingSongsJsonArray = JSONHelper.pendingSongsToJSON(songs, map);
 		return pendingSongsJsonArray;
 	}
+	
+	//----------artist remove request song
+		@RequestMapping(value = "/removeRequestSongForUploading", method = RequestMethod.POST)
+		public ModelAndView removeRequestSongForUploading(ModelAndView mav, HttpServletRequest request, HttpSession session)
+				throws ServletException, IOException {
+			User user = (User) session.getAttribute("user");
+			String songtmp = request.getParameter("songId");
+			int songId = Integer.parseInt(songtmp);
+			songService.uploadRemoveSong(user, songId);
+			List<Song> s = songService.getStatusSongs("removePending");
+			String retSongs = JSONHelper.new_pendingSongsToJSON(s,songService);
+			mav.setViewName("artistMainPage");
+			return mav;
+		}
 
 	@RequestMapping(value = "/loadArtists", method = RequestMethod.POST)
 	public @ResponseBody String loadArtists(HttpServletRequest request, HttpSession session) throws JSONException {
@@ -806,8 +820,8 @@ public class ServletController {
         
         List<Song> s = playlistService.getSongInPlaylist(pid);
         Song specificSong = s.get(0);
-        songService.updateMontlySong(specificSong.getMonthlyPlayed()+1, specificSong);
-        //----------------------------------------------------------------------------------------
+        //songService.updateMontlySong(specificSong.getMonthlyPlayed()+1, specificSong);
+        //-------------------------794---------------------------------------------------------------
         
         
 		songService.addPlaylistToQueue(newSq, pid, email);

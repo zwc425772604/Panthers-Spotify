@@ -24,6 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Releasesong.findAll", query = "SELECT r FROM Releasesong r")
     , @NamedQuery(name = "Releasesong.findByUemail", query = "SELECT r FROM Releasesong r WHERE r.releasesongPK.uemail = :uemail")
+    , @NamedQuery(name = "Releasesong.findBySidUemail", query = "SELECT r FROM Releasesong r WHERE r.releasesongPK.uemail = :uemail and r.releasesongPK.sid = :sid")
     , @NamedQuery(name = "Releasesong.findBySid", query = "SELECT r FROM Releasesong r WHERE r.releasesongPK.sid = :sid")
     , @NamedQuery(name = "Releasesong.findBySidAndStatus", query = "SELECT r FROM Releasesong r WHERE r.releasesongPK.sid = :sid and r.status = :status")
     , @NamedQuery(name = "Releasesong.findByStatus", query = "SELECT r FROM Releasesong r WHERE r.status = :status")})

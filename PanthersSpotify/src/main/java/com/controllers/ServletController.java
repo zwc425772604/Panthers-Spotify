@@ -211,7 +211,11 @@ public class ServletController {
 		List<Playlist> userPlaylist = playlistService.addPlaylist(playlistName, user, description, file, date);
 		mav.addObject("user_playlist", userPlaylist);
 		session.setAttribute("user_playlist", userPlaylist);
-		mav.setViewName("main");
+		if(user.getUserType()==0||user.getUserType()==1)
+			mav.setViewName("main");
+		else if(user.getUserType()==3)
+			mav.setViewName("admin");
+			
 		return mav;
 	}
 

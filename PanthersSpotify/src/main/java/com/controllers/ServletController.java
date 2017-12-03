@@ -1166,6 +1166,11 @@ public class ServletController {
 	public @ResponseBody String getUserHistory(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		
 		String email = request.getParameter("email");
+		
+		if(email.equals("himself")) {
+			User user = (User)session.getAttribute("user");
+			email = user.getEmail();
+		}
 		List<Song> history = songService.getHistorySongs(email);
 		String JSON = JSONHelper.new_pendingSongsToJSON(history, songService);
 		

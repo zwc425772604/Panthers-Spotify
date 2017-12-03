@@ -72,8 +72,6 @@ public class ServletController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap map) {
 		
-	
-	
 		return "index";
 	}
 

@@ -127,7 +127,7 @@ public class UserDAOImpl implements UserDAO {
 	@Transactional(readOnly = false)
 	public void followArtist(String artistEmail, String userEmail) {
 
-		Followartist followArtist = new Followartist(artistEmail, userEmail);
+		Followartist followArtist = new Followartist(userEmail, artistEmail);
 		
 		entityManager.persist(followArtist);
 		
@@ -144,7 +144,7 @@ public class UserDAOImpl implements UserDAO {
 	@Transactional(readOnly = false)
 	public void unfollowArtist(String artistEmail, String userEmail) {
 		Query query1 = entityManager.createNamedQuery("Followartist.findByUemailAemail")
-				.setParameter("aEmail", artistEmail)
+				.setParameter("aemail", artistEmail)
 				.setParameter("uemail", userEmail);
 		Followartist followArtist = (Followartist)query1.getSingleResult();
 		

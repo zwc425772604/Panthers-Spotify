@@ -405,7 +405,7 @@ public class ServletController {
 		session.setAttribute("user", user);
 		if(user.getUserType()==2)
 		{
-			mav.setViewName("artist");
+			mav.setViewName("artistMainPage");
 		}
 		else if(user.getUserType()==3)
 		{

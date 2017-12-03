@@ -218,10 +218,11 @@
               <th id="th-song-title">
                 <p> TITLE </p>
               </th>
+              <th id="th-album">ALBUM</th>
+              <th id="th-artist">ARTIST</th>
               <th id="th-date">
                 <p> <i class="fa fa-calendar" aria-hidden="true"></i> </p>
               </th>
-              <th></th>
             </tr>
           </thead>
           <tbody>

@@ -98,9 +98,17 @@ tr{
 }
 
 #th-song-title{
-	width: 75%
+	width: 45%
 }
 
 #th-date{
 	width: 15%;
 }
+
+#th-album{
+	width:15%;
+}
+#th-artist{
+	width:15%;
+}
+

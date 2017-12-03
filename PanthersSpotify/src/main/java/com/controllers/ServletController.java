@@ -1089,5 +1089,16 @@ public class ServletController {
 		return JSON;
 	}
 	
+	@RequestMapping(value = "/getAllSongsForArtist", method = RequestMethod.POST)
+	public @ResponseBody String getAllSongsForArtist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		User user = (User) session.getAttribute("user");//admin page only
+		
+		List<Song> songs = songService.getSongByArtist(user.getEmail());
+		String JSON = JSONHelper.new_pendingSongsToJSON(songs, songService);
+		
+		
+		return JSON;
+	}
+	
 
 }

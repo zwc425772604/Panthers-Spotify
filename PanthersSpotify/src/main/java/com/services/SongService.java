@@ -38,6 +38,6 @@ public interface SongService {
 	public void setArtistsCollection(Collection<SongQueue> songQueue);
 	public List<User> getArtistsCollection(int sid);
 	public List<Song> getSongs(Album aid);
-	
+	public List<Song> getSongByArtist(String artistEmail);
 	public Song updateMontlySong(int monthlyPlayed, Song song);
 }

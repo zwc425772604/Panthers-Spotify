@@ -212,5 +212,14 @@ public class SongDAOImpl implements SongDAO {
 		Collection<User> users = (ArrayList<User>)query.getResultList();
 		return users;
 	}
+	
+	@Transactional(readOnly = true)
+	public List<Song> getSongByArtist(String artistEmail)
+	{
+		String queryString = "select s from Song s where s.sid in (SELECT r.releasesongPK.sid FROM Releasesong r WHERE r.releasesongPK.uemail = :uemail)";
+		Query query = entityManager.createQuery(queryString).setParameter("uemail", artistEmail);
+		List<Song> songs = (ArrayList<Song>)query.getResultList();
+		return songs;
+	}
 
 }

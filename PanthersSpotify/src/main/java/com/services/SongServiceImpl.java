@@ -302,4 +302,9 @@ public class SongServiceImpl implements SongService {
 	public List<User> getArtistsCollection(int sid) {
 		return (List<User>)songDAO.getSongArtists(sid);
 	}
+	
+	public List<Song> getSongByArtist(String artistEmail)
+	{
+		return songDAO.getSongByArtist(artistEmail);
+	}
 }

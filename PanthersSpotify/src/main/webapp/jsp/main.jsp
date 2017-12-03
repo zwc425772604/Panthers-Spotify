@@ -79,7 +79,7 @@
                   <div class="row" >
                     <input type="text" class="w3-input" style="width: 75%;" placeholder="Search" name="search" id="search">
                     <span class="input-group-addon">
-                    <button type="submit" onclick="search()">
+                    <button type="submit" id="search-button">
                     <i class="fa fa-search" aria-hidden="true" ></i>
                     </button>
                     </span>

@@ -46,22 +46,15 @@ function songTable(jsonString)
 		{
 			if (songs.indexOf(jsonString[i]['songID']) == -1) //check to see if there is duplicate songID
 			{
-				$("#song-search-table").find('tbody').append([
+				$("#song-table").find('tbody').append([
 					'<tr>',
-					'<td><button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">',
-	                '<i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i></button>',
-	              '</td>',
-	              '<td> <button class="unstyle-buttons tracklist-save-button" data-toggle="tooltip-save" title="Remove from Your Library"  onclick="removeSong()">',
-	                '<i class="material-icons"><span class="tracklist-add-delete-button">done</span></i>',
-	                '</button>',
-	              '</td>',
+					  '<td>' + '</td>',
 					  '<td>' + jsonString[i]['songTitle'] + '</td>',
 					  '<td>' +  '</td>',
 					  '<td>' + '</td>',
 					  '<td>' + '</td>',
 					  '<td>' + '</td>',
-					  '<td>' + '</td>',
-					  
+					  '<td>' + '</td>',					  
 					 '</tr>'
 				].join(''));
 				songs.push(jsonString[i]['songID']);

@@ -363,14 +363,13 @@ function volumeMute(data){
 	
 }
 
+
+$("#search-button").click(function(){
+	$("#main-changing-content").load("jsp/search.jsp");	
+});
 function search()
 {
 	$("#main-changing-content").load("jsp/search.jsp");	
 }
 });
 
-$(document).on("click","", function(){
-	
-	
-	
-});

@@ -592,6 +592,7 @@ public class ServletController {
 		} else {
 			searchJson = JSONHelper.searchToJSON(retSong, retAlbum, retPlaylist);
 		}
+		System.out.println(searchJson);
 		return searchJson;
 	}
 

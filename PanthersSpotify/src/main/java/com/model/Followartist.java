@@ -21,6 +21,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Followartist.findAll", query = "SELECT f FROM Followartist f")
+    , @NamedQuery(name = "Followartist.findByUemailAemail", query = "SELECT f FROM Followartist f WHERE f.followartistPK.uemail = :uemail and f.followartistPK.aemail = :aemail")
     , @NamedQuery(name = "Followartist.findByUemail", query = "SELECT f FROM Followartist f WHERE f.followartistPK.uemail = :uemail")
     , @NamedQuery(name = "Followartist.findByAemail", query = "SELECT f FROM Followartist f WHERE f.followartistPK.aemail = :aemail")
     , @NamedQuery(name = "Followartist.findByCreateDate", query = "SELECT f FROM Followartist f WHERE f.createDate = :createDate")})

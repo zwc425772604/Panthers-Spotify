@@ -243,6 +243,31 @@ public class ServletController {
 		System.out.println("playlist id to be unfollow is : " + playlistID);
 		return "ok";
 	}
+	
+	@RequestMapping(value = "/followSpecificArtist", method = RequestMethod.POST)
+	public @ResponseBody String followSpecificArtist(HttpServletRequest request, HttpSession session) {
+		String artistEmail = request.getParameter("artistEmail");
+		User user = (User) session.getAttribute("user");
+		userService.followArtist(artistEmail, user);
+		//session.setAttribute("followedArtist", userPlaylist);
+		List<Artist> artists = userService.getFollowArtists(user);
+		System.out.println("artist email to be follow is : " + artistEmail);
+		return "ok";
+	}
+
+	@RequestMapping(value = "/unfollowSpecificArtist", method = RequestMethod.POST)
+	public @ResponseBody String unfollowSpecificArtist(HttpServletRequest request, HttpSession session) {
+		String artistEmail = request.getParameter("artistEmail");
+		User user = (User) session.getAttribute("user");
+		userService.unfollowArtist(artistEmail, user);
+		List<Artist> artists = userService.getFollowArtists(user);
+		//List<Playlist> userPlaylist = (List<Playlist>) (session.getAttribute("user_playlist"));
+		//userPlaylist.remove(ret);
+		//session.setAttribute("user_playlist", userPlaylist);
+		//System.out.println("here is unfollow");
+		//System.out.println("playlist id to be unfollow is : " + playlistID);
+		return "ok";
+	}
 
 	/* edit specific playlist */
 	@RequestMapping(value = "/editPlaylistDetails", method = RequestMethod.POST)

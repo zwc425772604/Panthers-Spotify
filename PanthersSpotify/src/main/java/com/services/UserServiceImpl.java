@@ -189,8 +189,11 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional
 	public void followArtist(String artistEmail, User user) {
+		User u = getUser(artistEmail);
+		Artist a = getArtistInfo(u);
+		
 		userDAO.followArtist(artistEmail, user.getEmail());
-
+		
 	}
 
 	@Transactional
@@ -277,6 +280,8 @@ public class UserServiceImpl implements UserService {
 		return userDAO.getArtist(artist);
 		
 	}
+	
+	
 	
 	
 }

@@ -128,14 +128,38 @@ public class UserDAOImpl implements UserDAO {
 	public void followArtist(String artistEmail, String userEmail) {
 
 		Followartist followArtist = new Followartist(artistEmail, userEmail);
-
+		
 		entityManager.persist(followArtist);
+		
+		
+		Query query = entityManager.createNamedQuery("Artist.findByArtistEmail").setParameter("artistEmail", artistEmail);
+		
+		Artist retArtist = (Artist)query.getSingleResult();
+		
+		retArtist.setFollowers(retArtist.getFollowers()+1);
+		entityManager.merge(retArtist);
+		
 	}
 
 	@Transactional(readOnly = false)
 	public void unfollowArtist(String artistEmail, String userEmail) {
-		Followartist followArtist = new Followartist(artistEmail, userEmail);
-		entityManager.remove(followArtist);
+		Query query1 = entityManager.createNamedQuery("Followartist.findByUemailAemail")
+				.setParameter("aEmail", artistEmail)
+				.setParameter("uemail", userEmail);
+		Followartist followArtist = (Followartist)query1.getSingleResult();
+		
+		if(entityManager.contains(followArtist))
+		{
+			entityManager.remove(followArtist);
+		
+			Query query = entityManager.createNamedQuery("Artist.findByArtistEmail").setParameter("artistEmail", artistEmail);
+			
+			Artist retArtist = (Artist)query.getSingleResult();
+			
+			retArtist.setFollowers(retArtist.getFollowers()-1);
+			entityManager.merge(retArtist);
+		}
+		
 	}
 
 	@Transactional(readOnly = true)

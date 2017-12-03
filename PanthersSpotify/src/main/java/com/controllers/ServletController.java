@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -1211,5 +1212,24 @@ public class ServletController {
 		return JSON;
 	}
 	
+	@RequestMapping(value = "/getRelatedAlbum", method = RequestMethod.POST)
+	public @ResponseBody String getRelatedAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		
+		String aid = request.getParameter("albumId");
+		Album curAlbum = (Album) albumService.getAlbum(Integer.parseInt(aid));
+		String genre = curAlbum.getGenre();
+		String display = environment.getProperty("displayAmount");
+		int displayAmount = Integer.parseInt(display);
+		List<Album> retAlbum = (List<Album>) albumService.getTopGenreAlbum(genre, 1, displayAmount);
+		Iterator<Album> iter = retAlbum.iterator();
 
+		while (iter.hasNext()) {
+		    Album a = iter.next();
+
+		    if (a.getAid() == Integer.parseInt(aid))
+		        iter.remove();
+		}
+		session.setAttribute("album_list", retAlbum);
+		return "ok";
+	}
 }

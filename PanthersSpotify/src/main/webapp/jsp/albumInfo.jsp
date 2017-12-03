@@ -36,7 +36,7 @@
 	      </div>
 	   </div>
 	 </div>
-   </div>
+   </div>	
    <div class="row">
    <div id="playlist-song-collection" style="width: 65%; ">
       <div class="table-responsive">
@@ -70,7 +70,29 @@
                                 font-size: 1.2em; padding-left: 0.2em; font-weight:bolder;">
         Related Album
       </div>
-      <div id="related-albums" style="padding: 3%;"></div>
+      <div id="related-albums" style="padding: 3%;">
+        <section class="row placeholders" id="infoContainer" style="padding: 3%;">
+		<c:if test="${not empty album_list}">
+			<c:forEach var="album" items="${album_list}">
+				<div
+					class="placeholder medium-boxes">
+					<div class="hover-control album-item">
+						<img src="${cp}/resources/data${album.photoUrl}"
+							width=100% height=width class="img-rounded info-image"
+							alt="Generic placeholder thumbnail"> <span class="album-ID"
+							style="display: none;">${album.aid}</span>
+					</div>
+					<div class="album-item medium-boxes-description">
+						<h6 style="text-align: center;">
+							<a href="#"><span id="album-name">${album.aname}</span></a> <span
+								class="album-ID" style="display: none;">${album.aid}</span>
+						</h6>
+					</div>
+				</div>
+			</c:forEach>
+		</c:if>
+	</section>
+      </div>
     </div>
    </div>
 </div>

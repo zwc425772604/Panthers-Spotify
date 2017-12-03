@@ -6,3 +6,11 @@
 	width: 90px;
 	background-color:#00cc00;
 }
+
+.artistinfo-top{
+	background: -webkit-linear-gradient(top, #6b6969, #272a2d);
+	padding-top: 5%;
+	padding-left: 5%;
+	color: white;
+	
+}

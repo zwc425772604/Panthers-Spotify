@@ -9,6 +9,8 @@ $(document).ready(function(){
         {
         	var actual_JSON = JSON.parse(response);
         	insertSongsTable(actual_JSON);
+     
+        
         },
         error: function(e)
         {
@@ -77,6 +79,7 @@ function insertSongsTable(data)
 		'<span class="artist-email" style="display:none;">' + data['songArtist'][artistLength - 1]['aemail'] + '</span>' + '</div>'
 	].join(''));
 	var songs = [];
+	$("#song-table").find('tbody').empty();
 	for (var i = 0; i < num; i++)
 		{
 			if (songs.indexOf(data['songsInAlbum'][i]['songID']) == -1) //check to see if there is duplicate songID

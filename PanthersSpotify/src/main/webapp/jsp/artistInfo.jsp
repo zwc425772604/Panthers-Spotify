@@ -11,13 +11,13 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
-<div class="suggestion-container" id = "release-container" style="margin-top: 3%;">
+<div class="artistinfo-top" id = "release-container" >
   <div class="suggestion-container-top">
     <div class="user_image_box" style="width: 20%">
-      <img src="${cp}/resources/data${selectedArtist.photoUrl}" width=100% class="img-rounded" alt="Generic placeholder thumbnail">
+      <img src="${cp}/resources/data${selectedArtist.photoUrl}" width=100% style="border-radius: 100px;" class="img-rounded" alt="Generic placeholder thumbnail">
     </div>
     <div class="userInfoBoxes" style="width:70%">
-      <div id ="userInfo" style="margin-top: 4%; margin-left:5%;">
+      <div id ="userInfo" style="margin-top: 2%; margin-left:7%;">
         <h5> Artist Page </h5>
         <p style="font-size: 1.8em;" id="artist-name">
           <c:out value="${selectedArtist.userName}"></c:out>

@@ -65,8 +65,7 @@ $(document).on("click", ".artist-item", function(){
                 cache: true,
                 success : function(response)
                 {
-                	$("#main-changing-content").load("jsp/artistInfo.jsp");
-            
+                	$("#main-changing-content").load("jsp/artistInfo.jsp");          
                 },
                 error: function(e)
                 {
@@ -77,7 +76,7 @@ $(document).on("click", ".artist-item", function(){
                         url: "${cp}/../getArtistInfo",
                         type: "POST",
                         data : {"artistEmail" : email},
-                        asyn: false,
+                        asyn: true,
                         cache: true,
                         success : function(response)
                         {
@@ -116,7 +115,7 @@ function insertArtistsPage(data)
 			$("#artist-page").append([
 				'<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">',
 		        '<div class="artist-item">',
-		        '<img src="' + data[i]['artistUrl'] +'" width=100% class="img-circle" alt="Generic placeholder thumbnail" style="border-radius:100px">',
+		        '<img src="' + data[i]['artistUrl'] +'" width=100% class="img-circle" alt="Generic placeholder thumbnail" style="border-radius: 100px;">',
 		      	  '<span style="display:none;" class="artist-email">'+  data[i]['artistEmail'] +'</span>',
 		        '</div>',
 		        '<div class="artist-item medium-boxes-description" style="text-align:center;">',

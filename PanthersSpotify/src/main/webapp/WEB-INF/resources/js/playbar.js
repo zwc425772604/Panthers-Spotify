@@ -1,14 +1,35 @@
-
+var player;
+var result;
 $(document).ready(function(){
-	
+    
+	 $.ajax({
+            url: "${cp}/../getSongQueue",
+            type: "POST",
+            asyn: false,
+            cache: false,
+            success : function(response)
+            {
+            	console.log("getSong queuee:  "+ response);
+            	 $.get("jsp/queue.jsp", function(data) {
+                     $("#main-changing-content").html(data)
+                 });
+            	 var actual_json = JSON.parse(response);
+                 result = actual_json;
+//            	 addToPlaybarPlaylist(actual_json);
+//            	 player.jPlayer("pause");
+            	 updatePlayerButton(actual_json);
+            },
+            error: function(e)
+            {
+              console.log(e);
+            }
+    	}); 
 	player = $("#jquery_jplayer_1").jPlayer({
 		ready: function (event) {
 			$(this).jPlayer("setMedia", {
 //				title: "Bubble",
-				// m4a: "http://jplayer.org/audio/m4a/Miaow-07-Bubble.m4a",
-				// oga: "http://jplayer.org/audio/ogg/Miaow-07-Bubble.ogg",
-          //mp3: "${cp}/../resources/data/audios/Artists/Jay-Z@gmail.com/Jay-Z,Alicia Keys - Empire State Of Mind.mp3"
-
+                            // mp3: "${cp}/../resources/data/audios/Artists/Jay-Z@gmail.com/Jay-Z,Alicia Keys - Empire State Of Mind.mp3"
+                            mp3: "${cp}/../" + result.nowPlay.song['songPath']
 			});
 		},
 		swfPath: "${cp}/resources/js",
@@ -51,27 +72,7 @@ $(document).ready(function(){
     	});
         
         
-        $.ajax({
-            url: "${cp}/../getSongQueue",
-            type: "POST",
-            asyn: false,
-            cache: false,
-            success : function(response)
-            {
-            	console.log("getSong queuee:  "+ response);
-            	 $.get("jsp/queue.jsp", function(data) {
-                     $("#main-changing-content").html(data)
-                 });
-            	 var actual_json = JSON.parse(response);
-            	 addToPlaybarPlaylist(actual_json);
-            	 player.jPlayer("pause");
-            	 updatePlayerButton(actual_json);
-            },
-            error: function(e)
-            {
-              console.log(e);
-            }
-    	});    
+          
         
 });
 

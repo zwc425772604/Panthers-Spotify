@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
 <script src="${cp}/resources/js/artist.js"></script>
+<link rel="stylesheet" href="${cp}/resources/css/artist.css">
 <style type="text/css">
   #filter_keyword
   {
@@ -63,7 +64,7 @@
       });
   
 </script>
-<div class="suggestion-container" id = "release-container" style="margin-top: 10%;">
+<div class="artist-top" id = "release-container" >
   <div class="suggestion-container-top">
     <h3 class="suggestion-topic" style="font-size: 4em;">Artists</h3>
   </div>
@@ -71,12 +72,6 @@
   <!-- <div id = "filter_text" style="margin-top: 3%;">
     <input type="search" id="filter_keyword" name="q" onkeyup="filterAlbum()" placeholder="Filter">
     </div> -->
-  <div class="input-group" id="filter_container">
-    <span class="input-group-addon" id="search_span">
-    <i class="fa fa-search" aria-hidden="true"></i>
-    </span>
-    <input type="search" id="filter_keyword" name="q" onkeyup="filterArtist()" placeholder="Filter">
-  </div>
 </div>
 <script>
   function filterArtist()
@@ -91,15 +86,7 @@
 <!--Container for release 1-->
 <!--  Container for DISCOVER -->
 <div class="suggestion-container" id = "charts-container">
-  <div id ="top_content">
-    <p style="display:inline;font-size:18px;">Sorted by</p>
-    <select id = "sorted_by_keyword" style="display:inline; font-size:20px;">
-      <option value="Name">Name</option>
-      <option value="Recently Added">Recently Added</option>
-    </select>
-  </div>
-  <div class="line"></div>
+
   <section class="row placeholders" style="margin-top: 3%;" id="artist-page">
   </section>
-</div>
 </div>

@@ -197,7 +197,7 @@
   	  });
   });
 </script>
-<div class="suggestion-container" id = "release-container" style="margin-top: 3%;">
+<div class="recentlyPlayed-top" id = "release-container" >
   <div class="suggestion-container-top">
     <h3 class="suggestion-topic" style="font-size: 4em;">Recently Played</h3>
   </div>
@@ -205,12 +205,7 @@
     <button class="btn formButton" onclick="playSong();">  <span class="playingStatus"> PLAY </span></button>
   </div>
   <!-- filter input div block -->
-  <div class="input-group" id="filter_container">
-    <span class="input-group-addon" id="search_span">
-    <i class="fa fa-search" aria-hidden="true"></i>
-    </span>
-    <input type="search" id="filter_keyword" name="q" onkeyup="filterAlbum()" placeholder="Filter">
-  </div>
+
 </div>
 <!--  Container for track list -->
 <div id="song-collection">

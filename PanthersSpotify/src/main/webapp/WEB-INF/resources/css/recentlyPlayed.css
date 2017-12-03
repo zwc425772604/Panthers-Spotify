@@ -1,0 +1,41 @@
+.recentlyPlayed-top{
+	background: -webkit-linear-gradient(top, #6b6969, #343a40);
+	padding-top: 10%;
+	padding-left: 5%;
+	color: white;
+	height:auto;
+}
+
+#song-collection{
+	margin-top: 3%;
+	margin-left: 5%;
+	width: 90%;
+	color: white;
+}
+
+tr{
+	line-height: 14px; 
+}
+
+.table p{
+	margin-bottom: 0;
+}
+.table th, .table td{
+    padding: 1rem 0rem 1rem 0.5rem;
+    vertical-align: center;
+    border-top: 0.5px solid grey;
+    border-bottom: 0.5px solid grey !important;
+    margin: 0 !important;
+}
+
+#th-play-button{
+	width: 7%;
+}
+
+#th-song-title{
+	width: 75%
+}
+
+#th-date{
+	width: 15%;
+}

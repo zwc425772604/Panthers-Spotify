@@ -15,12 +15,12 @@
 	</div>
 	<div class="line"></div>
 	<!-- filter input div block -->
-	<div class="input-group" id="filter_container">
+	<!--<div class="input-group" id="filter_container">
 		<span class="input-group-addon" id="search_span"> <i
 			class="fa fa-search" aria-hidden="true"></i>
 		</span> <input type="search" id="filter_keyword" name="q"
 			onkeyup="filterAlbum()" placeholder="Filter">
-	</div>
+	</div>-->
 </div>
 <script>
 	//filter by texts entered
@@ -34,7 +34,7 @@
 </script>
 <!--  Container for Album -->
 <div class="suggestion-container" id="charts-container">
-	<div id="top_content">
+	<!--  <div id="top_content">
 		<p style="display: inline; font-size: 18px;">Sorted by</p>
 		<select id="sorted_by_keyword"
 			style="display: inline; font-size: 20px;">
@@ -42,14 +42,7 @@
 			<option value="Title">Title</option>
 			<option value="Recently Added">Recently Added</option>
 		</select>
-		<!-- <div style="display: inline; float: right; margin-right: 5%;">
-			<p style="display: inline; font-size: 18px;">Saved Albums Only</p>
-			<label class="switch" style="display: inline"> <input
-				type="checkbox" checked> <span class="slider round"></span>
-			</label>
-		</div> -->
-	</div>
-	<div class="line"></div>
+	</div>-->
 	<!-- Saved albums section -->
 	<section class="row placeholders" id="infoContainer">
 		<c:if test="${not empty album_list}">

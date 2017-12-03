@@ -15,6 +15,7 @@ $(document).ready(function(){
                  });
             	 var actual_json = JSON.parse(response);
                  result = actual_json;
+                 updateSongInfo(actual_json.nowPlay);
 //            	 addToPlaybarPlaylist(actual_json);
 //            	 player.jPlayer("pause");
             	 updatePlayerButton(actual_json);
@@ -45,13 +46,7 @@ $(document).ready(function(){
 	        cssSelector: {
 	          play: "#playbar-play-button",
 	          next: "#playbar-next-button",
-//	          pause: "#playbar-pause-button",
-//                  repeat: "#playbar-repeat-button",
-//	          stop: "#stop",
-//	          mute: "#mute",
-//	          unmute: "#unmute",
-//	          currentTime: "#currentTime",
-//	         duration: "#duration"
+
 	        },
 	});
 //	var cssSelector = { jPlayer: "#jquery_jplayer_1", cssSelectorAncestor: "#jp_container_1" };
@@ -85,42 +80,10 @@ function addToPlaybarPlaylist(song_json)
 	numSong = song_json.length;
 	var songObject = song_json.nowPlay;
 	console.log("songObject is " + songObject.song['songPath']);
-//	for (var i = 0; i < numSong; i++)
-//		{
-//			console.log(song_json[i]['songTitle']);
-//			myPlaylist.push({mp3:"${cp}/../" + song_json[i]['songPath']});	
-//		}
-//	currentIndex = 0;
 	myPlaylist.push({mp3 : "${cp}/../" + songObject.song['songPath']});
 	player.jPlayer("setMedia", myPlaylist[0]);
 	//player.jPlayer("play");
 }
-
-
-
-//function playNextSong()
-//{
-//	if (currentIndex < numSong)
-//		{
-//			currentIndex += 1;
-//			player.jPlayer("setMedia", myPlaylist[currentIndex]);
-//			player.jPlayer("play");
-//		}
-//}
-//
-//function playPreviousSong()
-//{
-//	if (currentIndex > 0)
-//	{
-//		currentIndex -= 1;
-//		player.jPlayer("setMedia", myPlaylist[currentIndex]);
-//		player.jPlayer("play");
-//	}
-//	else
-//	{
-//		player.jPlayer("pause");
-//	}
-//}
 
 $(document).on("click", "#playbar-shuffle-button", function () {
 	$.ajax({
@@ -132,7 +95,7 @@ $(document).on("click", "#playbar-shuffle-button", function () {
         {
           console.log(response);
           var queueJSP = document.getElementById("queueDiv");
-          if (queueJSP != null){
+          if (queueJSP !== null){
         	  $.get("jsp/queue.jsp", function(data) {
                   $("#main-changing-content").html(data)
               });
@@ -144,9 +107,11 @@ $(document).on("click", "#playbar-shuffle-button", function () {
           console.log(e);
         }
       });
-})
+});
 
-/$(document).on("click", "#playbar-prev-button", function () {
+
+
+$(document).on("click", "#playbar-prev-button", function () {
 	console.log("play prev");
 //	playPreviousSong();
 	$.ajax({
@@ -159,6 +124,7 @@ $(document).on("click", "#playbar-shuffle-button", function () {
           console.log("pre song in js response : "+ response);
           var actual_json = JSON.parse(response);
           addToPlaybarPlaylist(actual_json);
+          updateSongInfo(actual_json.nowPlay);
           updatePlayerButton(actual_json);
           player.jPlayer("play");
           var queueJSP = document.getElementById("queueDiv");
@@ -174,7 +140,7 @@ $(document).on("click", "#playbar-shuffle-button", function () {
           console.log(e);
         }
       });
-})
+});
 
 $(document).on("click","#playbar-play-button",function (){
 	
@@ -199,6 +165,7 @@ $(document).on("click", "#playbar-next-button", function () {
           var actual_json = JSON.parse(response);
           console.log("next song js response " + actual_json);
           addToPlaybarPlaylist(actual_json);
+          updateSongInfo(actual_json.nowPlay);
           player.jPlayer("play");
           updatePlayerButton(actual_json);
           var queueJSP = document.getElementById("queueDiv");
@@ -214,7 +181,26 @@ $(document).on("click", "#playbar-next-button", function () {
           console.log(e);
         }
       });
-})
+});
+
+function updateSongInfo(nowPlay)
+{
+	var songName = nowPlay.song['title'];
+	console.log(songName);
+	$("#playbar-song-name").html(songName);
+	$("#playbar-artist-name").empty();
+	var artistArray = nowPlay.artists;
+	for (var i = 0; i < artistArray.length; i++)
+	{
+            console.log(artistArray[i]['name']);
+            $("#playbar-artist-name").append(
+                    '<div class="artist-item medium-boxes-description"><a href="#">' + artistArray[i]['name'] +  '</a>' +
+                    '<span style="display:none;" class="artist-email">' + artistArray[i]['email'] + '</span></div>'
+                    );
+	}
+	//$("#playbar-artist-name");
+	
+}
 
 function updatePlayerButton(actual_json){
 	console.log("update player button " + actual_json);

@@ -33,7 +33,7 @@
 	  <script type="text/javascript" src="${cp}/resources/js/jquery.jplayer.min.js"></script>
 	   <script type="text/javascript" src="${cp}/resources/js/jplayer.playlist.js"></script>
 	
-	   	
+	   	<script src="${cp}/resources/js/artist.js" /></script>
 		<script src="${cp}/resources/js/playbar.js" /></script>
 		<script src="${cp}/resources/js/jquery.session.js" /></script>
     <link rel="stylesheet" href="${cp}/resources/css/custom.css">
@@ -114,11 +114,10 @@
             </div>
             <div class="media-body">
               <h4 class="media-heading"> <a href="#" id="playbar-song-href"> <span id="playbar-song-name">   Song name     </span> </a></h4>
-              <p> <a href="#" id ="playbar-artist-href"/> <span id="playbar-artist-name"> Artist name </span>
-                <a href="#">
-                <span class="glyphicon glyphicon-search"></span>
-                </a>
-                <a href="#" data-toggle ="tooltip-save-library" title= "Save to Your Library" id="playbar-save-anchor-tag"><i class="fa fa-plus-square"></i></a>
+              <p id="playbar-artist-name"> 
+                  
+<!--                  <a href="#" id ="playbar-artist-href"/> <span id="playbar-artist-name"> Artist name </span>-->
+               
               </p>
             </div>
           </div>

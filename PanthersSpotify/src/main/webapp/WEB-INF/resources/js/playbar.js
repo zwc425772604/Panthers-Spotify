@@ -138,7 +138,7 @@ $(document).on("click", "#playbar-shuffle-button", function () {
           console.log("pre song in js response : "+ response);
           var actual_json = JSON.parse(response);
           addToPlaybarPlaylist(actual_json);
-          updatePlayerButton(response);
+          updatePlayerButton(actual_json);
           var queueJSP = document.getElementById("queueDiv");
           if (queueJSP != null){
         	  $.get("jsp/queue.jsp", function(data) {
@@ -188,19 +188,19 @@ $(document).on("click", "#playbar-next-button", function () {
 function updatePlayerButton(actual_json){
 	console.log("update player button " + actual_json);
 	console.log("update player button now play" + actual_json.nowPlay);
-	console.log("update player button previous song" + actual_json.previous.song);
-	console.log("update player button next song" + actual_json.nextUp.song);
+	console.log("update player button previous song" + actual_json.previous);
+	console.log("update player button next song" + actual_json.nextUp);
 	if (actual_json.nowPlay==null){
 		$("#playbar-play-button").prop("disabled",true);
 	}else{
 		$("#playbar-play-button").prop("disabled",false);
 	}
-	if (actual_json.previous.song==null){
+	if (actual_json.previous==null){
 		$("#playbar-prev-button").prop("disabled",true);
 	}else{
 		$("#playbar-prev-button").prop("disabled",false);
 	}
-	if (actual_json.nextUp.length==0){
+	if ((actual_json.nextUp).length==0){
 		$("#playbar-next-button").prop("disabled",true);
 	}else{
 		$("#playbar-next-button").prop("disabled",false);

@@ -143,6 +143,8 @@ public class JSONHelper {
 		for (Album a : albums) {
 			jsonObject = new JSONObject();
 			jsonObject.put("albumTitle", a.getAname());
+			jsonObject.put("albumURL", a.getPhotoUrl());
+			jsonObject.put("albumID", a.getAid());
 			albumArr.put(jsonObject);
 		}
 		arr.put(albumArr);
@@ -150,6 +152,7 @@ public class JSONHelper {
 		for (Playlist p : playlists) {
 			jsonObject = new JSONObject();
 			jsonObject.put("playlistTitle", p.getPname());
+			jsonObject.put("playlistID", p.getPid());
 			playlistArr.put(jsonObject);
 		}
 		arr.put(playlistArr);

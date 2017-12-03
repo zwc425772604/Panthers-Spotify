@@ -576,7 +576,17 @@ public class ServletController {
 		// System.out.println("remove success");
 		return "ok";
 	}
-
+	@RequestMapping(value = "/searchAlbum", method = RequestMethod.POST)
+	public @ResponseBody String searchAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		String input = request.getParameter("input");
+		List<Album> retAlbum = albumService.findRelative(input);
+		List<Playlist> retPlaylist = playlistService.findRelative(input);
+		session.setAttribute("album_list", retAlbum);
+		session.setAttribute("SearchingPlaylist", retPlaylist);
+		System.out.println(input);
+		return "ok";
+	}
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
 	public @ResponseBody String search(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");
@@ -592,7 +602,9 @@ public class ServletController {
 		} else {
 			searchJson = JSONHelper.searchToJSON(retSong, retAlbum, retPlaylist);
 		}
-		System.out.println(searchJson);
+		System.out.println(searchJson);	
+		Object gg = session.getAttribute("album_list");
+		System.out.println(gg);
 		return searchJson;
 	}
 

@@ -176,7 +176,26 @@ $(document).on("click", ".playlist-item", function(){
 	  });
 });
 
-
+$(document).on("click", ".album-item", function(){
+	var albumId = $(".album-ID", this).text(); //get the pid of the playlist
+	console.log(albumId);
+	
+	  $.ajax({
+        url: "${cp}/../getSpecificAlbum",
+        type: "POST",
+        data : {"albumID" : albumId},
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+          $("#main-changing-content").load("jsp/albumInfo.jsp");
+        },
+        error: function(e)
+        {
+          console.log(e);
+        }
+	  });
+});
 $(document).on("click", "#playbar-queue-button", function () {
 	$.ajax({
         url: "${cp}/../getSongQueue",
@@ -365,11 +384,25 @@ function volumeMute(data){
 
 
 $("#search-button").click(function(){
-	$("#main-changing-content").load("jsp/search.jsp");	
+	var text = $("#search").val();
+	console.log(text);
+	$.ajax({
+	    url: "${cp}/../searchAlbum",
+	    type: "POST",
+	    data : {"input" : text},
+	    asyn: false,
+	    cache: true,
+	    success : function(response)
+	    {
+	    	$("#main-changing-content").load("jsp/search.jsp");	
+	    },
+	    error: function(e)
+	    {	
+	        console.log("error");
+	    }
+	});
+	
 });
-function search()
-{
-	$("#main-changing-content").load("jsp/search.jsp");	
-}
+
 });
 

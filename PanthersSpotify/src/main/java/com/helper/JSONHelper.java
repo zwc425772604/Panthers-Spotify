@@ -169,11 +169,12 @@ public class JSONHelper {
 			jsonObject.put("songTitle", s.getStitle());
 			jsonObject.put("songGenre", s.getGener());
 			jsonObject.put("songPath", s.getSurl());
+                        
 			JSONArray artists = new JSONArray();
 			List<User> users = songService.getArtistsCollection(sid);
 			for (User user : users) {
 				JSONObject ob = new JSONObject();
-				ob.put("name", user.getFullName());
+				ob.put("name", user.getUserName());
 				ob.put("aemail", user.getEmail());
 				artists.put(ob);
 			}

@@ -320,8 +320,8 @@ public class SongServiceImpl implements SongService {
 		return (List<User>)songDAO.getSongArtists(sid);
 	}
 	
-	public List<Song> getSongByArtist(String artistEmail)
+	public List<Song> getSongByArtist(String artistEmail, String status)
 	{
-		return songDAO.getSongByArtist(artistEmail);
+		return songDAO.getSongByArtist(artistEmail, status);
 	}
 }

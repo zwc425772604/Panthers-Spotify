@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   <script src="${cp}/resources/js/artistMainPage.js"></script>
   <link rel="stylesheet" href="${cp}/resources/css/admin.css">
   <script>
     $(document).ready(function(){
@@ -176,24 +177,57 @@
           id="bootstrap-overrides-navbar">
           <ul class="navbar-nav mr-auto tab" id="navbar-ul">
             <li class="nav-item">
-              <a class="nav-link tablinks" href="javascript:displayContent('songsTableDiv')">SONGS </a>
+              <a class="nav-link tablinks" href="javascript:displayContent('approvedSongsTableDiv')">APPROVED SONGS </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link tablinks" href="javascript:displayContent('albumsTableDiv')">ALBUMS</a>
+              <a class="nav-link tablinks" href="javascript:displayContent('pendingSongsTableDiv')">PENDING SONGS </a>
             </li>
+          
             <li class="nav-item">
-              <a class="nav-link tablinks" href="javascript:displayContent('albumsTableDiv')">Royalty</a>
+              <a class="nav-link tablinks" href="javascript:displayContent('royaltyTableDiv')">Royalty</a>
             </li>
           </ul>
         </nav>
-        <div id="songsTableDiv" class="w3-container info-table">
-          <h1>Song Table</h1>
+        <div id="approvedSongsTableDiv" class="w3-container info-table">
+         <h1><span id="num-of-approved-songs"></span> songs approved</h1>
+              <table class="w3-table-all w3-hoverable" id = "artist-approved-songs-table">
+			    <thead>
+			      <tr class="w3-light-grey">
+			        <th>Song ID</th>
+			        <th>Song Title</th>
+			        <th>Artist</th>
+			        <th>Genre</th>
+			        <th>Status</th>
+			        <%-- <th>Created Date</th> --%>
+			        <th></th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			    </tbody>
+			  </table>
         </div>
-        <div id="albumsTableDiv" class="w3-container info-table" style="display:none">
-          <h1>Album Table</h1>
+        <div id="pendingSongsTableDiv" class="w3-container info-table" style="display:none">
+         <h1><span id="num-of-pending-songs"></span> songs need to be approved</h1>
+              <table class="w3-table-all w3-hoverable" id = "artist-pending-songs-table">
+			    <thead>
+			      <tr class="w3-light-grey">
+			        <th>Song ID</th>
+			        <th>Song Title</th>
+			        <th>Artist</th>
+			        <th>Genre</th>
+			        <th>Status</th>
+			        <%-- <th>Created Date</th> --%>
+			        <th></th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			    </tbody>
+			  </table>
         </div>
-        <div id="playlistsTableDiv" class="w3-container info-table" style="display:none">
+      
+        <div id="royaltyTableDiv" class="w3-container info-table" style="display:none">
           <h1> Royalty </h1>
+          <h3> Your Royalty is $<span id ="artistRoyaltyText"></span></h3>
         </div>
       </div>
       <script>

@@ -125,6 +125,7 @@ public class ServletController {
 				mav.addObject("username", user.getUserName());
 				break;
 			case ARTIST:
+                                session.setAttribute("user", user);
 				mav.addObject("username", user.getUserName());
 				mav.setViewName("artistMainPage");
 				break;
@@ -1192,11 +1193,11 @@ public class ServletController {
 		return JSON;
 	}
 	
-	@RequestMapping(value = "/getAllSongsForArtist", method = RequestMethod.POST)
-	public @ResponseBody String getAllSongsForArtist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	@RequestMapping(value = "/getAllSongsForArtist/{status}", method = RequestMethod.POST)
+	public @ResponseBody String getAllSongsForArtist(@PathVariable String status, HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");//admin page only
 		
-		List<Song> songs = songService.getSongByArtist(user.getEmail());
+		List<Song> songs = songService.getSongByArtist(user.getEmail(), status);
 		String JSON = JSONHelper.new_pendingSongsToJSON(songs, songService);
 		
 		

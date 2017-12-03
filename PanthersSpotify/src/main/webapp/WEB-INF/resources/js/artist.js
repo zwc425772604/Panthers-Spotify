@@ -37,6 +37,9 @@ $(document).on("click", ".album-item", function(){
 	  });
 });
 
+
+
+
 $(document).on("click", ".artist-item", function(){
 	var email = $(".artist-email", this).text(); //get the pid of the playlist
 	  $.ajax({
@@ -63,33 +66,38 @@ $(document).on("click", ".artist-item", function(){
                 success : function(response)
                 {
                 	$("#main-changing-content").load("jsp/artistInfo.jsp");
+            
                 },
                 error: function(e)
                 {
                   console.log(e);
-                }
-        	  });
-        	$.ajax({
-                url: "${cp}/../getArtistInfo",
-                type: "POST",
-                data : {"artistEmail" : email},
-                asyn: false,
-                cache: true,
-                success : function(response)
-                {
-                  console.log(response);
-                  var actual_JSON = JSON.parse(response);
-                  if(!actual_JSON['artistBio']){
-                	  actual_JSON['artistBio'] = "This artist doesn't include a bio.";
-                  }
-                  $("#artist-info").append(actual_JSON['artistBio']);
-                  
                 },
-                error: function(e)
-                {
-                  console.log(e);
+                complete: function(){
+                	$.ajax({
+                        url: "${cp}/../getArtistInfo",
+                        type: "POST",
+                        data : {"artistEmail" : email},
+                        asyn: false,
+                        cache: true,
+                        success : function(response)
+                        {
+                          $("#artist-info").empty();
+                          console.log(response);
+                          var actual_JSON = JSON.parse(response);
+                          if(!actual_JSON['artistBio']){
+                        	  actual_JSON['artistBio'] = "This artist doesn't include a bio.";
+                          }
+                          $("#artist-info").append(actual_JSON['artistBio']);
+                          
+                        },
+                        error: function(e)
+                        {
+                          console.log(e);
+                        }
+                	  });
                 }
         	  });
+        	
         }
 	  });
 });
@@ -108,7 +116,7 @@ function insertArtistsPage(data)
 			$("#artist-page").append([
 				'<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 col-xl-2 placeholder medium-boxes">',
 		        '<div class="artist-item">',
-		        '<img src="' + data[i]['artistUrl'] +'" width=100% class="img-rounded" alt="Generic placeholder thumbnail">',
+		        '<img src="' + data[i]['artistUrl'] +'" width=100% class="img-circle" alt="Generic placeholder thumbnail" style="border-radius:100px">',
 		      	  '<span style="display:none;" class="artist-email">'+  data[i]['artistEmail'] +'</span>',
 		        '</div>',
 		        '<div class="artist-item medium-boxes-description" style="text-align:center;">',
@@ -121,3 +129,41 @@ function insertArtistsPage(data)
 
 
 }
+
+
+$(document).on("click", ".followArtistButton", function(){
+	var status = $("#followArtistStatus").text().trim();
+	var email = $("#artistEmail",this).text().trim();
+	if (status.localeCompare('Follow') == 0 )
+	{
+		$.ajax({
+			url: "followSpecificArtist",
+			type: "POST",
+			data: {"artistEmail" : email},
+			asyn: true,
+			cache: false,
+			success: function(response)
+			{
+				console.log(response);
+				$("#followArtistStatus").html("Unfollow");
+			}
+		});
+	}
+	else
+	{
+		$.ajax({
+			url: "unfollowSpecificArtist",
+			type: "POST",
+			data: {"artistEmail" : email},
+			asyn: true,
+			cache: false,
+			success: function(response)
+			{
+				console.log(response);
+				$("#followArtistStatus").html("Follow");
+				
+			}
+		});
+	}
+
+});

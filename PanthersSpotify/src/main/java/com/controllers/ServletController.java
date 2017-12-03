@@ -740,10 +740,17 @@ public class ServletController {
 	@RequestMapping(value = "/getSpecificArtist", method = RequestMethod.POST)
 	public @ResponseBody String getSpecificArtist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String email = request.getParameter("email");
-		User user = userService.getUser(email);
+		User artist = userService.getUser(email);
 		// User user = (users.size() != 0 )?users.get(0):null;
-		session.setAttribute("selectedArtist", user);
-		System.out.println(user.getUserName());
+		session.setAttribute("selectedArtist", artist);
+		User user = (User)session.getAttribute("user");
+		List<Artist> followingArtist = userService.getFollowArtists(user);
+		List<String> followingArtistEmail = new ArrayList();
+		for(Artist a: followingArtist) {
+			followingArtistEmail.add(a.getArtistEmail());
+		}
+		session.setAttribute("userFollowingArtist", followingArtistEmail);
+		System.out.println("The user is currently following those artist:" + followingArtist.size());
 		return "ok";
 	}
 
@@ -1185,6 +1192,7 @@ public class ServletController {
 			User user = (User)session.getAttribute("user");
 			email = user.getEmail();
 		}
+		
 		List<Song> history = songService.getHistorySongs(email);
 		String JSON = JSONHelper.new_pendingSongsToJSON(history, songService);
 		

@@ -1,10 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
 <c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Artist Page - Panthers Spotify</title>
+  <link rel="stylesheet" href="${cp}/resources/css/artistInfo.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -20,6 +22,23 @@
         <p style="font-size: 1.8em;" id="artist-name">
           <c:out value="${selectedArtist.userName}"></c:out>
         </p>
+        <div>    
+            <button class="w3-button w3-round-xxlarge formButton followArtistButton" style="width:auto" >
+              <span id="followArtistStatus" >
+                <c:choose>
+                  <c:when test="${fn:contains(userFollowingArtist,selectedArtist.email)}">
+                    Unfollow
+                  </c:when>
+                  <c:otherwise>
+                    Follow
+                  </c:otherwise>
+                </c:choose>
+              </span>
+              <span id="artistEmail" style="display:none;">
+                <c:out value="${selectedArtist.email}"></c:out>
+              </span>
+            </button>
+      </div>
       </div>
     </div>
   </div>

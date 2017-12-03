@@ -28,7 +28,7 @@
             <c:out value="${selectedFriend.userName}"></c:out>
           </p>
           <div class="col-md-5" style="display:inline;">
-            <c:if test="${selectedFriend.email != user}">
+            <c:if test="${selectedFriend.email != user.email}">
               <button class="w3-button w3-round-xxlarge formButton AddFriendButton" style="width:auto" >
                 <span id="friendStatus" >
                   <c:choose>

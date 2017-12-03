@@ -341,6 +341,18 @@ public class ServletController {
 		mav.setViewName("admin");
 		return mav;
 	}
+	
+	///----------admin delete song from database-----------------------------
+	@RequestMapping(value = "/deleteSongToDatabase", method = RequestMethod.POST)
+	public ModelAndView deleteSongToDatabase(ModelAndView mav, HttpServletRequest request, HttpSession session)
+			throws ServletException, IOException {
+		String songtmp = request.getParameter("songId");
+		int songId = Integer.parseInt(songtmp);
+		Song deleteSong = songService.getSong(songId);
+		songService.removeSong(deleteSong);
+		mav.setViewName("admin");
+		return mav;
+	}
 
 	/* Load song from database */
 	@RequestMapping(value = "/loadSong", method = RequestMethod.POST)
@@ -564,6 +576,10 @@ public class ServletController {
 	public @ResponseBody String deleteSelectedUserPlaylist(ModelAndView mav, HttpServletRequest request,
 			HttpSession session) {
 		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
+		Playlist playlist = playlistService.getPlaylist(playlistID);
+		playlistService.removePlaylist(playlist);
+		List<Playlist> playlists = playlistService.getAllPlaylists();
+		String playlistsJsonArray = JSONHelper.playlistListToJSON(playlists);
 		// Playlist playlist = playlistManager.getPlaylist(playlistID);
 		// User user = (User) session.getAttribute("user");
 		// playlistManager.removePlaylist(playlistID,user);
@@ -574,7 +590,7 @@ public class ServletController {
 		// session.setAttribute("user_playlist", user_playlist);
 		// mav.addObject("user_playlist", user_playlist);
 		// System.out.println("remove success");
-		return "ok";
+		return playlistsJsonArray;
 	}
 
 	@RequestMapping(value = "/search", method = RequestMethod.POST)
@@ -805,14 +821,20 @@ public class ServletController {
 		return "approved";
 	}
 
+	//--------------edit delete song from database---admin-----
 	@RequestMapping(value = "/removeSongByAdmin", method = RequestMethod.POST)
 	public @ResponseBody String removeSongByAdmin(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		int songID = Integer.parseInt(request.getParameter("songID").trim());
+		
 		String status = "rejected";
 		songService.updateReleaseSong(songID, status);
+		
+		Song deleteSong = songService.getSong(songID);
+		songService.removeSong(deleteSong);
 		// need to delete the song from file system
 		return "rejected";
 	}
+	
 	
 	@RequestMapping(value = "/addPaymentForArtist", method = RequestMethod.POST)
 	public @ResponseBody String addPayment(ModelAndView mav, HttpServletRequest request, HttpSession session) {

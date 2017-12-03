@@ -10,7 +10,7 @@
 
 <div class="artist-top" id = "release-container" >
   <div class="suggestion-container-top">
-    <h3 class="suggestion-topic" style="font-size: 4em;">Artists</h3>
+    <h3 class="suggestion-topic" style="font-size: 4em;">All Artists</h3>
   </div>
   <div class="line"></div>
   <!-- <div id = "filter_text" style="margin-top: 3%;">

@@ -50,54 +50,69 @@ $(document).on("click", ".artist-item", function(){
         cache: true,
         success : function(response)
         {
-       
+        	 $.ajax({
+        	        url: "${cp}/../getRelatedArtist",
+        	        type: "POST",
+        	        data : {"artistEmail" : email},
+        	        asyn: false,
+        	        cache: false,
+        	        success : function(response)
+        	        {
+        	        
+        	        },
+        	        error: function(e)
+        	        {
+        	          console.log(e);
+        	        },
+        	        complete : function(){
+        	        	$.ajax({
+        	                url: "${cp}/../getArtistAlbum",
+        	                type: "POST",
+        	                data : {"artistEmail" : email},
+        	                asyn: false,
+        	                cache: true,
+        	                success : function(response)
+        	                {
+        	                	$("#main-changing-content").load("jsp/artistInfo.jsp");          
+        	                },
+        	                error: function(e)
+        	                {
+        	                  console.log(e);
+        	                },
+        	                complete: function(){
+        	                	$.ajax({
+        	                        url: "${cp}/../getArtistInfo",
+        	                        type: "POST",
+        	                        data : {"artistEmail" : email},
+        	                        asyn: true,
+        	                        cache: true,
+        	                        success : function(response)
+        	                        {
+        	                          $("#artist-info").empty();
+        	                          console.log(response);
+        	                          var actual_JSON = JSON.parse(response);
+        	                          if(!actual_JSON['artistBio']){
+        	                        	  actual_JSON['artistBio'] = "This artist doesn't include a bio.";
+        	                          }
+        	                          $("#artist-info").append(actual_JSON['artistBio']);
+        	                          
+        	                        },
+        	                        error: function(e)
+        	                        {
+        	                          console.log(e);
+        	                        }
+        	                	  });
+        	                }
+        	        	  });
+        	        	
+        	        }
+        	 });
         },
         error: function(e)
         {
           console.log(e);
-        },
-        complete : function(){
-        	$.ajax({
-                url: "${cp}/../getArtistAlbum",
-                type: "POST",
-                data : {"artistEmail" : email},
-                asyn: false,
-                cache: true,
-                success : function(response)
-                {
-                	$("#main-changing-content").load("jsp/artistInfo.jsp");          
-                },
-                error: function(e)
-                {
-                  console.log(e);
-                },
-                complete: function(){
-                	$.ajax({
-                        url: "${cp}/../getArtistInfo",
-                        type: "POST",
-                        data : {"artistEmail" : email},
-                        asyn: true,
-                        cache: true,
-                        success : function(response)
-                        {
-                          $("#artist-info").empty();
-                          console.log(response);
-                          var actual_JSON = JSON.parse(response);
-                          if(!actual_JSON['artistBio']){
-                        	  actual_JSON['artistBio'] = "This artist doesn't include a bio.";
-                          }
-                          $("#artist-info").append(actual_JSON['artistBio']);
-                          
-                        },
-                        error: function(e)
-                        {
-                          console.log(e);
-                        }
-                	  });
-                }
-        	  });
-        	
         }
+      
 	  });
 });
 

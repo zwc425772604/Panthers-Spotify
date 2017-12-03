@@ -50,6 +50,7 @@
 </div>
 <div class="suggestion-container row" style="margin-top:3%;">
   <div style="width: 60%; margin: 2%;">
+    <div>
     <div id="album-header" style="border-bottom: 1px solid white; margin-bottom: 2%;
                                 font-size: 1.5em;">
       Albums
@@ -73,7 +74,39 @@
 				</div>
 			</c:forEach>
 		</c:if>
-	</section>
+	  </section>
+    </div>
+    <div >
+      <div id="album-header" style="border-bottom: 1px solid white; margin-bottom: 2%; margin-top: 5%;
+                                font-size: 1.5em;">
+      Related Artists
+      </div>
+      <section class="row placeholders" id="infoContainer" style="padding-left: 5%;">
+       <c:choose>
+		<c:when test="${not empty artist_list}">
+			<c:forEach var="artist" items="${artist_list}">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-3 placeholder medium-boxes">
+					<div class="hover-control artist-item">
+						<img src="${cp}/resources/data${artist.photoUrl}"
+							width=100% height=width class="img-rounded info-image"
+							alt="Generic placeholder thumbnail"> <span class="album-ID"
+							style="display: none;">${artist.email}</span>
+					</div>
+					<div class="artist-item medium-boxes-description">
+						<h6 style="text-align: center;">
+							<a href="#"><span id="album-name">${artist.userName}</span></a> <span
+								class="album-ID" style="display: none;">${artist.email}</span>
+						</h6>
+					</div>
+				</div>
+			</c:forEach>
+		</c:when>
+		 <c:otherwise>
+			No artists suggested
+		</c:otherwise>
+		</c:choose>
+	  </section>
+    </div>
   </div>
   <div id="bio-section" style="width: 30%; margin: 2%;">
     <div id="bio-header" style="border-bottom: 1px solid white; margin-bottom: 2%;
@@ -82,7 +115,6 @@
     </div>
     <div id="artist-info" style="padding: 3%;">
     </div>
-  
   </div>
 
 </div>

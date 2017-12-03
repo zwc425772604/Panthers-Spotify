@@ -1232,4 +1232,36 @@ public class ServletController {
 		session.setAttribute("album_list", retAlbum);
 		return "ok";
 	}
+	
+	@RequestMapping(value = "/getRelatedArtist", method = RequestMethod.POST)
+	public @ResponseBody String getRelatedArtist(ModelAndView mav, HttpServletRequest request, HttpSession session) {	
+		String artistEmail = request.getParameter("artistEmail");		
+		List<Album> artAlbum = (List<Album>) albumService.getAllAlbumArtist(artistEmail);
+		List<String> genreList = new ArrayList();
+		for(Album a: artAlbum) {
+			if(!genreList.contains(a.getGenre())) {
+				genreList.add(a.getGenre());
+			}
+		}
+		String display = environment.getProperty("displayAmount");
+		int displayAmount = Integer.parseInt(display);
+		List<User> relatedAlbumsArtist = new ArrayList();
+		for(String genre: genreList) {
+			List<Album> tempAlbums = albumService.getTopGenreAlbum(genre, 1, displayAmount);
+						
+		    for(Album album : tempAlbums) {
+		    	List<User> tempArtist = albumService.getArtistsCollection(album.getAid());
+		    	
+		    	for(User u : tempArtist) {
+		    		if(!relatedAlbumsArtist.contains(u) && !u.getEmail().equals(artistEmail)) {
+		    			relatedAlbumsArtist.add(u);
+		    		}
+		    	}
+		    }		
+		}
+		
+		session.setAttribute("artist_list", relatedAlbumsArtist);
+		return "ok";
+	}
+	
 }

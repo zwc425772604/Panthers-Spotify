@@ -21,10 +21,10 @@
         <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('songs')">Songs</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('albums')">Albums</a>
+        <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('albums')">All Albums</a>
       </li>
       <li class="nav-item" id="extra-padding">
-        <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('artists')">Artists</a>
+        <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('artists')">All Artists</a>
       </li>
     </ul>
   </li>

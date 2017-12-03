@@ -1,6 +1,6 @@
 /* General Style */
 body {
-    background-color: #343a40;
+    background-color: #272a2d;
     font-size: 0.9vw;
     overflow:hidden;
 }
@@ -27,21 +27,21 @@ a:link, a:visited, a:hover, a:active {
 
 #style-1::-webkit-scrollbar-track
 {
-	-webkit-box-shadow: inset 0 0 6px #343a40;
+	-webkit-box-shadow: inset 0 0 6px #272a2d;
 	border-radius: 10px;
-	background-color: #343a40;
+	background-color: #272a2d;
 }
 
 #style-1::-webkit-scrollbar
 {
 	width: 12px;
-	background-color: #343a40;
+	background-color: #272a2d;
 }
 
 #style-1::-webkit-scrollbar-thumb
 {
 	border-radius: 10px;
-	-webkit-box-shadow: inset 0 0 6px #343a40;
+	-webkit-box-shadow: inset 0 0 6px #272a2d;
 	background-color: #555;
 }
 
@@ -303,7 +303,7 @@ input:checked + .slider:before {
 #bannerimage{
     height: 23vh;
     background-position: center;
-    background: -webkit-linear-gradient(top, #6b6969, #343a40);
+    background: -webkit-linear-gradient(top, #6b6969, #272a2d);
 }
 
 #browse-title{
@@ -615,7 +615,7 @@ th{
 {
 	height: 16uh;
 	text-align: center;
-	background-color: #343a40;
+	background-color: #272a2d;
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
 	border-top: 0.025px solid #47505c;

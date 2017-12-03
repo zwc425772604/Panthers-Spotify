@@ -45,6 +45,11 @@ function insertSongsTable(data)
 	var albumName = data['albumName'];
 	var albumID = data['albumID'];
 	var albumPhotoUrl = data['albumPhotoUrl'];
+	var albumDate = data['albumDate'];
+	var albumDes = data['albumDes'];
+	$("#album-info").empty();
+	$("#album-info").append(albumDes);
+	
 	$(".album-image-box").empty();
 	$(".album-image-box").append([		
 	           '<img src="${cp}/../resources/data' +albumPhotoUrl +'" width=100% class="img-rounded" alt="Generic placeholder thumbnail" style="border-radius: 100px;">'
@@ -82,7 +87,7 @@ function insertSongsTable(data)
 	                     '<i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i></button>',
 	                  '</td>',
 					  '<td>' + data['songsInAlbum'][i]['songTitle'] + '</td>',
-					  '<td> </td>',
+					  '<td>'  + albumDate+'</td>',
 					  '<td> </td>',
 					 '</tr>'
 				].join(''));

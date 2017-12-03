@@ -233,6 +233,7 @@ public class JSONHelper {
 		jsonObject.put("albumName", album.getAname());
 		jsonObject.put("albumDes", album.getDes());
 		jsonObject.put("albumPhotoUrl", album.getPhotoUrl());
+		jsonObject.put("albumDate", album.getReleaseDate());
 		JSONArray artists = new JSONArray();
 		List<User> users = albumService.getArtistsCollection(aid);
 		

@@ -19,7 +19,7 @@
   <h1 class="suggestion-topic" id="browse-title">Browse</h1>
 </div>
 <!--NavBar-->
-<nav class="navbar navbar-expand-md bg-dark navbar-dark"
+<nav class="navbar navbar-expand-md navbar-dark"
   id="bootstrap-overrides-navbar">
   <ul class="navbar-nav mr-auto tab" id="navbar-ul">
     <li class="nav-item">

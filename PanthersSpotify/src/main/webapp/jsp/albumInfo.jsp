@@ -61,8 +61,13 @@
       </div>
     </div>
     <div  style="width: 20%; margin-left: 4%; margin-top: 0.9%;">
+      <div id="related-album-header" style="border-bottom: 1px solid white; margin-bottom: 2%; margin-top: 2%;
+                                font-size: 1.2em; padding-left: 0.2em; font-weight:bolder; ">
+        Description
+      </div>
+      <div id="album-info" style="padding: 3%; margin-bottom: 2em;"></div>
       <div id="related-album-header" style="border-bottom: 1px solid white; margin-bottom: 2%;
-                                font-size: 1.2em; padding-left: 0.2em;">
+                                font-size: 1.2em; padding-left: 0.2em; font-weight:bolder;">
         Related Album
       </div>
       <div id="related-albums" style="padding: 3%;"></div>

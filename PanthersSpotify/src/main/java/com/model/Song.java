@@ -148,6 +148,16 @@ public class Song implements Serializable {
     public void setSurl(String surl) {
         this.surl = surl;
     }
+    
+    @Column(name = "lyricsUrl", length = 100)
+    private String lyricsUrl;
+    public String getLyricsUrl() {
+        return lyricsUrl;
+    }
+
+    public void setLyricsUrl(String lyricsUrl) {
+        this.lyricsUrl = lyricsUrl;
+    }
 
     @JoinColumn(name = "aid", referencedColumnName = "aid")
     @ManyToOne

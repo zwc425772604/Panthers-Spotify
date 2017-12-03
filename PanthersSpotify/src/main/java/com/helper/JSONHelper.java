@@ -303,7 +303,7 @@ public class JSONHelper {
 				}
 			}
 			JSONObject pre = new JSONObject();
-			if (preSong.getUser() !=null) {
+			if (preSong.getSqueuePK() !=null) {
 				pre = queueToJSON(preSong);
 			}
 			jsonObject.put("previous", pre);

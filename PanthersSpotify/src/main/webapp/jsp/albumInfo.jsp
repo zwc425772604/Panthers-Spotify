@@ -37,7 +37,8 @@
 	   </div>
 	 </div>
    </div>
-   <div id="playlist-song-collection">
+   <div class="row">
+   <div id="playlist-song-collection" style="width: 65%; ">
       <div class="table-responsive">
         <table class="table" id="song-table">
           <thead>
@@ -59,4 +60,12 @@
         </table>
       </div>
     </div>
+    <div  style="width: 20%; margin-left: 4%; margin-top: 0.9%;">
+      <div id="related-album-header" style="border-bottom: 1px solid white; margin-bottom: 2%;
+                                font-size: 1.2em; padding-left: 0.2em;">
+        Related Album
+      </div>
+      <div id="related-albums" style="padding: 3%;"></div>
+    </div>
+   </div>
 </div>

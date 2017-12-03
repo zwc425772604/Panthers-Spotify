@@ -4,7 +4,7 @@ $(document).ready(function(){
         url: "${cp}/../getSpecificAlbumInfo",
         type: "POST",
         asyn: false,
-        cache: true,
+        cache: false,
         success : function(response)
         {
         	var actual_JSON = JSON.parse(response);
@@ -25,7 +25,7 @@ $(document).on("click", ".artist-item", function(){
         type: "POST",
         data : {"email" : email},
         asyn: false,
-        cache: true,
+        cache: false,
         success : function(response)
         {
           $("#main-changing-content").load("jsp/artistInfo.jsp");
@@ -47,7 +47,7 @@ function insertSongsTable(data)
 	var albumPhotoUrl = data['albumPhotoUrl'];
 	$(".album-image-box").empty();
 	$(".album-image-box").append([		
-	           '<img src="${cp}/../resources/data' +albumPhotoUrl +'" width=100% class="img-rounded" alt="Generic placeholder thumbnail">'
+	           '<img src="${cp}/../resources/data' +albumPhotoUrl +'" width=100% class="img-rounded" alt="Generic placeholder thumbnail" style="border-radius: 100px;">'
 	].join(''));
 	console.log("loaded photo");
 	$("#album-name-place").empty();
@@ -77,8 +77,10 @@ function insertSongsTable(data)
 			if (songs.indexOf(data['songsInAlbum'][i]['songID']) == -1) //check to see if there is duplicate songID
 			{
 				$("#song-table").find('tbody').append([
-					'<tr>',	
-					  '<td> </td>',
+					'<tr">',	
+					  '<td style="padding-bottom:0; padding-top:0.8em; padding-left:1em;"> <button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">',
+	                     '<i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i></button>',
+	                  '</td>',
 					  '<td>' + data['songsInAlbum'][i]['songTitle'] + '</td>',
 					  '<td> </td>',
 					  '<td> </td>',

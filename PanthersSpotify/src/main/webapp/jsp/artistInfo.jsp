@@ -22,6 +22,7 @@
         <p style="font-size: 1.8em;" id="artist-name">
           <c:out value="${selectedArtist.userName}"></c:out>
         </p>
+        
         <div>    
             <button class="w3-button w3-round-xxlarge formButton followArtistButton" style="width:auto" >
               <span id="followArtistStatus" >
@@ -38,7 +39,11 @@
                 <c:out value="${selectedArtist.email}"></c:out>
               </span>
             </button>
-      </div>
+	       </div>
+		<div id="artist-followers" style="font-size: 1.5em; margin-top: 3%;">
+	         <div id="artist-follower-number"  style="display: inline-block"><c:out value="${selectedArtistFollowers}"></c:out>  </div>
+	         <h5 style="display: inline-block">Followers</h5>
+	       </div>
       </div>
     </div>
   </div>

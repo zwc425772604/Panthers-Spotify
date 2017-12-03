@@ -751,7 +751,8 @@ public class ServletController {
 			followingArtistEmail.add(a.getArtistEmail());
 		}
 		session.setAttribute("userFollowingArtist", followingArtistEmail);
-		System.out.println("The user is currently following those artist:" + followingArtist.size());
+		Artist artistObj = userService.getArtistInfo(artist);
+		session.setAttribute("selectedArtistFollowers", artistObj.getFollowers());
 		return "ok";
 	}
 
@@ -952,8 +953,6 @@ public class ServletController {
 		}
 		
 	}
-	
-	
 	
 	@RequestMapping(value = "/editPaymentAccount", method = RequestMethod.POST)
 	public @ResponseBody String editPaymentAccount(ModelAndView mav, HttpServletRequest request, HttpSession session) {

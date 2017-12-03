@@ -146,6 +146,11 @@ $(document).on("click", ".followArtistButton", function(){
 			{
 				console.log(response);
 				$("#followArtistStatus").html("Unfollow");
+				var cn = parseInt($("#artist-follower-number").text());
+				var cn = cn + 1;
+				console.log(cn);
+				$("#artist-follower-number").empty();
+				$("#artist-follower-number").html(cn);
 			}
 		});
 	}
@@ -161,7 +166,11 @@ $(document).on("click", ".followArtistButton", function(){
 			{
 				console.log(response);
 				$("#followArtistStatus").html("Follow");
-				
+				var cn = parseInt($("#artist-follower-number").text());
+				var cn = cn -1;
+				console.log(cn);
+				$("#artist-follower-number").empty();
+				$("#artist-follower-number").html(cn);
 			}
 		});
 	}

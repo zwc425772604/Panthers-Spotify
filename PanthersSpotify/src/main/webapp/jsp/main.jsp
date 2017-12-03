@@ -5,29 +5,6 @@
 <%@page import="org.json.JSONArray"%>
 <%@page import="org.json.JSONObject"%>
 <%@page import="org.json.JSONException"%>
-<%
-	JSONObject queue = (JSONObject)session.getAttribute("queueJSON");
-	JSONObject preSong = new JSONObject();
-	JSONObject nowSong = new JSONObject();
-	JSONArray nextSong = new JSONArray();
-	if(queue.length()!=0){
-		preSong = queue.getJSONObject("previous");
-		nowSong = queue.getJSONObject("nowPlay");
-		nextSong = queue.getJSONArray("nextUp");
-	}
-	boolean hasPre = true;
-	if(preSong==null || preSong.length()==0){
-		hasPre = false;
-	}
-	boolean hasNowPlay = true;
-	if(nowSong==null || nowSong.length()==0){
-		hasNowPlay = false;
-	}
-	boolean hasNextUp = true;
-	if(nextSong==null || nextSong.length()==0){
-		hasNextUp = false;
-	}
-%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -69,7 +46,6 @@
         </nav>
         <!--Main Page-->
         <main class="main-page">
-        <h3 style="color:white; display: none;"><%= hasNowPlay %></h3>
           <!--Scrollable Main Page Section-->
           <div class="scrolled-main" id="style-1">
             <!--Top Tool Section-->
@@ -156,9 +132,9 @@
 				<div class="" style="margin-left: 35%; ">
                                     <ul id="playbar-center-icons">
                                        <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Shuffle" id="playbar-shuffle-button" > <i class="material-icons">shuffle</i></button></li>
-                                       <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Previous"  id="playbar-prev-button" <%= hasPre ? "":"disabled" %>><i class="material-icons">skip_previous</i></button></li>
-                                       <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Play" id="playbar-play-button" <%= hasNowPlay ? "":"disabled" %>> <i class="material-icons"><span class="play-pause-button">play_circle_filled</span></i></button></li>
-                                       <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Next"  id="playbar-next-button" <%= hasNextUp ? "":"disabled" %>><i class="material-icons">skip_next</i></button></li>
+                                       <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Previous"  id="playbar-prev-button"><i class="material-icons">skip_previous</i></button></li>
+                                       <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Play" id="playbar-play-button"> <i class="material-icons"><span class="play-pause-button">play_circle_filled</span></i></button></li>
+                                       <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Next"  id="playbar-next-button"><i class="material-icons">skip_next</i></button></li>
                                        <li><button class="unstyle-buttons" role="button" tabindex="0" data-toggle="tooltip-mute" title="Repeat"  id="playbar-repeat-button" ><i class="material-icons"><span id="repeat-button-text">repeat</span></i></button></li>
                                     </ul>
                                 </div>

@@ -97,7 +97,6 @@ public class ServletController {
 			Collection<SongQueue> songQueue = new ArrayList<SongQueue>();
 			Collection<Playlist> playlists = new ArrayList<Playlist>();
 			Collection<Playlist> followedPlaylist = new ArrayList<Playlist>();
-			JSONObject result = new JSONObject();
 			switch (userType) {
 			case BASIC:
 				songQueue = userService.getQueue(email);
@@ -109,9 +108,6 @@ public class ServletController {
 				user.setSongQueueCollection(songQueue);
 				session.setAttribute("user", user);
 				songService.setArtistsCollection(songQueue);
-				result = JSONHelper.songQueueToJSON(songQueue);
-				session.setAttribute("queueJSON", result);
-				System.out.println("Queue: "+result.toString());
 				mav.setViewName("main");
 				mav.addObject("username", user.getUserName());
 				break;
@@ -123,9 +119,6 @@ public class ServletController {
 				playlists.addAll(followedPlaylist);
 				session.setAttribute("user_playlist", playlists);
 				user.setSongQueueCollection(songQueue);
-				result = JSONHelper.songQueueToJSON(songQueue);
-				System.out.println("Queue: "+result.toString());
-				session.setAttribute("queueJSON", result);
 				session.setAttribute("user", user);
 				mav.setViewName("main");
 				mav.addObject("username", user.getUserName());
@@ -1061,14 +1054,17 @@ public class ServletController {
 	
 	@RequestMapping(value = "/getSongQueue", method = RequestMethod.POST)
 	public @ResponseBody String getSongQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		/*User user = (User) session.getAttribute("user");
+		User user = (User) session.getAttribute("user");
 		Collection<SongQueue> que = user.getSongQueueCollection();
 		JSONObject result = JSONHelper.songQueueToJSON(que);
 		session.setAttribute("queueJSON", result);
 		return result.toString();
-		*/
+		
+		/*
+		
 		JSONObject obj = (JSONObject) session.getAttribute("queueJSON");
 		return obj.toString();
+		*/
 	}
 	
 	@RequestMapping(value = "/getArtistInfo", method = RequestMethod.POST)

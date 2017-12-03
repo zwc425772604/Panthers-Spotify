@@ -30,12 +30,6 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="confirmedPassowrd" class="col-md-4 col-form-label">Middle Name</label>
-            <div class="col-md-5">
-              <input type="text" class="form-control" id="middleName" name="middleName" value="${user.middleName}"/>                
-            </div>
-          </div>
-          <div class="form-group row">
             <label for="confirmedPassowrd" class="col-md-4 col-form-label">Last Name</label>
             <div class="col-md-5">
               <input type="text" class="form-control" id="lastName" name="lastName" value="${user.lastName}"/>                

@@ -7,18 +7,20 @@ $(document).ready(function(){
 	    type: "POST",
 	    data : {"input" : text},
 	    asyn: false,
-	    cache: true,
+	    cache: false,
 	    success : function(response)
 	    {
 	    	if(response.length == 0){
 	    		$("#search-keyword").empty();
 	    		$("#search-albums").empty();
+	    		$("#search-playlists").empty();
 	    		$("#search-keyword").append("Please enter a keyword");
 	    		$("#results").remove();
 	    	}
 	    	else if(response == "empty"){
 	    		$("#search-keyword").empty();
 	    		$("#search-albums").empty();
+	    		$("#search-playlists").empty();
 	    		$("#search-keyword").append("No Results Found");
 	    		$("#results").remove();
 	    	}

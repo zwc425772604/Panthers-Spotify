@@ -18,6 +18,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="${cp}/resources/js/playbar.js"></script>
     <script src="${cp}/resources/js/playlist.js"></script>
    
   </head>
@@ -224,7 +225,9 @@
            %>
            	<tr class= "song_info">
               <td><button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">
-                <i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i></button>
+                <i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i>
+                  <span class="song-id-in-playlist" style="display:none"><%= obj.get("songID") %></span>
+                  </button>
               </td>
               <td>  <button class="unstyle-buttons tracklist-save-button" data-toggle="tooltip-save" title="Remove from Your Library"  onclick="removeSong()">
                 <i class="material-icons"><span class="tracklist-add-delete-button">done</span></i>

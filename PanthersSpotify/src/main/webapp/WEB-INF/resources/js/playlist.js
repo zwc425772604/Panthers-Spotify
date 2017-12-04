@@ -167,32 +167,32 @@ $(".playlist_header_more_button").click(function()
 
 // handler for play/pause button in the song list
 $(".playbar-play-button").click(function(){
+     console.log('song in playlist is clicked');
+     var sid = $(".song-id-in-playlist",this).text().trim();
+     console.log("sond Id to play in playlist is " + sid);
+     var pid = $("#playlistID").text().trim();
+     console.log("playlist ID to play is " + pid );
 
-    if (isPlaying)
-    {
-      // $(".song-page-play-pause-button",this).text("play_circle_filled");
       if ($(".song-page-play-pause-button",this).text().localeCompare('play_circle_filled') == 0)
       {
-        isPlaying = false;
         $(".song-page-play-pause-button").text("play_circle_filled");
         $(".song-page-play-pause-button",this).text("pause_circle_filled");
-        playSong();
+        //playSongInPlaylist();
+         player.jPlayer("play");
       }
       else
       {
           $(".song-page-play-pause-button",this).text("play_circle_filled");
-          playSong();
+         player.jPlayer("pause");
       }
-    }
-    else
-    {
-      playSong();
+    });
+//    else
+//    {
+//      player.jPlayer("play");
+//      $(".song-page-play-pause-button").text("play_circle_filled");
+//      $(".song-page-play-pause-button",this).text("pause_circle_filled");
+//    }
 
-      $(".song-page-play-pause-button").text("play_circle_filled");
-      $(".song-page-play-pause-button",this).text("pause_circle_filled");
-    }
-
-});
 
 
 $(".remove-song-item").click(function(){

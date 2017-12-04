@@ -118,7 +118,7 @@ public class SongServiceImpl implements SongService {
 
 		final String dir = System.getProperty("user.dir");
 		char first = Character.toUpperCase(file.getOriginalFilename().charAt(0));
-		File f1 = new File(dir + "/song/"+first);
+		File f1 = new File(dir + "/src/main/webapp/WEB-INF/resources/data/songs/"+first);
 		String songUrl = f1.getAbsolutePath()+"/"+file.getOriginalFilename();
 		Song song = new Song(songTitle, null, null, 0, songGenre, songType, songUrl);
 

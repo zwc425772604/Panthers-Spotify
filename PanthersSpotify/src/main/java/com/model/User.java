@@ -349,6 +349,17 @@ public class User implements Serializable {
     public void setPhotoUrl(String photoUrl) {
         this.photoUrl = photoUrl;
     }
+    
+    @Column(name = "privateSession")
+    private boolean privateSession;
+	public boolean getPrivateSession() {
+        return privateSession;
+    }
+
+    public void setPrivateSession(boolean privateSession) {
+        this.privateSession = privateSession;
+    }
+    
 
 	@OneToMany(mappedBy = "uemail")
 	private Collection<Concert> concertCollection;

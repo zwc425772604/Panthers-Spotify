@@ -444,6 +444,41 @@ public class ServletController {
 		return mav;
 	}
 	
+	
+	@RequestMapping(value = "/privateSession", method = RequestMethod.POST)
+	public ModelAndView privateSession(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(user.getPrivateSession())
+		{
+			user.setPrivateSession(false);
+		}
+		else
+		{
+			user.setPrivateSession(true);
+		}
+		
+		mav.setViewName("main");
+		mav.addObject("username", user.getUserName());
+		return mav;
+	}
+	
+	@RequestMapping(value = "/ispublic", method = RequestMethod.POST)
+	public ModelAndView ispublic(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		if(user.getPublic())
+		{
+			user.setPublic(false);
+		}
+		else
+		{
+			user.setPublic(true);
+		}
+		
+		mav.setViewName("main");
+		mav.addObject("username", user.getUserName());
+		return mav;
+	}
+	
 	//this is in the change password place
 	@RequestMapping(value = "/sendToken", method = RequestMethod.POST)
 	public ModelAndView sendToken(ModelAndView mav, HttpServletRequest request, HttpSession session) {

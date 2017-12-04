@@ -147,6 +147,18 @@ public class User implements Serializable {
 	public void setPublic(boolean isPublic) {
 		this.isPublic = isPublic;
 	}
+	
+	@Size(max = 100)
+	@Column(name = "token", length = 100)
+	private String token;
+
+	public String getToken() {
+		return middleName;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 	@Column(name = "upgradeDate")
 	@Temporal(TemporalType.DATE)

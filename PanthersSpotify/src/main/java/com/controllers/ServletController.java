@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -426,9 +427,28 @@ public class ServletController {
 	public ModelAndView editUserPassword(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		String pwd = request.getParameter("password");
-		String encPwd = Security.encryptPassword(pwd);
-		user = userService.editUserPassword(user, encPwd);
-		session.setAttribute("user", user);
+		String token = request.getParameter("token");
+		if(token.equals(user.getToken()))
+		{
+			String encPwd = Security.encryptPassword(pwd);
+			user = userService.editUserPassword(user, encPwd);
+			session.setAttribute("user", user);
+		}
+		else
+		{
+			System.out.println("invalid token");
+		}
+		
+		mav.setViewName("main");
+		mav.addObject("username", user.getUserName());
+		return mav;
+	}
+	
+	//this is in the change password place
+	@RequestMapping(value = "/sendToken", method = RequestMethod.POST)
+	public ModelAndView sendToken(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		userService.editUserToken(user);
 		mav.setViewName("main");
 		mav.addObject("username", user.getUserName());
 		return mav;

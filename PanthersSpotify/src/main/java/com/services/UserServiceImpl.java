@@ -8,11 +8,20 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Properties;
+import java.util.UUID;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 
 import com.dao.SongDAO;
 import com.dao.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.model.Artist;
@@ -33,6 +42,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired(required = true)
 	@Qualifier("songDAO")
 	private SongDAO songDAO;
+	
+	@Autowired
+    public JavaMailSender sender;
 
 	@Transactional
 	public User addUser(String userName, String email, String encPassword, int userType, char gender, String firstName,
@@ -76,6 +88,15 @@ public class UserServiceImpl implements UserService {
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
 		user.setPublic(isPublic);
+		user = userDAO.updateUser(user);
+		return user;
+	}
+	
+	@Transactional
+	public User editUserToken(User user) {
+		String token = UUID.randomUUID().toString();
+		user.setToken(token);
+		sendEmail(user.getEmail(),token);
 		user = userDAO.updateUser(user);
 		return user;
 	}
@@ -284,6 +305,28 @@ public class UserServiceImpl implements UserService {
 	public Artist editArtist(User artist,String bio)
 	{
 		return userDAO.editArtist(artist, bio);
+	}
+	
+	@Transactional
+	public void sendEmail(String sentToEmail,String token)
+	{
+//		JavaMailSenderImpl sender = new JavaMailSenderImpl();
+//		sender.setHost("smtp.gmail.com");
+//		sender.setPort(587);
+//		sender.setUsername("xiangtingjin@gmail.com");
+//		sender.setPassword("229853300");
+//		
+//		Properties props = sender.getJavaMailProperties();
+//	    props.put("mail.transport.protocol", "smtp");
+//	    props.put("mail.smtp.auth", "true");
+//	    props.put("mail.smtp.starttls.enable", "true");
+//	    props.put("mail.debug", "true");
+	    
+	    SimpleMailMessage message = new SimpleMailMessage(); 
+        message.setTo(sentToEmail); 
+        message.setSubject("PantherSpotify company"); 
+        message.setText("your varification code is : "+token);
+        sender.send(message);
 	}
 	
 	

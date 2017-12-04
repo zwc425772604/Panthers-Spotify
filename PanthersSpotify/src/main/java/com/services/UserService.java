@@ -61,4 +61,8 @@ public interface UserService {
 	public Artist getArtistInfo(User artist);
 	
 	public Artist editArtist(User artist,String bio);
+	
+	public void sendEmail(String sentToEmail,String token);
+	
+	public User editUserToken(User user);
 }

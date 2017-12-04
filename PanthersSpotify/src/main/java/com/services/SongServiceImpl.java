@@ -234,6 +234,8 @@ public class SongServiceImpl implements SongService {
 
 	@Transactional
 	public Collection<SongQueue> shuffleQueue(Collection<SongQueue> que) {
+		
+		/*
 		Collection<SongQueue> collection = new ArrayList<SongQueue>();
 		Iterator<SongQueue> it = (Iterator<SongQueue>) que.iterator();
 		while (it.hasNext()) {
@@ -243,16 +245,27 @@ public class SongServiceImpl implements SongService {
 				it.remove();
 				break;
 			}
+			
 			collection.add(temp);
 			it.remove();
+			
+		}*/
+		Collection<SongQueue> collection = new ArrayList<SongQueue>();
+		ArrayList<SongQueue> sq = (ArrayList<SongQueue>) que;
+		for (int i=0; i<sq.size();i++) {
+			if (sq.get(i).getIsPlay()) {
+				collection.add(sq.get(i));
+				sq.remove(i);
+				break;
+			}
 		}
+		
+		//ArrayList<SongQueue> source = (ArrayList<SongQueue>) que;
 
-		ArrayList<SongQueue> source = (ArrayList<SongQueue>) que;
-
-		while (source.size() > 0) {
-			int randomNum = ThreadLocalRandom.current().nextInt(0, source.size());
-			collection.add(source.get(randomNum));
-			source.remove(randomNum);
+		while (sq.size() > 0) {
+			int randomNum = ThreadLocalRandom.current().nextInt(0, sq.size());
+			collection.add(sq.get(randomNum));
+			sq.remove(randomNum);
 		}
 
 		return collection;

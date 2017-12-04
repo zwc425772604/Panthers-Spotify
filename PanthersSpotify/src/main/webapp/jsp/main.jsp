@@ -131,7 +131,7 @@
                             <div class="row">
 				<div class="" style="margin-left: 35%; ">
                                     <ul id="playbar-center-icons">
-                                       <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Shuffle" id="playbar-shuffle-button" > <i class="material-icons">shuffle</i></button></li>
+                                       <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Shuffle" id="playbar-shuffle-button" > <i class="material-icons" id="shuffle-icon">shuffle</i></button></li>
                                        <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Previous"  id="playbar-prev-button"><i class="material-icons">skip_previous</i></button></li>
                                        <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Play" id="playbar-play-button"> <i class="material-icons"><span class="play-pause-button">play_circle_filled</span></i></button></li>
                                        <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Next"  id="playbar-next-button"><i class="material-icons">skip_next</i></button></li>

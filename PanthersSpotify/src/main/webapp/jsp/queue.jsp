@@ -35,8 +35,12 @@
 	}else
 	{
 		JSONObject nowPlay = queue.getJSONObject("nowPlay");
-		JSONObject nowSong = nowPlay.getJSONObject("song");
-		
+		if (nowPlay.length()==0){
+			%>
+			<h3 align="center" style="color:white;">Your Queue is empty</h3>>
+			<%
+		}else{
+			JSONObject nowSong = nowPlay.getJSONObject("song");
 	%>
  <div id = "nowPlayingSongDiv">
   <h3>Now Playing</h3>
@@ -156,7 +160,7 @@
 	    		}
 			%>
 		</td>
-        <td><% JSONObject album = nowPlay.getJSONObject("album"); 
+        <td><% JSONObject album = ns.getJSONObject("album"); 
         		boolean hasAlbum = (album.length()==0);
         	%>
 				<a  style="color:black;" href=<%= hasAlbum ? "" : "{cp}/../getSpecificArtist/"+album.get("id") %>> <%= (album.length()==0) ? "unknown" : album.get("name") %> </a>
@@ -178,6 +182,7 @@
 </div>
 </div>
 <% 
+		}
 	}
 %>
 <div id="historyDiv" class="w3-container info-table"

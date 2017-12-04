@@ -75,7 +75,7 @@
                 <div class="w3-dropdown-click more_action_list">
                   <button class="w3-button more_button"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
                   <div class="w3-dropdown-content w3-bar-block w3-border song_action_list">
-                    <button onclick="" class="w3-bar-item w3-button">Add to Queue</button>
+                     <button onclick="" class="w3-bar-item w3-button add-to-queue-btn">Add to Queue<span style="display:none;" class="song-id">${song.sid}</span></button>
                     <button onclick="" class="w3-bar-item w3-button">Go to Song Radio</button>
                     <hr>
                     <button onclick="" class="w3-bar-item w3-button">Go to Artist</button> <!-- a song might have multiple artists -->

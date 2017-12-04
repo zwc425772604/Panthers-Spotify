@@ -894,9 +894,13 @@ public class ServletController {
         //-------------------------794---------------------------------------------------------------
         
         
-		songService.addPlaylistToQueue(newSq, pid, email);
+        songService.addPlaylistToQueue(newSq, pid, email);
+		String sid = request.getParameter("sid");
+		int index = newSq.get(0).getSong().getSid();
+		if (sid != null)
+			index = Integer.parseInt(sid);
 		if(newSq.size()>0) {
-			songService.setNowPlay(newSq, newSq.get(0).getSong().getSid());
+			songService.setNowPlay(newSq, index);
 			songService.setArtistsCollection(newSq);
 		}
 		user.setSongQueueCollection(newSq);

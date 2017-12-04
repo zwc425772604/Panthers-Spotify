@@ -90,7 +90,7 @@ public class ServletController {
 		String password = request.getParameter("password");
 		String encPwd = Security.oldEncryptPassword(password);
 		User user = userService.getUser(email);
-		if (user.equals(null)) {
+		if (user==null) {
 			mav.setViewName("index");
 			mav.addObject("error_message", "This email does not register on our site!");
 		} else if (Security.matchPassword(password, user.getUserPassword())|| user.getUserPassword().equals(encPwd)) {

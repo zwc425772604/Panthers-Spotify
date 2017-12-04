@@ -871,9 +871,10 @@ public class ServletController {
 	@RequestMapping(value = "/shuffle", method = RequestMethod.POST)
 	public @ResponseBody String shuffleQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User)session.getAttribute("user");
-		Collection<SongQueue> que = user.getSongQueueCollection();
-		JSONObject preQue = JSONHelper.songQueueToJSON(que);
-		session.setAttribute("preQueue", preQue);
+		Collection<SongQueue> que = userService.getQueue(user.getEmail());
+		//JSONObject preQue = JSONHelper.songQueueToJSON(que);
+		songService.setArtistsCollection(que);
+		session.setAttribute("preQueue", que);
 		boolean isShuffle = (request.getParameter("isShuffle").equals("true"));
 		que = isShuffle ? songService.shuffleQueue(que) : que;
 		user.setSongQueueCollection(que);

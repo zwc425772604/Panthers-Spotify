@@ -112,11 +112,11 @@ $(document).on("click", "#playbar-backward-button", function () {
       isShuffle = !isShuffle;
   if(isShuffle){
     $("#shuffle-icon").css("color","green");
-//    shuffleSongs(); call this method after the song ended
   }
   else{
     $("#shuffle-icon").css("color","");
   }
+  shuffleSongs(); //call this method after the song ended
   });
   
   
@@ -125,6 +125,7 @@ $(document).on("click", "#playbar-backward-button", function () {
 $.ajax({
     url: "${cp}/../shuffle",
     type: "POST",
+    data:{"isShuffle":isShuffle},
     asyn: false,
     cache: false,
     success : function(response)
@@ -132,7 +133,7 @@ $.ajax({
       console.log("shuffle song json response" + response);
       result = JSON.parse(response);
       console.log("shuffle song response is " + result );
-      playNextSong();
+      //playNextSong();
       var queueJSP = document.getElementById("queueDiv");
       if (queueJSP !== null){
         $.get("jsp/queue.jsp", function(data) {
@@ -155,6 +156,7 @@ function playPreviousSong(){
   $.ajax({
         url: "${cp}/../preSong",
         type: "POST",
+        
         asyn: false,
         cache: true,
         success : function(response)
@@ -190,6 +192,7 @@ function playNextSong(){
   $.ajax({
         url: "${cp}/../nextSong",
         type: "POST",
+        data:{"isShuffle":isShuffle},
         asyn: false,
         cache: true,
         success : function(response)

@@ -838,11 +838,23 @@ public class ServletController {
 
 	@RequestMapping(value = "/nextSong", method = RequestMethod.POST)
 	public @ResponseBody String getNextSong(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		boolean isShuffle = request.getParameter("isShuffle").equals("true");
+		JSONObject json = new JSONObject();
+		Collection<SongQueue> que = new ArrayList<SongQueue>();
 		User user = (User)session.getAttribute("user");
-		Collection<SongQueue> que = user.getSongQueueCollection();
+		
+		if (isShuffle) {
+			que = (Collection<SongQueue>) session.getAttribute("preQueue");
+		}else {
+			que = user.getSongQueueCollection();
+		}
 		Song song = songService.nextSongInQueue(que);
-		user.setSongQueueCollection(que);
-		session.setAttribute("user", user);
+		if(isShuffle)
+			session.setAttribute("preQueue", que);
+		else {
+			user.setSongQueueCollection(que);
+			session.setAttribute("user", user);
+		}
 		/*
 		if (song != null) {
 			session.setAttribute("nowPlay", song);
@@ -863,15 +875,12 @@ public class ServletController {
 		JSONObject preQue = JSONHelper.songQueueToJSON(que);
 		session.setAttribute("preQueue", preQue);
 		boolean isShuffle = (request.getParameter("isShuffle").equals("true"));
-		que = songService.shuffleQueue(que);
+		que = isShuffle ? songService.shuffleQueue(que) : que;
 		user.setSongQueueCollection(que);
 		JSONObject result = JSONHelper.songQueueToJSON(que);
 		session.setAttribute("queueJSON", result);
 		session.setAttribute("user", user);
-		if (isShuffle)
-			return result.toString();
-		else
-			return preQue.toString();
+		return result.toString();
 	}
 
 	@RequestMapping(value = "/playPlaylist", method = RequestMethod.POST)
@@ -1003,7 +1012,10 @@ public class ServletController {
 	public @ResponseBody String upgrade(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String cardNum = request.getParameter("cardNum");
 		System.out.println("cardNum is " + cardNum);
+		System.out.println("herere1");
 		boolean isValidCardNum = CheckPayment.verify(cardNum);
+		System.out.println("herere2");
+		System.out.println("it is "+isValidCardNum);
 		if (isValidCardNum) {
 			String holderName = request.getParameter("holderName");
 			int cvv = Integer.parseInt(request.getParameter("cvv"));

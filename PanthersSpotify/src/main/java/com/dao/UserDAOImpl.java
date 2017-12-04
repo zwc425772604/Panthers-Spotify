@@ -16,7 +16,9 @@ import javax.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.model.Album;
 import com.model.Artist;
+import com.model.Concert;
 import com.model.Followartist;
 import com.model.Followplaylist;
 import com.model.Friend;
@@ -24,6 +26,7 @@ import com.model.FriendPK;
 import com.model.Payment;
 import com.model.Playlist;
 import com.model.Releasesong;
+import com.model.Song;
 import com.model.SongQueue;
 import com.model.User;
 import com.model.UserType;
@@ -244,7 +247,7 @@ public class UserDAOImpl implements UserDAO {
 		return retArtist;
 	}
 	
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = false)
 	public Artist editArtist(User artist,String bio) {
 		Query query = entityManager.createNamedQuery("Artist.findByArtistEmail").setParameter("artistEmail", artist.getEmail());
 		
@@ -254,5 +257,38 @@ public class UserDAOImpl implements UserDAO {
 		
 		return retArtist;
 	}
+	
+	@Transactional(readOnly = true)
+	public Concert getConcert(int cid) {
+		Query query = entityManager.createNamedQuery("Concert.findByCid").setParameter("cid", cid);
+		
+		Concert retConcert = (Concert)query.getSingleResult();
+			
+		
+		return retConcert;
+	}
+	
+	@Transactional(readOnly = false)
+	public Concert addConcert(Concert c) {
+		entityManager.persist(c);
+		return c;
+	}
+	
+	@Transactional(readOnly = false)
+	public Concert deleteConcert(Concert c) {
+		entityManager.remove(c);
+		return c;
+	}
+	
+	@Transactional(readOnly = true)
+	public List<Concert> getConcerts(User user) {
+		TypedQuery<Concert> query1 = entityManager
+				.createQuery("SELECT s from Concert s WHERE s.uemail=:uemail", Concert.class)
+				.setParameter("uemail", user);
+
+		List<Concert> result = query1.getResultList();
+		return result;
+	}
+	
 
 }

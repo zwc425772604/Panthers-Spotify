@@ -3,12 +3,16 @@
 package com.controllers;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -40,6 +44,7 @@ import com.helper.StringToDateHelper;
 //import com.helper.StringToDateHelper;
 import com.model.Album;
 import com.model.Artist;
+import com.model.Concert;
 import com.model.Payment;
 import com.model.Song;
 import com.model.SongQueue;
@@ -1313,6 +1318,43 @@ public class ServletController {
 		}
 		
 		session.setAttribute("artist_list", relatedAlbumsArtist);
+		return "ok";
+	}
+	
+	
+	@RequestMapping(value = "/addConcert", method = RequestMethod.POST)
+	public @ResponseBody String addConcert(@PathVariable String status, HttpServletRequest request, HttpSession session) {
+		User user = (User) session.getAttribute("user");//artist page only
+		Concert c = new Concert();
+		String address = request.getParameter("address");	
+		String cname = request.getParameter("cname");
+		String ctimeTmp = request.getParameter("ctime");
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd yyyy hh:mm:ss", Locale.US);
+		Date ctime = null;
+		try {
+			ctime = (Date) dateFormat.parse(ctimeTmp);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		c.setAddress(address);
+		c.setCname(cname);
+		c.setCtime(ctime);
+		c.setUemail(user);
+		userService.addConcert(c);
+		
+		return "ok";
+	}
+	
+	@RequestMapping(value = "/getConcertInfo", method = RequestMethod.POST)
+	public @ResponseBody String getConcertInfo(@PathVariable String status, HttpServletRequest request, HttpSession session) {
+		User user = (User) session.getAttribute("user");//normal user page only
+		String artistEmail = request.getParameter("artistEmail");	
+		
+		User u = userService.getUser(artistEmail);
+		List<Concert> c = userService.getConcerts(u);
+		
+		
 		return "ok";
 	}
 	

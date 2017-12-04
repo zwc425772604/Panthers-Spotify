@@ -5,13 +5,17 @@
  */
 package com.model;
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -20,25 +24,43 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author weichaozhao
+ * @author yangxiang
  */
 @Entity
-@Table(name = "concert")
+@Table(name = "concert", catalog = "panthers", schema = "")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Concert.findAll", query = "SELECT c FROM Concert c")
     , @NamedQuery(name = "Concert.findByCid", query = "SELECT c FROM Concert c WHERE c.cid = :cid")
     , @NamedQuery(name = "Concert.findByCtime", query = "SELECT c FROM Concert c WHERE c.ctime = :ctime")
+    , @NamedQuery(name = "Concert.findByAddress", query = "SELECT c FROM Concert c WHERE c.address = :address")
     , @NamedQuery(name = "Concert.findByCname", query = "SELECT c FROM Concert c WHERE c.cname = :cname")})
 public class Concert implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @Column(name = "cid", nullable = false)
+    private Integer cid;
+    @Column(name = "ctime")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date ctime;
+    @Column(name = "cname", length = 50)
+    private String cname;
+    @JoinColumn(name = "uemail", referencedColumnName = "email")
+    
+    @Column(name = "address", length = 200)
+    private String address;
+    
+    @ManyToOne
+    private User uemail;
+    @JoinColumn(name = "lid", referencedColumnName = "lid")
+    @ManyToOne
+    private Location lid;
 
     public Concert() {
     }
@@ -47,53 +69,46 @@ public class Concert implements Serializable {
         this.cid = cid;
     }
 
-    @Id
-    @Basic(optional = false)
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    @NotNull
-    @Column(name = "cid", nullable = false)
-    private Integer cid;
     public Integer getCid() {
         return cid;
     }
+
     public void setCid(Integer cid) {
         this.cid = cid;
     }
 
-    @Column(name = "ctime")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date ctime;
     public Date getCtime() {
         return ctime;
     }
+
     public void setCtime(Date ctime) {
         this.ctime = ctime;
     }
+    
+    public String getAddress() {
+        return address;
+    }
 
-    @Size(max = 50)
-    @Column(name = "cname", length = 50)
-    private String cname;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public String getCname() {
         return cname;
     }
+
     public void setCname(String cname) {
         this.cname = cname;
     }
 
-    @JoinColumn(name = "uemail", referencedColumnName = "email")
-    @ManyToOne
-    private User uemail;
     public User getUemail() {
         return uemail;
     }
+
     public void setUemail(User uemail) {
         this.uemail = uemail;
     }
 
-
-    @JoinColumn(name = "lid", referencedColumnName = "lid")
-    @ManyToOne
-    private Location lid;
     public Location getLid() {
         return lid;
     }
@@ -124,7 +139,7 @@ public class Concert implements Serializable {
 
     @Override
     public String toString() {
-        return "com.model.Concert[ cid=" + cid + " ]";
+        return "javaapplication2.Concert[ cid=" + cid + " ]";
     }
-
+    
 }

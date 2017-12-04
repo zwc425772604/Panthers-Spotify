@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.model.Artist;
+import com.model.Concert;
 import com.model.Payment;
 import com.model.Releasesong;
 import com.model.SongQueue;
@@ -34,4 +35,8 @@ public interface UserDAO {
 	public void setRoyalty(Artist artist,double royalty) ;
 	public Artist getArtist(User artist);
 	public Artist editArtist(User artist,String bio);
+	public Concert getConcert(int cid);
+	public Concert addConcert(Concert c);
+	public Concert deleteConcert(Concert c);
+	public List<Concert> getConcerts(User user);
 }

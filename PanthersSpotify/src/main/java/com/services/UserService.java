@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.model.Artist;
+import com.model.Concert;
 import com.model.Payment;
 import com.model.Song;
 import com.model.SongQueue;
@@ -65,4 +66,12 @@ public interface UserService {
 	public void sendEmail(String sentToEmail,String token);
 	
 	public User editUserToken(User user);
+	
+	public Concert getConcert(int cid);
+	
+	public void addConcert(Concert c);
+	
+	public void deleteConcert(Concert c);
+	
+	public List<Concert> getConcerts(User user);
 }

@@ -25,6 +25,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.model.Artist;
+import com.model.Concert;
 import com.model.Payment;
 import com.model.Playlist;
 import com.model.Releasesong;
@@ -327,6 +328,32 @@ public class UserServiceImpl implements UserService {
         message.setSubject("PantherSpotify company"); 
         message.setText("your varification code is : "+token);
         sender.send(message);
+	}
+	
+	@Transactional
+	public void addConcert(Concert c)
+	{
+	    
+	    userDAO.addConcert(c);
+	}
+	
+	@Transactional
+	public void deleteConcert(Concert c)
+	{
+	    
+	    userDAO.deleteConcert(c);
+	}
+	
+	@Transactional
+	public Concert getConcert(int cid)
+	{
+	    return userDAO.getConcert(cid);
+	}
+	
+	@Transactional
+	public List<Concert> getConcerts(User user)
+	{
+	    return userDAO.getConcerts(user);
 	}
 	
 	

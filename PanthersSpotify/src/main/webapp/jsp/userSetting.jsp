@@ -31,8 +31,16 @@
             <div class="col-md-5">
               <div class="col-md-5">
               <select id="privacy">
-				  <option value="public">Public</option>
+              	<c:choose>
+              	  <c:when test="${user.isPublic}">
+				  <option value="public"  selected>Public</option>
 				  <option value="private">Private</option>
+				  </c:when>
+				  <c:otherwise>
+				  <option value="public">Public</option>
+				  <option value="private" selected>Private</option>
+				  </c:otherwise>
+				</c:choose>
 			  </select>
             </div>
             </div>

@@ -34,15 +34,14 @@
 </script>
 <!--  Container for Album -->
 <div class="suggestion-container" id="charts-container">
-	<!--  <div id="top_content">
+	<div id="top_content">
 		<p style="display: inline; font-size: 18px;">Sorted by</p>
 		<select id="sorted_by_keyword"
 			style="display: inline; font-size: 20px;">
-			<option value="Artist">Artist</option>
-			<option value="Title">Title</option>
-			<option value="Recently Added">Recently Added</option>
+			<option id="sort_by" value=""></option>
+			<option id="sort_by" value="Title">Title           </option>
 		</select>
-	</div>-->
+	</div>
 	<!-- Saved albums section -->
 	<section class="row placeholders" id="infoContainer">
 		<c:if test="${not empty album_list}">

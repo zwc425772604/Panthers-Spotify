@@ -140,11 +140,11 @@ public class User implements Serializable {
 	@Column(name = "isPublic")
 	private boolean isPublic;
 
-	public boolean getPublic() {
+	public boolean getIsPublic() {
 		return isPublic;
 	}
 
-	public void setPublic(boolean isPublic) {
+	public void setIsPublic(boolean isPublic) {
 		this.isPublic = isPublic;
 	}
 	

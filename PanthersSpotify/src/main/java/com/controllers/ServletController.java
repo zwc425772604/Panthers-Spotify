@@ -474,7 +474,7 @@ public class ServletController {
 		String privacy = request.getParameter("privacy");
 		String language = request.getParameter("lang");
 		
-		user.setPublic((privacy.equals("Public")? true:false));		
+		user.setIsPublic((privacy.equals("Public")? true:false));		
 		
 		userService.updateSpecificUser(user);
 		return "ok";
@@ -1255,8 +1255,8 @@ public class ServletController {
 		}
 		
 		User friend = userService.getUser(email);
-		System.out.println(friend.getPublic());
-		if(!friend.getPublic()) {
+		System.out.println(friend.getIsPublic());
+		if(!friend.getIsPublic()) {
 			return "private";
 		}
 		List<Song> history = songService.getHistorySongs(email);
@@ -1371,13 +1371,12 @@ public class ServletController {
 	public @ResponseBody String findPayment(@PathVariable String status, HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");//normal user page only
 		Payment userPayment = userService.findPayment(user.getEmail());
-		
-		
+				
 		return JSONHelper.getPayment(userPayment);
 	}
 	
 	@RequestMapping(value = "/sortAlbum", method = RequestMethod.POST)
-	public @ResponseBody String sortAlbum(@PathVariable String status, HttpServletRequest request, HttpSession session) {
+	public @ResponseBody String sortAlbum( ModelAndView mav,HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");//normal user page only
 		List<Album> albums = (List<Album>)session.getAttribute("album_list");
 		albums = SortTitle.sortAlbumAlpha(albums);

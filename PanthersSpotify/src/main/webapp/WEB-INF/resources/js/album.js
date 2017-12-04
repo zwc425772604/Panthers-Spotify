@@ -34,6 +34,23 @@ $(document).on("click", ".album-item", function(){
      });
 });
 
+$("#sorted_by_keyword").change(function(){
+	$.ajax({
+		url: "${cp}/../sortAlbum",
+        type: "POST",
+        asyn: false,
+        cache: false,
+        success : function(response)
+        {
+        	$("#main-changing-content").load("jsp/album.jsp");
+        },
+        error: function(e)
+        {
+          console.log(e);
+        }     
+     });
+})
+
 $( "#filter_container" )
 .mouseover(function() {
   $('#filter_keyword').css('color', 'white');

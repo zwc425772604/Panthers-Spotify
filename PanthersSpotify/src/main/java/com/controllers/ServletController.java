@@ -453,6 +453,7 @@ public class ServletController {
 	@RequestMapping(value = "/privateSession", method = RequestMethod.POST)
 	public @ResponseBody String privateSession(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");
+		System.out.println("herere");
 		if(user.getPrivateSession())
 		{
 			user.setPrivateSession(false);
@@ -461,7 +462,7 @@ public class ServletController {
 		{
 			user.setPrivateSession(true);
 		}		
-		
+		userService.updateSpecificUser(user);
 		System.out.println(user.getPrivateSession());
 		return "ok";
 	}
@@ -474,6 +475,7 @@ public class ServletController {
 		
 		user.setPublic((privacy.equals("Public")? true:false));		
 		
+		userService.updateSpecificUser(user);
 		return "ok";
 	}
 	

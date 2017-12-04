@@ -74,4 +74,6 @@ public interface UserService {
 	public void deleteConcert(Concert c);
 	
 	public List<Concert> getConcerts(User user);
+	
+	public User updateSpecificUser(User user);
 }

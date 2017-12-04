@@ -356,5 +356,11 @@ public class UserServiceImpl implements UserService {
 	    return userDAO.getConcerts(user);
 	}
 	
+	@Transactional
+	public User updateSpecificUser(User user)
+	{
+	    return userDAO.updateUser(user);
+	}
+	
 	
 }

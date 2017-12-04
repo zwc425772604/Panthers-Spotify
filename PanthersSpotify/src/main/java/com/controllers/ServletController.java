@@ -1355,6 +1355,7 @@ public class ServletController {
 		
 		User u = userService.getUser(artistEmail);
 		List<Concert> c = userService.getConcerts(u);
+		System.out.println("merge");
 		
 		
 		return "ok";

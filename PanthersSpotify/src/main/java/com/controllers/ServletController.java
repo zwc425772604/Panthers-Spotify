@@ -881,7 +881,11 @@ public class ServletController {
         Playlist p = playlistService.getPlaylist(pid);
 
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
-        playlistService.addHistoryPlaylist(p, user, date);
+		if(user.getPrivateSession()==false)
+		{
+			playlistService.addHistoryPlaylist(p, user, date);
+		}
+		
         
         List<Song> s = playlistService.getSongInPlaylist(pid);
         Song specificSong = s.get(0);

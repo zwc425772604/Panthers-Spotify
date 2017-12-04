@@ -90,8 +90,25 @@ function addToPlaybarPlaylist(song_json)
 	player.jPlayer("setMedia", myPlaylist[0]);
 	player.jPlayer("play");
 }
-/*
-$(document).on("click", "#playbar-shuffle-button", function () {
+  
+$(document).on("click", "#playbar-forward-button", function () {
+    var currentTime = $('#jquery_jplayer_1').data('jPlayer').status.currentTime;
+    var songDuration = $('#jquery_jplayer_1').data('jPlayer').status.duration;
+        if (currentTime < songDuration - 15) {
+            $("#jquery_jplayer_1").jPlayer("play", currentTime + 15);     
+        }
+//        else{
+//            playNextSong();
+//        }
+  });
+$(document).on("click", "#playbar-backward-button", function () {
+    var currentTime = $('#jquery_jplayer_1').data('jPlayer').status.currentTime;
+        if (currentTime > 15) {
+            $("#jquery_jplayer_1").jPlayer("play", currentTime - 15);     
+        }  
+  });
+  
+  $(document).on("click", "#playbar-shuffle-button", function () {
       isShuffle = !isShuffle;
   if(isShuffle){
     $("#shuffle-icon").css("color","green");
@@ -101,9 +118,10 @@ $(document).on("click", "#playbar-shuffle-button", function () {
     $("#shuffle-icon").css("color","");
   }
   });
-*/
-$(document).on("click","#playbar-shuffle-button",function(){
-// function shuffleSongs(){
+  
+  
+
+ function shuffleSongs(){
 $.ajax({
     url: "${cp}/../shuffle",
     type: "POST",
@@ -114,7 +132,7 @@ $.ajax({
       console.log("shuffle song json response" + response);
       result = JSON.parse(response);
       console.log("shuffle song response is " + result );
-      //playNextSong();
+      playNextSong();
       var queueJSP = document.getElementById("queueDiv");
       if (queueJSP !== null){
         $.get("jsp/queue.jsp", function(data) {
@@ -129,7 +147,6 @@ $.ajax({
     }
   } );
 }
-);
 
 
 function playPreviousSong(){
@@ -166,6 +183,10 @@ function playPreviousSong(){
 function playNextSong(){
   console.log("play next");
 //  playNextSong();
+
+    if((result.nextUp).length !=0)
+    {
+   
   $.ajax({
         url: "${cp}/../nextSong",
         type: "POST",
@@ -194,6 +215,11 @@ function playNextSong(){
           console.log(e);
         }
       });
+  }
+  else
+  {
+      player.jPlayer("stop");
+  }
 }
     
 	
@@ -258,35 +284,3 @@ function updatePlayerButton(actual_json){
 		$("#playbar-next-button").prop("disabled",false);
 	}
 }
-
-function playNextSong(){
-	$.ajax({
-        url: "${cp}/../nextSong",
-        type: "POST",
-        asyn: false,
-        cache: true,
-        success : function(response)
-        {
-          //console.log("next:  "+response);
-          console.log("next button json response " + response );
-          var actual_json = JSON.parse(response);
-          console.log("next song js response " + actual_json);
-          addToPlaybarPlaylist(actual_json);
-          updateSongInfo(actual_json.nowPlay);
-          //player.jPlayer("play");
-          updatePlayerButton(actual_json);
-          var queueJSP = document.getElementById("queueDiv");
-          if (queueJSP != null){
-        	  $.get("jsp/queue.jsp", function(data) {
-                  $("#main-changing-content").html(data)
-              });
-          }
-        },
-        error: function(e)
-        {
-
-          console.log(e);
-        }
-      });
-}
-

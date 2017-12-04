@@ -1254,6 +1254,11 @@ public class ServletController {
 			email = user.getEmail();
 		}
 		
+		User friend = userService.getUser(email);
+		System.out.println(friend.getPublic());
+		if(!friend.getPublic()) {
+			return "private";
+		}
 		List<Song> history = songService.getHistorySongs(email);
 		String JSON = JSONHelper.new_pendingSongsToJSON(history, songService);
 		

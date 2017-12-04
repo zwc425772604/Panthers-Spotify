@@ -9,8 +9,15 @@ $(document).ready(function(){
         cache: false,
         success : function(response)
         {
-        	var actual_JSON = JSON.parse(response);
-        	insertSongsTable(actual_JSON);
+        	if(response.localeCompare('private') == 0){
+        		$("#song-table").empty();
+        		$("#song-table").append("This user's history is set to Private");
+        	}
+        	else{
+        		var actual_JSON = JSON.parse(response);
+        		insertSongsTable(actual_JSON);
+        	}
+        	
         },
         error: function(e)
         {

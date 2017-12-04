@@ -52,6 +52,7 @@
     
   
   </div>
+ 
   <div id="song-collection">
       <div class="table-responsive">
         <table class="table" id="song-table">
@@ -76,5 +77,3 @@
         </table>
       </div>
     </div>
-
-  

@@ -9,6 +9,34 @@ function checkPassword(password, password_confirm)
     }
   }
   
+function submitConfirm(){
+	var verf = $("#verf").val();
+	var pwd = $("#password").val();
+	if(!verf)
+	{
+		$("#verf-error").empty();
+		$("#verf-error").append("Verf cannot be black");
+	}
+	else{
+		$.ajax({
+		    url: "${cp}/../editUserPassword",
+		    type: "POST",
+		        asyn: true,
+		        cache: false,
+		        data: {"token": verf, "password":pwd},
+		        success : function(response)
+		        {		          
+		          $("#main-changing-content").load("jsp/browse.jsp");
+		        },
+		        error: function(e)
+		        {
+		          console.log(e);
+		        }
+		  
+		      });
+	}
+}
+
 function validateFormInputs()
   {
     var password = $("#password").val();
@@ -20,14 +48,13 @@ function validateFormInputs()
 	  $("#password_error").text("");
 	  $("#email_error").text("");
 	  $.ajax({
-	    url: "${cp}/editUserPassword",
+	    url: "${cp}/../sendToken",
 	    type: "POST",
-	    data : {"password" : password },
 	        asyn: true,
 	        cache: false,
 	        success : function(response)
 	        {
-	          console.log(response);         
+	          $("#submitPwdForm").show();
 	        },
 	        error: function(e)
 	        {
@@ -35,7 +62,6 @@ function validateFormInputs()
 	        }
 	  
 	      });
-	      $("#main-changing-content").load("jsp/browse.jsp");
 	    }
 	    else
 	    {

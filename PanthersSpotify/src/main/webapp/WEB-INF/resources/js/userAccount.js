@@ -5,7 +5,7 @@ function validateFormInputsforAccount()
       var lastName = $("#lastName").val();
     
       $.ajax({
-          url: "${cp}/editUserAccount",
+          url: "${cp}/../editUserAccount",
           type: "POST",
           data : {"gender" : gender, "firstName" : firstName, "lastName" : lastName },
           asyn: true,

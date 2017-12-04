@@ -153,7 +153,7 @@ public class User implements Serializable {
 	private String token;
 
 	public String getToken() {
-		return middleName;
+		return token;
 	}
 
 	public void setToken(String token) {

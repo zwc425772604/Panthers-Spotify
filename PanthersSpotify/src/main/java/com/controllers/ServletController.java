@@ -433,6 +433,7 @@ public class ServletController {
 		User user = (User) session.getAttribute("user");
 		String pwd = request.getParameter("password");
 		String token = request.getParameter("token");
+		System.out.println(token + " " + user.getToken());
 		if(token.equals(user.getToken()))
 		{
 			String encPwd = Security.encryptPassword(pwd);
@@ -442,8 +443,7 @@ public class ServletController {
 		else
 		{
 			System.out.println("invalid token");
-		}
-		
+		}		
 		mav.setViewName("main");
 		mav.addObject("username", user.getUserName());
 		return mav;

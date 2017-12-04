@@ -10,7 +10,7 @@ function sendUserSetting()
         cache: false,
         success : function(response)
         {
-        	
+        	$("#main-changing-content").load("jsp/browse.jsp");
         },
         error: function(e)
         {

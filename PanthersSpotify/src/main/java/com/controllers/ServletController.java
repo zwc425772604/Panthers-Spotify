@@ -40,6 +40,7 @@ import com.model.UserType;
 import com.helper.CheckPayment;
 import com.helper.JSONHelper;
 import com.helper.Security;
+import com.helper.SortTitle;
 import com.helper.StringToDateHelper;
 //import com.helper.StringToDateHelper;
 import com.model.Album;
@@ -1368,6 +1369,16 @@ public class ServletController {
 		
 		
 		return JSONHelper.getPayment(userPayment);
+	}
+	
+	@RequestMapping(value = "/sortAlbum", method = RequestMethod.POST)
+	public @ResponseBody String sortAlbum(@PathVariable String status, HttpServletRequest request, HttpSession session) {
+		User user = (User) session.getAttribute("user");//normal user page only
+		List<Album> albums = (List<Album>)session.getAttribute("album_list");
+		albums = SortTitle.sortAlbumAlpha(albums);
+		session.setAttribute("album_list",albums);
+		
+		return "ok";
 	}
 	
 }

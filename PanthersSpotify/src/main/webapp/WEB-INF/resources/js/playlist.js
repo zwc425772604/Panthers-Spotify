@@ -172,6 +172,25 @@ $(".playbar-play-button").click(function(){
      console.log("sond Id to play in playlist is " + sid);
      var pid = $("#playlistID").text().trim();
      console.log("playlist ID to play is " + pid );
+     $.ajax({
+         url: "${cp}/../playPlaylist ",
+         type: "POST",
+         data : {"pid" : pid, "sid":sid},
+         asyn: false,
+         cache: false,
+         success : function(response)
+         {
+           console.log("song in queue: "+ response);
+           var actual_json = JSON.parse(response);
+           console.log(actual_json);
+           addToPlaybarPlaylist(actual_json);
+           //updateButtons()
+         },
+         error: function(e)
+         {
+           console.log(e);
+         }
+	  });
 
       if ($(".song-page-play-pause-button",this).text().localeCompare('play_circle_filled') == 0)
       {

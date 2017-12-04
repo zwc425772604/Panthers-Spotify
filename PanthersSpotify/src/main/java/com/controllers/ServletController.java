@@ -446,7 +446,7 @@ public class ServletController {
 	
 	
 	@RequestMapping(value = "/privateSession", method = RequestMethod.POST)
-	public ModelAndView privateSession(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	public @ResponseBody String privateSession(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		if(user.getPrivateSession())
 		{
@@ -456,27 +456,20 @@ public class ServletController {
 		{
 			user.setPrivateSession(true);
 		}		
-		mav.setViewName("main");
-		mav.addObject("username", user.getUserName());
+		
 		System.out.println(user.getPrivateSession());
-		return mav;
+		return "ok";
 	}
 	
-	@RequestMapping(value = "/ispublic", method = RequestMethod.POST)
-	public ModelAndView ispublic(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	@RequestMapping(value = "/editUserSetting", method = RequestMethod.POST)
+	public @ResponseBody String editUserSetting(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");
-		if(user.getPublic())
-		{
-			user.setPublic(false);
-		}
-		else
-		{
-			user.setPublic(true);
-		}		
-		mav.setViewName("main");
-		mav.addObject("username", user.getUserName());
+		String privacy = request.getParameter("privacy");
+		String language = request.getParameter("lang");
 		
-		return mav;
+		user.setPublic((privacy.equals("Public")? true:false));		
+		
+		return "ok";
 	}
 	
 	//this is in the change password place

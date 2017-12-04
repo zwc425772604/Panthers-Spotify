@@ -5,6 +5,7 @@
   <!-- 	<link rel="stylesheet" href="${cp}/resources/css/songs.css"> -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://www.w3schools.com/lib/w3.js"></script> <!-- for include html in div tag -->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="${cp}/resources/js/songs.js" /></script>
   <link rel="stylesheet" href="${cp}/resources/css/songs.css">
@@ -21,13 +22,13 @@
     <span class="input-group-addon" id="search_span">
     <i class="fa fa-search" aria-hidden="true"></i>
     </span>
-    <input type="search" id="filter_keyword" name="q" onkeyup="filterAlbum()" placeholder="Filter">
+    <input type="search" id="filter_keyword" name="q" oninput="w3.filterHTML('#songs-table-info', '.song_info', this.value)" placeholder="Filter">
   </div>
 </div>
 <!--  Container for track list -->
 <div class="suggestion-container" id = "charts-container">
   <div class="table-responsive">
-    <table class="table">
+    <table class="table" id="songs-table-info">
       <thead>
         <tr>
           <th></th>

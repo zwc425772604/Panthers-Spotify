@@ -182,6 +182,23 @@ public class UserDAOImpl implements UserDAO {
 		return result;
 	}
 	
+	
+	
+	@Transactional(readOnly = true)
+	public Payment findPayment(String userEmail) {
+		Query query = entityManager.createNamedQuery("Payment.findByUemail", Payment.class);
+		query.setParameter("uemail", userEmail);
+		Payment result=null;
+		try {
+			result = (Payment) query.getSingleResult();
+		}
+		catch(NoResultException e)
+		{
+			return null;
+		}
+		return result;
+	}
+	
 	@Transactional(readOnly = false)
 	public void addPayment(Payment payment) {
 		entityManager.persist(payment);		

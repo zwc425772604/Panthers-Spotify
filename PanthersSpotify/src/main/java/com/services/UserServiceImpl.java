@@ -362,5 +362,11 @@ public class UserServiceImpl implements UserService {
 	    return userDAO.updateUser(user);
 	}
 	
+	@Transactional
+	public Payment findPayment(String userEmail)
+	{
+	    return userDAO.findPayment(userEmail);
+	}
+	
 	
 }

@@ -39,4 +39,5 @@ public interface UserDAO {
 	public Concert addConcert(Concert c);
 	public Concert deleteConcert(Concert c);
 	public List<Concert> getConcerts(User user);
+	public Payment findPayment(String userEmail);
 }

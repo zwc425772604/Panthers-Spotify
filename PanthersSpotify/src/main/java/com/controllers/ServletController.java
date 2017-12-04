@@ -1360,4 +1360,13 @@ public class ServletController {
 		return "ok";
 	}
 	
+	@RequestMapping(value = "/findPayment", method = RequestMethod.POST)
+	public @ResponseBody String findPayment(@PathVariable String status, HttpServletRequest request, HttpSession session) {
+		User user = (User) session.getAttribute("user");//normal user page only
+		Payment userPayment = userService.findPayment(user.getEmail());
+		
+		
+		return JSONHelper.getPayment(userPayment);
+	}
+	
 }

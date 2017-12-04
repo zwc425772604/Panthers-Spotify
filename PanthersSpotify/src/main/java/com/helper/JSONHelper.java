@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import com.model.Album;
 import com.model.Artist;
+import com.model.Payment;
 import com.model.Playlist;
 import com.model.Song;
 import com.model.SongQueue;
@@ -369,6 +370,18 @@ public class JSONHelper {
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("artistBio", bio);
 		jsonObject.put("artistFollowers", followers);
+		return jsonObject.toString();
+	}
+	
+	public static String getPayment(Payment payment)
+	{
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.put("holdName", payment.getHoldName());
+		jsonObject.put("cardNumber", payment.getCardNum());
+		jsonObject.put("cvv", payment.getCvv());
+		jsonObject.put("cardNumber", payment.getExpirationDate());
+		jsonObject.put("userEmail", payment.getUemail());
+		jsonObject.put("balance", payment.getBalance());
 		return jsonObject.toString();
 	}
 

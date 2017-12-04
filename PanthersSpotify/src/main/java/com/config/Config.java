@@ -29,7 +29,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 public class Config extends WebMvcConfigurerAdapter {  
       
     @Bean  
-    public UrlBasedViewResolver setupViewResolver() {  
+    public UrlBasedViewResolver setupViewResolver() { 
         UrlBasedViewResolver resolver = new UrlBasedViewResolver();  
         resolver.setPrefix("/jsp/");  
         resolver.setSuffix(".jsp");  

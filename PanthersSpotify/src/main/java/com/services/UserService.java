@@ -76,4 +76,6 @@ public interface UserService {
 	public List<Concert> getConcerts(User user);
 	
 	public User updateSpecificUser(User user);
+	
+	public Payment findPayment(String userEmail);
 }

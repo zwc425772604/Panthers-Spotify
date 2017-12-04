@@ -431,5 +431,27 @@ $("#search-button").click(function(){
 	
 });
 
+$(document).on("click",".add-to-queue-btn" ,function(){
+	var sid = $(".song-id",this).text().trim();
+	console.log("sssid : "+ sid);
+	$.ajax({
+	    url: "${cp}/../addSongToQueue",
+	    type: "GET",
+	    data : {"sid" : sid},
+	    asyn: false,
+	    cache: true,
+	    success : function(response)
+	    {
+	    	$(".song_action_list").removeClass("w3-show");
+	    },
+	    error: function(e)
+	    {	
+	    	alert("already in queue");
+	    	$(".song_action_list").removeClass("w3-show");
+	    }
+	});
+	
+});
+
 });
 

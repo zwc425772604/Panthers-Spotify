@@ -198,11 +198,7 @@ public class SongDAOImpl implements SongDAO {
 		Date date = new Date();
 		newSq.setAddedTime(date);
 		newSq.setIsPlay(false);
-		try {
-			entityManager.persist(newSq);
-		} catch (Exception e) {
-			return null;
-		}
+		entityManager.persist(newSq);
 		return newSq;
 	}
 

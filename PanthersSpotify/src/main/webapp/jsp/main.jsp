@@ -63,8 +63,8 @@
                 </div>
               </div>
               <p id="private-session">Private Session:</p>
-              <label class="switch">
-              <input type="checkbox" checked>
+              <label class="switch" id="psSelected"  style="margin-top:0.8em;">
+              <input type="checkbox" >
               <span class="slider round"></span>
               </label>
               <div id="top-tool-upgrade-and-user">

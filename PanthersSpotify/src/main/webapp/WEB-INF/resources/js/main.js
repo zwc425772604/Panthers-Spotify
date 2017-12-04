@@ -248,6 +248,24 @@ $(document).on("submit", "#findFriendForm", function (event) {
 	  });
 });
 
+$(document).on("click","#psSelected",function(){
+	$.ajax({
+        url: "${cp}/../privateSession",
+        type: "POST",
+        asyn: false,
+        cache: false,
+        success : function(response)
+        {
+         	
+        },
+        error: function(e)
+        {
+          console.log(e);
+        }
+	  });
+});
+
+
 function displayLeftNavbarContent(nav_name)
 {
     //compare the string
@@ -363,6 +381,9 @@ $("#rangeinput").on('mousedown',function(e){
 	updateVolume(e.main);
 	
 });
+
+
+
 
 function updateVolume(volume){
 	console.log(volume);

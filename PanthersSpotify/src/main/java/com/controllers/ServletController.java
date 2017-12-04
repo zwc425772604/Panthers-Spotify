@@ -455,10 +455,10 @@ public class ServletController {
 		else
 		{
 			user.setPrivateSession(true);
-		}
-		
+		}		
 		mav.setViewName("main");
 		mav.addObject("username", user.getUserName());
+		System.out.println(user.getPrivateSession());
 		return mav;
 	}
 	
@@ -472,10 +472,10 @@ public class ServletController {
 		else
 		{
 			user.setPublic(true);
-		}
-		
+		}		
 		mav.setViewName("main");
 		mav.addObject("username", user.getUserName());
+		
 		return mav;
 	}
 	

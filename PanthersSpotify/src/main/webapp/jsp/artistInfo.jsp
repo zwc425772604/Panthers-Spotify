@@ -89,13 +89,13 @@
 					<div class="hover-control artist-item">
 						<img src="${cp}/resources/data${artist.photoUrl}"
 							width=100% height=width class="img-rounded info-image"
-							alt="Generic placeholder thumbnail"> <span class="album-ID"
+							alt="Generic placeholder thumbnail" style="border-radius: 100px;"> <span class="artist-email"
 							style="display: none;">${artist.email}</span>
 					</div>
 					<div class="artist-item medium-boxes-description">
 						<h6 style="text-align: center;">
 							<a href="#"><span id="album-name">${artist.userName}</span></a> <span
-								class="album-ID" style="display: none;">${artist.email}</span>
+								class="artist-email" style="display: none;">${artist.email}</span>
 						</h6>
 					</div>
 				</div>

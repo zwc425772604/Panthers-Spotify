@@ -1433,5 +1433,48 @@ public class ServletController {
 		
 		return "ok";
 	}
-
+	@RequestMapping(value = "/repeatTrack", method = RequestMethod.POST)
+	public @ResponseBody String repeatTrack( ModelAndView mav,HttpServletRequest request, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		ArrayList<SongQueue> que = (ArrayList<SongQueue>) user.getSongQueueCollection();
+		ArrayList<SongQueue> newSq = new ArrayList<SongQueue>();
+		Iterator<SongQueue> it = (Iterator<SongQueue>) que.iterator();
+		boolean isLast = false;
+		if (que.size()>0) {
+			isLast = que.get(que.size()-1).getIsPlay();
+		}
+		if(isLast) {
+			SongQueue last = que.get(que.size()-1);
+			que.remove(que.size()-1);
+			newSq.add(last);
+			newSq.addAll(que);
+			JSONObject result = JSONHelper.songQueueToJSON(isLast? newSq : que);
+			user.setSongQueueCollection(newSq);
+			session.setAttribute("queueJSON", result);
+			session.setAttribute("user", user);
+			return result.toString();
+		}else {
+			//JSONObject result = JSONHelper.songQueueToJSON(que);
+			JSONObject obj = (JSONObject) session.getAttribute("queueJSON");
+			return obj.toString();
+		}
+	}
+	@RequestMapping(value = "/unrepeatTrack", method = RequestMethod.POST)
+	public @ResponseBody String unrepeatTrack( ModelAndView mav,HttpServletRequest request, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		ArrayList<SongQueue> que = (ArrayList<SongQueue>) user.getSongQueueCollection();
+		SongQueue first = new SongQueue();
+		if (que.size()>0)
+			first = que.get(0);
+		if (first.getIsPlay()) {
+			que.remove(0);
+			que.add(first);
+			user.setSongQueueCollection(que);
+			session.setAttribute("user", user);
+		}
+		JSONObject result = JSONHelper.songQueueToJSON(que);
+		user.setSongQueueCollection(que);
+		session.setAttribute("queueJSON", result);
+		return result.toString();
+	}
 }

@@ -212,6 +212,7 @@ $(document).on("click", "#playbar-queue-button", function () {
         success : function(response)
         {
         	console.log("getSong queuee:  "+ response);
+        	result = JSON.parse(response);
         	 $.get("jsp/queue.jsp", function(data) {
                  $("#main-changing-content").html(data)
              });

@@ -63,26 +63,19 @@ $(document).ready(function(){
 	});
         player.on($.jPlayer.event.ended, function(e){
            console.log("isShuffle value " + isShuffle);
-           if (isRepeat === 2) //repeat one
-           {
-               player.jPlayer("play", 0);
+           switch(isRepeat){
+           case 0:		//no repeat
+        	   playNextSong();
+        	   break;
+           case 1:		//repeat all
+        	   playNextSong();
+        	   break;
+           case 2:
+        	   player.jPlayer("play",0);
+        	   break;
+           default:
+        	   console.log("out of bound [0,2]");
            }
-           else
-           {
-              if (isRepeat === 1){ // repeat track {
-                  if (result.nextUp.length===0)
-                  {
-                      //ajax call to handler
-                  }
-                  else
-                  {
-                      playNextSong();
-                  }
-              }
-              else
-              {
-                  playNextSong();
-              }
 //          if (isShuffle)
 //          {
 //            console.log("need to shuffle song");
@@ -92,7 +85,7 @@ $(document).ready(function(){
 //          {
 //              playNextSong();
 //          }
-          }
+          
         });
         
           
@@ -134,11 +127,13 @@ $(document).on("click", "#playbar-backward-button", function () {
       if (isRepeat == 0)
       {
           isRepeat = 1;
+          repeatAll();
           $("#repeat-icon").css("color","green");
           $(this).prop("title","Repeat Track");
       }
       else if (isRepeat == 1){
           isRepeat = 2;
+          unrepeatAll();
           $("#repeat-icon").text("repeat_one");
           $(this).prop("title","Repeat One");
       }
@@ -195,33 +190,39 @@ $.ajax({
 function playPreviousSong(){
   console.log("play prev");
 //  playPreviousSong();
-  $.ajax({
-        url: "${cp}/../preSong",
-        type: "POST",
-        
-        asyn: false,
-        cache: true,
-        success : function(response)
-        {
-          console.log("pre song in js response : "+ response);
-          result = JSON.parse(response);
-          addToPlaybarPlaylist(result);
-          updateSongInfo(result.nowPlay);
-          updatePlayerButton(result);
-          //player.jPlayer("play");
-          var queueJSP = document.getElementById("queueDiv");
-          if (queueJSP != null){
-            $.get("jsp/queue.jsp", function(data) {
-                  $("#main-changing-content").html(data)
-              });
-          }
-        },
-        error: function(e)
-        {
-
-          console.log(e);
-        }
-      });
+  if(isRepeat==0){
+	  $.ajax({
+	        url: "${cp}/../preSong",
+	        type: "POST",
+	        
+	        asyn: false,
+	        cache: true,
+	        success : function(response)
+	        {
+	          console.log("pre song in js response : "+ response);
+	          result = JSON.parse(response);
+	          addToPlaybarPlaylist(result);
+	          updateSongInfo(result.nowPlay);
+	          updatePlayerButton(result);
+	          //player.jPlayer("play");
+	          var queueJSP = document.getElementById("queueDiv");
+	          if (queueJSP != null){
+	            $.get("jsp/queue.jsp", function(data) {
+	                  $("#main-changing-content").html(data)
+	              });
+	          }
+	        },
+	        error: function(e)
+	        {
+	
+	          console.log(e);
+	        }
+	      });
+	  }
+  else{
+	  console.log("start 00:00");
+	  player.jPlayer("play",0);
+  }
 }
 
 function playNextSong(){
@@ -242,6 +243,9 @@ function playNextSong(){
           //console.log("next:  "+response);
           console.log("next button json response " + response );
           result = JSON.parse(response);
+          if(isRepeat == 1){
+        		repeatAll();
+    	  }
           console.log("next song js response " + result);
           addToPlaybarPlaylist(result);
           updateSongInfo(result.nowPlay);
@@ -273,7 +277,7 @@ function playNextSong(){
 
 
 $(document).on("click", "#playbar-prev-button", function () {
-    playPreviousSong();
+	playPreviousSong();
     });
 	
 
@@ -329,4 +333,58 @@ function updatePlayerButton(actual_json){
 	}else{
 		$("#playbar-next-button").prop("disabled",false);
 	}
+}
+function repeatAll(){
+	$.ajax({
+	    url: "${cp}/../repeatTrack",
+	    type: "POST",
+	    asyn: false,
+	    cache: false,
+	    success : function(response)
+	    {
+	      console.log("repeat Song: " + response);
+	      result = JSON.parse(response);
+	      updatePlayerButton(result);
+	      
+	      // playNextSong();
+	      var queueJSP = document.getElementById("queueDiv");
+	      if (queueJSP !== null){
+	        $.get("jsp/queue.jsp", function(data) {
+	              $("#main-changing-content").html(data)
+	          });
+	      }
+	    },
+	    error: function(e)
+	    {
+	
+	      console.log(e);
+	    }
+	  } );
+}
+
+function unrepeatAll(){
+	$.ajax({
+	    url: "${cp}/../unrepeatTrack",
+	    type: "POST",
+	    asyn: false,
+	    cache: false,
+	    success : function(response)
+	    {
+	      console.log("repeat Song: " + response);
+	      result = JSON.parse(response);
+	      // playNextSong();
+	      updatePlayerButton(result);
+	      var queueJSP = document.getElementById("queueDiv");
+	      if (queueJSP !== null){
+	        $.get("jsp/queue.jsp", function(data) {
+	              $("#main-changing-content").html(data)
+	          });
+	      }
+	    },
+	    error: function(e)
+	    {
+	
+	      console.log(e);
+	    }
+	  } );
 }

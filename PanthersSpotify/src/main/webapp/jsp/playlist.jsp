@@ -243,7 +243,9 @@
                 		{
                 			JSONObject obj1 = artist.getJSONObject(j);
                 			%>
-                			<a href="{cp}/../getSpecificArtist/<%= obj1.getString("aemail")%>"> <%= obj1.getString("name") %> </a><br>
+                                        <div class="artist-item medium-boxes-description"><a href="#"><%= obj1.getString("name")%></a>
+                                        <span style="display:none;" class="artist-email"><%= obj1.getString("aemail")%></span></div>
+                			
                 			<% 
                 		}
                 	%>

@@ -44,7 +44,7 @@
              <div class="form-group row">
                <label for="inputPassword" class="col-md-4 col-form-label">Amount($):</label>
                <div class="col-md-8">
-                 $10/month
+                 $10/month	
                </div>
              </div>
              <div class="form-group row">

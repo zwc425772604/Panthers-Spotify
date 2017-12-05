@@ -260,7 +260,8 @@ $(document).on("submit","#downgradeForm",function(){
 	    cache: false,
 	    success : function(response)
 	    {
-	     	console.log("What up?");
+	    	location.reload();
+	     	$("main-changing-content").load("jsp/browse.jsp");
 	
 	    },
 	    error: function(e)

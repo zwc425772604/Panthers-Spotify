@@ -309,7 +309,7 @@ $(document).on ("click", ".approveSongButton", function () {
 	        success : function(response)
 	        {
 	          console.log(response);
-						$(this).closest('tr').children('td:eq(4)').text("Hello world!");
+						
 	        },
 	        error: function(e)
 	        {
@@ -317,7 +317,7 @@ $(document).on ("click", ".approveSongButton", function () {
 	          console.log(e);
 	        }
 	      });
-					$(this).closest('tr').children('td:eq(4)').text("Hello world!");
+					$(this).closest('tr').children('td:eq(4)').text(response);
 });
 
 $(document).on ("click", ".removeSongButton", function () {

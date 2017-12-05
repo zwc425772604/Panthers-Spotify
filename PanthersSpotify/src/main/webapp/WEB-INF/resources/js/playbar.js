@@ -1,6 +1,7 @@
 var player;
 var result;
 var isShuffle = false;
+var isRepeat = 0;
 $(document).ready(function(){
     
 	 $.ajax({
@@ -62,14 +63,35 @@ $(document).ready(function(){
 	});
         player.on($.jPlayer.event.ended, function(e){
            console.log("isShuffle value " + isShuffle);
-          if (isShuffle)
-          {
-            console.log("need to shuffle song");
-            shuffleSongs();
-          }
-          else
-          {
-              playNextSong();
+           if (isRepeat === 2) //repeat one
+           {
+               player.jPlayer("play", 0);
+           }
+           else
+           {
+              if (isRepeat === 1){ // repeat track {
+                  if (result.nextUp.length===0)
+                  {
+                      //ajax call to handler
+                  }
+                  else
+                  {
+                      playNextSong();
+                  }
+              }
+              else
+              {
+                  playNextSong();
+              }
+//          if (isShuffle)
+//          {
+//            console.log("need to shuffle song");
+//            shuffleSongs();
+//          }
+//          else
+//          {
+//              playNextSong();
+//          }
           }
         });
         
@@ -106,6 +128,26 @@ $(document).on("click", "#playbar-backward-button", function () {
         if (currentTime > 15) {
             $("#jquery_jplayer_1").jPlayer("play", currentTime - 15);     
         }  
+  });
+  
+  $(document).on("click", "#playbar-repeat-button", function () {
+      if (isRepeat == 0)
+      {
+          isRepeat = 1;
+          $("#repeat-icon").css("color","green");
+          $(this).prop("title","Repeat Track");
+      }
+      else if (isRepeat == 1){
+          isRepeat = 2;
+          $("#repeat-icon").text("repeat_one");
+          $(this).prop("title","Repeat One");
+      }
+      else{
+          isRepeat = 0;
+          $("#repeat-icon").text("repeat");
+           $("#repeat-icon").css("color","");
+          $(this).prop("title","Repeat");
+      }
   });
   
   $(document).on("click", "#playbar-shuffle-button", function () {
@@ -186,7 +228,7 @@ function playNextSong(){
   console.log("play next");
 //  playNextSong();
 
-    if((result.nextUp).length !=0)
+    if((result.nextUp).length !==0)
     {
    
   $.ajax({
@@ -236,15 +278,16 @@ $(document).on("click", "#playbar-prev-button", function () {
 	
 
 $(document).on("click", "#playbar-next-button", function () {
-	if (isShuffle)
-   {
-        console.log("need to shuffle song");
-        shuffleSongs();
-   }
-   else
-   {
-        playNextSong();
-   }
+//	if (isShuffle)
+//   {
+//        console.log("need to shuffle song");
+//        shuffleSongs();
+//   }
+//   else
+//   {
+//        playNextSong();
+//   }
+    playNextSong();
 });
 
 function updateSongInfo(nowPlay)
@@ -281,7 +324,7 @@ function updatePlayerButton(actual_json){
 	}else{
 		$("#playbar-prev-button").prop("disabled",false);
 	}
-	if ((actual_json.nextUp).length==0){
+	if ((actual_json.nextUp).length===0){
 		$("#playbar-next-button").prop("disabled",true);
 	}else{
 		$("#playbar-next-button").prop("disabled",false);

@@ -157,7 +157,7 @@
                                        <li><button class="unstyle-buttons" data-toggle="tooltip-play" title="Play" id="playbar-play-button"> <i class="material-icons"><span class="play-pause-button">play_circle_filled</span></i></button></li>
                                        <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Next"  id="playbar-next-button"><i class="material-icons">skip_next</i></button></li>
                                        <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Fast Forward"  id="playbar-forward-button"><i class="material-icons">fast_forward</i></button></li>
-                                       <li><button class="unstyle-buttons" role="button" tabindex="0" data-toggle="tooltip-mute" title="Repeat"  id="playbar-repeat-button" ><i class="material-icons"><span id="repeat-button-text">repeat</span></i></button></li>
+                                       <li><button class="unstyle-buttons" role="button" tabindex="0" data-toggle="tooltip-mute" title="Repeat"  id="playbar-repeat-button" ><i class="material-icons" id="repeat-icon">repeat</i></button></li>
                                     </ul>
                                 </div>
                             </div>   

@@ -215,18 +215,12 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Transactional(readOnly = false)
 	public void removePayment(String userEmail) {
-		
-		Query query = entityManager.createNamedQuery("Payment.findByUemail", Payment.class);
+		String queryString = "DELETE FROM Payment WHERE uemail=:uemail";
+		Query query = entityManager.createQuery(queryString);
 		query.setParameter("uemail", userEmail);
-		Payment result=null;
-		try {
-			result = (Payment) query.getSingleResult();
-			entityManager.remove(result);
-		}
-		catch(NoResultException e)
-		{
-			return;
-		}	
+		
+		query.executeUpdate();
+		
 	}
 
 	@Transactional(readOnly = false)

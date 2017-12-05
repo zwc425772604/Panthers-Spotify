@@ -89,9 +89,9 @@
       </ul>
       -->
     <c:if test="${not empty user_playlist}">
-      <ul class="nav nav-stacked flex-column" >
+      <ul class="nav nav-stacked flex-column" id="user-playlist-section">
         <c:forEach var="playlist" items="${user_playlist}">
-          <li class="nav-item playlist-item">
+          <li class="nav-item playlist-item" id="playlistID${playlist.pid}">
             <a class="nav-link color-nav">${playlist.pname}</a>
             <span style="display:none;" class="playlist_id">${playlist.pid}</span>
           </li>

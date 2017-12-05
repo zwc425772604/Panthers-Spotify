@@ -22,30 +22,15 @@ import com.services.SongService;
 import com.services.UserService;
 
 public class JSONHelper {
-	// public static String playlistToJSON(List<Playlist> playlist) throws
-	// JSONException
-	// {
-	// JSONArray playlistJsonArray = new JSONArray();
-	// for (Playlist p : playlist)
-	// {
-	// JSONObject jsonObject = new JSONObject();
-	// jsonObject.put("playlistID", p.getPid());
-	// jsonObject.put("playlistName", p.getPname());
-	// jsonObject.put("playlistOwner", p.getPowner().getEmail());
-	// JSONArray songArray = new JSONArray();
-	// for (Song s : p.getSongCollection())
-	// {
-	// JSONObject songObject = new JSONObject();
-	// songObject.put("songID", s.getSid());
-	// songObject.put("songTitle", s.getStitle());
-	// songArray.put(songObject);
-	// }
-	// jsonObject.put("songs", songArray);
-	// playlistJsonArray.put(songArray);
-	//
-	// }
-	// return playlistJsonArray.toString();
-	// }
+	public static String singlePlaylistToJSON(Playlist playlist) throws JSONException {
+		JSONArray arr = new JSONArray();
+		JSONObject jsonObject;
+			jsonObject = new JSONObject();
+			jsonObject.put("playlistName", playlist.getPname());
+			jsonObject.put("playlistId", playlist.getPid());
+			arr.put(jsonObject);	
+		return arr.toString();
+	}
 
 	public static String userListToJSON(List<User> users) throws JSONException {
 		JSONArray arr = new JSONArray();

@@ -63,6 +63,8 @@ $(".followPlaylistButton").unbind('click').bind('click', function(){
 			{
 				console.log(response);
 				$("#followingPlaylistStatus").html("UNFOLLOW");
+                                var playlist_json = JSON.parse(response);
+                                appendPlaylistToPlaylistSection(playlist_json);
 			}
 		});
 	}
@@ -78,6 +80,8 @@ $(".followPlaylistButton").unbind('click').bind('click', function(){
 			{
 				console.log(response);
 				$("#followingPlaylistStatus").html("FOLLOW");
+                                var playlistToRemove = "#playlistID" + pid;
+                                $(playlistToRemove).remove();
 			}
 		});
 	}
@@ -282,3 +286,9 @@ $("#play-playlist-button").click(function(){
 	  });
 });
 
+function appendPlaylistToPlaylistSection(data)
+{
+    console.log("append playlist hehrherhrhisorheishr");
+    $("#user-playlist-section").prepend('<li class="nav-item playlist-item"><a class="nav-link color-nav">' + data[0]['playlistName'] + 
+            '</a><span style="display:none;" class="playlist_id">' + data[0]['playlistId'] + '</span></li>');
+}

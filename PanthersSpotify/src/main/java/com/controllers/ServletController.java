@@ -117,6 +117,7 @@ public class ServletController {
 				followedPlaylist = playlistService.getFollowPlaylists(email);
 				playlists.addAll(followedPlaylist);
 				session.setAttribute("user_playlist", playlists);
+                                session.setAttribute("userFollowedPlaylists", followedPlaylist);
 				user.setSongQueueCollection(songQueue);
 				session.setAttribute("user", user);
 				songService.setArtistsCollection(songQueue);
@@ -130,6 +131,7 @@ public class ServletController {
 				followedPlaylist = playlistService.getFollowPlaylists(email);
 				playlists.addAll(followedPlaylist);
 				session.setAttribute("user_playlist", playlists);
+                                session.setAttribute("userFollowedPlaylists", followedPlaylist);
 				user.setSongQueueCollection(songQueue);
 				session.setAttribute("user", user);
 				mav.setViewName("main");
@@ -238,8 +240,12 @@ public class ServletController {
 		List<Playlist> userPlaylist = (List<Playlist>) (session.getAttribute("user_playlist"));
 		userPlaylist.add(ret);
 		session.setAttribute("user_playlist", userPlaylist);
+		List<Playlist> followedPlaylist = (List<Playlist> )(session.getAttribute("userFollowedPlaylists"));
+                followedPlaylist.add(ret);
+                session.setAttribute("userFollowedPlaylists", followedPlaylist);
 		System.out.println("playlist id to be follow is : " + playlistID);
-		return "ok";
+                String jsonResult = JSONHelper.singlePlaylistToJSON(ret);
+                return jsonResult;
 	}
 
 	@RequestMapping(value = "/unfollowSpecificPlaylist", method = RequestMethod.POST)

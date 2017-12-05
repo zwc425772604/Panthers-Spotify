@@ -114,9 +114,12 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 		Playlistsong playlistsong = new Playlistsong(playlistId, songId);
 		if(entityManager.contains(playlistsong))
 		{
-			System.out.println("already has it");
+			entityManager.merge(playlistsong);
 		}
-		entityManager.persist(playlistsong);
+		else
+		{
+			entityManager.persist(playlistsong);
+		}
 	}
 	
 	@Transactional(readOnly=false)

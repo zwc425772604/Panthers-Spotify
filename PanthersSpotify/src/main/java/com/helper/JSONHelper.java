@@ -163,6 +163,7 @@ public class JSONHelper {
 	public static String new_pendingSongsToJSON(List<Song> songs, SongService songService) throws JSONException {
 		JSONArray arr = new JSONArray();
 		JSONObject jsonObject;
+		
 		for (Song s : songs) {
 			jsonObject = new JSONObject();
 			int sid = s.getSid();

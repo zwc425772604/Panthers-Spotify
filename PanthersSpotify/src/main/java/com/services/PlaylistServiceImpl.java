@@ -2,6 +2,7 @@ package com.services;
 
 import java.io.File;
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
@@ -253,4 +254,21 @@ public class PlaylistServiceImpl implements PlaylistService {
 	{
 		return playlistDAO.getTopGenrePlaylist(genre);
 	}
+	
+	@Transactional
+	public Time setPlaylistTimeLength(Playlist playlist,List<Song> s)
+	{
+		Time constant = new Time(18000000);
+		Time ret = new Time(0);
+		for(int i=0;i<s.size();i++)
+		{
+			Song song = s.get(i);
+			if(song.getDuration().getTime()!=0)
+				ret.setTime(ret.getTime()+song.getDuration().getTime()-constant.getTime());
+		}
+		return ret;
+	}
+	
+	
+	
 }

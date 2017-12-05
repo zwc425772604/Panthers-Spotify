@@ -45,7 +45,6 @@ public class Payment implements Serializable {
     @Column(name = "cvv")
     private Integer cvv;
     @Column(name = "expirationDate")
-    @Temporal(TemporalType.DATE)
     private Date expirationDate;
     @Id
     @Basic(optional = false)

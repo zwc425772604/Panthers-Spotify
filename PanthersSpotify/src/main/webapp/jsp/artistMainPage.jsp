@@ -225,7 +225,7 @@
 			  </table>
         </div>
       
-        <div id="royaltyTableDiv" class="w3-container info-table" style="display:none">
+        <div id="royaltyTableDiv" class="w3-container info-table" style="display:none; color:white;">
           <h1> Royalty </h1>
           <h3> Your Royalty is $<span id ="artistRoyaltyText"></span></h3>
         </div>

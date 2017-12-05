@@ -148,6 +148,7 @@ function insertArtistsPage(data)
 $(document).on("click", ".followArtistButton", function(){
 	var status = $("#followArtistStatus").text().trim();
 	var email = $("#artistEmail",this).text().trim();
+	console.log("THis");
 	if (status.localeCompare('Follow') == 0 )
 	{
 		$.ajax({

@@ -1011,10 +1011,8 @@ public class ServletController {
 
 	@RequestMapping(value = "/upgrade", method = RequestMethod.POST)
 	public @ResponseBody String upgrade(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		String cardNum = request.getParameter("cardNum");
-		System.out.println("cardNum is " + cardNum);
+		String cardNum = request.getParameter("cardNum");		
 		boolean isValidCardNum = CheckPayment.verify(cardNum);
-		System.out.println("it is "+isValidCardNum);
 		if (isValidCardNum) {
 			String holderName = request.getParameter("holderName");
 			int cvv = Integer.parseInt(request.getParameter("cvv"));
@@ -1031,6 +1029,7 @@ public class ServletController {
 			
 			userService.addPayment(payment);
 			userService.upgrade(user);
+			session.setAttribute("user", user);
 			return "ok";
 		} else {
 			return "invalid card number";

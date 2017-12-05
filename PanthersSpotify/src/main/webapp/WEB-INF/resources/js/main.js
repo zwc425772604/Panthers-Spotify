@@ -251,6 +251,26 @@ $(document).on("submit", "#findFriendForm", function (event) {
 	  });
 });
 
+$(document).on("submit","#downgradeForm",function(){
+	event.preventDefault();
+	$.ajax({
+	    url: "${cp}/../downgrade",
+	    type: "POST",
+	    asyn: false,
+	    cache: false,
+	    success : function(response)
+	    {
+	     	console.log("What up?");
+	
+	    },
+	    error: function(e)
+	    {
+	      console.log(e);
+	    }
+      });
+});
+
+
 $(document).on("click","#psSelected",function(){
 	$.ajax({
         url: "${cp}/../privateSession",
@@ -348,6 +368,18 @@ function displayUserAccount(){
 function displayUpgradeForm()
 {
 	$("#main-changing-content").load("jsp/pay.jsp");
+}
+
+function displayDowngradeForm()
+{
+	$('#downgradeDialog').dialog({
+        //autoOpen: true,
+        height: 250,
+        width: 450,
+        modal: true,
+        resizable: false,
+        dialogClass: 'no-close'
+   });
 }
 
 function displaySetting()

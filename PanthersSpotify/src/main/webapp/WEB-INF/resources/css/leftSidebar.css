@@ -7,7 +7,7 @@
 	color: white;
 	border: none !important;
 	text-align: center;
-	margin-left: 5vw;
+	padding-left: 3vw !important;
 }
 
 .ui-dialog-titlebar-close{

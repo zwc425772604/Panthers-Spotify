@@ -77,7 +77,27 @@
                   <div class="w3-dropdown-content w3-bar-block w3-border user-dropdown-button">
                     <a href="javascript:displayUserAccount()" class="w3-bar-item w3-button" id="dropdown-item">Account Setting</a>
                     <a href="javascript:displayAccount()" class="w3-bar-item w3-button" id="dropdown-item">Change Password </a>
-                    <a href="javascript:displayUpgradeForm()" class="w3-bar-item w3-button" id="dropdown-item">Upgrade Your Account</a>
+                    <c:choose>
+                      <c:when test="${user.userType == 0}">
+                        <a href="javascript:displayUpgradeForm()" class="w3-bar-item w3-button" id="dropdown-item">Upgrade Your Account</a>
+                      </c:when>
+                      <c:when test="${user.userType == 1}">
+                        <a href="javascript:displayDowngradeForm()" class="w3-bar-item w3-button" id="dropdown-item">Downgrade Your Account</a>                     
+						<div id="downgradeDialog" title="Downgrade" style="display:none;">
+						 	<form id="downgradeForm">
+						 	  <div style="margin-left:25%; text-algin:center; color: white;">Are you sure you want to downgrade?</div> 				  
+							  <div class="w3-row w3-section" style="margin-left:25%;">
+							    <div class="w3-third w3-container">
+							      <button onclick="event.preventDefault(); $('#downgradeDialog').dialog('close');" class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>
+							    </div>							  
+							    <div class="w3-third w3-container">
+							      <input id="downgradeButton" type="submit" class="w3-button w3-block w3-section w3-blue w3-ripple" value="Yes"></button>
+							    </div>
+							  </div>
+							 </form>
+						</div>
+                      </c:when>
+                    </c:choose>
                     <a href="javascript:displaySetting()" class="w3-bar-item w3-button" id="dropdown-item">Setting</a>
                     <a href="home" class="w3-bar-item w3-button" id="dropdown-item">Log Out</a>
                   </div>

@@ -16,15 +16,22 @@ function submitUpgradeForm()
           console.log(response);
           if (response.localeCompare("ok") == 0)
         	  {
+        	  $("#paymentForm").hide();
         	  $("#upgradeAccountMessage").html("Successfully upgrade to premium");
+        	  $("#paymentGoHome").show();
         	  }
           else{$("#upgradeAccountMessage").html("Failed to upgrade to premium"); }
          
         },
         error: function(e)
         {
-
+        	$("#upgradeAccountMessage").html("Failed to upgrade to premium");
           console.log(e);
         }
       });
+}
+
+function paymentFinished(){
+	location.reload();
+	$("main-changing-content").load("jsp/browse.jsp");
 }

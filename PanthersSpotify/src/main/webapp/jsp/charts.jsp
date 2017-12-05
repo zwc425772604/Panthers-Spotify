@@ -1,5 +1,7 @@
 <!--  Container for DISCOVER -->
 <div class="suggestion-container" id = "charts-container">
+Coming Soon!
+<!-- 
   <div class="suggestion-container-top">
     <h3 class="suggestion-topic">Featured Charts</h3>
     <button class="suggestion-top-page-button"><i class="fa fa-angle-left fa-2x" aria-hidden="true"></i></button>
@@ -41,7 +43,6 @@
     </div>
   </section>
 </div>
-<!--Container for CHARTS-->
 <div class="suggestion-container" id = "charts-container">
   <div class="line"></div>
   <section class="row placeholders">
@@ -58,4 +59,4 @@
       </div>
     </div>
   </section>
-</div>
+</div>-->

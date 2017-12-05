@@ -10,7 +10,18 @@
 	<div style="text-align:center;">
 		<h2 id="upgradeAccountMessage"></h2>
 	</div>
-  <div class="panel-group" style= "margin-top: 5%;">
+	<div style="display:none;" id="paymentGoHome">
+	  <form action="javascript:paymentFinished()">
+	    <div class="form-group row">
+	      <div class="col-md-offset-8 col-md-4">
+	      </div>
+           <div class="col-md-offset-8 col-md-4">
+             <input type="submit" class="form-control"  value="Go Back to Home Page">
+           </div>
+         </div>
+       </form> <!-- end of form -->
+	</div>
+  <div class="panel-group" style= "margin-top: 5%;"  id="paymentForm">
      <div class="panel panel-default">
        <div class="panel-heading">
          <div class="form-group row">
@@ -28,12 +39,6 @@
                <label for="staticEmail" class="col-md-4 col-form-label">Your Name:</label>
                <div class="col-md-8">
                  <input type="text" class="form-control" id="holderName" placeholder="enter your name"required>
-               </div>
-             </div>
-             <div class="form-group row">
-               <label for="inputPassword" class="col-md-4 col-form-label">Your Email Address:</label>
-               <div class="col-md-8">
-                 <input type="email" class="form-control"  placeholder="enter your email address" required>
                </div>
              </div>
              <div class="form-group row">

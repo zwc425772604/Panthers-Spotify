@@ -148,6 +148,19 @@ public class User implements Serializable {
 		this.isPublic = isPublic;
 	}
 	
+	@Column(name = "isLogin")
+	private boolean isLogin;
+
+	public boolean getIsLogin() {
+		return isLogin;
+	}
+
+	public void setIsLogin(boolean isLogin) {
+		this.isLogin = isLogin;
+	}
+	
+	
+	
 	@Size(max = 100)
 	@Column(name = "token", length = 100)
 	private String token;
@@ -159,7 +172,7 @@ public class User implements Serializable {
 	public void setToken(String token) {
 		this.token = token;
 	}
-
+	
 	@Column(name = "upgradeDate")
 	@Temporal(TemporalType.DATE)
 	private Date upgradeDate;

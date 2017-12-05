@@ -92,11 +92,13 @@ public class ServletController {
 		String password = request.getParameter("password");
 		String encPwd = Security.oldEncryptPassword(password);
 		User user = userService.getUser(email);
-		if (user==null) {
+		if (user==null) {//||user.getIsLogin()
 			mav.setViewName("index");
 			mav.addObject("error_message", "This email does not register on our site!");
 		} else if (Security.matchPassword(password, user.getUserPassword())|| user.getUserPassword().equals(encPwd)) {
 			int userTypeInt = user.getUserType();
+			user.setIsLogin(true);
+			userService.updateSpecificUser(user);
 			UserType userType = UserType.BASIC;
 			UserType[] types = { UserType.BASIC, UserType.PREMIUM, UserType.ARTIST, UserType.ADMIN };
 			for (UserType type : types) {
@@ -167,9 +169,13 @@ public class ServletController {
 	/* user logout */
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView userLogout(ModelAndView mav, HttpSession session) {
+		User user = (User)session.getAttribute("user");
+		user.setIsLogin(false);
+		userService.updateSpecificUser(user);
 		if (session.getAttribute("user") != null) {
 			session.removeAttribute("user");
 		}
+		
 		mav.setViewName("index");
 		return mav;
 	}
@@ -1405,7 +1411,6 @@ public class ServletController {
 		
 		User u = userService.getUser(artistEmail);
 		List<Concert> c = userService.getConcerts(u);
-		System.out.println("merge");
 		
 		
 		return "ok";

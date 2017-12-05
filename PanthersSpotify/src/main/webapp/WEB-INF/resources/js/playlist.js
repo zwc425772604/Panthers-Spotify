@@ -43,49 +43,49 @@ $(document).ready(function(){
 	  event.preventDefault(); document.getElementById('edit_playlist_modal').style.display='none';
   });
   
-  
+  $(".followPlaylistButton").unbind('click').bind('click', function(){
+		var status = $("#followingPlaylistStatus").text().trim();
+		var pid = $("#playlistID").text().trim();
+		console.log(status);
+		console.log("follow playlist button clicked");
+		if (status.localeCompare('FOLLOW') == 0 )
+		{
+			$.ajax({
+				url: "followSpecificPlaylist",
+				type: "POST",
+				data: {"playlistID" : pid},
+				asyn: false,
+				cache: false,
+				success: function(response)
+				{
+					console.log(response);
+					$("#followingPlaylistStatus").html("UNFOLLOW");
+	                                var playlist_json = JSON.parse(response);
+	                                appendPlaylistToPlaylistSection(playlist_json);
+				}
+			});
+		}
+		else
+		{
+			$.ajax({
+				url: "unfollowSpecificPlaylist",
+				type: "POST",
+				data: {"playlistID" : pid},
+				asyn: false,
+				cache: false,
+				success: function(response)
+				{
+					console.log(response);
+					$("#followingPlaylistStatus").html("FOLLOW");
+	                var playlistToRemove = "#playlistID" + pid;
+	                $(playlistToRemove).remove();                               
+				}
+			});
+		}
+	});
 });
 
-$(".followPlaylistButton").unbind('click').bind('click', function(){
-	var status = $("#followingPlaylistStatus").text().trim();
-	var pid = $("#playlistID").text().trim();
-	console.log(status);
-	console.log("follow playlist button clicked");
-	if (status.localeCompare('FOLLOW') == 0 )
-	{
-		$.ajax({
-			url: "followSpecificPlaylist",
-			type: "POST",
-			data: {"playlistID" : pid},
-			asyn: false,
-			cache: false,
-			success: function(response)
-			{
-				console.log(response);
-				$("#followingPlaylistStatus").html("UNFOLLOW");
-                                var playlist_json = JSON.parse(response);
-                                appendPlaylistToPlaylistSection(playlist_json);
-			}
-		});
-	}
-	else
-	{
-		$.ajax({
-			url: "unfollowSpecificPlaylist",
-			type: "POST",
-			data: {"playlistID" : pid},
-			asyn: false,
-			cache: false,
-			success: function(response)
-			{
-				console.log(response);
-				$("#followingPlaylistStatus").html("FOLLOW");
-                                var playlistToRemove = "#playlistID" + pid;
-                                $(playlistToRemove).remove();
-			}
-		});
-	}
-});
+
 
 
 //style for the filter container
@@ -159,6 +159,7 @@ $(".playbar-play-button").click(function(){
          {
            console.log("song in queue: "+ response);
            var actual_json = JSON.parse(response);
+           updateSongInfo(actual_json.nowPlay);
            console.log(actual_json);
            addToPlaybarPlaylist(actual_json);
            //updateButtons()
@@ -248,6 +249,7 @@ $("#play-playlist-button").click(function(){
           {
             console.log(response);
             var actual_json = JSON.parse(response);
+            updateSongInfo(actual_json.nowPlay);
             console.log(actual_json);
             addToPlaybarPlaylist(actual_json);
             //updateButtons()

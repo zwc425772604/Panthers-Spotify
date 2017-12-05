@@ -184,6 +184,7 @@ public class UserDAOImpl implements UserDAO {
 	
 	
 	
+	
 	@Transactional(readOnly = true)
 	public Payment findPayment(String userEmail) {
 		Query query = entityManager.createNamedQuery("Payment.findByUemail", Payment.class);

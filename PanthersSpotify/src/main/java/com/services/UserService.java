@@ -55,7 +55,7 @@ public interface UserService {
 	
 	public void updatePayment(Payment payment);
 	
-	public void removePayment(Payment payment);
+	public void removePayment(String uEmail);
 	
 	public List<Song> getReleaseSong(Artist artist);
 	

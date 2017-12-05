@@ -213,8 +213,19 @@ public class UserDAOImpl implements UserDAO {
 	}
 	
 	@Transactional(readOnly = false)
-	public void removePayment(Payment payment) {
-		entityManager.remove(payment);		
+	public void removePayment(String userEmail) {
+		
+		Query query = entityManager.createNamedQuery("Payment.findByUemail", Payment.class);
+		query.setParameter("uemail", userEmail);
+		Payment result=null;
+		try {
+			result = (Payment) query.getSingleResult();
+			entityManager.remove(result);
+		}
+		catch(NoResultException e)
+		{
+			return;
+		}	
 	}
 
 	@Transactional(readOnly = false)

@@ -1080,7 +1080,8 @@ public class ServletController {
 	public @ResponseBody String downgrade(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		// at the end of the month do it
 		User user = (User) session.getAttribute("user");
-		userService.removePayment(user.getPayment());// need to test
+		userService.removePayment(user.getEmail());// need to test
+		user.setPayment(null);
 		userService.downgrade(user);
 		return null;
 	}

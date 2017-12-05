@@ -29,7 +29,7 @@ public interface UserDAO {
 	public void upgrade(User user);
 	public void downgrade(User user);
 	public void updatePayment(Payment payment);
-	public void removePayment(Payment payment);
+	public void removePayment(String userEmail);
 	public List<Releasesong> getArtistRelease(Artist artist);
 	public double getRoyalty(Artist artist);
 	public void setRoyalty(Artist artist,double royalty) ;

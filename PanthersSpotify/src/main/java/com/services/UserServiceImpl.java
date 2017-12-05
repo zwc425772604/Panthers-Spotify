@@ -245,8 +245,8 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Transactional
-	public void removePayment(Payment payment) {
-		userDAO.removePayment(payment);		
+	public void removePayment(String uEmail) {
+		userDAO.removePayment(uEmail);		
 	}
 
 	@Transactional

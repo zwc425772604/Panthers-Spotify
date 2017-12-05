@@ -6,11 +6,7 @@ function dropdownDisplay(song_div) {
           x.className = x.className.replace(" w3-show", "");
       }
   }
-  
-  function filterAlbum()
-  {
-  
-  }
+
   //sort by keyword handler
   $('#sorted_by_keyword').on('change',function(){
    //alert(this.value);

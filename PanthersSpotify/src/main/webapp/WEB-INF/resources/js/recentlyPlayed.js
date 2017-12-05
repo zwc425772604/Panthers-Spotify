@@ -1,7 +1,7 @@
 $(document).ready(function(){
 	var email = "himself";
 	$.ajax({
-        url: "${cp}/../getUserHistory",
+        url: "${cp}/../getCurrentUserHistory",
         type: "POST",
         asyn: false,
         data: {"email" : email},

@@ -1,5 +1,7 @@
 <!--  Container for DISCOVER -->
 <div class="suggestion-container" id = "discover-container">
+Coming Soon!
+<!-- 
   <div class="suggestion-container-top">
     <h3 class="suggestion-topic">Get The Weekend Started</h3>
     <button class="suggestion-top-page-button"><i class="fa fa-angle-left fa-2x" aria-hidden="true"></i></button>
@@ -40,4 +42,5 @@
       </div>
     </div>
   </section>
+   -->
 </div>

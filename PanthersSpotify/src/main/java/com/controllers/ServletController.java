@@ -1,6 +1,3 @@
-
-
-
 package com.controllers;
 
 import java.io.IOException;
@@ -1300,6 +1297,16 @@ public class ServletController {
 		String JSON = JSONHelper.new_pendingSongsToJSON(history, songService);
 		
 		
+		return JSON;
+	}
+	
+	@RequestMapping(value = "/getCurrentUserHistory", method = RequestMethod.POST)
+	public @ResponseBody String getCurrentUserHistory(ModelAndView mav, HttpServletRequest request, HttpSession session) {		
+		String email;
+		User user = (User)session.getAttribute("user");
+		email = user.getEmail();
+		List<Song> history = songService.getHistorySongs(email);
+		String JSON = JSONHelper.new_pendingSongsToJSON(history, songService);	
 		return JSON;
 	}
 	

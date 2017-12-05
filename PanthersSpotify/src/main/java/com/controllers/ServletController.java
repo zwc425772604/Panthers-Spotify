@@ -1013,9 +1013,7 @@ public class ServletController {
 	public @ResponseBody String upgrade(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String cardNum = request.getParameter("cardNum");
 		System.out.println("cardNum is " + cardNum);
-		System.out.println("herere1");
 		boolean isValidCardNum = CheckPayment.verify(cardNum);
-		System.out.println("herere2");
 		System.out.println("it is "+isValidCardNum);
 		if (isValidCardNum) {
 			String holderName = request.getParameter("holderName");
@@ -1024,6 +1022,8 @@ public class ServletController {
 			java.util.Date expDate = StringToDateHelper.parseToMonthYear(expirationDate);
 			User user = (User) session.getAttribute("user");
 			Payment payment = new Payment();
+			payment.setUser(user);
+			payment.setUemail(user.getEmail());
 			payment.setCardNum(cardNum);
 			payment.setCvv(cvv);
 			payment.setExpirationDate(expDate);
@@ -1278,6 +1278,7 @@ public class ServletController {
 		}
 		
 		User friend = userService.getUser(email);
+		
 		System.out.println(friend.getIsPublic());
 		if(!friend.getIsPublic()) {
 			return "private";

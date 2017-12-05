@@ -6,9 +6,9 @@
 package com.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Time;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -52,7 +52,7 @@ public class Song implements Serializable {
     public Song() {
     }
 
-    public Song(String songTitle, Date duration, Date releaseDay, int monthlyPlayed, String genre, String type, String url) {
+    public Song(String songTitle, Time duration, Date releaseDay, int monthlyPlayed, String genre, String type, String url) {
     	this.stitle = songTitle;
     	this.duration = duration;
     	this.releaseDay = releaseDay;
@@ -90,17 +90,15 @@ public class Song implements Serializable {
     }
 
     @Column(name = "duration")
-    @Temporal(TemporalType.TIME)
-    private Date duration;
-    public Date getDuration() {
+    private Time duration;
+    public Time getDuration() {
         return duration;
     }
-    public void setDuration(Date duration) {
+    public void setDuration(Time duration) {
         this.duration = duration;
     }
 
     @Column(name = "releaseDay")
-    @Temporal(TemporalType.DATE)
     private Date releaseDay;
     public Date getReleaseDay() {
         return releaseDay;

@@ -4,11 +4,13 @@ package com.controllers;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -19,6 +21,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -80,7 +83,7 @@ public class ServletController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(ModelMap map) {
-        
+		
 		return "index";
 	}
 
@@ -317,11 +320,11 @@ public class ServletController {
 	public @ResponseBody String getSpecificPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		int playlistID = Integer.parseInt(request.getParameter("playlist_id"));
 		Playlist playlist = playlistService.getPlaylist(playlistID);
-		String pname = playlist.getPname();
+		//String pname = playlist.getPname();
 		session.setAttribute("selectedPlaylist", playlist);
 		session.setAttribute("selectedPlaylistNumSongs", playlist.getNSongs());
 		List<Song> list = playlistService.getSongInPlaylist(playlistID);
-		session.setAttribute("list", list);
+		//session.setAttribute("list", list);
 		String playlistSongJSON = JSONHelper.new_pendingSongsToJSON(list,songService);
 		JSONArray playlistSongJSON1 = JSONHelper.new_pendingSongsToJSON1(list,songService);
 		session.setAttribute("jsonList", playlistSongJSON1);
@@ -596,7 +599,11 @@ public class ServletController {
 		playlistService.addSongToPlaylist(playlistID, songID);
 		List<Song> list = playlistService.getSongInPlaylist(playlistID);
 		Playlist p = playlistService.getPlaylist(playlistID);
+		Time t = playlistService.setPlaylistTimeLength(p, list);
+		//Song song = songService.getSong(songID);
+		p.setTimelength(p.getTimelength());
 		p.setNSongs(p.getNSongs()+1);
+		p.setTimelength(t);
 		playlistService.updateSpecificPlaylist(p);
 		String playlistSongJSON = JSONHelper.new_pendingSongsToJSON(list, songService);
 		System.out.println("addsongtoplaylist");
@@ -612,9 +619,14 @@ public class ServletController {
 		
 		Playlist p = playlistService.getPlaylist(playlistID);
 		p.setNSongs(p.getNSongs()-1);
-		playlistService.updateSpecificPlaylist(p);
+		
 		
 		List<Song> list = playlistService.getSongInPlaylist(playlistID);
+		
+		
+		Time t = playlistService.setPlaylistTimeLength(p, list);
+		p.setTimelength(t);
+		playlistService.updateSpecificPlaylist(p);
 		String playlistSongJSON = JSONHelper.new_pendingSongsToJSON(list, songService);
 		System.out.println("removesongtoplaylist");
 		return playlistSongJSON;

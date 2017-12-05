@@ -1,6 +1,7 @@
 package com.services;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,4 +31,5 @@ public interface PlaylistService {
 	public List<Song> getSongInPlaylist(int playlistId);
 	public void updateSpecificPlaylist(Playlist p);
 	public List<Playlist> getTopGenrePlaylist(String genre);
+	public Time setPlaylistTimeLength(Playlist playlist,List<Song> s);
 }

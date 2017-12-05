@@ -141,33 +141,6 @@ $( ".song_info" ).bind({
 	   }
 	  });
 
-$(".more_button").click(function()
-{
-  var x =$(this).siblings( ".song_action_list");
-  if($(this).siblings( ".song_action_list").hasClass('w3-show') == false)
-  {
-    $(this).siblings( ".song_action_list").addClass("w3-show");
-  }
-  else {
-    $(this).siblings( ".song_action_list").removeClass("w3-show");
-  }
-  hoverEnabled = !hoverEnabled;
-
-});
-$(".playlist_header_more_button").click(function()
-{
-  var x =$(this).siblings( ".playlist_action_list");
-  if($(this).siblings( ".playlist_action_list").hasClass('w3-show') == false)
-  {
-    $(this).siblings( ".playlist_action_list").addClass("w3-show");
-  }
-  else {
-    $(this).siblings( ".playlist_action_list").removeClass("w3-show");
-  }
-  hoverEnabled = !hoverEnabled;
-  //alert("clicked");
-});
-
 
 // handler for play/pause button in the song list
 $(".playbar-play-button").click(function(){
@@ -292,3 +265,17 @@ function appendPlaylistToPlaylistSection(data)
     $("#user-playlist-section").prepend('<li class="nav-item playlist-item"><a class="nav-link color-nav">' + data[0]['playlistName'] + 
             '</a><span style="display:none;" class="playlist_id">' + data[0]['playlistId'] + '</span></li>');
 }
+
+$(document).on("click",".playlist_header_more_button",function()
+{
+  var x =$(this).siblings( ".playlist_action_list");
+  if($(this).siblings( ".playlist_action_list").hasClass('w3-show') == false)
+  {
+    $(this).siblings( ".playlist_action_list").addClass("w3-show");
+  }
+  else {
+    $(this).siblings( ".playlist_action_list").removeClass("w3-show");
+  }
+  hoverEnabled = !hoverEnabled;
+  //alert("clicked");
+});

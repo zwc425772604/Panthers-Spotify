@@ -70,20 +70,6 @@ function dropdownDisplay(song_div) {
    }
   });
   
-  $(".more_button").click(function()
-  {
-   var x =$(this).siblings( ".song_action_list");
-   if($(this).siblings( ".song_action_list").hasClass('w3-show') == false)
-   {
-     $(this).siblings( ".song_action_list").addClass("w3-show");
-   }
-   else {
-     $(this).siblings( ".song_action_list").removeClass("w3-show");
-   }
-   hoverEnabled = !hoverEnabled;
-  
-  });
-  
   // handler for play/pause button in the song list
   $(".playbar-play-button").click(function(){
   

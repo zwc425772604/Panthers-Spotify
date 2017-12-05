@@ -86,13 +86,17 @@ $(document).ready(function(){
 	
 	$("#ad-close").click(function(){
 		$("#advertisement").hide();
+		$(".scrolled-main").css("height","86.5vh");
+		console.log("changed adv height");
 	})
 	
 });
 
 
 
-
+function premUserAdv(){
+	$(".scrolled-main").css("height","86.5vh");
+}
 
 function genre_page(){
 	$("#middle-container").load("jsp/genre.jsp");

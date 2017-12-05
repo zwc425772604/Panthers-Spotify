@@ -27,25 +27,21 @@
           <div id = "loginForm">
             <br>
             <div>
-              <p id="error_message" style="color:#ff4d4d; font-size:2em; "> ${error_message}</p>
+              <p id="error_message" style="color:#ff4d4d; font-size:1.5em; "> ${error_message}</p>
             </div>
             <form:form class="w3-container" method="POST" action="main">
               <div class="w3-section">
                 <input class="w3-input w3-border w3-margin-bottom" type="text" placeholder="email" name="email" id = "username_login" required>
                 <input class="w3-input w3-border" type="password" placeholder="Password" name="password" id = "user_password" required>
-                <input class="w3-check w3-margin-top" type="checkbox" checked="checked"> <span style="color: white">Remember me </span>
-                <button class="btn formButton" id ="loginButton" type="submit">LOG IN</button>
+                <button class="btn formButton" id ="loginButton" type="submit" style="margin-top:10%;">LOG IN</button>
               </div>
             </form:form>
           </div>
           <center>
-            <div id="bottomLinks" style="margin-top:10%;">
+            <div id="bottomLinks" style="margin-top:3%;">
               <form:form action="signup" method="GET">
-                <button class="btn formButton" id="signButton" type="submit">Sign Up</button>
+                <button class="btn formButton" id="signButton" type="submit" style="color:black;">Sign Up</button>
               </form:form>
-              <!--                <p> <a href="signup"> SIGN UP </a></p>-->
-              <p> <a href="" target="_self"> RESET PASSWORD </a></p>
-              <p> <a href="" target="_self"> SETTINGS </a></p>
             </div>
           </center>
         </div>

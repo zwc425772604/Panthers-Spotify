@@ -9,9 +9,13 @@ function checkPassword(password, password_confirm)
     }
   }
   
+
+var savedPwd;
+
 function submitConfirm(){
 	var verf = $("#verf").val();
-	var pwd = $("#password").val();
+	var pwd = savedPwd;
+	console.log(pwd);
 	if(!verf)
 	{
 		$("#verf-error").empty();
@@ -25,11 +29,23 @@ function submitConfirm(){
 		        cache: false,
 		        data: {"token": verf, "password":pwd},
 		        success : function(response)
-		        {		          
-		          $("#main-changing-content").load("jsp/browse.jsp");
+		        {		 
+		        	if(response.localeCompare('invalid error') == 0){
+		        		console.log(response); 
+		        		$("#submitPwdForm").hide();
+			        	$("#getConfirmationEmailForm").show();
+			        	$("#password_error").text("Your verfication is wrong. Please try again.");
+		        	}
+		        	else{
+		        		console.log(response);
+		        		$("#main-changing-content").load("jsp/browse.jsp");
+		        	}
+		          
 		        },
 		        error: function(e)
 		        {
+		        	$("#submitPwdForm").hide();
+		        	$("#getConfirmationEmailForm").show();
 		          console.log(e);
 		        }
 		  
@@ -55,9 +71,12 @@ function validateFormInputs()
 	        success : function(response)
 	        {
 	          $("#submitPwdForm").show();
+	          $("#getConfirmationEmailForm").hide();
+	          savedPwd = password;
 	        },
 	        error: function(e)
 	        {
+	          $("#password_error").text("Error when changing password. Please try again.");
 	          console.log(e);
 	        }
 	  

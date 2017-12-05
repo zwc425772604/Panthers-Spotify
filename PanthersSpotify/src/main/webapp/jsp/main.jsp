@@ -117,6 +117,9 @@
                 <img height="75em" src="http://dsim.in/blog/wp-content/uploads/2017/01/samsung2.jpg">
               </div>
             </c:when>
+            <c:otherwise>
+              <script> premUserAdv() </script>
+            </c:otherwise>
           </c:choose>
         </main>
         <!--Right Most Column-->

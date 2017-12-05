@@ -69,7 +69,7 @@
       }
     </script>
 </head>
-<body>
+<body style="margin-top:-1em;">
 	<nav class="sidebar" id="left-sidebar">
 		<ul class="nav flex-column">
 			<!--First Section: browse and radio-->
@@ -377,7 +377,7 @@
 						</button></li>
 				</ul>
 			</li>
-			<li>
+			<!--<li>
 				<p class="color-nav-header">Daily Recommended Songs:</p>
 				<ul class="left_sizebar">
 					<li><button class="unstyle-buttons" data-toggle="tooltip-mute"
@@ -395,7 +395,7 @@
 							<i class="material-icons">delete_forever</i>
 						</button></li>
 				</ul>
-			</li>
+			</li>-->
 			<li>
 				<p class="color-nav-header">Royalty Payment:</p>
 				<ul class="left_sizebar">
@@ -414,27 +414,9 @@
 	<div class="scrolled-main" id="style-1">
 		<!--Top Tool Section-->
 		<div class="row" id="top-tool">
-			<div id="top-tool-page-change">
-				<button class="top-tool-page-button">
-					<i class="fa fa-angle-left fa-2x" aria-hidden="true"></i>
-				</button>
-				<button class="top-tool-page-button">
-					<i class="fa fa-angle-right fa-2x" aria-hidden="true"></i>
-				</button>
-			</div>
-			<div class="col-sm-3 col-sm-offset-3" id="top-tool-search">
-				<div class="input-group stylish-input-group" id="top-tool-search">
-					<input type="text" class="form-control" placeholder="Search">
-					<span class="input-group-addon">
-						<button type="submit">
-							<i class="fa fa-search" aria-hidden="true"></i>
-						</button>
-					</span>
-				</div>
-			</div>
-			<div id="top-tool-upgrade-and-user">
-				<a href=""> Admin</a>
-				<div class="w3-dropdown-hover">
+			<div style="float:right;">
+				<a href="" style="height: 2px;">Log Out</a>
+				<!--<div class="w3-dropdown-hover">
 					<button class="w3-button w3-black" id="top-tool-profile">
 						<img width=25px height=25px class="rounded-circle"
 							alt="Generic placeholder thumbnail" id="dropdown-img"
@@ -451,7 +433,7 @@
 							id="dropdown-item">Settings</a> <a href="home"
 							class="w3-bar-item w3-button" id="dropdown-item">Log Out</a>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<!--Banner Image-->

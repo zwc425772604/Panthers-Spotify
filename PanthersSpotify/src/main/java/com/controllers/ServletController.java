@@ -437,7 +437,7 @@ public class ServletController {
 	}
 
 	@RequestMapping(value = "/editUserPassword", method = RequestMethod.POST)
-	public ModelAndView editUserPassword(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	public @ResponseBody String editUserPassword(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		String pwd = request.getParameter("password");
 		String token = request.getParameter("token");
@@ -450,11 +450,11 @@ public class ServletController {
 		}
 		else
 		{
-			System.out.println("invalid token");
+			return "invalid error";
 		}		
-		mav.setViewName("main");
+		
 		mav.addObject("username", user.getUserName());
-		return mav;
+		return "ok";
 	}
 	
 	

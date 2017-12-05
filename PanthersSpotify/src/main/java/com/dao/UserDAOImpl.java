@@ -201,7 +201,10 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Transactional(readOnly = false)
 	public void addPayment(Payment payment) {
-		entityManager.persist(payment);		
+		if(!entityManager.contains(payment))
+			entityManager.persist(payment);	
+		else
+			entityManager.merge(payment);	
 	}
 	
 	@Transactional(readOnly = false)

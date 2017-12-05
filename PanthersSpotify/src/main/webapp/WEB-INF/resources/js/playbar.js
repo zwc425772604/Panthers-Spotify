@@ -123,7 +123,6 @@ $(document).on("click", "#playbar-forward-button", function () {
 //    }
   });
 $(document).on("click", "#playbar-backward-button", function () {
-    console.log("current time in backward is " + currentTime);
     if (currentTime > 15) {
         player.jPlayer("play", currentTime - 15);     
     }

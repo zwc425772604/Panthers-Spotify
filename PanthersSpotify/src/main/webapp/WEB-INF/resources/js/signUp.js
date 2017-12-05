@@ -70,8 +70,8 @@ if (password_matched == 0 && correct_email && email_matched == 0)
     	    $("#signup_message").empty();
         $("#signup_message").css("color","green");
         $("#signup_message").text(response);
-       /*  window.location.href = "http://localhost:8080/PanthersSpotify/"; */
-        window.open("home.html", "_self");
+        window.location.href = "http://localhost:8080/PanthersSpotify/"; 
+        
       }
      
     },

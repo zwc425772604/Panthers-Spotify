@@ -77,7 +77,7 @@
 				class="nav-link color-nav"
 				href="javascript:displayPage('dashboard')">Dashboard</a></li>
 			<!--Actions taken by the admin-->
-			<li>
+			<!-- <li>
 				<p class="color-nav-header">User:</p>
 				<ul class="left_sizebar">
 					<li><button class="unstyle-buttons" data-toggle="tooltip-mute"
@@ -92,7 +92,7 @@
 				</ul>
 
 
-			</li>
+			</li>-->
 			<li>
 				<p class="color-nav-header">Playlist:</p>
 				<ul class="left_sizebar">
@@ -363,6 +363,7 @@
 						</button></li>
 				</ul>
 			</li>
+			<!--  
 			<li>
 				<p class="color-nav-header">Album:</p>
 				<ul class="left_sizebar">
@@ -376,7 +377,7 @@
 							<i class="material-icons">mode_edit</i>
 						</button></li>
 				</ul>
-			</li>
+			</li> -->
 			<!--<li>
 				<p class="color-nav-header">Daily Recommended Songs:</p>
 				<ul class="left_sizebar">
@@ -396,6 +397,7 @@
 						</button></li>
 				</ul>
 			</li>-->
+			<!--  
 			<li>
 				<p class="color-nav-header">Royalty Payment:</p>
 				<ul class="left_sizebar">
@@ -404,7 +406,7 @@
 							<i class="material-icons">add</i>
 						</button></li>
 				</ul>
-			</li>
+			</li>-->
 		</ul>
 		</li>
 		</ul>

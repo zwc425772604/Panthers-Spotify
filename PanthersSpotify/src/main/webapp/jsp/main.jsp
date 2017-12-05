@@ -53,7 +53,7 @@
               <div class="col-sm-3 col-sm-offset-3" id="top-tool-search">
                 <div class="input-group stylish-input-group"  id="top-tool-search">
                   <div class="row" >
-                    <input type="text" class="w3-input" style="width: 75%;" placeholder="Search" name="search" id="search">
+                    <input type="text" class="w3-input" style="width: 70%;" placeholder="Search" name="search" id="search">
                     <span class="input-group-addon">
                     <button type="submit" id="search-button">
                     <i class="fa fa-search" aria-hidden="true" ></i>
@@ -152,7 +152,7 @@
                     <div class="jp-type-single" >
 			<div class="jp-gui jp-interface" style="background-color: #4E4E4E;"> 
                             <div class="row">
-				<div class="" style="margin-left: 47%; margin-top:0.65em; ">
+				<div class="" style="margin-left: 35%; margin-top:0.65em; ">
                                     <ul id="playbar-center-icons">
                                        <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Shuffle" id="playbar-shuffle-button" > <i class="material-icons" id="shuffle-icon">shuffle</i></button></li>
                                        <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Fast Backward"  id="playbar-backward-button"> <i class="material-icons">fast_rewind</i></button></li>
@@ -165,12 +165,12 @@
                                 </div>
                             </div>   
 				       		
-			    <div class="jp-progress" style="width:100%; margin-top: 5%; margin-left: 4.3em;">
+			    <div class="jp-progress" style="width:100%; margin-top: 5%; margin-left: 1.75em;">
 				<div class="jp-seek-bar">
                                     <div class="jp-play-bar"></div>
 				</div>
 			    </div>
-                            <div class="jp-time-holder" style="width:100%; margin-top: 5%; margin-left: 4.3em;">
+                            <div class="jp-time-holder" style="width:100%; margin-top: 5%; margin-left: 1.75em;">
 				<div class="jp-current-time" role="timer" aria-label="time" style="color: white; font-size:0.75em;">&nbsp;</div>
                                 <div class="jp-duration" role="timer" aria-label="duration" style="color: white; font-size:0.75em;">&nbsp;</div>				
                             </div>

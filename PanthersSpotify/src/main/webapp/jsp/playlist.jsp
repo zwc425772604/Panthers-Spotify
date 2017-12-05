@@ -77,12 +77,16 @@
                 <div class="w3-dropdown-click playlist_header_more_action_list">
                   <button class="w3-button playlist_header_more_button" title="More" id="play-dropdown" ><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
                   <div class="w3-dropdown-content w3-bar-block w3-border playlist_action_list">
+                     <!--
                     <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Go to Playlist Radio</button>
                     <hr>
-                    <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Collaborative Playlist</button> <!-- a song might have multiple artists -->
+                    <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Collaborative Playlist</button>
+                     -->
                     <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Make Secret</button>
                     <hr>
-                    <button id = "edit_playlist_button" class="w3-bar-item w3-button playlist_action_dropdown">Edit Details</button>
+                     <c:if test="${selectedPlaylist.powner == user}">
+                      <button id = "edit_playlist_button" class="w3-bar-item w3-button playlist_action_dropdown">Edit Details</button>
+                     </c:if>
                     <div id="edit_playlist_modal" class="w3-modal w3-animate-opacity">
                       <div class="w3-modal-content w3-card-4" style="height:500px; overflow:scroll;">
                         <header class="w3-container w3-theme-d3">
@@ -94,7 +98,7 @@
                           <form:form action="editPlaylistDetails" method="POST" enctype="multipart/form-data">
                             <label>Name</label>
                             <br>
-                            <input type="text" class="w3-input" name="playlist_name">
+                            <input type="text" class="w3-input" name="playlist_name" value="${selectedPlaylist.pname}">
                             <br>
                             <div class="row" style="margin-top: 3%;">
                               <div class="col-md-4" style="margin-left:2%">
@@ -106,8 +110,10 @@
                               </div>
                               <div class="col-md-2"></div>
                               <div class="col-md-5">
-                                <p>Description <span class="w3-badge w3-blue">7/300</span></p>
-                                <textarea type="playlist_description" rows="14" cols="30"></textarea>
+                                  <p>Description <span class="w3-badge w3-blue"></span></p>
+<!--                                          <c:set var="des" value="{selectedPlaylist.des}"/>
+                                          <span id="description-length">${fn:length(des)}</span>/300</span></p>-->
+                                <textarea type="playlist_description" rows="14" cols="30">${selectedPlaylist.des}</textarea>
                               </div>
                             </div>
                             <div style="text-align:center;margin-top: 4%;">
@@ -135,9 +141,12 @@
                       </div>
                     </div>
                     <hr>
+                     <!--
                     <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Create Similar Playlist</button>
-                    <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Download</button> <!-- w3css hover dropdown -->
+                   
+                    <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Download</button> 
                     <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Share</button>
+                    -->
                   </div>
                 </div>
               </div>
@@ -194,13 +203,9 @@
         <table class="table">
           <thead>
             <tr>
-              <th></th>
-              <!-- play/pause button -->
-              <th></th>
-              <!-- add/remove button -->
-              <th>
-                <p> TITLE </p>
-              </th>
+              <th></th>  <!-- play/pause button -->
+              <th>TITLE</th>
+            
               <th>
                 <p> ARTIST</p>
               </th>
@@ -229,10 +234,12 @@
                   <span class="song-id-in-playlist" style="display:none"><%= obj.get("songID") %></span>
                   </button>
               </td>
+            
+<!--               not implemented 
               <td>  <button class="unstyle-buttons tracklist-save-button" data-toggle="tooltip-save" title="Remove from Your Library"  onclick="removeSong()">
                 <i class="material-icons"><span class="tracklist-add-delete-button">done</span></i>
                 </button>
-              </td>
+              </td>-->
               <td>
                 <p> <%= obj.get("songTitle") %> </p>
               </td>
@@ -262,12 +269,14 @@
                   <button class="w3-button more_button"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
                   <div class="w3-dropdown-content w3-bar-block w3-border song_action_list">
                     <button class="w3-bar-item w3-button add-to-queue-btn" id = "add-to-queue-btn">Add to Queue<span style="display:none;" class="song-id">${song.sid}</span></button> 
-                    <button onclick="" class="w3-bar-item w3-button">Go to Song Radio</button>
+                    
+<!--                    <button onclick="" class="w3-bar-item w3-button">Go to Song Radio</button>-->
                     <hr>
                     <button onclick="" class="w3-bar-item w3-button">Go to Artist</button> 
                     <button onclick="" class="w3-bar-item w3-button">Go to Album</button>
                     <hr>
-                    <button onclick="" class="w3-bar-item w3-button">Remove from Your Library</button>
+                    <!-- not implemented -->
+<!--                    <button onclick="" class="w3-bar-item w3-button">Remove from Your Library</button>-->
              
                     <div class="w3-dropdown-hover">
                      <button onclick="" class="w3-bar-item w3-button add-to-playlist-button dropdown1">Add to Playlist</button>

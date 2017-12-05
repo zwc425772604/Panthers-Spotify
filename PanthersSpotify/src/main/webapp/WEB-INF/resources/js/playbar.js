@@ -2,6 +2,8 @@ var player;
 var result;
 var isShuffle = false;
 var isRepeat = 0;
+var currentTime = 0;
+var songDuration = 0;
 $(document).ready(function(){
     
 	 $.ajax({
@@ -61,6 +63,10 @@ $(document).ready(function(){
 		 $(".play-pause-button").text("play_circle_filled");
 		 $(".playingStatus").text("PLAY");
 	});
+        player.on($.jPlayer.event.timeupdate, function(e){
+            currentTime = e.jPlayer.status.currentTime;
+            songDuration = e.jPlayer.status.duration;
+        });
         player.on($.jPlayer.event.ended, function(e){
            console.log("isShuffle value " + isShuffle);
            switch(isRepeat){
@@ -107,21 +113,22 @@ function addToPlaybarPlaylist(song_json)
 }
   
 $(document).on("click", "#playbar-forward-button", function () {
-    var currentTime = $('#jquery_jplayer_1').data('jPlayer').status.currentTime;
-    var songDuration = $('#jquery_jplayer_1').data('jPlayer').status.duration;
-        if (currentTime < songDuration - 15) {
-            $("#jquery_jplayer_1").jPlayer("play", currentTime + 15);     
-        }
-//        else{
-//            playNextSong();
-//        }
+    console.log("current time in forward is " + currentTime);
+    console.log("songDuration is " + songDuration);
+    if (currentTime < songDuration - 15) {
+        player.jPlayer("play", currentTime + 15);     
+    }
+//    else{
+//        playNextSong();
+//    }
   });
 $(document).on("click", "#playbar-backward-button", function () {
-    var currentTime = $('#jquery_jplayer_1').data('jPlayer').status.currentTime;
-        if (currentTime > 15) {
-            $("#jquery_jplayer_1").jPlayer("play", currentTime - 15);     
-        }  
+    console.log("current time in backward is " + currentTime);
+    if (currentTime > 15) {
+        player.jPlayer("play", currentTime - 15);     
+    }
   });
+  
   
   $(document).on("click", "#playbar-repeat-button", function () {
       if (isRepeat == 0)

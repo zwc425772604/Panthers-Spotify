@@ -9,8 +9,8 @@ $(document).ready(function(){
         cache: true,
         success : function(response)
         {
-        	console.log(response);
-        	var actual_JSON = JSON.parse(response);
+          console.log(response);
+        	  var actual_JSON = JSON.parse(response);
         	insertFriends(actual_JSON);
         },
         error: function(e)
@@ -89,6 +89,9 @@ $(document).ready(function(){
 	})
 	
 });
+
+
+
 
 
 function genre_page(){

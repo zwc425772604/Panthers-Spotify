@@ -1270,14 +1270,15 @@ public class ServletController {
 	@RequestMapping(value = "/getUserHistory", method = RequestMethod.POST)
 	public @ResponseBody String getUserHistory(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		
-		String email = request.getParameter("email");
-		
+		String email = (String)((User)session.getAttribute("selectedFriend")).getEmail();
+		System.out.println(email);
 		if(email.equals("himself")) {
 			User user = (User)session.getAttribute("user");
 			email = user.getEmail();
 		}
 		
 		User friend = userService.getUser(email);
+		System.out.println(friend);
 		System.out.println(friend.getIsPublic());
 		if(!friend.getIsPublic()) {
 			return "private";

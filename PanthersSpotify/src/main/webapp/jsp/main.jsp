@@ -126,14 +126,14 @@
       </div>
     </div>
     <!--Footer Section-->
-    <footer class="fixed-bottom">		
+    <footer class="fixed-bottom" style="height:13.5vh;">		
       <div class="row">
         <div class="col-md-3 col-sm-3" id = "playbar-artist-info">
           <div class="media">
-            <div class="media-left">
+            <div class="media-left" style="margin: 0.65em;">
               <img src="https://i.pinimg.com/736x/8d/e4/20/8de42050e671b93b1d6bad2f2764ba89--calm-graphic-design-sun-graphic.jpg" class="media-object" style="width:60px">
             </div>
-            <div class="media-body">
+            <div class="media-body" style="margin-top: 0.2em; margin-left: 1em;">
               <h4 class="media-heading"> <a href="#" id="playbar-song-href"> <span id="playbar-song-name">   Song name     </span> </a></h4>
               <p id="playbar-artist-name"> 
                   
@@ -143,13 +143,13 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-sm-6">
+        <div class="col-md-	 col-sm-6">
             <div id="jquery_jplayer_1" class="jp-jplayer"></div>
 		<div id="jp_container_1" class="jp-audio" role="application" aria-label="media player" style="border-style: none;">
                     <div class="jp-type-single" >
 			<div class="jp-gui jp-interface" style="background-color: #4E4E4E;"> 
                             <div class="row">
-				<div class="" style="margin-left: 35%; ">
+				<div class="" style="margin-left: 47%; margin-top:0.65em; ">
                                     <ul id="playbar-center-icons">
                                        <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Shuffle" id="playbar-shuffle-button" > <i class="material-icons" id="shuffle-icon">shuffle</i></button></li>
                                        <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Fast Backward"  id="playbar-backward-button"> <i class="material-icons">fast_rewind</i></button></li>
@@ -162,14 +162,14 @@
                                 </div>
                             </div>   
 				       		
-			    <div class="jp-progress" style="width:100%; margin-top: 5%;">
+			    <div class="jp-progress" style="width:100%; margin-top: 5%; margin-left: 4.3em;">
 				<div class="jp-seek-bar">
                                     <div class="jp-play-bar"></div>
 				</div>
 			    </div>
-                            <div class="jp-time-holder" style="width:100%; margin-top: 5%;">
-				<div class="jp-current-time" role="timer" aria-label="time" style="color: black; font-size:1.2em;">&nbsp;</div>
-                                <div class="jp-duration" role="timer" aria-label="duration" style="color: black; font-size:1.2em;">&nbsp;</div>				
+                            <div class="jp-time-holder" style="width:100%; margin-top: 5%; margin-left: 4.3em;">
+				<div class="jp-current-time" role="timer" aria-label="time" style="color: white; font-size:0.75em;">&nbsp;</div>
+                                <div class="jp-duration" role="timer" aria-label="duration" style="color: white; font-size:0.75em;">&nbsp;</div>				
                             </div>
 			</div>	
                     </div>

@@ -490,8 +490,7 @@ public class ServletController {
 		String privacy = request.getParameter("privacy");
 		String language = request.getParameter("lang");
 		
-		user.setLanguage(language);
-		
+		user.setLanguage(language);	
 		user.setIsPublic((privacy.equals("Public")? true:false));		
 		
 		userService.updateSpecificUser(user);

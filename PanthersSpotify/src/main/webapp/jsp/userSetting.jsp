@@ -22,8 +22,16 @@
             <label for="staticEmail" class="col-md-4 col-form-label">Language</label>
             <div class="col-md-5">
               <select id="lang" class="styled-select black rounded">
-				  <option value="English">English</option>
+                <c:choose>
+              	  <c:when test="${user.language == 'English'}">
+				  <option value="English" selected>English</option>
 				  <option value="Chinese">Chinese</option>
+				  </c:when>
+				  <c:otherwise>
+				  <option value="English" >English</option>
+				  <option value="Chinese" selected>Chinese</option>
+				  </c:otherwise>
+				</c:choose>
 				</select>
             </div>
            </div>

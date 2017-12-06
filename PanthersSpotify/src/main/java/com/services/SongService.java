@@ -25,7 +25,7 @@ public interface SongService {
 	public List<Song> getHistorySongs(String userEmail);
 	public List<Song> addHistorySong(Song song,User user,Date date);
 	public List<Song> deleteHistorySong(Song song,User user);
-	public void addSongToQueue(Collection<SongQueue> que, int sid, String email);
+	public String addSongToQueue(Collection<SongQueue> que, int sid, String email);
 	public void addPlaylistToQueue(Collection<SongQueue> que, int pid, String email);
 	public Song getNowPlay(Collection<SongQueue> que);
 	public Song setNowPlay(Collection<SongQueue> que, int sid);

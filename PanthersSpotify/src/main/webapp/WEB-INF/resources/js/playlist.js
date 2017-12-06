@@ -46,46 +46,7 @@ $(document).ready(function(){
   
 });
 
-$(".followPlaylistButton").unbind('click').bind('click', function(){
-	var status = $("#followingPlaylistStatus").text().trim();
-	var pid = $("#playlistID").text().trim();
-	console.log(status);
-	console.log("follow playlist button clicked");
-	if (status.localeCompare('FOLLOW') == 0 )
-	{
-		$.ajax({
-			url: "followSpecificPlaylist",
-			type: "POST",
-			data: {"playlistID" : pid},
-			asyn: false,
-			cache: false,
-			success: function(response)
-			{
-				console.log(response);
-				$("#followingPlaylistStatus").html("UNFOLLOW");
-                                var playlist_json = JSON.parse(response);
-                                appendPlaylistToPlaylistSection(playlist_json);
-			}
-		});
-	}
-	else
-	{
-		$.ajax({
-			url: "unfollowSpecificPlaylist",
-			type: "POST",
-			data: {"playlistID" : pid},
-			asyn: false,
-			cache: false,
-			success: function(response)
-			{
-				console.log(response);
-				$("#followingPlaylistStatus").html("FOLLOW");
-                                var playlistToRemove = "#playlistID" + pid;
-                                $(playlistToRemove).remove();
-			}
-		});
-	}
-});
+
 
 
 //style for the filter container
@@ -272,7 +233,7 @@ $(document).on("click",".playbar-play-button", function(){
 function appendPlaylistToPlaylistSection(data)
 {
     console.log("append playlist hehrherhrhisorheishr");
-    $("#user-playlist-section").prepend('<li class="nav-item playlist-item"><a class="nav-link color-nav">' + data[0]['playlistName'] + 
+    $("#user-playlist-section").prepend('<li class="nav-item playlist-item" id="playlistID'+data[0]['playlistId']+'"><a class="nav-link color-nav">' + data[0]['playlistName'] + 
             '</a><span style="display:none;" class="playlist_id">' + data[0]['playlistId'] + '</span></li>');
 }
 
@@ -288,4 +249,45 @@ $(document).on("click",".playlist_header_more_button",function()
   }
   hoverEnabled = !hoverEnabled;
   //alert("clicked");
+});
+
+$(document).on("click",".followPlaylistButton", function(){
+	var status = $("#followingPlaylistStatus").text().trim();
+	var pid = $("#playlistID").text().trim();
+	console.log(status);
+	console.log("follow playlist button clicked");
+	if (status.localeCompare('FOLLOW') == 0 )
+	{
+		$.ajax({
+			url: "followSpecificPlaylist",
+			type: "POST",
+			data: {"playlistID" : pid},
+			asyn: false,
+			cache: false,
+			success: function(response)
+			{
+				console.log(response);
+				$("#followingPlaylistStatus").html("UNFOLLOW");
+                var playlist_json = JSON.parse(response);
+                appendPlaylistToPlaylistSection(playlist_json);
+			}
+		});
+	}
+	else
+	{
+		$.ajax({
+			url: "unfollowSpecificPlaylist",
+			type: "POST",
+			data: {"playlistID" : pid},
+			asyn: false,
+			cache: false,
+			success: function(response)
+			{
+				console.log("what the fk... "+ response);
+				$("#followingPlaylistStatus").html("FOLLOW");
+                var playlistToRemove = "#playlistID" + pid;
+                $(playlistToRemove).remove();
+			}
+		});
+	}
 });

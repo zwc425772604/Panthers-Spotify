@@ -415,9 +415,9 @@
 	<main class="main-page"> <!--Scrollable Main Page Section-->
 	<div class="scrolled-main" id="style-1">
 		<!--Top Tool Section-->
-		<div class="row" id="top-tool">
-			<div style="float:right;">
-				<a href="" style="height: 2px;">Log Out</a>
+		<div id="top-tool">
+			<div>
+				<a href="" style="height: 2px; margin-left: 2%; margin-top:5%; width:10%;">Log Out</a>
 				<!--<div class="w3-dropdown-hover">
 					<button class="w3-button w3-black" id="top-tool-profile">
 						<img width=25px height=25px class="rounded-circle"

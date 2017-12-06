@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-dark-grey.css">
 <script src="${cp}/resources/js/admin.js"></script>
-<div id="bannerimage" style="background-image: url(http://ep.id-t.com/dam/asset/pictures/website-content/newsitems/banner-sensation-spotify-playlist-.jpeg?uuid=6j3c6dvv5ncwviv4yuwizw7tfa);"></div>
+
 <!--
   <div class="w3-bar w3-black">
   <button class="w3-bar-item w3-button" onclick="openCity('London')">London</button>
@@ -41,7 +41,7 @@
   </ul>
 </nav>
 <div id="songsPendingTableDiv" class="w3-container info-table">
-  <h1><span id="num-of-pending-songs"></span> songs to be verified</h1>
+  <h1 style="color: white;"><span id="num-of-pending-songs"></span> songs to be approved</h1>
   <table class="w3-table-all w3-hoverable" id = "pending-songs-table">
     <thead>
       <tr class="w3-light-grey">
@@ -63,7 +63,7 @@
   <h1>Album Table</h1>
 </div>
 <div id="playlistsTableDiv" class="w3-container info-table" style="display:none">
-  <h1><span id="num-of-playlist"></span> playlist(s) created</h1>
+  <h1 style="color: white;"><span id="num-of-playlist"></span> playlist(s) created</h1>
   <table class="w3-table-all w3-hoverable" id = "playlists-table">
     <thead>
       <tr class="w3-light-grey">
@@ -81,7 +81,7 @@
   </table>
 </div>
 <div id="basicUsersTableDiv" class="w3-container info-table" style="display:none">
-  <h1><span id="num-of-basic-user"></span> basic users registered</h1>
+  <h1 style="color: white;"><span id="num-of-basic-user"></span> basic users registered</h1>
   <table class="w3-table-all w3-hoverable" id = "basic-users-table">
     <thead>
       <tr class="w3-light-grey">
@@ -101,7 +101,7 @@
   </table>
 </div>
 <div id="premiumUsersTableDiv" class="w3-container info-table" style="display:none">
-  <h1> <span id="num-of-premium-user"></span> premium users registered</h1>
+  <h1 style="color: white;"> <span id="num-of-premium-user"></span> premium users registered</h1>
   <table class="w3-table-all w3-hoverable" id = "premium-users-table">
     <thead>
       <tr class="w3-light-grey">
@@ -121,7 +121,7 @@
   </table>
 </div>
 <div id="artistsTableDiv" class="w3-container info-table" style="display:none">
-  <h1><span id="num-of-artist"></span> artists registered</h1>
+  <h1 style="color: white;"><span id="num-of-artist"></span> artists registered</h1>
   <table class="w3-table-all w3-hoverable" id = "artist-table">
     <thead>
       <tr class="w3-light-grey">

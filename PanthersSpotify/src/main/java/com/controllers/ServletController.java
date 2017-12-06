@@ -1406,7 +1406,7 @@ public class ServletController {
 	
 	
 	@RequestMapping(value = "/addConcert", method = RequestMethod.POST)
-	public @ResponseBody String addConcert(HttpServletRequest request, HttpSession session) {
+	public ModelAndView addConcert(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");//artist page only
 		Concert c = new Concert();
 		String address = request.getParameter("address");	
@@ -1425,9 +1425,11 @@ public class ServletController {
 		c.setCname(cname);
 		c.setCtime(ctime);
 		c.setUemail(user);
+		c.setLid(null);
 		userService.addConcert(c);
-		
-		return "ok";
+		mav.addObject("username", user.getUserName());
+		mav.setViewName("artistMainPage");
+		return mav;
 	}
 	
 	@RequestMapping(value = "/getConcertInfo", method = RequestMethod.POST)

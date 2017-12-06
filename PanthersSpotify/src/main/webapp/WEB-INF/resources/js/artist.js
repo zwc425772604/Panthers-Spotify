@@ -144,13 +144,31 @@ $(document).on("click", ".artist-item", function(){
         	                        	  actual_JSON['artistBio'] = "This artist doesn't include a bio.";
         	                          }
         	                          $("#artist-info").append(actual_JSON['artistBio']);
+        	                          $.ajax({
+		              	                        url: "${cp}/../getConcertInfo",
+		              	                        type: "POST",
+		              	                        data : {"artistEmail" : email},
+		              	                        asyn: true,
+		              	                        cache: true,
+		              	                        success : function(response)
+		              	                        {
+		              	                             console.log(response);
+		              	                             var actual_JSON = JSON.parse(response);
+		              	                             inputConcertTable(actual_JSON);
+		              	                        },
+		              	                        error: function(e)
+		              	                        {
+		              	                          console.log(e);
+		              	                        }
+		              	                	  });
         	                          
         	                        },
         	                        error: function(e)
         	                        {
         	                          console.log(e);
         	                        }
-        	                	  });      	                	
+        	                	  });
+        	                	
         	                }
         	        	  });
         	        	
@@ -164,6 +182,27 @@ $(document).on("click", ".artist-item", function(){
       
 	  });
 });
+
+function inputConcertTable(data){
+	$("#artist-concert-info").empty();
+	var num = data['concertList'].length;
+	if(num == 0){
+		$("#artist-concert-info").append("This artist has no upcoming concerts.");
+	}
+	else{
+		for(var i = 0; i < num; i++){
+			var cname = data['concertList'][i]['name'];
+			var date = data['concertList'][i]['date'];
+			var address =data['concertList'][i]['address'];
+			$("#artist-concert-info").append([
+				'<div id="artist-concert-name" style="font-size:1.2em; font-weight: bolder;color:lightgreen; margin-top: 1em;">'+ cname +'</div>',
+			      '<div id="artist-concert-date" style="font-size:1em; font-weight: bolder;">' + date +'</div>',
+			      '<div id="artist-cocnert-address" style="font-size: 1em;">' +address +'</div>'
+			].join(''));
+		}
+	}
+}
+
 
 function insertArtistsPage(data)
 {

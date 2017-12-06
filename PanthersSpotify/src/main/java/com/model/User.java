@@ -148,6 +148,17 @@ public class User implements Serializable {
 		this.isPublic = isPublic;
 	}
 	
+	@Column(name = "isBan")
+	private boolean isBan;
+
+	public boolean getIsBan() {
+		return isBan;
+	}
+
+	public void setIsBan(boolean isBan) {
+		this.isBan = isBan;
+	}
+	
 	@Column(name = "isLogin")
 	private boolean isLogin;
 

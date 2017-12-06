@@ -1,5 +1,7 @@
 
 $(document).ready(function(){
+	document.getElementById('approve_song').focus();
+	
 	$.ajax({
 		url: "{cp}/../displayArtistCheckRoyalty",
 		type: "POST",
@@ -150,6 +152,15 @@ $(document).on ("click", "#add_new_song_button", function () {
     });
 
 
+$(document).on ("click", "#add_new_concert_button", function () {
+    $('#new_concert_dialog').dialog({
+     height: 300,
+     width: 550,
+     modal: true,
+     resizable: true,
+     dialogClass: 'no-close'
+  	});
+  });
 
 
 

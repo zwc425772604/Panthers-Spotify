@@ -160,20 +160,20 @@
         </div>
       </div>
       <!-- filter input div block -->
-      <div id="filter_and_download">
+      <!--  <div id="filter_and_download">
         <div class="filter_left" style="width:50%;">
           <div class="input-group" id="filter_container">
             <span class="input-group-addon" id="search_span">
             <i class="fa fa-search" aria-hidden="true"></i>
-            </span>
+            </span>-->
             <!-- <input type="search"  id="filter_keyword" name="q" onkeyup="filterAlbum()" placeholder="Filter"> -->
-            <input placeholder= "filter" class="w3-input w3-border w3-animate-input" type="search" style="width:30%">
+            <!-- <input placeholder= "filter" class="w3-input w3-border w3-animate-input" type="search" style="width:30%">
           </div>
         </div>
         <div class="download_right"style="width: 20%;margin-top:1%;">
           <p3 class="suggestion-topic" style="font-size: 1.5em;">Download</p3>
         </div>
-      </div>
+      </div>-->
     </div>
     </div>
     <script>

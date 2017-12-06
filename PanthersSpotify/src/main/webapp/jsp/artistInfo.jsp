@@ -117,7 +117,7 @@
     <div id="artist-info" style="padding: 3%;">
     </div>
   </div>
-  <div style="margin-top: 5%;">
+  <div style="margin-top: 7%;">
     <div id="concert-section">
     <div id="concert-header" style="border-bottom: 1px solid white; margin-bottom: 2%;
                                 font-size: 1.5em;">

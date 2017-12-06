@@ -128,7 +128,52 @@
             </form:form>
           </div>
           <!-- end of dialog popup box -->
-          <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Edit Song Information" id="edit_song_button"> <i class="material-icons">mode_edit</i></button></li>
+          
+        </ul>
+      </li>
+      <li>
+        <p class="color-nav-header">Concert:</p>
+        <ul class="left_sizebar">
+          <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Add Concert"  id="add_new_concert_button"><i class="material-icons">add</i></button></li>
+          <div id="new_concert_dialog" title="Add Concert To Database" style="display:none;">
+            <!-- create playlist -->
+            <form:form  method = "POST" action="addConcert" enctype="multipart/form-data" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
+            
+              <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Concert Name</span></div>
+                <div class="w3-rest">
+                  <input class="w3-input w3-border" type="concert_name" name="cname"  placeholder="Concert Name">
+                </div>
+              </div>
+              <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Concert Date</span></div>
+                <div class="w3-rest">
+                  <input class="w3-input w3-border" name="ctime" type="date"  placeholder="Concert date">
+                </div>
+              </div>
+              <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Location</span></div>
+                <div class="w3-rest">
+                  <input class="w3-input w3-border" name="address" type="location"  placeholder="Location">
+                </div>
+              </div>
+             
+              
+              
+              <div class="w3-row w3-section">
+                <div class="w3-third w3-container">
+                  <button onclick="event.preventDefault(); $('#new_song_dialog').dialog('close');" class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>
+                </div>
+                <div class="w3-third w3-container">
+                </div>
+                <div class="w3-third w3-container">
+                  <button type="submit" class="w3-button w3-block w3-section w3-blue w3-ripple">Create</button>
+                </div>
+              </div>
+            </form:form>
+          </div>
+          <!-- end of dialog popup box -->
+          
         </ul>
       </li>
     </ul>
@@ -141,31 +186,14 @@
     <div class="scrolled-main" id="style-1">
       <!--Top Tool Section-->
       <div class ="row" id="top-tool">
-        <div id="top-tool-page-change">
-          <button class="top-tool-page-button"><i class="fa fa-angle-left fa-2x" aria-hidden="true"></i></button>
-          <button class="top-tool-page-button"><i class="fa fa-angle-right fa-2x" aria-hidden="true"></i></button>
-        </div>
-        <div class="col-sm-3 col-sm-offset-3" id="top-tool-search">
-          <div class="input-group stylish-input-group"  id="top-tool-search">
-            <input type="text" class="form-control"  placeholder="Search" >
-            <span class="input-group-addon">
-            <button type="submit">
-            <i class="fa fa-search" aria-hidden="true"></i>
-            </button>
-            </span>
-          </div>
-        </div>
         <div id="top-tool-upgrade-and-user">
-          <a href= ""> Artist</a>
           <div class="w3-dropdown-hover">
             <button class="w3-button w3-black" id="top-tool-profile">
-            <img width=25px height=25px class="rounded-circle" alt="Generic placeholder thumbnail" id="dropdown-img"  src="http://orig05.deviantart.net/f239/f/2011/089/3/3/jack_skellington_facebook_icon_by_valashard-d3cu1bt.jpg">
+            <!--  img width=25px height=25px class="rounded-circle" alt="Generic placeholder thumbnail" id="dropdown-img"  src="http://orig05.deviantart.net/f239/f/2011/089/3/3/jack_skellington_facebook_icon_by_valashard-d3cu1bt.jpg">-->
             <span class="user_name">${username}</span>
             <i class="fa fa-angle-down" aria-hidden="true"></i>
             </button>
             <div class="w3-dropdown-content w3-bar-block w3-border user-dropdown-button">
-              <a href="#" class="w3-bar-item w3-button" id="dropdown-item">Account</a>
-              <a href="#" class="w3-bar-item w3-button" id="dropdown-item">Settings</a>
               <a href="home" class="w3-bar-item w3-button" id="dropdown-item">Log Out</a>
             </div>
           </div>
@@ -177,7 +205,7 @@
           id="bootstrap-overrides-navbar">
           <ul class="navbar-nav mr-auto tab" id="navbar-ul">
             <li class="nav-item">
-              <a class="nav-link tablinks" href="javascript:displayContent('approvedSongsTableDiv')">APPROVED SONGS </a>
+              <a id="approve_song" class="nav-link tablinks" href="javascript:displayContent('approvedSongsTableDiv')" selected>APPROVED SONGS </a>
             </li>
             <li class="nav-item">
               <a class="nav-link tablinks" href="javascript:displayContent('pendingSongsTableDiv')">PENDING SONGS </a>
@@ -189,7 +217,7 @@
           </ul>
         </nav>
         <div id="approvedSongsTableDiv" class="w3-container info-table">
-         <h1><span id="num-of-approved-songs"></span> songs approved</h1>
+         <h1 style="color:white;"><span id="num-of-approved-songs"></span> songs approved</h1>
               <table class="w3-table-all w3-hoverable" id = "artist-approved-songs-table">
 			    <thead>
 			      <tr class="w3-light-grey">
@@ -207,7 +235,7 @@
 			  </table>
         </div>
         <div id="pendingSongsTableDiv" class="w3-container info-table" style="display:none">
-         <h1><span id="num-of-pending-songs"></span> songs need to be approved</h1>
+         <h1 style="color:white;"><span id="num-of-pending-songs"></span> songs need to be approved</h1>
               <table class="w3-table-all w3-hoverable" id = "artist-pending-songs-table">
 			    <thead>
 			      <tr class="w3-light-grey">

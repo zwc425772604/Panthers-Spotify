@@ -1399,14 +1399,15 @@ public class ServletController {
 	
 	
 	@RequestMapping(value = "/addConcert", method = RequestMethod.POST)
-	public @ResponseBody String addConcert(@PathVariable String status, HttpServletRequest request, HttpSession session) {
+	public @ResponseBody String addConcert(HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");//artist page only
 		Concert c = new Concert();
 		String address = request.getParameter("address");	
 		String cname = request.getParameter("cname");
-		String ctimeTmp = request.getParameter("ctime");
+		String ctimeTmp = request.getParameter("ctime") + " 00:00:00";
 		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd yyyy hh:mm:ss", Locale.US);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US);
+		
 		Date ctime = null;
 		try {
 			ctime = (Date) dateFormat.parse(ctimeTmp);

@@ -42,61 +42,50 @@ $(document).ready(function(){
 	
 	  event.preventDefault(); document.getElementById('edit_playlist_modal').style.display='none';
   });
-  $(document).on('click', ".followPlaylistButton",function(){
-//  $(".followPlaylistButton").unbind('click').bind('click', function(){
-		var status = $("#followingPlaylistStatus").text().trim();
-		var pid = $("#playlistID").text().trim();
-                console.log("playlist want to playlist is " + pid);
-		console.log(status);
-		console.log("follow playlist button clicked");
-                
-		if (status.localeCompare('FOLLOW') == 0 )
-		{
-			$.ajax({
-				url: "followSpecificPlaylist",
-				type: "POST",
-				data: {"playlistID" : pid},
-				asyn: false,
-				cache: false,
-				success: function(response)
-				{
-					console.log(response);
-					$("#followingPlaylistStatus").html("UNFOLLOW");
-	                                var playlist_json = JSON.parse(response);
-	                                appendPlaylistToPlaylistSection(playlist_json);
-				}
-			});
-		}
-		else
-		{
-                    var playlistToRemove = "#playlistID" + pid;
-                   
-			$.ajax({
-				url: "unfollowSpecificPlaylist",
-				type: "POST",
-				data: {"playlistID" : pid},
-				asyn: false,
-				cache: false,
-				success: function(response)
-				{
-					console.log(response);
-					$("#followingPlaylistStatus").html("FOLLOW");
-//                                         var playlist_json = JSON.parse(response);
-                                        removePlaylistFromPlaylistSection(pid);
-//                                    
-                                    console.log("remove ok?");
-                       
-	                                             
-				}
-                                
-			});
-                         
-		}
-                 
-	});
+  
+  
 });
 
-
+$(".followPlaylistButton").unbind('click').bind('click', function(){
+	var status = $("#followingPlaylistStatus").text().trim();
+	var pid = $("#playlistID").text().trim();
+	console.log(status);
+	console.log("follow playlist button clicked");
+	if (status.localeCompare('FOLLOW') == 0 )
+	{
+		$.ajax({
+			url: "followSpecificPlaylist",
+			type: "POST",
+			data: {"playlistID" : pid},
+			asyn: false,
+			cache: false,
+			success: function(response)
+			{
+				console.log(response);
+				$("#followingPlaylistStatus").html("UNFOLLOW");
+                                var playlist_json = JSON.parse(response);
+                                appendPlaylistToPlaylistSection(playlist_json);
+			}
+		});
+	}
+	else
+	{
+		$.ajax({
+			url: "unfollowSpecificPlaylist",
+			type: "POST",
+			data: {"playlistID" : pid},
+			asyn: false,
+			cache: false,
+			success: function(response)
+			{
+				console.log(response);
+				$("#followingPlaylistStatus").html("FOLLOW");
+                                var playlistToRemove = "#playlistID" + pid;
+                                $(playlistToRemove).remove();
+			}
+		});
+	}
+});
 
 
 //style for the filter container
@@ -154,52 +143,6 @@ $( ".song_info" ).bind({
 
 
 // handler for play/pause button in the song list
-$(".playbar-play-button").click(function(){
-     console.log('song in playlist is clicked');
-     var sid = $(".song-id-in-playlist",this).text().trim();
-     console.log("sond Id to play in playlist is " + sid);
-     var pid = $("#playlistID").text().trim();
-     console.log("playlist ID to play is " + pid );
-     $.ajax({
-         url: "${cp}/../playPlaylist ",
-         type: "POST",
-         data : {"pid" : pid, "sid":sid},
-         asyn: false,
-         cache: false,
-         success : function(response)
-         {
-           console.log("song in queue: "+ response);
-           var actual_json = JSON.parse(response);
-           updateSongInfo(actual_json.nowPlay);
-           console.log(actual_json);
-           addToPlaybarPlaylist(actual_json);
-           //updateButtons()
-         },
-         error: function(e)
-         {
-           console.log(e);
-         }
-	  });
-
-      if ($(".song-page-play-pause-button",this).text().localeCompare('play_circle_filled') == 0)
-      {
-        $(".song-page-play-pause-button").text("play_circle_filled");
-        $(".song-page-play-pause-button",this).text("pause_circle_filled");
-        //playSongInPlaylist();
-         player.jPlayer("play");
-      }
-      else
-      {
-          $(".song-page-play-pause-button",this).text("play_circle_filled");
-         player.jPlayer("pause");
-      }
-    });
-//    else
-//    {
-//      player.jPlayer("play");
-//      $(".song-page-play-pause-button").text("play_circle_filled");
-//      $(".song-page-play-pause-button",this).text("pause_circle_filled");
-//    }
 
 
 
@@ -247,44 +190,90 @@ $(".add-to-playlist-item").click(function(){
   });
 
 
-$("#play-playlist-button").click(function(){
+$(document).on("click","#play-playlist-button", function(){
     var pid = $("#playlistID").text().trim();
+    var status = $(".playingStatus",this).text().trim();
+    console.log("play button status is: "+ status);
 	console.log("pid to play is " + pid);
-	 $.ajax({
-          url: "${cp}/../playPlaylist ",
-          type: "POST",
-          data : {"pid" : pid},
-          asyn: false,
-          cache: false,
-          success : function(response)
-          {
-            console.log(response);
-            var actual_json = JSON.parse(response);
-            updateSongInfo(actual_json.nowPlay);
-            console.log(actual_json);
-            addToPlaybarPlaylist(actual_json);
-            //updateButtons()
-          },
-          error: function(e)
-          {
-            console.log(e);
-          }
-	  });
+	if (status=="PLAY"){
+		 $.ajax({
+	          url: "${cp}/../playPlaylist ",
+	          type: "POST",
+	          data : {"pid" : pid},
+	          asyn: false,
+	          cache: false,
+	          success : function(response)
+	          {
+	            console.log(response);
+	            var actual_json = JSON.parse(response);
+	            result = actual_json;
+	            console.log(actual_json);
+	            addToPlaybarPlaylist(actual_json);
+	            updateSongInfo(result.nowPlay);
+	            $(".playingStatus",this).text("PAUSE");
+	            //updateButtons()
+	          },
+	          error: function(e)
+	          {
+	            console.log(e);
+	          }
+		  });
+	}else{
+		player.jPlayer("pause");
+	}
 });
+
+$(document).on("click",".playbar-play-button", function(){
+    console.log('song in playlist is clicked');
+    var sid = $(".song-id-in-playlist",this).text().trim();
+    console.log("sond Id to play in playlist is " + sid);
+    var pid = $("#playlistID").text().trim();
+    console.log("playlist ID to play is " + pid );
+     if ($(".song-page-play-pause-button",this).text().localeCompare('play_circle_filled') == 0)
+     {
+       $(".song-page-play-pause-button").text("play_circle_filled");
+       $(".song-page-play-pause-button",this).text("pause_circle_filled");
+       //playSongInPlaylist();
+       $.ajax({
+           url: "${cp}/../playPlaylist ",
+           type: "POST",
+           data : {"pid" : pid, "sid":sid},
+           asyn: false,
+           cache: false,
+           success : function(response)
+           {
+             console.log("song in queue: "+ response);
+             var actual_json = JSON.parse(response);
+             updateSongInfo(actual_json.nowPlay);
+             console.log(actual_json);
+             addToPlaybarPlaylist(actual_json);
+             //updateButtons()
+           },
+           error: function(e)
+           {
+             console.log(e);
+           }
+  	  });
+        player.jPlayer("play");
+     }
+     else
+     {
+        $(".song-page-play-pause-button",this).text("play_circle_filled");
+        player.jPlayer("pause");
+     }
+   });
+//   else
+//   {
+//     player.jPlayer("play");
+//     $(".song-page-play-pause-button").text("play_circle_filled");
+//     $(".song-page-play-pause-button",this).text("pause_circle_filled");
+//   }
 
 function appendPlaylistToPlaylistSection(data)
 {
     console.log("append playlist hehrherhrhisorheishr");
-    $("#user-playlist-section").prepend('<li class="nav-item playlist-item" id="playlistID' + data[0]['playlistId'] + '"><a class="nav-link color-nav">' + data[0]['playlistName'] + 
+    $("#user-playlist-section").prepend('<li class="nav-item playlist-item"><a class="nav-link color-nav">' + data[0]['playlistName'] + 
             '</a><span style="display:none;" class="playlist_id">' + data[0]['playlistId'] + '</span></li>');
-}
-
-function removePlaylistFromPlaylistSection(pid){
-    console.log("remove playlist");
-    var playlistID = "playlistID" + pid;
-    var child = document.getElementById(playlistID);
-    child.parentNode.removeChild(child);
-    console.log("remove done");
 }
 
 $(document).on("click",".playlist_header_more_button",function()

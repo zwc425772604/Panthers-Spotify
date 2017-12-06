@@ -1,7 +1,7 @@
 package com.controllers;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -914,6 +914,8 @@ public class ServletController {
 	@RequestMapping(value = "/playPlaylist", method = RequestMethod.POST)
 	public @ResponseBody String getNewSongQueue(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		User user = (User)session.getAttribute("user");
+		Date now = new Date();
+		System.out.println("start time: "+now);
 		Collection<SongQueue> orig = user.getSongQueueCollection();
 		String email = user.getEmail();
 		List<SongQueue> newSq = (List<SongQueue>) songService.removeAllQueue(orig, email);
@@ -950,6 +952,8 @@ public class ServletController {
 		JSONObject result = JSONHelper.songQueueToJSON(newSq);
 		session.setAttribute("queueJSON", result);
 		session.setAttribute("user", user);
+		now = new Date();
+		System.out.println("ended time: "+now);
 		return result.toString();
 	}
 

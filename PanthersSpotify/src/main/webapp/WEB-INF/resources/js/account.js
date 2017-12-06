@@ -1,3 +1,8 @@
+$(document).ready(function(){
+	
+
+});
+
 function checkPassword(password, password_confirm)
   {
     if (password.localeCompare(password_confirm) == 0)
@@ -109,4 +114,35 @@ function checkPassword(password, password_confirm)
     return -1;
   }
 }
+
+function deleteAccountForm()
+{
+	$('#deleteAccountDialog').dialog({
+        //autoOpen: true,
+        height: 250,
+        width: 450,
+        modal: true,
+        resizable: true,
+        dialogClass: 'no-close'
+   });
+}
+
+$(document).on("submit","#deleteAccountForm",function(){
+	event.preventDefault();
+	$.ajax({
+	    url: "${cp}/../deleteUserAccount",
+	    type: "POST",
+	    asyn: false,
+	    cache: false,
+	    success : function(response)
+	    {
+	    	window.location.href='';
+	         	
+	    },
+	    error: function(e)
+	    {
+	      console.log(e);
+	    }
+      });
+});
 

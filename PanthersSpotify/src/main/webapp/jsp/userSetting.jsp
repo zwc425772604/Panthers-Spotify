@@ -7,6 +7,7 @@
 <html lang="en">
   <head>
     <script src="${cp}/resources/js/userSetting.js" /></script>  
+    <link rel="stylesheet" href="${cp}/resources/css/userSetting.css">
   </head>
   <body>
     <div class="suggestion-container" id = "release-container" style="margin-top: 5%;">
@@ -20,7 +21,7 @@
           <div class="form-group row">
             <label for="staticEmail" class="col-md-4 col-form-label">Language</label>
             <div class="col-md-5">
-              <select id="lang">
+              <select id="lang" class="styled-select black rounded">
 				  <option value="English">English</option>
 				  <option value="Chinese">Chinese</option>
 				</select>
@@ -30,7 +31,7 @@
             <label for="staticEmail" class="col-md-4 col-form-label">Set my profile to:</label>
             <div class="col-md-5">
               <div class="col-md-5">
-              <select id="privacy">
+              <select id="privacy" class="styled-select black rounded">
               	<c:choose>
               	  <c:when test="${user.isPublic}">
 				  <option value="public"  selected>Public</option>

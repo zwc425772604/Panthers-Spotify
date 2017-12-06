@@ -25,25 +25,26 @@
     <li class="nav-item">
       <a class="nav-link tablinks" href="javascript:overview_page()">OVERVIEW </a>
     </li>
-   <li class="nav-item">
+   <!-- <li class="nav-item">
       <a class="nav-link tablinks" href="javascript:chart_page()">CHARTS</a>
-    </li>
+    </li>-->
     <li class="nav-item">
-      <a class="nav-link" href="javascript:genre_page()">GENRES &amp MOODS</a>
+      <a class="nav-link" href="javascript:genre_page()">GENRES</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="javascript:newrelease_page()">NEW RELEASES</a>
     </li>
-    
+    <!-- 
     <li class="nav-item">
       <a class="nav-link" href="javascript:discover_page()">DISCOVER</a>
-    </li>
+    </li> -->
     <li class="nav-item">
       <a class="nav-link" href="javascript:displayContainer('concerts_container')">CONCERTS</a>
     </li>
+    <!--  
     <li class="nav-item">
       <a class="nav-link" href="javascript:void(0)">MORE</a>
-    </li>
+    </li> -->
   </ul>
 </nav>
 <div id= "middle-container">

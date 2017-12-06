@@ -60,14 +60,20 @@
         </form:form>
         </div>
         <!-- end of form -->
-        <form:form action="deleteUserAccount" method="POST">
-          <div class="form-group row">
-            <div class="col-md-4" style="margin-top: 2%;">
-              <input type="submit" class="form-control" value="Delete Account"
-                name="deleteUser">
-            </div>
-          </div>
-        </form:form>
+        <a href="javascript:deleteAccountForm()" class="w3-bar-item w3-button" id="delete-button">Delete Your Account</a>                     
+			<div id="deleteAccountDialog" title="Downgrade" style="display:none;">
+			 	<form id="deleteAccountForm">
+			 	  <div style="margin-left:25%; text-algin:center; color: white;">Are you sure you want to delete?</div> 				  
+				  <div class="w3-row w3-section" style="margin-left:25%;">
+				    <div class="w3-third w3-container">
+				      <button onclick="event.preventDefault(); $('#deleteAccountDialog').dialog('close');" class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>
+				    </div>							  
+				    <div class="w3-third w3-container">
+				      <input id="downgradeButton" type="submit" class="w3-button w3-block w3-section w3-blue w3-ripple" value="Delete"></button>
+				    </div>
+				  </div>
+			 </form>
+		</div>
       </div>
       <!-- end of panel body -->
     </div>

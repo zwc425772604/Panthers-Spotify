@@ -2,6 +2,21 @@
 	width: 15em;
 }
 
+.rounded {
+   -webkit-border-radius: 20px;
+   -moz-border-radius: 20px;
+   border-radius: 20px;
+}
+
+.styled-select {
+   height: 29px;
+   overflow: hidden;
+   width: 240px;
+   color: white;
+}
+.black   { background-color: #272a2d; }
+.black select   { color: #fff; }
+
 .album-top{
 	background: -webkit-linear-gradient(top, #6b6969, #272a2d);
 	padding-top: 10%;

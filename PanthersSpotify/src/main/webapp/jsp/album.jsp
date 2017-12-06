@@ -35,8 +35,8 @@
 <!--  Container for Album -->
 <div class="suggestion-container" id="charts-container">
 	<div id="top_content">
-		<p style="display: inline; font-size: 18px;">Sorted by</p>
-		<select id="sorted_by_keyword"
+		<p style="display: inline; font-size: 18px; margin-right:2%;">Sorted by</p>
+		<select id="sorted_by_keyword" class="styled-select black rounded"
 			style="display: inline; font-size: 20px;">
 			<option id="sort_by" value=""></option>
 			<option id="sort_by" value="Title">Title           </option>

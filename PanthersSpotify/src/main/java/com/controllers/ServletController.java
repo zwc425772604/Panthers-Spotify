@@ -235,6 +235,7 @@ public class ServletController {
 	public @ResponseBody String followSpecificPlaylist(HttpServletRequest request, HttpSession session) {
 		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
 		User user = (User) session.getAttribute("user");
+		System.out.println("playlist start to be follow");
 		Playlist ret = playlistService.followPlaylist(playlistID, user);
 		ret.setFollowers(ret.getFollowers()+1);
 		List<Playlist> userPlaylist = (List<Playlist>) (session.getAttribute("user_playlist"));
@@ -253,6 +254,7 @@ public class ServletController {
 		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
 		User user = (User) session.getAttribute("user");
 		Playlist ret = playlistService.unfollowPlaylist(playlistID, user);
+		System.out.println("playlist start to be unfollow");
 		ret.setFollowers(ret.getFollowers()-1);
 		List<Playlist> userPlaylist = (List<Playlist>) (session.getAttribute("user_playlist"));
 		userPlaylist.remove(ret);
@@ -486,6 +488,8 @@ public class ServletController {
 		User user = (User) session.getAttribute("user");
 		String privacy = request.getParameter("privacy");
 		String language = request.getParameter("lang");
+		
+		user.setLanguage(language);
 		
 		user.setIsPublic((privacy.equals("Public")? true:false));		
 		

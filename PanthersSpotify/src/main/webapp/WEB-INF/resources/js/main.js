@@ -65,7 +65,7 @@ $(document).ready(function(){
 	          height: 430,
 	          width: 700,
 	          modal: true,
-	          resizable: false,
+	          resizable: true,
 	          background: "#2f2f2f",
 	  
 	          dialogClass: 'no-close'
@@ -502,6 +502,7 @@ $(document).on("click",".add-to-queue-btn" ,function(){
 	    },
 	    error: function(e)
 	    {	
+	    	$(".song_action_list").removeClass("w3-show");
 	    	console.log(e);
 	    }
 	});

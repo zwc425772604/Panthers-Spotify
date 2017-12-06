@@ -115,6 +115,15 @@ public class Song implements Serializable {
     public void setMonthlyPlayed(Integer monthlyPlayed) {
         this.monthlyPlayed = monthlyPlayed;
     }
+    
+    @Column(name = "played")
+    private Integer played;
+    public Integer getPlayed() {
+        return played;
+    }
+    public void setPlayed(Integer played) {
+        this.played = played;
+    }
 
 
     @Size(max = 10)

@@ -308,6 +308,8 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Transactional(readOnly = true)
 	public List<Concert> getConcerts(User user) {
+		
+		
 		TypedQuery<Concert> query1 = entityManager
 				.createQuery("SELECT s from Concert s WHERE s.uemail=:uemail", Concert.class)
 				.setParameter("uemail", user);

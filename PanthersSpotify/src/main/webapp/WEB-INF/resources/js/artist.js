@@ -14,6 +14,55 @@ $(document).ready(function(){
           console.log(e);
         }
       });
+	
+	$(document).on('click',".followArtistButton",function(){
+	$(".followArtistButton").unbind('click').bind('click', function(){
+		var status = $("#followArtistStatus").text().trim();
+		var email = $("#artistEmail",this).text().trim();
+		console.log("THis");
+		if (status.localeCompare('Follow') == 0 )
+		{
+			$.ajax({
+				url: "followSpecificArtist",
+				type: "POST",
+				data: {"artistEmail" : email},
+				asyn: true,
+				cache: false,
+				success: function(response)
+				{
+					console.log(response);
+					$("#followArtistStatus").html("Unfollow");
+					var cn = parseInt($("#artist-follower-number").text());
+					var cn = cn + 1;
+					console.log(cn);
+					$("#artist-follower-number").empty();
+					$("#artist-follower-number").html(cn);
+				}
+			});
+		}
+		else
+		{
+			$.ajax({
+				url: "unfollowSpecificArtist",
+				type: "POST",
+				data: {"artistEmail" : email},
+				asyn: true,
+				cache: false,
+				success: function(response)
+				{
+					console.log(response);
+					$("#followArtistStatus").html("Follow");
+					var cn = parseInt($("#artist-follower-number").text());
+					var cn = cn -1;
+					console.log(cn);
+					$("#artist-follower-number").empty();
+					$("#artist-follower-number").html(cn);
+				}
+			});
+		}
+
+	});
+	});
 });
 
 $(document).on("click", ".album-item", function(){
@@ -101,7 +150,7 @@ $(document).on("click", ".artist-item", function(){
         	                        {
         	                          console.log(e);
         	                        }
-        	                	  });
+        	                	  });      	                	
         	                }
         	        	  });
         	        	
@@ -145,49 +194,3 @@ function insertArtistsPage(data)
 }
 
 
-$(document).on("click", ".followArtistButton", function(){
-	var status = $("#followArtistStatus").text().trim();
-	var email = $("#artistEmail",this).text().trim();
-	console.log("THis");
-	if (status.localeCompare('Follow') == 0 )
-	{
-		$.ajax({
-			url: "followSpecificArtist",
-			type: "POST",
-			data: {"artistEmail" : email},
-			asyn: true,
-			cache: false,
-			success: function(response)
-			{
-				console.log(response);
-				$("#followArtistStatus").html("Unfollow");
-				var cn = parseInt($("#artist-follower-number").text());
-				var cn = cn + 1;
-				console.log(cn);
-				$("#artist-follower-number").empty();
-				$("#artist-follower-number").html(cn);
-			}
-		});
-	}
-	else
-	{
-		$.ajax({
-			url: "unfollowSpecificArtist",
-			type: "POST",
-			data: {"artistEmail" : email},
-			asyn: true,
-			cache: false,
-			success: function(response)
-			{
-				console.log(response);
-				$("#followArtistStatus").html("Follow");
-				var cn = parseInt($("#artist-follower-number").text());
-				var cn = cn -1;
-				console.log(cn);
-				$("#artist-follower-number").empty();
-				$("#artist-follower-number").html(cn);
-			}
-		});
-	}
-
-});

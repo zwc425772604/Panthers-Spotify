@@ -218,6 +218,7 @@ public class SongDAOImpl implements SongDAO {
 				((ArrayList<SongQueue>) que).get(i).setIsPlay(true);
 				s = ((ArrayList<SongQueue>) que).get(i).getSong();
 				s.setMonthlyPlayed(s.getMonthlyPlayed()+1);
+				s.setPlayed(s.getPlayed()+1);
 				entityManager.merge(s);
 				entityManager.merge(((ArrayList<SongQueue>) que).get(i));
 			} else if (temp.getIsPlay() && temp.getSqueuePK().getSid() != sid) {

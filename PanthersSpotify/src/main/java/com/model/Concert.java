@@ -37,8 +37,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Concert.findAll", query = "SELECT c FROM Concert c")
     , @NamedQuery(name = "Concert.findByCid", query = "SELECT c FROM Concert c WHERE c.cid = :cid")
     , @NamedQuery(name = "Concert.findByCtime", query = "SELECT c FROM Concert c WHERE c.ctime = :ctime")
-    , @NamedQuery(name = "Concert.findByAddress", query = "SELECT c FROM Concert c WHERE c.address = :address")
-    , @NamedQuery(name = "Concert.findByCname", query = "SELECT c FROM Concert c WHERE c.cname = :cname")})
+    , @NamedQuery(name = "Concert.findByCname", query = "SELECT c FROM Concert c WHERE c.cname = :cname")
+    , @NamedQuery(name = "Concert.findByAddress", query = "SELECT c FROM Concert c WHERE c.address = :address")})
 public class Concert implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -51,12 +51,10 @@ public class Concert implements Serializable {
     private Date ctime;
     @Column(name = "cname", length = 50)
     private String cname;
-    @JoinColumn(name = "uemail", referencedColumnName = "email")
-    
     @Column(name = "address", length = 200)
     private String address;
-    
-    @ManyToOne
+    @JoinColumn(name = "uemail", referencedColumnName = "email", nullable = false)
+    @ManyToOne(optional = false)
     private User uemail;
     @JoinColumn(name = "lid", referencedColumnName = "lid")
     @ManyToOne
@@ -84,14 +82,6 @@ public class Concert implements Serializable {
     public void setCtime(Date ctime) {
         this.ctime = ctime;
     }
-    
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getCname() {
         return cname;
@@ -99,6 +89,14 @@ public class Concert implements Serializable {
 
     public void setCname(String cname) {
         this.cname = cname;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public User getUemail() {

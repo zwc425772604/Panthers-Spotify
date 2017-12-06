@@ -42,12 +42,14 @@ $(document).ready(function(){
 	
 	  event.preventDefault(); document.getElementById('edit_playlist_modal').style.display='none';
   });
-  
-  $(".followPlaylistButton").unbind('click').bind('click', function(){
+  $(document).on('click', ".followPlaylistButton",function(){
+//  $(".followPlaylistButton").unbind('click').bind('click', function(){
 		var status = $("#followingPlaylistStatus").text().trim();
 		var pid = $("#playlistID").text().trim();
+                console.log("playlist want to playlist is " + pid);
 		console.log(status);
 		console.log("follow playlist button clicked");
+                
 		if (status.localeCompare('FOLLOW') == 0 )
 		{
 			$.ajax({
@@ -67,6 +69,8 @@ $(document).ready(function(){
 		}
 		else
 		{
+                    var playlistToRemove = "#playlistID" + pid;
+                   
 			$.ajax({
 				url: "unfollowSpecificPlaylist",
 				type: "POST",
@@ -77,11 +81,18 @@ $(document).ready(function(){
 				{
 					console.log(response);
 					$("#followingPlaylistStatus").html("FOLLOW");
-	                var playlistToRemove = "#playlistID" + pid;
-	                $(playlistToRemove).remove();                               
+//                                         var playlist_json = JSON.parse(response);
+                                        removePlaylistFromPlaylistSection(pid);
+//                                    
+                                    console.log("remove ok?");
+                       
+	                                             
 				}
+                                
 			});
+                         
 		}
+                 
 	});
 });
 
@@ -264,8 +275,16 @@ $("#play-playlist-button").click(function(){
 function appendPlaylistToPlaylistSection(data)
 {
     console.log("append playlist hehrherhrhisorheishr");
-    $("#user-playlist-section").prepend('<li class="nav-item playlist-item"><a class="nav-link color-nav">' + data[0]['playlistName'] + 
+    $("#user-playlist-section").prepend('<li class="nav-item playlist-item" id="playlistID' + data[0]['playlistId'] + '"><a class="nav-link color-nav">' + data[0]['playlistName'] + 
             '</a><span style="display:none;" class="playlist_id">' + data[0]['playlistId'] + '</span></li>');
+}
+
+function removePlaylistFromPlaylistSection(pid){
+    console.log("remove playlist");
+    var playlistID = "playlistID" + pid;
+    var child = document.getElementById(playlistID);
+    child.parentNode.removeChild(child);
+    console.log("remove done");
 }
 
 $(document).on("click",".playlist_header_more_button",function()

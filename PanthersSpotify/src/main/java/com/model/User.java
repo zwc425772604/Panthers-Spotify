@@ -159,7 +159,17 @@ public class User implements Serializable {
 		this.isLogin = isLogin;
 	}
 	
-	
+	@Size(max = 10)
+	@Column(name = "language", length = 10)
+	private String language;
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
 	
 	@Size(max = 100)
 	@Column(name = "token", length = 100)

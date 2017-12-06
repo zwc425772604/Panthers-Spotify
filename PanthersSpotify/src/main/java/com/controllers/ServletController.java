@@ -257,6 +257,9 @@ public class ServletController {
 		List<Playlist> userPlaylist = (List<Playlist>) (session.getAttribute("user_playlist"));
 		userPlaylist.remove(ret);
 		session.setAttribute("user_playlist", userPlaylist);
+                List<Playlist> followedPlaylist = (List<Playlist> )(session.getAttribute("userFollowedPlaylists"));
+                followedPlaylist.remove(ret);
+                session.setAttribute("userFollowedPlaylists", followedPlaylist);
 		System.out.println("here is unfollow");
 		System.out.println("playlist id to be unfollow is : " + playlistID);
 		return "ok";
@@ -486,6 +489,8 @@ public class ServletController {
 		User user = (User) session.getAttribute("user");
 		String privacy = request.getParameter("privacy");
 		String language = request.getParameter("lang");
+		
+		user.setLanguage(language);
 		
 		user.setIsPublic((privacy.equals("Public")? true:false));		
 		

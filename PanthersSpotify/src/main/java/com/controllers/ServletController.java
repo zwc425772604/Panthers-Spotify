@@ -1510,7 +1510,7 @@ public class ServletController {
 	@RequestMapping(value = "/banUser", method = RequestMethod.POST)
 	public ModelAndView banUser(ModelAndView mav, HttpServletRequest request, HttpSession session)
 			throws ServletException, IOException {
-		String userEmail = request.getParameter("userEmail");
+		String userEmail = request.getParameter("userID");
 		User user = userService.getUser(userEmail);
 		user.setIsBan(true);
 		userService.updateSpecificUser(user);

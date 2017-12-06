@@ -125,6 +125,7 @@ function insertBasicUserTables(data)
 				  '<td>' + data[i]['username'] + '</td>',
 				  '<td><button class="unstyle-buttons edit_user_button"  data-toggle="tooltip-play" title="Edit This User Profiles"> <i class="material-icons">mode_edit</i></button></td>',
 				  '<td><button class="unstyle-buttons delete-user-button"  data-toggle="tooltip-play" title="Delete This User"> <i class="material-icons">delete_forever</i></button></td>',
+				  '<td><button class="unstyle-buttons ban-user-button"  data-toggle="tooltip-play" title="Ban This User"> <i class="material-icons">not_interested</i></button></td>',
 				 '</tr>'
 			].join(''));
 		}
@@ -147,6 +148,7 @@ function insertPremiumUserTables(data)
 				  '<td>' + data[i]['username'] + '</td>',
 				  '<td><button class="unstyle-buttons edit_user_button"  data-toggle="tooltip-play" title="Edit This User Profiles"> <i class="material-icons">mode_edit</i></button></td>',
 				  '<td><button class="unstyle-buttons delete-user-button"  data-toggle="tooltip-play" title="Delete This User"> <i class="material-icons">delete_forever</i></button></td>',
+				  '<td><button class="unstyle-buttons ban-user-button"  data-toggle="tooltip-play" title="Ban This User"> <i class="material-icons">not_interested</i></button></td>',
 				 '</tr>'
 			].join(''));
 		}
@@ -217,6 +219,31 @@ function insertPendingSongsTables(data)
 
 		}
 }
+
+
+$(document).ready ( function () {
+    $(document).on ("click", ".ban-user-button", function () {
+    	var userID = $(this).closest('tr').children('td:eq(0)').text();
+    	console.log("userId is : " + userID);
+    	$(this).closest('tr').css("background","red");
+   	 	$.ajax({
+ 	        url: "{cp}/../banUser",
+ 	        data: {"userID" : userID},
+ 	        type: "POST",
+ 	        asyn: false,
+ 	        cache: false,
+ 	        success : function(response)
+ 	        {
+ 	          console.log(response);
+ 	          
+ 	        },
+ 	        error: function(e)
+ 	        {
+ 	          console.log(e);
+ 	        }
+ 	      });
+    });
+});
 
 
 $(document).ready ( function () {

@@ -38,9 +38,6 @@
     <li class="nav-item">
       <a class="nav-link" href="javascript:discover_page()">DISCOVER</a>
     </li> -->
-    <li class="nav-item">
-      <a class="nav-link" href="javascript:displayContainer('concerts_container')">CONCERTS</a>
-    </li>
     <!--  
     <li class="nav-item">
       <a class="nav-link" href="javascript:void(0)">MORE</a>

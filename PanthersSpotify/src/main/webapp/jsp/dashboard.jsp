@@ -94,6 +94,8 @@
         <!--  edit button -->
         <th></th>
         <!--  delete button -->
+        <th></th>
+        <!--  ban button  -->
       </tr>
     </thead>
     <tbody>
@@ -114,6 +116,8 @@
         <!--  edit button -->
         <th></th>
         <!--  delete button -->
+        <th></th>
+        <!--  ban button  -->
       </tr>
     </thead>
     <tbody>

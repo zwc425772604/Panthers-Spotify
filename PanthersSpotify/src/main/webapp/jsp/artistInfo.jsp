@@ -108,7 +108,8 @@
 	  </section>
     </div>
   </div>
-  <div id="bio-section" style="width: 30%; margin: 2%;">
+  <div style="width: 30%; margin: 2%;">
+  <div id="bio-section" >
     <div id="bio-header" style="border-bottom: 1px solid white; margin-bottom: 2%;
                                 font-size: 1.5em;">
       Bio
@@ -116,5 +117,18 @@
     <div id="artist-info" style="padding: 3%;">
     </div>
   </div>
-
+  <div style="margin-top: 5%;">
+    <div id="concert-section">
+    <div id="concert-header" style="border-bottom: 1px solid white; margin-bottom: 2%;
+                                font-size: 1.5em;">
+      Upcoming Concert Info
+    </div>
+    <div id="artist-concert-info" style="padding: 3%;">
+ 
+      <div id="artist-concert-name" style="font-size:1.2em; font-weight: bolder;color:lightgreen;">Cool Concert</div>
+      <div id="artist-concert-date" style="font-size:1em; font-weight: bolder;"> 2018-11-12</div>
+      <div id="artist-cocnert-address" style="font-size: 1em;">Main St. New York, NY 11000</div>
+    </div>
+  </div>
+  </div>
 </div>

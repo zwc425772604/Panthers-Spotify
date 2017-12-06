@@ -1286,6 +1286,12 @@ public class ServletController {
 		
 		String retArtistInfo = JSONHelper.getArtistInfo(user.getArtist().getBio(),user.getArtist().getFollowers());
 		
+		User u = userService.getUser(artistEmail);
+		List<Concert> c = userService.getConcerts(u);
+		
+		String json = JSONHelper.getConcertInfo(c);
+		System.out.println(json);
+
 		return retArtistInfo;
 	}
 	
@@ -1423,12 +1429,13 @@ public class ServletController {
 	public @ResponseBody String getConcertInfo(@PathVariable String status, HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");//normal user page only
 		String artistEmail = request.getParameter("artistEmail");	
-		
+		System.out.println("HI");
 		User u = userService.getUser(artistEmail);
 		List<Concert> c = userService.getConcerts(u);
 		
-		
-		return "ok";
+		String json = JSONHelper.getConcertInfo(c);
+		System.out.println(json);
+		return json;
 	}
 	
 	@RequestMapping(value = "/findPayment", method = RequestMethod.POST)

@@ -65,7 +65,7 @@ $(document).ready(function(){
 	          height: 430,
 	          width: 700,
 	          modal: true,
-	          resizable: false,
+	          resizable: true,
 	          background: "#2f2f2f",
 	  
 	          dialogClass: 'no-close'

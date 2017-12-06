@@ -963,12 +963,16 @@ public class ServletController {
 		Collection<SongQueue> que = user.getSongQueueCollection();
 		String email = user.getEmail();
 		int sid = Integer.parseInt(request.getParameter("sid"));
-		songService.addSongToQueue(que, sid, email);
-		user.setSongQueueCollection(que);
-		JSONObject result = JSONHelper.songQueueToJSON(que);
-		session.setAttribute("queueJSON", result);
-		session.setAttribute("user", user);
-		return result.toString();
+		String res = songService.addSongToQueue(que, sid, email);
+		if (res.equals("ok")) {
+			user.setSongQueueCollection(que);
+			JSONObject result = JSONHelper.songQueueToJSON(que);
+			session.setAttribute("queueJSON", result);
+			session.setAttribute("user", user);
+			return res;
+		}else {
+			return res;
+		}
 	}
 
 	@RequestMapping(value = "/addPlaylistToQueue", method = RequestMethod.GET)

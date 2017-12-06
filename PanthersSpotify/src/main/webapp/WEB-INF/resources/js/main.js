@@ -496,11 +496,13 @@ $(document).on("click",".add-to-queue-btn" ,function(){
 	    success : function(response)
 	    {
 	    	$(".song_action_list").removeClass("w3-show");
+	    	console.log("add to queu response:"+ response);
+	    	if(response!="ok")
+	    		alert("already in queue");
 	    },
 	    error: function(e)
 	    {	
-	    	alert("already in queue");
-	    	$(".song_action_list").removeClass("w3-show");
+	    	console.log(e);
 	    }
 	});
 	

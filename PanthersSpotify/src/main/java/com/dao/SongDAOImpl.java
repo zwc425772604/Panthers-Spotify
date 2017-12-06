@@ -194,6 +194,13 @@ public class SongDAOImpl implements SongDAO {
 
 	@Transactional(readOnly = false)
 	public SongQueue addSongToQueue(int sid, String email) {
+		Query query = entityManager.createNamedQuery("SongQueue.findByPK");
+		query.setParameter("uemail", email);
+		query.setParameter("songId", sid);
+		ArrayList<SongQueue> result = (ArrayList<SongQueue>) query.getResultList();
+		if(result.size()>0) {
+			return null;
+		}
 		SongQueue newSq = new SongQueue(email, sid);
 		Date date = new Date();
 		newSq.setAddedTime(date);

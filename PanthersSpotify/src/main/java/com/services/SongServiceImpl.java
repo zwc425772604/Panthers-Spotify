@@ -176,14 +176,18 @@ public class SongServiceImpl implements SongService {
 	}
 
 	@Transactional
-	public void addSongToQueue(Collection<SongQueue> que, int sid, String email) {
+	public String addSongToQueue(Collection<SongQueue> que, int sid, String email) {
 		//System.out.println(sid);
 		SongQueue newSq = songDAO.addSongToQueue(sid, email);
-		
-		Collection<User> artists = songDAO.getSongArtists(sid);
-		newSq.setSong(songDAO.getSong(sid));//i think it should be this way
-		newSq.setArtistsCollection(artists);
-		que.add(newSq);
+		if(newSq!=null) {
+			Collection<User> artists = songDAO.getSongArtists(sid);
+			newSq.setSong(songDAO.getSong(sid));//i think it should be this way
+			newSq.setArtistsCollection(artists);
+			que.add(newSq);
+			return "ok";
+		}else {
+			return "fail";
+		}
 	}
 
 	@Transactional

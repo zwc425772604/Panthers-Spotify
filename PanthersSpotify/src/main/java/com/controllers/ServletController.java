@@ -92,10 +92,17 @@ public class ServletController {
 		String password = request.getParameter("password");
 		String encPwd = Security.oldEncryptPassword(password);
 		User user = userService.getUser(email);
+		
 		if (user==null) {//||user.getIsLogin()
 			mav.setViewName("index");
 			mav.addObject("error_message", "This email does not register on our site!");
-		} else if (Security.matchPassword(password, user.getUserPassword())|| user.getUserPassword().equals(encPwd)) {
+		}
+		else if(user.getIsBan())
+		{
+			mav.setViewName("index");
+			mav.addObject("error_message", "you are banned!!!!");
+		}
+		else if (Security.matchPassword(password, user.getUserPassword())|| user.getUserPassword().equals(encPwd)) {
 			int userTypeInt = user.getUserType();
 			user.setIsLogin(true);
 			userService.updateSpecificUser(user);
@@ -1495,5 +1502,17 @@ public class ServletController {
 		user.setSongQueueCollection(que);
 		session.setAttribute("queueJSON", result);
 		return result.toString();
+	}
+	
+	@RequestMapping(value = "/banUser", method = RequestMethod.POST)
+	public ModelAndView banUser(ModelAndView mav, HttpServletRequest request, HttpSession session)
+			throws ServletException, IOException {
+		String userEmail = request.getParameter("userEmail");
+		User user = userService.getUser(userEmail);
+		user.setIsBan(true);
+		userService.updateSpecificUser(user);
+		
+		mav.setViewName("admin");
+		return mav;
 	}
 }

@@ -30,7 +30,10 @@
       <a class="nav-link" href="javascript:displayContent('artistsTableDiv')">ARTISTS</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link tablinks" href="javascript:displayContent('songsPendingTableDiv')">SONGS </a>
+      <a class="nav-link tablinks" href="javascript:displayContent('songsPendingTableDiv')">PENDING SONGS </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link tablinks" href="javascript:displayContent('songsApprovedTableDiv')">APPROVED SONGS </a>
     </li>
     <li class="nav-item">
       <a class="nav-link tablinks" href="javascript:displayContent('albumsTableDiv')">ALBUMS</a>
@@ -114,6 +117,24 @@
         <th>Status</th>
         <%-- <th>Created Date</th> --%>
         <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+<div id="songsApprovedTableDiv" class="w3-container info-table" style="display:none">
+  <h1 style="color: white;"><span id="num-of-approved-songs"></span> songs approved</h1>
+  <table class="w3-table-all w3-hoverable" id = "approved-songs-table">
+    <thead>
+      <tr class="w3-light-grey">
+        <th>Song ID</th>
+        <th>Song Title</th>
+        <th>Artist</th>
+        <th>Genre</th>
+        <th>Status</th>
+        <%-- <th>Created Date</th> --%>
         <th></th>
       </tr>
     </thead>

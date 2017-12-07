@@ -72,7 +72,22 @@ $(document).ready(function(){
 		}
 	});
 
-
+	$.ajax({
+		url: "{cp}/../loadApprovedSongs",
+		type: "POST",
+		asyn: false,
+		cache: false,
+		success : function(response)
+			{
+				console.log(response);
+				var actual_JSON = JSON.parse(response);
+				insertApprovedSongsTables(actual_JSON);
+			},
+		error: function(e)
+		{
+			console.log(e);
+		}
+	});
 
 	 $.ajax({
 	        url: "{cp}/../loadAlbum",
@@ -235,7 +250,30 @@ function insertPendingSongsTables(data)
 
 		}
 }
+function insertApprovedSongsTables(data)
+{
+	var num = data.length;
+	$("#num-of-playlist").html(num);
+	var songs = [];
+	for (var i = 0; i < num; i++)
+		{
+			if (songs.indexOf(data[i]['songID']) == -1) //check to see if there is duplicate songID
+			{
+				$("#approved-songs-table").find('tbody').append([
+					'<tr>',
+					  '<td>' + data[i]['songID'] + '</td>',
+					  '<td>' + data[i]['songTitle'] + '</td>',
+					  '<td>' + data[i]['songArtist'].join() + '</td>',
+					  '<td>' + data[i]['songGenre'] + '</td>',
+						'<td>Approved</td>',					  
+ 					  '<td><button class="unstyle-buttons removeSongButton"  data-toggle="tooltip-play" title="Remove this song"> <i class="material-icons">close</i></button></td>',
+					 '</tr>'
+				].join(''));
+				songs.push(data[i]['songID']);
+			}
 
+		}
+}
 
 $(document).ready ( function () {
     $(document).on ("click", ".ban-user-button", function () {
@@ -340,9 +378,13 @@ $(document).on ("click", ".send-single-royalty-check", function () {
 
 $(document).on ("click", ".approveSongButton", function () {
 	var songID = $(this).closest('tr').children('td:eq(0)').text();
+	var songTitle = $(this).closest('tr').children('td:eq(1)').text();
+	var songArtist = $(this).closest('tr').children('td:eq(2)').text();
+	var songGenre = $(this).closest('tr').children('td:eq(3)').text();
 	var stat = $(this).closest('tr').children('td:eq(4)').text();
 	console.log("status is " + stat);
 	console.log("song id is " + songID);
+	$(this).closest('tr').remove();
 	 $.ajax({
 	        url: "{cp}/../approveSongByAdmin",
 	        data: {"songID" : songID},
@@ -352,7 +394,17 @@ $(document).on ("click", ".approveSongButton", function () {
 	        success : function(response)
 	        {
 	          console.log(response);
-	          $(this).closest('tr').children('td:eq(4)').text(response);			
+	          $(this).closest('tr').children('td:eq(4)').text(response);
+	          $("#approved-songs-table").find('tbody').append([
+					'<tr>',
+					  '<td>' + songID + '</td>',
+					  '<td>' + songTitle + '</td>',
+					  '<td>' + songArtist + '</td>',
+					  '<td>' + songGenre + '</td>',
+						'<td>Approved</td>',					  
+					  '<td><button class="unstyle-buttons removeSongButton"  data-toggle="tooltip-play" title="Remove this song"> <i class="material-icons">close</i></button></td>',
+					 '</tr>'
+				].join(''));
 	        },
 	        error: function(e)
 	        {

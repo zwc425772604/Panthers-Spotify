@@ -922,6 +922,28 @@ public class ServletController {
 		return pendingSongsJsonArray;
 	}
 	
+	@RequestMapping(value = "/loadApprovedSongs", method = RequestMethod.POST)
+	public @ResponseBody String loadApprovedSongs(HttpServletRequest request, HttpSession session) throws JSONException {
+		List<Releasesong> releaseSongs = songService.getAllSongsByStatus("approved");
+		List<Song> songs = new ArrayList<Song>();
+		HashMap<Integer, ArrayList<String>> map = new HashMap<Integer, ArrayList<String>>();
+		for (Releasesong rs : releaseSongs) {
+			ReleasesongPK rpk = rs.getReleasesongPK();
+			int sid = rpk.getSid();
+			Song s = songService.getSong(sid);
+			songs.add(s);
+			// use hashmap<String, arraylist> to store the artist in a song
+			if (map.get(sid) == null) {
+				map.put(sid, new ArrayList<String>());
+			}
+			map.get(sid).add(rpk.getUemail()); // add the artist email to the map
+		}
+		System.out.println("map size " + map.size());
+		System.out.println("map" + map.values());
+		String pendingSongsJsonArray = JSONHelper.pendingSongsToJSON(songs, map);
+		return pendingSongsJsonArray;
+	}
+	
 	//----------artist remove request song
 		@RequestMapping(value = "/removeRequestSongForUploading", method = RequestMethod.POST)
 		public ModelAndView removeRequestSongForUploading(ModelAndView mav, HttpServletRequest request, HttpSession session)

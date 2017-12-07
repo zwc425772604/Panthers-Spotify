@@ -273,7 +273,7 @@
                 <div class="w3-dropdown-click more_action_list">
                   <button class="w3-button more_button"><i class="fa fa-ellipsis-h" aria-hidden="true"></i></button>
                   <div class="w3-dropdown-content w3-bar-block w3-border song_action_list">
-                    <button class="w3-bar-item w3-button add-to-queue-btn" id = "add-to-queue-btn">Add to Queue<span style="display:none;" class="song-id">${song.sid}</span></button> 
+                    <button class="w3-bar-item w3-button add-to-queue-btn" id = "add-to-queue-btn">Add to Queue<span style="display:none;" class="song-id"><%= obj.get("songID") %></button> 
                     
 <!--                    <button onclick="" class="w3-bar-item w3-button">Go to Song Radio</button>-->
                     <hr>

@@ -94,7 +94,7 @@ public class JSONHelper {
 			jsonObject.put("artistLastName", u.getLastName());
 			jsonObject.put("artistEmail", u.getEmail());
 			jsonObject.put("artistUrl", u.getPhotoUrl());
-			jsonObject.put("artistRoyalty", u.getArtist().getRoyalty());
+			//jsonObject.put("artistRoyalty", u.getArtist().getRoyalty());
 			arr.put(jsonObject);
 		}
 		return arr.toString();

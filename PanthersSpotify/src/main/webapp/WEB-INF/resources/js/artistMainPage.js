@@ -1,12 +1,14 @@
 
 $(document).ready(function(){
 	document.getElementById('approve_song').focus();
-	
+	var artistEmail = $("#artist-email").text().trim();
+	console.log("artist email is " + artistEmail);
 	$.ajax({
 		url: "{cp}/../displayArtistCheckRoyalty",
 		type: "POST",
 		asyn: false,
 		cache: false,
+		data: {"artistEmail" : artistEmail}, 
 		success : function(response)
 			{
 				console.log(response);

@@ -77,22 +77,123 @@
 				class="nav-link color-nav"
 				href="javascript:displayPage('dashboard')">Dashboard</a></li>
 			<!--Actions taken by the admin-->
-			<!-- <li>
+			<li>
 				<p class="color-nav-header">User:</p>
 				<ul class="left_sizebar">
 					<li><button class="unstyle-buttons" data-toggle="tooltip-mute"
-							title="Add User" id="add-user-button" onclick="addUser()">
+							title="Add User" id="add-new-user-button">
 							<i class="material-icons">add</i>
 						</button></li>
-					<li><button class="unstyle-buttons"
-							data-toggle="tooltip-queue" title="Edit User Information"
-							id="edit-user-button">
-							<i class="material-icons">mode_edit</i>
-						</button></li>
+						<div id="new-user-dialog" title="Add User To Database" style="display: none;">
+						<!-- create playlist -->
+						<form:form method="POST" action="addUserToDatabase" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
+							<div class="w3-row w3-section">
+								<div class="w3-col" style="width: 50px">
+									<span style="font-size: 0.8em">Username</span>
+								</div>
+								<div class="w3-rest">
+									<input class="w3-input w3-border" name="username"
+										type="text" placeholder="Username">
+								</div>
+							</div>
+							<div class="w3-row w3-section">
+								<div class="w3-col" style="width: 50px">
+									<span style="font-size: 0.8em">Email</span>
+								</div>
+								<div class="w3-rest">
+									<input class="w3-input w3-border" type="email"
+										name="email" placeholder="Email Address">
+								</div>
+							</div>
+							<div class="w3-row w3-section">
+								<div class="w3-col" style="width: 50px">
+									<span style="font-size: 0.8em">Password</span>
+								</div>
+								<div class="w3-rest">
+									<input class="w3-input w3-border" name="password"
+										type="password" placeholder="Password">
+								</div>
+							</div>
+							<div class="w3-row w3-section">
+								<div class="w3-col" style="width: 50px">
+									<span style="font-size: 0.8em">First Name</span>
+								</div>
+								<div class="w3-rest">
+									<input class="w3-input w3-border" name="firstName"
+										type="text" placeholder="First name">
+								</div>
+							</div>
+							<div class="w3-row w3-section">
+								<div class="w3-col" style="width: 50px">
+									<span style="font-size: 0.8em">Middle Name</span>
+								</div>
+								<div class="w3-rest">
+									<input class="w3-input w3-border" name="middleName"
+										type="text" placeholder="Middle name">
+								</div>
+							</div>
+							<div class="w3-row w3-section">
+								<div class="w3-col" style="width: 50px">
+									<span style="font-size: 0.8em">Last Name</span>
+								</div>
+								<div class="w3-rest">
+									<input class="w3-input w3-border" name="lastName"
+										type="text" placeholder="Last name">
+								</div>
+							</div>
+							<div class="w3-row w3-section">
+								<div class="w3-col" style="width: 50px">
+									<span style="font-size: 0.8em">Gender</span>
+								</div>
+								<div class="w3-rest">
+									<div style="display: inline";>
+										<input class="w3-input w3-border w3-radio" type="radio"
+											name="gender" value="male" checked> <label>Male</label>
+										<input class="w3-input w3-border w3-radio" type="radio"
+											name="gender" value="female"> <label>Female</label>
+									</div>
+								</div>
+								<div class="w3-row w3-section">
+									<div class="w3-col" style="width: 50px">
+										<span style="font-size: 0.8em">Date of Birth</span>
+									</div>
+									<div class="w3-rest">
+										<input class="w3-input w3-border" type="date"
+											placeholder="Date of Birth (yyyy-mm-dd)" name="DOB"
+											required>
+									</div>
+								</div>
+								<div class="w3-row w3-section">
+									<div class="w3-col" style="width: 50px">
+										<span style="font-size: 0.8em">User Type</span>
+									</div>
+									<div class="w3-rest">
+										<select class="w3-select w3-input" name="userType">
+						                    <option value="" disabled selected>Choose user type</option>
+						                    <option value="Basic">Basic</option>	
+						                    <option value="Premium">Premium</option>	                    
+						                </select>
+									</div>
+								</div>
+								<div class="w3-row w3-section">
+									<div class="w3-third w3-container">
+										<button
+											onclick="event.preventDefault(); $('#new-user-dialog').dialog('close');"
+											class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>
+									</div>
+									<div class="w3-third w3-container"></div>
+									<div class="w3-third w3-container">
+										<button type="submit"
+											class="w3-button w3-block w3-section w3-blue w3-ripple">Create</button>
+									</div>
+								</div>
+						</form:form>
+					</div>
 				</ul>
 
 
-			</li>-->
+			</li>
+		
 			<li>
 				<p class="color-nav-header">Playlist:</p>
 				<ul class="left_sizebar">
@@ -356,11 +457,11 @@
 						</form:form>
 					</div>
 					<!-- end of dialog popup box -->
-					<li><button class="unstyle-buttons"
+					<!--  <li><button class="unstyle-buttons"
 							data-toggle="tooltip-queue" title="Edit Song Information"
 							id="edit_song_button">
 							<i class="material-icons">mode_edit</i>
-						</button></li>
+						</button></li>-->
 				</ul>
 			</li>
 			<!--  

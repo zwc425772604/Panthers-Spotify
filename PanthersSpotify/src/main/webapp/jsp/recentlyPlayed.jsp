@@ -7,54 +7,7 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <link rel="stylesheet" href="${cp}/resources/css/recentlyPlayed.css">
-  <style>
-    /* for the close button in input type search */
-    input[type="search"]::-webkit-search-cancel-button
-    {
-    -webkit-appearance: searchfield-cancel-button;
-    }
-    #search_span
-    {
-    background-color: #343a40;
-    color: white;
-    border: none;
-    color: #cccccc;
-    }
-    #filter_keyword
-    {
-    width: 90%;
-    font-size: 16px;
-    background-color: #343a40;
-    border-color: inherit;
-    -webkit-box-shadow: none;
-    box-shadow: none;border:none;
-    color: #cccccc;
-    }
-    #filter_container
-    {
-    margin-top: 3%;
-    }
-    .formButton
-    {
-    display:block;
-    border-radius: 10px;
-    color:white;
-    width: 90px;
-    background-color:#00cc00;
-    }
-    .song_action_list
-    {
-    background-color: gray;
-    margin-left: -100%;
-    margin-top: -10%;
-    }
-    .add-to-playlists-section
-    {
-    margin-left: -100%;
-    background-color: gray;
-    margin-top: -60%;
-    }
-  </style>
+
 </head>
 <script>
   function dropdownDisplay(song_div) {

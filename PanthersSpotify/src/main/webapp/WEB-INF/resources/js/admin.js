@@ -408,6 +408,17 @@ $(document).on ("click", "#add-new-artist-button", function () {
 
 });
 
+$(document).on ("click", "#add-new-user-button", function () {
+	$('#new-user-dialog').dialog({
+        height: 600,
+        width: 550,
+        modal: true,
+        resizable: false,
+        dialogClass: 'no-close'
+  	});
+});
+
+
 
 $(document).on ("click", "#add-new-playlist-button", function () {
 

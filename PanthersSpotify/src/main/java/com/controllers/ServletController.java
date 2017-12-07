@@ -248,8 +248,7 @@ public class ServletController {
 		String genre = request.getParameter("genre");
 		User user = (User) session.getAttribute("user");
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
-		
-		
+				
 		List<Album> userAlbum = albumService.addAlbum(albumName, user, description, file, date);
 		mav.addObject("user_album", userAlbum);
 		session.setAttribute("user_album", userAlbum);
@@ -418,7 +417,7 @@ public class ServletController {
 
 	@RequestMapping(value = "/loadAlbum", method = RequestMethod.POST)
 	public @ResponseBody String loadAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		List<Album> albums = albumService.getAllAlbums();
+		List<Album> albums = albumService.getAllAlbums();		
 		session.setAttribute("album_list", albums);
 		return "ok";
 	}
@@ -815,6 +814,26 @@ public class ServletController {
 		System.out.println("adding artist successfully");
 		return mav;
 	}
+	
+	@RequestMapping(value = "/addUserToDatabase", method = RequestMethod.POST)
+	public ModelAndView addUserToDatabase(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		String name = request.getParameter("username");
+		String email = request.getParameter("email");
+		String artistPassword = request.getParameter("password");
+		String encPwd = Security.encryptPassword(artistPassword);
+		String firstName = request.getParameter("firstName");
+		String middleName = request.getParameter("middleName");
+		String lastName = request.getParameter("lastName");		
+		String DOB = request.getParameter("DOB");
+		char gender = request.getParameter("gender").charAt(0);
+		int userType = request.getParameter("userType").equals("Basic")?0:1;
+		userService.addUser(name, email, encPwd, userType, gender, firstName, middleName,
+				lastName, DOB, null);
+		mav.setViewName("admin");
+		System.out.println("adding user successfully");
+		return mav;
+	}
+	
 
 	@RequestMapping(value = "/submitSongForUploading", method = RequestMethod.POST)
 	public ModelAndView submitSongForUploading(ModelAndView mav,
@@ -826,7 +845,7 @@ public class ServletController {
 		String releaseDay = request.getParameter("release_day");
 		String songGenre = request.getParameter("song_genre");
 		String songType = request.getParameter("song_type");
-
+		
 		songService.uploadSong(user, songTitle, songTime, releaseDay, songGenre, songType, file);
 
 		mav.setViewName("artistMainPage");
@@ -1465,7 +1484,7 @@ public class ServletController {
 		String cname = request.getParameter("cname");
 		String ctimeTmp = request.getParameter("ctime") + " 00:00:00";
 		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 		
 		Date ctime = null;
 		try {

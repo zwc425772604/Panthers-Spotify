@@ -704,7 +704,7 @@ public class ServletController {
 	@RequestMapping(value = "/loadUserTables/{userType}", method = RequestMethod.POST)
 	public @ResponseBody String loadAllUsers(@PathVariable int userType, HttpServletRequest request,
 			HttpSession session) throws JSONException {
-		System.out.println("user type" + userType);
+		
 		List<User> users = userService.getUsersByType(userType);
 		String userJsonArray;
 		userJsonArray = userType == 2 ? JSONHelper.artistListToJSON(users) : JSONHelper.userListToJSON(users);
@@ -1179,11 +1179,12 @@ public class ServletController {
 	
 	@RequestMapping(value = "/displayArtistCheckRoyalty", method = RequestMethod.POST)
 	public @ResponseBody String displayArtistCheckRoyalty(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		User user = (User) session.getAttribute("user");
 		
+		String artistEmail = request.getParameter("artistEmail");
+		User user = userService.getUser(artistEmail);
 		double factor = Double.parseDouble(environment.getProperty("artist.royalty.factor"));
 		
-			userService.setArtistRoylties(user.getArtist(), factor);
+			userService.setArtistRoylties(userService.getArtistInfo(user), factor);
 			List<Song> songs = userService.getReleaseSong(userService.getArtistInfo(user));
 			for(int j=0;j<songs.size();j++)
 			{
@@ -1194,6 +1195,8 @@ public class ServletController {
 		String artistRoyaltyInfo = JSONHelper.getOneArtistRoyalty(user,userService);
 		return artistRoyaltyInfo;
 	}
+	
+	
 	
 	@RequestMapping(value = "/displayCheckRoyalty", method = RequestMethod.POST)
 	public @ResponseBody String checkRoyalty(ModelAndView mav, HttpServletRequest request, HttpSession session) {

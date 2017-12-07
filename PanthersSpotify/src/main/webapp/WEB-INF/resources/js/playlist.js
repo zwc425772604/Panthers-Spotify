@@ -107,7 +107,7 @@ $( ".song_info" ).bind({
 
 
 
-$(".remove-song-item").click(function(){
+$(document).on("click",".remove-song-item", function(){
 	var songID = $(".song-id", this).text();
 	var playlistID = $(".playlist-id", this).text();
 	console.log("song id to remove is " + songID);
@@ -120,7 +120,10 @@ $(".remove-song-item").click(function(){
          cache: false,
          success : function(response)
          {
-           console.log(response);
+        	 var songDiv = "#songID"+songID;
+             console.log("song id: "+ songDiv);
+             $(songDiv).remove();
+             console.log(response);
          },
          error: function(e)
          {
@@ -128,28 +131,6 @@ $(".remove-song-item").click(function(){
          }
 	  });
 });
-
-$(".add-to-playlist-item").click(function(){
-  	var songID = $(".song-id", this).text();
-  	var playlistID = $(".add-song-to-playlist-id",this).text();
-  	  $.ajax({
-            url: "${cp}/../addSongToPlaylist",
-            type: "POST",
-            data : {"playlistID" : playlistID, "songID" : songID },
-            asyn: false,
-            cache: false,
-            success : function(response)
-            {
-              console.log(response);
-  
-            },
-            error: function(e)
-            {
-              console.log(e);
-            }
-  	  });
-  });
-
 
 $(document).on("click","#play-playlist-button", function(){
     var pid = $("#playlistID").text().trim();

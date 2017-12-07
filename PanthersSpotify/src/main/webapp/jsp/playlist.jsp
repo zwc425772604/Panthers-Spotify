@@ -228,7 +228,7 @@
             	JSONObject obj = data.getJSONObject(i);
             	
            %>
-           	<tr class= "song_info">
+           	<tr class= "song_info" id = "songID<%=obj.get("songID")%>">  
               <td><button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">
                 <i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i>
                   <span class="song-id-in-playlist" style="display:none"><%= obj.get("songID") %></span>
@@ -271,12 +271,10 @@
                     <button class="w3-bar-item w3-button add-to-queue-btn" id = "add-to-queue-btn">Add to Queue<span style="display:none;" class="song-id">${song.sid}</span></button> 
                     
 <!--                    <button onclick="" class="w3-bar-item w3-button">Go to Song Radio</button>-->
-<!-- 
                     <hr>
                     <button onclick="" class="w3-bar-item w3-button">Go to Artist</button> 
                     <button onclick="" class="w3-bar-item w3-button">Go to Album</button>
                     <hr>
- -->
                     <!-- not implemented -->
 <!--                    <button onclick="" class="w3-bar-item w3-button">Remove from Your Library</button>-->
              
@@ -315,7 +313,7 @@
                          <span class="playlist-id" style="display:none;">${selectedPlaylist.pid}</span>
                      </div>
       
-                    <!--<button onclick="" class="w3-bar-item w3-button">Share</button>  -->
+                    <button onclick="" class="w3-bar-item w3-button">Share</button>
                   </div>
                 </div>
               </td>

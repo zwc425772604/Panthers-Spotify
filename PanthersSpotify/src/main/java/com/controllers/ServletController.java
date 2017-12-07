@@ -614,6 +614,7 @@ public class ServletController {
 
 	@RequestMapping(value = "/addSongToPlaylist", method = RequestMethod.POST)
 	public @ResponseBody String addSongToPlaylist(HttpServletRequest request, HttpSession session) {
+		/*
 		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
 		int songID = Integer.parseInt(request.getParameter("songID").trim());
 		User user = (User) session.getAttribute("user");
@@ -629,6 +630,23 @@ public class ServletController {
 		String playlistSongJSON = JSONHelper.new_pendingSongsToJSON(list, songService);
 		System.out.println("addsongtoplaylist");
 		return playlistSongJSON;
+		*/
+		int playlistID = Integer.parseInt(request.getParameter("playlistID").trim());
+		int songID = Integer.parseInt(request.getParameter("songID").trim());
+		User user = (User) session.getAttribute("user");
+		String res = playlistService.addSongToPlaylist(playlistID, songID);
+		if (res==null) {
+			return "fail";
+		}
+		List<Song> list = playlistService.getSongInPlaylist(playlistID);
+		Playlist p = playlistService.getPlaylist(playlistID);
+		Time t = playlistService.setPlaylistTimeLength(p, list);
+		//Song song = songService.getSong(songID);
+		p.setTimelength(p.getTimelength());
+		p.setNSongs(p.getNSongs()+1);
+		p.setTimelength(t);
+		playlistService.updateSpecificPlaylist(p);
+		return "ok";
 	}
 
 	@RequestMapping(value = "/removeSongFromPlaylist", method = RequestMethod.POST)

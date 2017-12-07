@@ -279,6 +279,27 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Transactional
+	public void setArtistsRoylties(double factor) {
+		
+		List ret = userDAO.getMonthlyPlay();
+		
+		for(int i=0;i<ret.size();i++)
+		{
+			Object[] artistInfo = (Object[])ret.get(i);
+			String artistEmail = (String)artistInfo[0];
+			User u = userDAO.getUser(artistEmail);
+			Artist a = userDAO.getArtist(u);
+			String monthlyPlayedString = artistInfo[1].toString();
+			int monthlyPlayed = Integer.parseInt(monthlyPlayedString);
+			double royalties = monthlyPlayed * factor;
+			userDAO.setRoyalty(a, royalties);
+		}
+		
+	}
+	
+	
+	
+	@Transactional
 	public List<Song> getReleaseSong(Artist artist) {
 		
 		List<Releasesong> songs = userDAO.getArtistRelease(artist);
@@ -363,6 +384,12 @@ public class UserServiceImpl implements UserService {
 	public Payment findPayment(String userEmail)
 	{
 	    return userDAO.findPayment(userEmail);
+	}
+	
+	@Transactional
+	public List getMonthlyPlay()
+	{
+		return userDAO.getMonthlyPlay();
 	}
 	
 	

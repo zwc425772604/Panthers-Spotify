@@ -78,4 +78,8 @@ public interface UserService {
 	public User updateSpecificUser(User user);
 	
 	public Payment findPayment(String userEmail);
+	
+	public List getMonthlyPlay();
+	
+	public void setArtistsRoylties(double factor);
 }

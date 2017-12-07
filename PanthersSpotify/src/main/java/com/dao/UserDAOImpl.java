@@ -45,6 +45,40 @@ public class UserDAOImpl implements UserDAO {
 		return User;
 	}
 	
+
+
+	//asdfasdf ihsidfhsdfihsdih royalty
+		@Transactional(readOnly = false)
+		public List getMonthlyPlay() {
+			//where ra.releasealbumPK.aid=s.albumId and ra.releasealbumPK.uemail=a.artistEmail 
+			String queryString = "SELECT a.artistEmail,SUM(s.monthlyPlayed) FROM Song s,Releasealbum ra,Artist a where ra.releasealbumPK.aid=s.albumId and ra.releasealbumPK.uemail=a.artistEmail group by s.albumId";
+			Query query = entityManager.createQuery(queryString);
+			List results = query.getResultList();
+			//List<String> ret = query.getResultList();
+			return results;
+//			for (int i=0;i<results.size();i++) {
+//				Object[] ret = (Object[])results.get(i);
+//			    System.out.println(ret[0]+"  "+ret[1]);
+//			}
+			
+		}
+		
+		@Transactional(readOnly = false)
+		public Object[] getArtistMonthlyPlay(String artistEmail) {
+			//where ra.releasealbumPK.aid=s.albumId and ra.releasealbumPK.uemail=a.artistEmail 
+			String queryString = "SELECT a.artistEmail,SUM(s.monthlyPlayed) FROM Song s,Releasealbum ra,Artist a where ra.releasealbumPK.aid=s.albumId and ra.releasealbumPK.uemail=a.artistEmail and a.artistEmail=:artistEmail group by s.albumId";
+			Query query = entityManager.createQuery(queryString);
+			query.setParameter("artistEmail", artistEmail);
+			Object[] results = (Object[])query.getSingleResult();
+			//List<String> ret = query.getResultList();
+			return results;
+//			for (int i=0;i<results.size();i++) {
+//				Object[] ret = (Object[])results.get(i);
+//			    System.out.println(ret[0]+"  "+ret[1]);
+//			}
+			
+		}
+	
 	@Transactional(readOnly = false)
 	public User addArtist(User user,String bio) {
 		Artist a = new Artist();

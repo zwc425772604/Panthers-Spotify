@@ -41,4 +41,6 @@ public interface UserDAO {
 	public List<Concert> getConcerts(User user);
 	public Payment findPayment(String userEmail);
 	public User addArtist(User user,String bio);
+	public List getMonthlyPlay();
+	public Object[] getArtistMonthlyPlay(String artistEmail);
 }

@@ -152,6 +152,8 @@ public class ServletController {
 				break;
 			case ADMIN:
 				session.setAttribute("user", user);
+				//double factor = Double.parseDouble(environment.getProperty("artist.royalty.factor"));
+				//userService.setArtistsRoylties(factor);
 				mav.addObject("username", user.getUserName());
 				mav.setViewName("admin");
 				break;

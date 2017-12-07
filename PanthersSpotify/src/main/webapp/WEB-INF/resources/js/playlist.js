@@ -2,7 +2,28 @@ var hoverEnabled = true;
 $(document).ready(function(){
 	$(".more_action_list").css('visibility','hidden'); //hide the ... button when page is loaded
 	$(".playbar-play-button").css('visibility','hidden'); //hide the play button when page is loaded
+	
 });
+
+$(document).on("change","#sort_song_by_keyword", function(){
+	console.log("do u want to sort?");
+	$.ajax({
+		url: "${cp}/../sortSongInPlaylist",
+        type: "POST",
+        asyn: false,
+        cache: false,
+        success : function(response)
+        {
+        	console.log("what the result: "+response);
+        	$("#main-changing-content").load("jsp/playlist.jsp");
+        },
+        error: function(e)
+        {
+          console.log(e);
+        }     
+     });
+})
+
 
 $(document).on("click","#remove_playlist_button",function(){
 	console.log("daddy love u!!!!!!");
@@ -276,3 +297,4 @@ $(document).on("click",".followPlaylistButton", function(){
 		});
 	}
 });
+

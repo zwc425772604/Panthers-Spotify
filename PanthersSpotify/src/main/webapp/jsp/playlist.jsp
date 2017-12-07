@@ -204,6 +204,15 @@
     </script>
     <!--  Container for track list -->
     <div class="suggestion-container" id="playlist-song-collection">
+    <div id="top_content">
+		<p style="display: inline; font-size: 18px; margin-right:2%;">Sorted by</p>
+		<select id="sort_song_by_keyword" class="styled-select black rounded"
+			style="display: inline; font-size: 18px;">
+			<option id="sort_by" value=""></option>
+			<option id="sort_by" value="Title">Title</option>
+		</select>
+	</div>
+	<br>
       <div class="table-responsive">
         <table class="table">
           <thead>

@@ -37,7 +37,7 @@
 	<div id="top_content">
 		<p style="display: inline; font-size: 18px; margin-right:2%;">Sorted by</p>
 		<select id="sorted_by_keyword" class="styled-select black rounded"
-			style="display: inline; font-size: 20px;">
+			style="display: inline; font-size: 18px;">
 			<option id="sort_by" value=""></option>
 			<option id="sort_by" value="Title">Title           </option>
 		</select>

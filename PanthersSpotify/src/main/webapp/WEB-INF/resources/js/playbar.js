@@ -74,11 +74,10 @@ $(document).ready(function(){
                                        updateRecentlyPlayTable(nowPlay);
 //                                  hahaha();
 //                                  $("#"+songRow).remove();
-//                                  document.getElementById(songRow).remove
-//				  if (container !== null){
-//					  $("#main-changing-content").load("jsp/recentlyPlayed.jsp");
-////                                       
-//				  }
+//                 document.getElementById(songRow).remove
+				  //if (container != null){
+					//  $("#main-changing-content").load("jsp/recentlyPlayed.jsp");
+				  //}
                                     
 				},
 				error: function(e)

@@ -215,7 +215,8 @@ public class Playlist implements Serializable {
     public String toString() {
         return "com.model.Playlist[ pid=" + pid + " ]";
     }
-
+    
+    /*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "playlist")
     private Collection<Playlistsong> playlistsongCollection;
     @XmlTransient
@@ -225,6 +226,15 @@ public class Playlist implements Serializable {
     public void setPlaylistsongCollection(Collection<Playlistsong> playlistsongCollection) {
         this.playlistsongCollection = playlistsongCollection;
     }
-
+    */
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "playlist")
+    private Collection<Playlistsong> playlistsongCollection;
+    @XmlTransient
+	public Collection<Playlistsong> getPlaylistsongCollection() {
+		return playlistsongCollection;
+	}
+	public void setPlaylistsongCollection(Collection<Playlistsong> playlistsongCollection) {
+		this.playlistsongCollection = playlistsongCollection;
+	}
 
 }

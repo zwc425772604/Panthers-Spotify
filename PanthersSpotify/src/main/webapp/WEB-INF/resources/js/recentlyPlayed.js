@@ -18,15 +18,7 @@ $(document).ready(function(){
       });
 });
 
- function updateRecentlyPlayTable(result)
- {          
-    var songRow =  "recently-play-song" + result['sid'];
-    var child = document.getElementById(songRow);
-    child.parentNode.removeChild(child);
-    $("#recently-play-song-table").prepend(child);
-              
-                                    
- }
+
 
 function insertSongsTable(data)
 {

@@ -54,6 +54,7 @@ import com.model.Payment;
 import com.model.Song;
 import com.model.SongQueue;
 import com.model.Playlist;
+import com.model.Playlistsong;
 import com.model.Releasesong;
 import com.model.ReleasesongPK;
 import com.services.AlbumService;
@@ -1100,22 +1101,24 @@ public class ServletController {
         
       //----------------------------------------------------------------------------------------
         Playlist p = playlistService.getPlaylist(pid);
-        
-        
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
-		
-		if(user.getPrivateSession()==false)
+		/*if(user.getPrivateSession()==false)
 		{
 			playlistService.addHistoryPlaylist(p, user, date);
-		}
+		}*/
 		
-        
         List<Song> s = playlistService.getSongInPlaylist(pid);
-        Song specificSong = s.get(0);
+        Song specificSong = new Song();
+        if(s.size()>0)
+        	specificSong = s.get(0);
+        
         //songService.updateMontlySong(specificSong.getMonthlyPlayed()+1, specificSong);
         //-------------------------794---------------------------------------------------------------
-        
-        
+        if(user.getPrivateSession()==false)
+		{
+        	songService.addToHistory(email, specificSong.getSid());
+		}
+		
         songService.addPlaylistToQueue(newSq, pid, email);
 		String sid = request.getParameter("sid");
 		int index = newSq.get(0).getSong().getSid();
@@ -1715,5 +1718,17 @@ public class ServletController {
 		}
 		return null;
 	}
-
+	@RequestMapping(value = "/sortSongInPlaylist", method = RequestMethod.POST)
+	public @ResponseBody String sortSongInPlaylist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		Playlist playlist = (Playlist)session.getAttribute("selectedPlaylist");
+		List<Song> songs = playlistService.getSongInPlaylist(playlist.getPid());
+		List<Song> sortedSong = SortTitle.sortSongAlpha(songs);
+		//playlist.setSongCollection(sortedSong);
+		//session.setAttribute("selectedPlaylist", playlist);
+		//String obj = JSONHelper.singlePlaylistToJSON(playlist);
+		//System.out.println(obj);
+		JSONArray obj = JSONHelper.new_pendingSongsToJSON1(sortedSong, songService);
+		session.setAttribute("jsonList", obj);
+		return obj.toString();
+	}
 }

@@ -16,6 +16,8 @@ import javax.mail.internet.MimeMessage;
 
 import com.dao.SongDAO;
 import com.dao.UserDAO;
+import com.helper.UploadFile;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.SimpleMailMessage;
@@ -24,6 +26,8 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import com.model.Artist;
 import com.model.Concert;
 import com.model.Payment;
@@ -60,6 +64,8 @@ public class UserServiceImpl implements UserService {
 		user.setMiddleName(middleName);
 		user.setLastName(lastName);
 		user.setIsPublic(true);
+		
+		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 		Date parsedBirthday = null;
 		try {
@@ -72,6 +78,8 @@ public class UserServiceImpl implements UserService {
 		File f1 = new File(dir + "/src/main/webapp/WEB-INF/resources/data/Users");
 		File userDir = new File(f1, email);
 		userDir.mkdirs();
+		
+		
 		user = userDAO.addUser(user);
 		if(bio!=null)
 			userDAO.addArtist(user, bio);
@@ -80,7 +88,7 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional
 	public User updateUser(User user, String userName, int userType, char gender, String firstName, String lastName,
-			boolean isPublic) {
+			boolean isPublic,String photoUrl) {
 
 		// User User = new User();
 		user.setUserName(userName);
@@ -89,6 +97,9 @@ public class UserServiceImpl implements UserService {
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
 		user.setIsPublic(isPublic);
+		
+	    	
+	    	user.setPhotoUrl(photoUrl);
 		user = userDAO.updateUser(user);
 		return user;
 	}

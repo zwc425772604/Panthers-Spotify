@@ -3,6 +3,8 @@ package com.services;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import com.model.Artist;
 import com.model.Concert;
 import com.model.Payment;
@@ -15,7 +17,7 @@ public interface UserService {
 			String middleName, String lastName, String dob,String bio);
 
 	public User updateUser(User user, String userName, int userType, char gender, String firstName, String lastName,
-			boolean isPublic);
+			boolean isPublic,String photoUrl);
 
 	public void removeUser(User user);
 

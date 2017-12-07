@@ -1,6 +1,7 @@
 
 package com.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.sql.Time;
@@ -44,6 +45,7 @@ import com.helper.JSONHelper;
 import com.helper.Security;
 import com.helper.SortTitle;
 import com.helper.StringToDateHelper;
+import com.helper.UploadFile;
 //import com.helper.StringToDateHelper;
 import com.model.Album;
 import com.model.Artist;
@@ -427,7 +429,8 @@ public class ServletController {
 	}
 
 	@RequestMapping(value = "/editUserAccount", method = RequestMethod.POST)
-	public ModelAndView editUserAccount(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	public ModelAndView editUserAccount(ModelAndView mav, @RequestParam(value = "file") CommonsMultipartFile file,
+			HttpServletRequest request, HttpSession session) {
 		User user = (User) session.getAttribute("user");
 		char gender = request.getParameter("gender").charAt(0);
 		String firstName = request.getParameter("firstName");
@@ -441,8 +444,21 @@ public class ServletController {
 			bio = request.getParameter("artistBio");
 			userService.editArtist(user, bio);
 			boolean isPublic = true;
+			
+			String filename = file.getOriginalFilename();
+			String dir = System.getProperty("user.dir");
+		    	String userPath = dir+"/src/main/webapp/WEB-INF/resources/data/Users/"+user.getEmail();
+		    	File userFile = new File(userPath);
+		    	String photoUrl = UploadFile.upload(userPath,filename,file);
+		    	if(photoUrl==null)
+		    	{
+		    		photoUrl=user.getPhotoUrl();
+		    		userFile.delete();
+		    	}
+		    	
+		    	
 			user = userService.updateUser(user, user.getUserName(), user.getUserType(), gender, firstName, lastName,
-				isPublic);
+				isPublic,user.getPhotoUrl());
 		}
 		else if(user.getUserType()==3)
 		{
@@ -451,14 +467,40 @@ public class ServletController {
 			User selectedUser = userService.getUser(selectedArtist);
 			userService.editArtist(selectedUser, bio);
 			boolean isPublic = true;
+			
+			String filename = file.getOriginalFilename();
+			String dir = System.getProperty("user.dir");
+		    	String userPath = dir+"/src/main/webapp/WEB-INF/resources/data/Users/"+user.getEmail();
+		    	File userFile = new File(userPath);
+		    	String photoUrl = UploadFile.upload(userPath,filename,file);
+		    	if(photoUrl==null)
+		    	{
+		    		photoUrl=selectedUser.getPhotoUrl();
+		    		userFile.delete();
+		    	}
+			
 			user = userService.updateUser(selectedUser, selectedUser.getUserName(), selectedUser.getUserType(), gender, firstName, lastName,
-				isPublic);
+				isPublic,selectedUser.getPhotoUrl());
 		}
 		else
 		{
 			boolean isPublic = true;
+			String filename = file.getOriginalFilename();
+			String dir = System.getProperty("user.dir");
+		    	String userPath = dir+"/src/main/webapp/WEB-INF/resources/data/Users/"+user.getEmail();
+		    	File userFile = new File(userPath);
+		    	String photoUrl = UploadFile.upload(userPath,filename,file);
+		    	if(photoUrl==null)
+		    	{
+		    		userFile.delete();
+		    	}
+		    	
+		    	
 			user = userService.updateUser(user, user.getUserName(), user.getUserType(), gender, firstName, lastName,
-				isPublic);
+				isPublic,photoUrl);
+
+			
+			
 		}
 		
 		session.setAttribute("user", user);

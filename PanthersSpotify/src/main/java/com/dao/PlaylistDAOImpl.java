@@ -111,7 +111,8 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	}
 	
 	@Transactional(readOnly=false)
-	public void addSongToPlaylist(int playlistId,int songId) {
+	public String addSongToPlaylist(int playlistId,int songId) {
+		/*
 		Playlistsong playlistsong = new Playlistsong(playlistId, songId);
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
 		playlistsong.setCreateDate(date);
@@ -123,6 +124,19 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 		{
 			entityManager.persist(playlistsong);
 		}
+		*/
+		Query query = entityManager.createNamedQuery("Playlistsong.findByPK");
+		query.setParameter("pid", playlistId);
+		query.setParameter("sid", songId);
+		ArrayList<Playlistsong> result = (ArrayList<Playlistsong>) query.getResultList();
+		if(result.size()>0) {
+			return null;
+		}
+		Playlistsong playlistsong = new Playlistsong(playlistId, songId);
+		java.util.Date now = new java.util.Date();
+		playlistsong.setCreateDate(now);
+		entityManager.persist(playlistsong);
+		return "ok";
 	}
 	
 	@Transactional(readOnly=false)

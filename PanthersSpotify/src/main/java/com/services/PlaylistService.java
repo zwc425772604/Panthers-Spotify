@@ -20,7 +20,7 @@ public interface PlaylistService {
 	public List<Playlist> getTopFollowedPlaylist(int numberOfPlaylist);
 	public Playlist followPlaylist(int playlistId,User user);
 	public Playlist unfollowPlaylist(int playlistId,User user);
-	public void addSongToPlaylist(int playlistId,int songId);
+	public String addSongToPlaylist(int playlistId,int songId);
 	public void removeSongFromPlaylist(int playlistId,int songId);
 	public List<Playlist> findRelative(String input);
 	public List<Playlist> getHistoryPlaylists(String userEmail);

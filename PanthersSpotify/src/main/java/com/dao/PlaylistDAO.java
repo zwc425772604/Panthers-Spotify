@@ -17,7 +17,7 @@ public interface PlaylistDAO {
 	public List<Playlist> getTopFollowedPlaylist(int numberOfPlaylist);
 	public void followPlaylist(int playlistId,String userEmail);
 	public void unfollowPlaylist(int playlistId,String userEmail);
-	public void addSongToPlaylist(int playlistId,int songId);
+	public String addSongToPlaylist(int playlistId,int songId);
 	public void removeSongFromPlaylist(int playlistId,int songId);
 	public List<Song> getSongInPlaylist(int playlistId);
 	public List<Playlist> findRelative(String input);

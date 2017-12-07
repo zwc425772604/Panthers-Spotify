@@ -197,9 +197,9 @@ public class PlaylistServiceImpl implements PlaylistService {
 	
 	//add song to playlist
 	@Transactional
-	  public void addSongToPlaylist(int playlistId,int songId)
+	  public String addSongToPlaylist(int playlistId,int songId)
 	  {
-			playlistDAO.addSongToPlaylist(playlistId, songId);
+			return playlistDAO.addSongToPlaylist(playlistId, songId);
 	  }
 	
 	@Transactional

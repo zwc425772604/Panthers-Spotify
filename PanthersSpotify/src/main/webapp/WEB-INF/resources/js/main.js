@@ -511,5 +511,28 @@ $(document).on("click",".add-to-queue-btn" ,function(){
 	
 });
 
+$(document).on("click",".add-to-playlist-item",function(){
+  	var songID = $(".song-id", this).text();
+  	$(".song_action_list").removeClass("w3-show");
+  	var playlistID = $(".add-song-to-playlist-id",this).text();
+  	  $.ajax({
+            url: "${cp}/../addSongToPlaylist",
+            type: "POST",
+            data : {"playlistID" : playlistID, "songID" : songID },
+            asyn: false,
+            cache: false,
+            success : function(response)
+            {
+              console.log(response);
+              if (response!="ok")
+            	  alert("already in this playlist");
+            },
+            error: function(e)
+            {
+              console.log(e);
+              
+            }
+  	  });
+  });
 });
 

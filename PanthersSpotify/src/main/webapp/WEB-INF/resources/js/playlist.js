@@ -132,28 +132,6 @@ $(document).on("click",".remove-song-item", function(){
 	  });
 });
 
-$(document).on("click",".add-to-playlist-item",function(){
-  	var songID = $(".song-id", this).text();
-  	$(".song_action_list").removeClass("w3-show");
-  	var playlistID = $(".add-song-to-playlist-id",this).text();
-  	  $.ajax({
-            url: "${cp}/../addSongToPlaylist",
-            type: "POST",
-            data : {"playlistID" : playlistID, "songID" : songID },
-            asyn: false,
-            cache: false,
-            success : function(response)
-            {
-              console.log(response);
-            },
-            error: function(e)
-            {
-              console.log(e);
-            }
-  	  });
-  });
-
-
 $(document).on("click","#play-playlist-button", function(){
     var pid = $("#playlistID").text().trim();
     var status = $(".playingStatus",this).text().trim();

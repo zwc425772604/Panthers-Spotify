@@ -176,6 +176,36 @@
           
         </ul>
       </li>
+      <li>
+        <p class="color-nav-header">Info:</p>
+        <ul class="left_sizebar">
+          <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Edit Info"  id="edit_info_button"><i class="material-icons">edit</i></button></li>
+            <div id="edit_info_dialog" title="Edit your information" style="display:none;">
+            <!-- create playlist -->
+            <form:form  method = "POST" action="editArtistBio" enctype="multipart/form-data" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
+       
+              <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Bio</span></div>
+                <div class="w3-rest">
+                  <textarea cols="70" rows="5" name="bio">${user.artist.bio}</textarea>              
+                </div>
+              </div>                                                  
+              <div class="w3-row w3-section">
+                <div class="w3-third w3-container">
+                  <button onclick="event.preventDefault(); $('#edit_info_dialog').dialog('close');" class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>
+                </div>
+                <div class="w3-third w3-container">
+                </div>
+                <div class="w3-third w3-container">
+                  <button type="submit" class="w3-button w3-block w3-section w3-blue w3-ripple">Edit</button>
+                </div>
+              </div>
+            </form:form>
+          </div>
+          
+          
+        </ul>
+      </li>
     </ul>
     </li>
     </ul>
@@ -190,7 +220,7 @@
           <div class="w3-dropdown-hover">
             <button class="w3-button w3-black" id="top-tool-profile">
             <!--  img width=25px height=25px class="rounded-circle" alt="Generic placeholder thumbnail" id="dropdown-img"  src="http://orig05.deviantart.net/f239/f/2011/089/3/3/jack_skellington_facebook_icon_by_valashard-d3cu1bt.jpg">-->
-            <span class="user_name">${username}</span>
+            <span class="user_name">${user.userName}</span>
             <i class="fa fa-angle-down" aria-hidden="true"></i>
             </button>
             <div class="w3-dropdown-content w3-bar-block w3-border user-dropdown-button">

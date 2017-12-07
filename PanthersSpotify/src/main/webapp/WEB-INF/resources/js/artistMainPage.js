@@ -163,6 +163,15 @@ $(document).on ("click", "#add_new_concert_button", function () {
   });
 
 
+$(document).on ("click", "#edit_info_button", function () {
+    $('#edit_info_dialog').dialog({
+     height: 300,
+     width: 550,
+     modal: true,
+     resizable: true,
+     dialogClass: 'no-close'
+  	});
+  });
 
 
 $(document).on ("click", ".edit_user_button", function () {

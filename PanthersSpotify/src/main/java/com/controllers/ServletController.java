@@ -964,7 +964,19 @@ public class ServletController {
 		String artistsArray = JSONHelper.artistListToJSON(artists);
 		return artistsArray;
 	}
-
+    
+	@RequestMapping(value = "/editArtistBio", method = RequestMethod.POST)
+	public ModelAndView editArtistBio(ModelAndView mav, HttpServletRequest request, HttpSession session) throws JSONException {
+		User user = (User) session.getAttribute("user");
+		String bio = request.getParameter("bio");
+		System.out.println(bio);
+		userService.editArtist(user, bio);
+		user = userService.getUser(user.getEmail());
+		session.setAttribute("user", user);
+		mav.setViewName("artistMainPage");
+		return mav;
+	}
+	
 	@RequestMapping(value = "/getSpecificArtist", method = RequestMethod.POST)
 	public @ResponseBody String getSpecificArtist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String email = request.getParameter("email");

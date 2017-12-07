@@ -150,6 +150,7 @@ public class ServletController {
 				mav.setViewName("artistMainPage");
 				break;
 			case ADMIN:
+				session.setAttribute("user", user);
 				mav.addObject("username", user.getUserName());
 				mav.setViewName("admin");
 				break;

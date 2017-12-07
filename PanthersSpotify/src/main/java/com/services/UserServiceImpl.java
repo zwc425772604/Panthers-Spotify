@@ -49,8 +49,7 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional
 	public User addUser(String userName, String email, String encPassword, int userType, char gender, String firstName,
-			String middleName, String lastName, String dob) {
-		System.out.println("User Service create invoked:" + userName);
+			String middleName, String lastName, String dob,String bio) {
 		User user = new User();
 		user.setEmail(email);
 		user.setUserName(userName);
@@ -74,6 +73,8 @@ public class UserServiceImpl implements UserService {
 		File userDir = new File(f1, email);
 		userDir.mkdirs();
 		user = userDAO.addUser(user);
+		if(bio!=null)
+			userDAO.addArtist(user, bio);
 		return user;
 	}
 
@@ -81,7 +82,6 @@ public class UserServiceImpl implements UserService {
 	public User updateUser(User user, String userName, int userType, char gender, String firstName, String lastName,
 			boolean isPublic) {
 
-		System.out.println("Cusomer Service Update invoked:" + userName);
 		// User User = new User();
 		user.setUserName(userName);
 		user.setUserType(userType);
@@ -147,12 +147,12 @@ public class UserServiceImpl implements UserService {
 		// :email").setParameter("email", email);
 		List<User> results = userDAO.getFriend(userEmail);
 
-		for (int i = 0; i < results.size(); i++) {
-			System.out.println(results.get(i).getEmail());
-		}
-		if (results.size() == 0) {
-			System.out.println("no friends");
-		}
+//		for (int i = 0; i < results.size(); i++) {
+//			System.out.println(results.get(i).getEmail());
+//		}
+//		if (results.size() == 0) {
+//			System.out.println("no friends");
+//		}
 		return results;
 	}
 
@@ -164,12 +164,12 @@ public class UserServiceImpl implements UserService {
 		userDAO.addFriend(userEmail, friendEmail);
 		List<User> results = userDAO.getFriend(userEmail);
 
-		for (int i = 0; i < results.size(); i++) {
-			System.out.println(results.get(i).getEmail());
-		}
-		if (results.size() == 0) {
-			System.out.println("no friends");
-		}
+//		for (int i = 0; i < results.size(); i++) {
+//			System.out.println(results.get(i).getEmail());
+//		}
+//		if (results.size() == 0) {
+//			System.out.println("no friends");
+//		}
 		return results;
 	}
 
@@ -181,12 +181,12 @@ public class UserServiceImpl implements UserService {
 		userDAO.deleteFriend(userEmail, friendEmail);
 		List<User> results = userDAO.getFriend(userEmail);
 
-		for (int i = 0; i < results.size(); i++) {
-			System.out.println(results.get(i).getEmail());
-		}
-		if (results.size() == 0) {
-			System.out.println("no friends");
-		}
+//		for (int i = 0; i < results.size(); i++) {
+//			System.out.println(results.get(i).getEmail());
+//		}
+//		if (results.size() == 0) {
+//			System.out.println("no friends");
+//		}
 		return results;
 	}
 
@@ -263,13 +263,10 @@ public class UserServiceImpl implements UserService {
 	public void setArtistRoylties(Artist artist,double factor) {
 		
 		List<Releasesong> songs = userDAO.getArtistRelease(artist);
-		System.out.println("song size is "+songs.size());
 		double royalties = 0;
 		for(Releasesong rs: songs) {
 			Collection<User> artists = songDAO.getSongArtists(rs.getReleasesongPK().getSid());
 			
-			System.out.println("artist number is "+artists.size());
-			System.out.println("song id is "+rs.getReleasesongPK().getSid());
 				royalties += (songDAO.getSong(rs.getReleasesongPK().getSid()).getMonthlyPlayed())/artists.size();
 				
 				

@@ -145,11 +145,12 @@ public class ServletController {
 				mav.addObject("username", user.getUserName());
 				break;
 			case ARTIST:
-                                session.setAttribute("user", user);
+                session.setAttribute("user", user);
 				mav.addObject("username", user.getUserName());
 				mav.setViewName("artistMainPage");
 				break;
 			case ADMIN:
+				session.setAttribute("user", user);
 				mav.addObject("username", user.getUserName());
 				mav.setViewName("admin");
 				break;
@@ -214,7 +215,7 @@ public class ServletController {
 		String lastName = request.getParameter("lastName");
 		String dob = request.getParameter("dob");
 		int userType = Integer.parseInt(environment.getProperty("user.basic"));
-		userService.addUser(username, email, encPassword, userType, gender, firstName, middleName, lastName, dob);
+		userService.addUser(username, email, encPassword, userType, gender, firstName, middleName, lastName, dob,null);
 		String message = "Congratulation, sign up successfully. Please return to homepage for login.";
 		return message; // handle in SignUp.jsp
 	}
@@ -232,6 +233,28 @@ public class ServletController {
 		session.setAttribute("user_playlist", userPlaylist);
 		if(user.getUserType()==0||user.getUserType()==1)
 			mav.setViewName("main");
+		else if(user.getUserType()==3)
+			mav.setViewName("admin");
+			
+		return mav;
+	}
+	
+	/* create Album */
+	@RequestMapping(value = "/createAlbum", method = RequestMethod.POST)
+	public ModelAndView createAlbum(ModelAndView mav, @RequestParam(value = "file") CommonsMultipartFile file,
+			HttpServletRequest request, HttpSession session) {
+		String albumName = request.getParameter("album_name");
+		String description = request.getParameter("album_description");
+		String genre = request.getParameter("genre");
+		User user = (User) session.getAttribute("user");
+		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
+		
+		
+		List<Album> userAlbum = albumService.addAlbum(albumName, user, description, file, date);
+		mav.addObject("user_album", userAlbum);
+		session.setAttribute("user_album", userAlbum);
+		if(user.getUserType()==2)
+			mav.setViewName("artistMainPage");
 		else if(user.getUserType()==3)
 			mav.setViewName("admin");
 			
@@ -488,7 +511,8 @@ public class ServletController {
 		}		
 		userService.updateSpecificUser(user);
 		System.out.println(user.getPrivateSession());
-		return "ok";
+		String status = user.getPrivateSession()?"true":"false";
+		return status;
 	}
 	
 	@RequestMapping(value = "/editUserSetting", method = RequestMethod.POST)
@@ -518,11 +542,17 @@ public class ServletController {
 	public ModelAndView deleteUserAccount(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		System.out.println("deleting user account");
 		User user = (User) session.getAttribute("user");
-		if (session.getAttribute("user") != null) {
+		if (session.getAttribute("user") != null&&user.getUserType()!=3) {
 			session.removeAttribute("user");
 		}
-		userService.removeUser(user);
-		mav.setViewName("index");
+		
+		if(user.getUserType()!=3)
+		{
+			userService.removeUser(user);
+			mav.setViewName("index");
+		}
+		else
+			mav.setViewName("admin");
 		return mav;
 	}
 
@@ -674,7 +704,7 @@ public class ServletController {
 	@RequestMapping(value = "/loadUserTables/{userType}", method = RequestMethod.POST)
 	public @ResponseBody String loadAllUsers(@PathVariable int userType, HttpServletRequest request,
 			HttpSession session) throws JSONException {
-		System.out.println("user type" + userType);
+		
 		List<User> users = userService.getUsersByType(userType);
 		String userJsonArray;
 		userJsonArray = userType == 2 ? JSONHelper.artistListToJSON(users) : JSONHelper.userListToJSON(users);
@@ -780,7 +810,7 @@ public class ServletController {
 		char gender = request.getParameter("gender").charAt(0);
 		int userType = 2;
 		userService.addUser(artistName, artistEmail, encPwd, userType, gender, artistFirstName, artistMiddleName,
-				artistLastName, artistDOB);
+				artistLastName, artistDOB,artistBiography);
 		mav.setViewName("admin");
 		System.out.println("adding artist successfully");
 		return mav;
@@ -946,13 +976,15 @@ public class ServletController {
 		String email = user.getEmail();
 		List<SongQueue> newSq = (List<SongQueue>) songService.removeAllQueue(orig, email);
         int pid = Integer.parseInt(request.getParameter("pid"));
-        
+       
         
         
       //----------------------------------------------------------------------------------------
         Playlist p = playlistService.getPlaylist(pid);
-
+        
+        
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
+		
 		if(user.getPrivateSession()==false)
 		{
 			playlistService.addHistoryPlaylist(p, user, date);
@@ -1061,6 +1093,8 @@ public class ServletController {
 			payment.setCvv(cvv);
 			payment.setExpirationDate(expDate);
 			payment.setHoldName(holderName);
+			payment.setUemail(user.getEmail());
+			payment.setUser(user);
 			
 			userService.addPayment(payment);
 			return "ok";
@@ -1147,11 +1181,12 @@ public class ServletController {
 	
 	@RequestMapping(value = "/displayArtistCheckRoyalty", method = RequestMethod.POST)
 	public @ResponseBody String displayArtistCheckRoyalty(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		User user = (User) session.getAttribute("user");
 		
+		String artistEmail = request.getParameter("artistEmail");
+		User user = userService.getUser(artistEmail);
 		double factor = Double.parseDouble(environment.getProperty("artist.royalty.factor"));
 		
-			userService.setArtistRoylties(user.getArtist(), factor);
+			userService.setArtistRoylties(userService.getArtistInfo(user), factor);
 			List<Song> songs = userService.getReleaseSong(userService.getArtistInfo(user));
 			for(int j=0;j<songs.size();j++)
 			{
@@ -1162,6 +1197,8 @@ public class ServletController {
 		String artistRoyaltyInfo = JSONHelper.getOneArtistRoyalty(user,userService);
 		return artistRoyaltyInfo;
 	}
+	
+	
 	
 	@RequestMapping(value = "/displayCheckRoyalty", method = RequestMethod.POST)
 	public @ResponseBody String checkRoyalty(ModelAndView mav, HttpServletRequest request, HttpSession session) {
@@ -1555,4 +1592,5 @@ public class ServletController {
 		}
 		return null;
 	}
+	
 }

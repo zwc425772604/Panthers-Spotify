@@ -44,6 +44,18 @@ public class UserDAOImpl implements UserDAO {
 		entityManager.persist(User);
 		return User;
 	}
+	
+	@Transactional(readOnly = false)
+	public User addArtist(User user,String bio) {
+		Artist a = new Artist();
+		a.setBio(bio);
+		a.setFollowers(0);
+		a.setRoyalty(0);
+		a.setUser(user);
+		a.setArtistEmail(user.getEmail());
+		entityManager.persist(a);
+		return user;
+	}
 
 	@Transactional(readOnly = false)
 	public User updateUser(User User) {

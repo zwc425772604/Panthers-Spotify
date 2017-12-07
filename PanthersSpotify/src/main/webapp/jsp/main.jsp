@@ -62,11 +62,11 @@
                   </div>
                 </div>
               </div>
-              <p id="private-session">Private Session:</p>
+              <!--  <p id="private-session">Private Session:</p>
               <label class="switch" id="psSelected"  style="margin-top:0.8em;">
-              <input type="checkbox" >
-              <span class="slider round"></span>
-              </label>
+              	<input type="checkbox" >
+                  <span class="checkmark"></span>
+              </label>-->
               <div id="top-tool-upgrade-and-user">
                 <div class="w3-dropdown-hover">
                   <button class="w3-button w3-black" id="top-tool-profile" style="border-radius:0;">
@@ -75,6 +75,7 @@
                   <i class="fa fa-angle-down" aria-hidden="true"></i>
                   </button>
                   <div class="w3-dropdown-content w3-bar-block w3-border user-dropdown-button">
+                    <a href="javascript:startPrivateSession()" class="w3-bar-item w3-button private-button" id="dropdown-item">Private Session</a>
                     <a href="javascript:displayUserAccount()" class="w3-bar-item w3-button" id="dropdown-item">Account Setting</a>
                     <a href="javascript:displayAccount()" class="w3-bar-item w3-button" id="dropdown-item">Change Password </a>
                     <c:choose>

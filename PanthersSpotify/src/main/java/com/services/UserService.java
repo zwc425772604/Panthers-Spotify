@@ -12,7 +12,7 @@ import com.model.User;
 
 public interface UserService {
 	public User addUser(String userName, String email, String encPassword, int userType, char gender, String firstName,
-			String middleName, String lastName, String dob);
+			String middleName, String lastName, String dob,String bio);
 
 	public User updateUser(User user, String userName, int userType, char gender, String firstName, String lastName,
 			boolean isPublic);

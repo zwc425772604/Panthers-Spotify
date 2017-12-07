@@ -23,9 +23,9 @@
       <li class="nav-item">
         <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('recently_played')">Recently Played</a>
       </li>
-      <li class="nav-item">
+      <!--<li class="nav-item">
         <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('songs')">Songs</a>
-      </li>
+      </li>-->
       <li class="nav-item" id="extra-padding">
         <a class="nav-link color-nav" href="#">Following Artist</a>
       </li>

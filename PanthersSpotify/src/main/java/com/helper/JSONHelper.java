@@ -43,6 +43,7 @@ public class JSONHelper {
 			jsonObject.put("userType", u.getUserType());
 			jsonObject.put("userFirstName", u.getFirstName());
 			jsonObject.put("userLastName", u.getLastName());
+			jsonObject.put("userBan", u.getIsBan());
 			arr.put(jsonObject);
 		}
 		return arr.toString();

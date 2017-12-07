@@ -145,7 +145,7 @@ public class ServletController {
 				mav.addObject("username", user.getUserName());
 				break;
 			case ARTIST:
-                                session.setAttribute("user", user);
+                session.setAttribute("user", user);
 				mav.addObject("username", user.getUserName());
 				mav.setViewName("artistMainPage");
 				break;
@@ -233,6 +233,28 @@ public class ServletController {
 		session.setAttribute("user_playlist", userPlaylist);
 		if(user.getUserType()==0||user.getUserType()==1)
 			mav.setViewName("main");
+		else if(user.getUserType()==3)
+			mav.setViewName("admin");
+			
+		return mav;
+	}
+	
+	/* create Album */
+	@RequestMapping(value = "/createAlbum", method = RequestMethod.POST)
+	public ModelAndView createAlbum(ModelAndView mav, @RequestParam(value = "file") CommonsMultipartFile file,
+			HttpServletRequest request, HttpSession session) {
+		String albumName = request.getParameter("album_name");
+		String description = request.getParameter("album_description");
+		String genre = request.getParameter("genre");
+		User user = (User) session.getAttribute("user");
+		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
+		
+		
+		List<Album> userAlbum = albumService.addAlbum(albumName, user, description, file, date);
+		mav.addObject("user_album", userAlbum);
+		session.setAttribute("user_album", userAlbum);
+		if(user.getUserType()==2)
+			mav.setViewName("artistMainPage");
 		else if(user.getUserType()==3)
 			mav.setViewName("admin");
 			
@@ -951,13 +973,15 @@ public class ServletController {
 		String email = user.getEmail();
 		List<SongQueue> newSq = (List<SongQueue>) songService.removeAllQueue(orig, email);
         int pid = Integer.parseInt(request.getParameter("pid"));
-        
+       
         
         
       //----------------------------------------------------------------------------------------
         Playlist p = playlistService.getPlaylist(pid);
-
+        
+        
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
+		
 		if(user.getPrivateSession()==false)
 		{
 			playlistService.addHistoryPlaylist(p, user, date);
@@ -1066,6 +1090,8 @@ public class ServletController {
 			payment.setCvv(cvv);
 			payment.setExpirationDate(expDate);
 			payment.setHoldName(holderName);
+			payment.setUemail(user.getEmail());
+			payment.setUser(user);
 			
 			userService.addPayment(payment);
 			return "ok";

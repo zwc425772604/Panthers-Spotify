@@ -3,6 +3,7 @@ package com.services;
 import java.io.File;
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -28,77 +29,90 @@ public class AlbumServiceImpl implements AlbumService {
 	@Transactional
 	public List<Album> addAlbum(String albumName,User user, String description,CommonsMultipartFile file,Date date) {
 		
-		System.out.println("Album Service create invoked:"+albumName);
-		Album Album  = new Album();
-		List<Album> userAlbum = (List<Album>)(user.getAlbumCollection());
-
+	
     	String filename = file.getOriginalFilename();
-    	File albumFile = new File("Users/"+user.getEmail()+"/Album"+userAlbum.size());
-    	if(!albumFile.exists())
+    	String dir = System.getProperty("user.dir");
+    	String albumPath = dir+"/src/main/webapp/WEB-INF/resources/data/Users/"+user.getEmail()+"/album"+date.getTime();
+    	File albumFile = new File(albumPath);
+    	albumFile.mkdirs();
+    	String photoUrl = UploadFile.upload(albumPath,filename,file);
+    	if(photoUrl==null)
     	{
-    		albumFile.mkdirs();//PanthersSpotify
+    		albumFile.delete();
     	}
-    	else
-    	{
-    		System.out.println("exist fail");
-    	}
+    	Time t = new Time(0);	
+	Album album = new Album(albumName,description,photoUrl,0,0,date,t);
+	album = albumDAO.addAlbum(album);
+	//userPlaylists.add(playlist);
     	
-    	System.out.println(albumFile.getAbsolutePath());
-    	
-    	String photoUrl = UploadFile.upload("Users/"+user.getEmail()+"/Album"+userAlbum.size(),filename,file);
-	Time t = new Time(0);	
-    	Album album = new Album(albumName,description,photoUrl,0,0,date,t);
-		System.out.println(photoUrl);
-		
-		Album = albumDAO.addAlbum(album);
 		return albumDAO.getAlbums();
 	}
 	@Transactional
-	public List<Album> updateAlbum(int pid, String des,CommonsMultipartFile file, String pname, User user) {
+	public List<Album> updateAlbum(int aid, String des,CommonsMultipartFile file, String pname, User user) {
 		
-		System.out.println("Cusomer Service Update invoked:"+pid);
+		Album album=albumDAO.getAlbum(aid);
 		
-		Album p=new Album();
-	  	String photoUrl=null;
-	  	int num=findAlbum(pid,albumDAO.getAlbums());
+	  	String photoUrl=album.getPhotoUrl();
+	  	File albumFile = null;
 	  	if(des!=null)
 	  	{
-			p.setDes(des);
+	  		album.setDes(des);
 	  	}
-	  	if(p.getPhotoUrl()!=null)
+	  	if(photoUrl!=null)
 	  	{
-	  		File deleteFile = new File(p.getPhotoUrl());
+	  		File deleteFile = new File(photoUrl);
 	  		if(deleteFile.exists())
 	  		{
 	  			deleteFile.delete();
 	  		}
+	  		File photo = new File(photoUrl);
+	  		albumFile = photo.getParentFile();
 	  	}
-		if(file!=null)
+	  	
+		if(file!=null&&albumFile!=null)
 		{
-			File AlbumFile = new File("Users/"+user.getEmail()+"/Album"+num);
 			
 			String filename = file.getOriginalFilename();
-		  	if(!AlbumFile.exists())
-		  	{
-		  		System.out.println("exist fail");
-		  	}
-		  	else
-		  	{
-		  		photoUrl = UploadFile.upload("Users/"+user.getEmail()+"/Album"+num,filename,file);
-		  	}
-			p.setPhotoUrl(photoUrl);
-		}	
+		  	System.out.println("it should be + "+albumFile.getAbsolutePath());
+		  	photoUrl = UploadFile.upload(albumFile.getAbsolutePath(),filename,file);
+		  	
+		  	album.setPhotoUrl(photoUrl);
+		}
+		else if(file!=null&&albumFile==null)
+		{
+			java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
+			String albumPath = "src/main/webapp/WEB-INF/resources/data/Users/"+user.getEmail()+"/album"+date.getTime();
+			File albumF = new File(albumPath);
+			albumF.mkdirs();
+	    		String filename = file.getOriginalFilename();
+	    		
+	    		photoUrl = UploadFile.upload(albumF.getAbsolutePath(),filename,file);
+			  	
+	    		album.setPhotoUrl(photoUrl);
+		}
+		
 		if(pname!=null)
-				p.setAname(pname);
+		{
+			album.setAname(pname);
+		}
+		album = albumDAO.updateAlbum(album);
 		
 		
-		
-		Album Album = albumDAO.updateAlbum(p);
 		return albumDAO.getAlbums();
 	}
 	@Transactional
-	public List<Album> removeAlbum(Album Album) {
-		albumDAO.deleteAlbum(Album);
+	public List<Album> removeAlbum(Album album) {
+		albumDAO.deleteAlbum(album);
+		if(album.getPhotoUrl()!=null)
+		{
+			File deleteFile = new File(album.getPhotoUrl());
+			File deleteFileParent = deleteFile.getParentFile();
+	  		if(deleteFile.exists())
+	  		{
+	  			deleteFile.delete();
+	  		}
+	  		deleteFileParent.delete();
+		}
 		return albumDAO.getAlbums();
 	}
 	

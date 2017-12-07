@@ -245,6 +245,11 @@ $(document).on("click",".followPlaylistButton", function(){
 				$("#followingPlaylistStatus").html("UNFOLLOW");
                 var playlist_json = JSON.parse(response);
                 appendPlaylistToPlaylistSection(playlist_json);
+                var cn = parseInt($("#playlist-follower").text());
+				var cn = cn + 1;
+				console.log(cn);
+				$("#playlist-follower").empty();
+				$("#playlist-follower").html(cn);
 			}
 		});
 	}
@@ -262,6 +267,11 @@ $(document).on("click",".followPlaylistButton", function(){
 				$("#followingPlaylistStatus").html("FOLLOW");
                 var playlistToRemove = "#playlistID" + pid;
                 $(playlistToRemove).remove();
+                var cn = parseInt($("#playlist-follower").text());
+				var cn = cn - 1;
+				console.log(cn);
+				$("#playlist-follower").empty();
+				$("#playlist-follower").html(cn);
 			}
 		});
 	}

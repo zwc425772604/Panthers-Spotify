@@ -157,7 +157,7 @@
               </div>
               <div class="col-md-5"></div>
               <div class="col-md-3">
-                <p id="playlist-follower"><c:out value="${selectedPlaylist.followers}"></c:out> FOLLOWERS</p>
+                <p id="playlist-follower"><c:out value="${selectedPlaylist.followers}"></c:out> </p> <p>FOLLOWERS</p>
                 
               </div>
             </div>

@@ -17,7 +17,7 @@
       <div class="line"></div>
       <div class="panel-body" style="margin-top: 2%;">
         <span id='message'></span>
-        <form:form action="editUserAccount">
+        <form:form action="editUserAccount"  method="POST" enctype="multipart/form-data">
           <div class="form-group row">
             <label for="staticEmail" class="col-md-4 col-form-label">Gender</label>
             <div class="col-md-5">
@@ -47,7 +47,7 @@
 		             <img id="user-img" width=100% height=width  src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"  class="img-rounded" alt="Generic placeholder thumbnail">
 		           </c:otherwise>
 		          </c:choose>     		-->          
-		          <input class="w3-input" type="file" name="file" id="browse" style="border-bottom: 0 !important;">
+		          <input class="w3-input" type="file" name="file" id="browse" style="border-bottom: 0 !important;" accept="image/*">
 		          <div id="preview" style="margin-left: 0.5em">
 		            <c:choose>
 			           <c:when test="${not empty user.photoUrl}">

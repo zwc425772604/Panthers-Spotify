@@ -72,9 +72,14 @@
 		      <c:forEach var="overviewPlaylist" items="${SearchingPlaylist}">
 		        <div class="col-xs-6 col-sm-4 col-md-2 col-sm-2 placeholder medium-boxes">
 		          <a class="playlist-item">
-		          <object width=100% height=width data="https://s.discogs.com/images/default-release-cd.png" type="image/png">
-		          <img src="${overviewPlaylist.photoUrl}"  class="img-rounded" alt="Generic placeholder thumbnail">
-		          </object>
+		          <c:choose>
+		            <c:when test="${not empty overviewPlaylist.photoUrl}">
+		            <img width=100% height=width src="${cp}/resources/data${overviewPlaylist.photoUrl}"  class="img-rounded" alt="Generic placeholder thumbnail">
+		            </c:when>
+		            <c:otherwise>
+		            <img width=100% height=width src="http://res.cloudinary.com/dn1agy1ea/image/upload/v1495644755/empty-album-cover_wvtnrn.png"  class="img-rounded" alt="Generic placeholder thumbnail">
+		            </c:otherwise>
+		          </c:choose>     
 		          <span style="display:none;" class="playlist_id">${overviewPlaylist.pid}</span>
 		          </a>
 		          <div class="suggestion-boxes-description playlist-item">

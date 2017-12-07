@@ -327,6 +327,10 @@ function displayLeftNavbarContent(nav_name)
 	{
 		   $("#main-changing-content").load("jsp/recentlyPlayed.jsp");
 		}
+	else if (nav_name.localeCompare('following-artists') == 0)
+		{
+		   $("#main-changing-content").load("jsp/followingArtist.jsp");
+		}
 	else if (nav_name.localeCompare('songs') == 0)
 	{
 

@@ -236,7 +236,7 @@ public class ServletController {
 			mav.setViewName("main");
 		else if(user.getUserType()==3)
 			mav.setViewName("admin");
-			
+		
 		return mav;
 	}
 	
@@ -913,6 +913,20 @@ public class ServletController {
 		session.setAttribute("selectedArtistFollowers", artistObj.getFollowers());
 		return "ok";
 	}
+	
+	@RequestMapping(value = "/loadFollowingArtist", method = RequestMethod.POST)
+	public @ResponseBody String loadFollowingArtist(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		User user = (User) session.getAttribute("user");
+		List<Artist> followingArtist = userService.getFollowArtists(user);
+		List<User> artistUserList = new ArrayList<User>();
+		for(Artist a : followingArtist) {
+			artistUserList.add(userService.getUser(a.getArtistEmail()));
+		}
+		
+		String artistsArray = JSONHelper.artistListToJSON(artistUserList);
+		return artistsArray;
+	}
+	
 
 	@RequestMapping(value = "/preSong", method = RequestMethod.POST)
 	public @ResponseBody String getPreSong(ModelAndView mav, HttpServletRequest request, HttpSession session) {

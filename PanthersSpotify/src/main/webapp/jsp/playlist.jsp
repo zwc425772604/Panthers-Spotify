@@ -27,10 +27,15 @@
     <div id="playlist-top-background">
     <div class="playlist-top" id = "release-container">    
       <div class="suggestion-container-top">
-        <div class="playlist_image_box" style="width: 20%">
-          <object width=100% height=width data="https://s.discogs.com/images/default-release-cd.png" type="image/png">
-            <img src="${selectedPlaylist.photoUrl}"  class="img-rounded" alt="Generic placeholder thumbnail">
-          </object>
+        <div class="playlist_image_box" style="width: 20%">    
+          <c:choose>
+            <c:when test="${not empty selectedPlaylist.photoUrl}">
+            <img width=100% height=width src="${cp}/resources/data${selectedPlaylist.photoUrl}"  class="img-rounded" alt="Generic placeholder thumbnail">
+            </c:when>
+            <c:otherwise>
+            <img width=100% height=width src="http://res.cloudinary.com/dn1agy1ea/image/upload/v1495644755/empty-album-cover_wvtnrn.png"  class="img-rounded" alt="Generic placeholder thumbnail">
+            </c:otherwise>
+          </c:choose>
         </div>
         <div class="playlist-details-box">
           <div id ="playlist-info">

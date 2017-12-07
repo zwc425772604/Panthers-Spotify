@@ -27,7 +27,7 @@
         <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('songs')">Songs</a>
       </li>-->
       <li class="nav-item" id="extra-padding">
-        <a class="nav-link color-nav" href="#">Following Artist</a>
+        <a class="nav-link color-nav" href="javascript:displayLeftNavbarContent('following-artists')">Following Artist</a>
       </li>
     </ul>
   </li>

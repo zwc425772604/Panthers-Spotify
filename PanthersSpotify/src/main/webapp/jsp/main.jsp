@@ -71,7 +71,7 @@
                 <div class="w3-dropdown-hover">
                   <button class="w3-button w3-black" id="top-tool-profile" style="border-radius:0;">
                   <img width=25px height=25px class="rounded-circle" alt="Generic placeholder thumbnail" id="dropdown-img"  src="http://orig05.deviantart.net/f239/f/2011/089/3/3/jack_skellington_facebook_icon_by_valashard-d3cu1bt.jpg">
-                  <span class="user_name">${username}</span>
+                  <span class="user_name">${user.userName}</span>
                   <i class="fa fa-angle-down" aria-hidden="true"></i>
                   </button>
                   <div class="w3-dropdown-content w3-bar-block w3-border user-dropdown-button">

@@ -241,6 +241,9 @@ public class ServletController {
 		else if(user.getUserType()==3)
 			mav.setViewName("admin");
 		
+		
+		
+		
 		return mav;
 	}
 	

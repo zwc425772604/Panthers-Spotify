@@ -2,6 +2,7 @@ package com.dao;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -112,6 +113,8 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	@Transactional(readOnly=false)
 	public void addSongToPlaylist(int playlistId,int songId) {
 		Playlistsong playlistsong = new Playlistsong(playlistId, songId);
+		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
+		playlistsong.setCreateDate(date);
 		if(entityManager.contains(playlistsong))
 		{
 			entityManager.merge(playlistsong);
@@ -135,8 +138,10 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	@Transactional(readOnly=true)
 	public List<Song> getSongInPlaylist(int playlistId) {
 		
-		 String queryString = "SELECT song FROM Song song WHERE song.sid in(SELECT f.playlistsongPK.sid from Playlistsong f where f.playlistsongPK.pid=:pid)"; 	  
-		  Query query = entityManager.createQuery(queryString);
+		 //String queryString = "SELECT song FROM Song song WHERE song.sid in(SELECT f.playlistsongPK.sid from Playlistsong f where f.playlistsongPK.pid=:pid)"; 	  
+		String queryString = "SELECT s FROM Song s,Playlistsong p WHERE s.sid=p.playlistsongPK.sid and p.playlistsongPK.pid=:pid order by p.createDate";
+		
+		Query query = entityManager.createQuery(queryString);
 		  
 		  query.setParameter("pid", playlistId);
 		  List<Song>	list = (List<Song>)query.getResultList();

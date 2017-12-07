@@ -197,7 +197,7 @@
   	  });
   });
 </script>
-<div class="recentlyPlayed-top" id = "release-container" >
+<div class="recentlyPlayed-top" id = "recentlyPlayed-container" >
   <div class="suggestion-container-top">
     <h3 class="suggestion-topic" style="font-size: 4em;">Recently Played</h3>
   </div>

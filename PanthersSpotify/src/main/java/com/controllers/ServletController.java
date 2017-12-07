@@ -869,6 +869,7 @@ public class ServletController {
 		User user = (User)session.getAttribute("user");
 		Collection<SongQueue> que = user.getSongQueueCollection();
 		Song song = songService.preSongInQueue(que);
+		songService.addToHistory(user.getEmail(), song.getSid());
 		user.setSongQueueCollection(que);
 		session.setAttribute("user", user);
 		/*
@@ -900,6 +901,7 @@ public class ServletController {
 			que = user.getSongQueueCollection();
 		}
 		Song song = songService.nextSongInQueue(que);
+		songService.addToHistory(user.getEmail(), song.getSid());
 		if(isShuffle)
 			session.setAttribute("preQueue", que);
 		else {
@@ -1535,5 +1537,22 @@ public class ServletController {
 		
 		mav.setViewName("admin");
 		return mav;
+	}
+	@RequestMapping(value = "/addToHistory", method = RequestMethod.POST)
+	public String addToHistory(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		JSONObject json = (JSONObject) session.getAttribute("queueJSON");
+		User user  = (User) session.getAttribute("user");
+		if(json.length()>0) {
+			JSONObject nowPlay = json.getJSONObject("nowPlay");
+			System.out.println("nowPlay: "+nowPlay.toString());
+			if(nowPlay!=null && nowPlay.length()>0) {
+				JSONObject nowSong = nowPlay.getJSONObject("song");
+				System.out.println("nowSong123: "+nowSong.toString());
+				int sid = nowSong.getInt("sid");
+				songService.addToHistory(user.getEmail(),sid);
+				return "ok";
+			}
+		}
+		return null;
 	}
 }

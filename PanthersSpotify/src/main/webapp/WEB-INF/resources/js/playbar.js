@@ -58,6 +58,27 @@ $(document).ready(function(){
 	player.on($.jPlayer.event.play, function(e){
 		 $(".play-pause-button").text("pause_circle_filled");
 		 $(".playingStatus").text("PAUSE");
+		 $.ajax({
+				url: "${cp}/../addToHistory",
+				type: "POST",
+				asyn: false,
+				cache: false,
+				success : function(response)
+				{
+				  console.log("history: "+ response);
+				  result = JSON.parse(response);
+				  // playNextSong();
+				  var container = document.getElementById("recentlyPlayed-container");
+				  if (container !== null){
+					  $("#main-changing-content").load("jsp/recentlyPlayed.jsp");
+				  }
+				},
+				error: function(e)
+				{
+
+				  console.log(e);
+				}
+			} );
 	});
         player.on($.jPlayer.event.pause, function(e){
 		 $(".play-pause-button").text("play_circle_filled");

@@ -3,6 +3,7 @@
 <c:set var="cp" value="${pageContext.request.servletContext.contextPath}" scope="request" />
 <head>
   <script src="${cp}/resources/js/recentlyPlayed.js"></script>
+   <script src="${cp}/resources/js/playbar.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -210,7 +211,7 @@
 <!--  Container for track list -->
 <div id="song-collection">
       <div class="table-responsive">
-        <table class="table" id="song-table">
+        <table class="table" id="recently-play-song-table">
           <thead>
             <tr>
               <th id="th-play-button"></th>

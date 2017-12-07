@@ -1612,7 +1612,7 @@ public class ServletController {
 		return mav;
 	}
 	@RequestMapping(value = "/addToHistory", method = RequestMethod.POST)
-	public String addToHistory(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+	public @ResponseBody String addToHistory(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		JSONObject json = (JSONObject) session.getAttribute("queueJSON");
 		User user  = (User) session.getAttribute("user");
 		if(json.length()>0) {
@@ -1623,7 +1623,7 @@ public class ServletController {
 				System.out.println("nowSong123: "+nowSong.toString());
 				int sid = nowSong.getInt("sid");
 				songService.addToHistory(user.getEmail(),sid);
-				return "ok";
+				return nowSong.toString();
 			}
 		}
 		return null;

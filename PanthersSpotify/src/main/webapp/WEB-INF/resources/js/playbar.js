@@ -66,12 +66,20 @@ $(document).ready(function(){
 				success : function(response)
 				{
 				  console.log("history: "+ response);
-				  result = JSON.parse(response);
+				  nowPlay = JSON.parse(response);
 				  // playNextSong();
+                                  console.log(result);
 				  var container = document.getElementById("recentlyPlayed-container");
-				  if (container !== null){
-					  $("#main-changing-content").load("jsp/recentlyPlayed.jsp");
-				  }
+                             
+                                       updateRecentlyPlayTable(nowPlay);
+//                                  hahaha();
+//                                  $("#"+songRow).remove();
+//                                  document.getElementById(songRow).remove
+//				  if (container !== null){
+//					  $("#main-changing-content").load("jsp/recentlyPlayed.jsp");
+////                                       
+//				  }
+                                    
 				},
 				error: function(e)
 				{

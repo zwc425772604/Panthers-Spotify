@@ -18,6 +18,15 @@ $(document).ready(function(){
       });
 });
 
+ function updateRecentlyPlayTable(result)
+ {          
+    var songRow =  "recently-play-song" + result['sid'];
+    var child = document.getElementById(songRow);
+    child.parentNode.removeChild(child);
+    $("#recently-play-song-table").prepend(child);
+              
+                                    
+ }
 
 function insertSongsTable(data)
 {
@@ -28,8 +37,8 @@ function insertSongsTable(data)
 		var albumName = data[i]['albumName'];
 		var albumID = data[i]['albumId'];
 		var date = data[i]['songReleaseDate'];
-		$("#song-table").find('tbody').append([
-			'<tr>',	
+		$("#recently-play-song-table").find('tbody').append([
+			'<tr id="recently-play-song' + data[i]['songID'] + '">',	
 			 '<td style="padding-bottom:0; padding-top:0.8em; padding-left:1em;"> <button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">',
                '<i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i></button>',
               '</td>',

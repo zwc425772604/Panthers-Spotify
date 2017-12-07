@@ -70,7 +70,14 @@
               <div id="top-tool-upgrade-and-user">
                 <div class="w3-dropdown-hover">
                   <button class="w3-button w3-black" id="top-tool-profile" style="border-radius:0;">
-                  <img width=25px height=25px class="rounded-circle" alt="Generic placeholder thumbnail" id="dropdown-img"  src="http://orig05.deviantart.net/f239/f/2011/089/3/3/jack_skellington_facebook_icon_by_valashard-d3cu1bt.jpg">
+                  <c:choose>
+		            <c:when test="${not empty user.photoUrl}">
+		              <img id="dropdown-img" style="border-radius: 5px;" width=25px height=25px src="${cp}/resources/data${user.photoUrl}"  class="img-rounded" alt="Generic placeholder thumbnail">
+		            </c:when>
+		            <c:otherwise>
+		              <img id="dropdown-img" style="border-radius: 5px;" width=25px height=25px src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"  class="img-rounded" alt="Generic placeholder thumbnail">
+		            </c:otherwise>
+		          </c:choose>   
                   <span class="user_name">${user.userName}</span>
                   <i class="fa fa-angle-down" aria-hidden="true"></i>
                   </button>

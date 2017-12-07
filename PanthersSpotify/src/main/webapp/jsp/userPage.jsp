@@ -17,9 +17,14 @@
   <div id ="userPage-main">
     <div class="suggestion-container-top" >
       <div class="user_image_box" style="width: 20%">
-        <object type="image/png" data="http://weclipart.com/gimg/0A3C841B9FA4F2C6/13099629981030824019profile.svg.hi.png"  width=100% height=width>
-        <img src="" class="img-rounded" alt="Generic placeholder thumbnail">
-        </object>
+         <c:choose>
+           <c:when test="${not empty selectedFriend.photoUrl}">
+             <img width=100% height=width src="${cp}/resources/data${selectedFriend.photoUrl}"  class="img-rounded" alt="Generic placeholder thumbnail">
+           </c:when>
+           <c:otherwise>
+             <img  width=100% height=width  src="https://x1.xingassets.com/assets/frontend_minified/img/users/nobody_m.original.jpg"  class="img-rounded" alt="Generic placeholder thumbnail">
+           </c:otherwise>
+         </c:choose>          
       </div>
       <div class="userInfoBoxes" style="width:70%">
         <div id ="userInfo" style="margin-top: 4%; margin-left:5%;">

@@ -44,6 +44,7 @@ public class JSONHelper {
 			jsonObject.put("userFirstName", u.getFirstName());
 			jsonObject.put("userLastName", u.getLastName());
 			jsonObject.put("userBan", u.getIsBan());
+			jsonObject.put("userPhotoUrl", u.getPhotoUrl());
 			arr.put(jsonObject);
 		}
 		return arr.toString();

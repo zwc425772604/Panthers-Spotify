@@ -21,15 +21,6 @@
   id="bootstrap-overrides-navbar">
   <ul class="navbar-nav mr-auto tab" id="navbar-ul">
     <li class="nav-item">
-      <a class="nav-link tablinks" href="javascript:displayContent('songsPendingTableDiv')">SONGS </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link tablinks" href="javascript:displayContent('albumsTableDiv')">ALBUMS</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="javascript:displayContent('playlistsTableDiv')">PLAYLISTS</a>
-    </li>
-    <li class="nav-item">
       <a class="nav-link" href="javascript:displayContent('basicUsersTableDiv')">BASIC USERS</a>
     </li>
     <li class="nav-item">
@@ -38,49 +29,18 @@
     <li class="nav-item">
       <a class="nav-link" href="javascript:displayContent('artistsTableDiv')">ARTISTS</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link tablinks" href="javascript:displayContent('songsPendingTableDiv')">SONGS </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link tablinks" href="javascript:displayContent('albumsTableDiv')">ALBUMS</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="javascript:displayContent('playlistsTableDiv')">PLAYLISTS</a>
+    </li>
   </ul>
 </nav>
-<div id="songsPendingTableDiv" class="w3-container info-table">
-  <h1 style="color: white;"><span id="num-of-pending-songs"></span> songs to be approved</h1>
-  <table class="w3-table-all w3-hoverable" id = "pending-songs-table">
-    <thead>
-      <tr class="w3-light-grey">
-        <th>Song ID</th>
-        <th>Song Title</th>
-        <th>Artist</th>
-        <th>Genre</th>
-        <th>Status</th>
-        <%-- <th>Created Date</th> --%>
-        <th></th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-</div>
-<div id="albumsTableDiv" class="w3-container info-table" style="display:none">
-  <h1>Album Table</h1>
-</div>
-<div id="playlistsTableDiv" class="w3-container info-table" style="display:none">
-  <h1 style="color: white;"><span id="num-of-playlist"></span> playlist(s) created</h1>
-  <table class="w3-table-all w3-hoverable" id = "playlists-table">
-    <thead>
-      <tr class="w3-light-grey">
-        <th>ID</th>
-        <th>Name</th>
-        <th>Owner</th>
-        <th># of Songs</th>
-        <th># of Followers</th>
-        <th>Created Date</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-</div>
-<div id="basicUsersTableDiv" class="w3-container info-table" style="display:none">
+<div id="basicUsersTableDiv" class="w3-container info-table">
   <h1 style="color: white;"><span id="num-of-basic-user"></span> basic users registered</h1>
   <table class="w3-table-all w3-hoverable" id = "basic-users-table">
     <thead>
@@ -136,6 +96,46 @@
         <th></th> <!-- edit -->
         <th></th> <!-- delete  -->
         <th></th> <!-- royalty -->
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+<div id="songsPendingTableDiv" class="w3-container info-table" style="display:none">
+  <h1 style="color: white;"><span id="num-of-pending-songs"></span> songs to be approved</h1>
+  <table class="w3-table-all w3-hoverable" id = "pending-songs-table">
+    <thead>
+      <tr class="w3-light-grey">
+        <th>Song ID</th>
+        <th>Song Title</th>
+        <th>Artist</th>
+        <th>Genre</th>
+        <th>Status</th>
+        <%-- <th>Created Date</th> --%>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+<div id="albumsTableDiv" class="w3-container info-table" style="display:none">
+  <h1>Album Table</h1>
+</div>
+<div id="playlistsTableDiv" class="w3-container info-table" style="display:none">
+  <h1 style="color: white;"><span id="num-of-playlist"></span> playlist(s) created</h1>
+  <table class="w3-table-all w3-hoverable" id = "playlists-table">
+    <thead>
+      <tr class="w3-light-grey">
+        <th>ID</th>
+        <th>Name</th>
+        <th>Owner</th>
+        <th># of Songs</th>
+        <th># of Followers</th>
+        <th>Created Date</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>

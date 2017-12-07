@@ -82,7 +82,13 @@
                   <i class="fa fa-angle-down" aria-hidden="true"></i>
                   </button>
                   <div class="w3-dropdown-content w3-bar-block w3-border user-dropdown-button">
-                    <a href="javascript:startPrivateSession()" class="w3-bar-item w3-button private-button" id="dropdown-item">Private Session</a>
+                    <a href="javascript:startPrivateSession()" class="w3-bar-item w3-button private-button" id="dropdown-item">Private Session
+                       <c:choose>
+                         <c:when test="${user.privateSession == true}">
+                         	<i class="fa fa-check" aria-hidden="true"></i>
+                         </c:when>
+                       </c:choose>
+                       </a>
                     <a href="javascript:displayUserAccount()" class="w3-bar-item w3-button" id="dropdown-item">Account Setting</a>
                     <a href="javascript:displayAccount()" class="w3-bar-item w3-button" id="dropdown-item">Change Password </a>
                     <c:choose>

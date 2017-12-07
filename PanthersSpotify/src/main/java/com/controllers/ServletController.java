@@ -1490,7 +1490,7 @@ public class ServletController {
 		String cname = request.getParameter("cname");
 		String ctimeTmp = request.getParameter("ctime") + " 00:00:00";
 		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 		
 		Date ctime = null;
 		try {

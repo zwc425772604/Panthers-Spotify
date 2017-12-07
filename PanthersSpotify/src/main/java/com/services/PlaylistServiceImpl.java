@@ -43,6 +43,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 	    	String playlistPath = dir+"/src/main/webapp/WEB-INF/resources/data/Users/"+user.getEmail()+"/playlist"+date.getTime();
 	    	File playlistFile = new File(playlistPath);
 	    	playlistFile.mkdirs();
+	    	
 	    	String photoUrl = UploadFile.upload(playlistPath,filename,file);
 	    	if(photoUrl==null)
 	    	{

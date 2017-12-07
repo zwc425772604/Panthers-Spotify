@@ -481,7 +481,7 @@ public class ServletController {
 		    		photoUrl=selectedUser.getPhotoUrl();
 		    		userFile.delete();
 		    	}
-			
+		    	photoUrl = "Users/"+selectedUser.getEmail()+"/"+filename;
 			user = userService.updateUser(selectedUser, selectedUser.getUserName(), selectedUser.getUserType(), gender, firstName, lastName,
 				isPublic,selectedUser.getPhotoUrl());
 		}
@@ -498,7 +498,7 @@ public class ServletController {
 		    		userFile.delete();
 		    	}
 		    	
-		    	
+		    	photoUrl = "Users/"+user.getEmail()+"/"+filename;
 			user = userService.updateUser(user, user.getUserName(), user.getUserType(), gender, firstName, lastName,
 				isPublic,photoUrl);
 

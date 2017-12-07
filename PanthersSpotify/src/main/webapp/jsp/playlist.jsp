@@ -271,10 +271,12 @@
                     <button class="w3-bar-item w3-button add-to-queue-btn" id = "add-to-queue-btn">Add to Queue<span style="display:none;" class="song-id">${song.sid}</span></button> 
                     
 <!--                    <button onclick="" class="w3-bar-item w3-button">Go to Song Radio</button>-->
+<!-- 
                     <hr>
                     <button onclick="" class="w3-bar-item w3-button">Go to Artist</button> 
                     <button onclick="" class="w3-bar-item w3-button">Go to Album</button>
                     <hr>
+ -->
                     <!-- not implemented -->
 <!--                    <button onclick="" class="w3-bar-item w3-button">Remove from Your Library</button>-->
              
@@ -313,7 +315,7 @@
                          <span class="playlist-id" style="display:none;">${selectedPlaylist.pid}</span>
                      </div>
       
-                    <button onclick="" class="w3-bar-item w3-button">Share</button>
+                    <!--<button onclick="" class="w3-bar-item w3-button">Share</button>  -->
                   </div>
                 </div>
               </td>

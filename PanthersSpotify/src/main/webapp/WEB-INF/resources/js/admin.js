@@ -116,8 +116,16 @@ function insertBasicUserTables(data)
 	$("#num-of-basic-user").html(num);
 	for (var i = 0; i < num; i++)
 		{
+		    var ban = data[i]['userBan'];
+		    var color;
+		    if(ban == 0){
+		    	color= '#f1f1f1';
+		    }
+		    else{
+		    	color='red';
+		    }
 			$("#basic-users-table").find('tbody').append([
-				'<tr>',
+				'<tr style="background:' + color + '">',
 				  '<td>' + data[i]['userID'] + '</td>',
 				  '<td>' + data[i]['userFirstName'] + '</td>',
 				  '<td>' + data[i]['userLastName'] + '</td>',
@@ -139,8 +147,16 @@ function insertPremiumUserTables(data)
 	$("#num-of-premium-user").html(num);
 	for (var i = 0; i < num; i++)
 		{
+			var ban = data[i]['userBan'];
+		    var color;
+		    if(ban == 0){
+		    	color= '#f1f1f1';
+		    }
+		    else{
+		    	color='red';
+		    }
 			$("#premium-users-table").find('tbody').append([
-				'<tr>',
+				'<tr style="background:' + color + '">',
 				  '<td>' + data[i]['userID'] + '</td>',
 				  '<td>' + data[i]['userFirstName'] + '</td>',
 				  '<td>' + data[i]['userLastName'] + '</td>',
@@ -274,6 +290,7 @@ $(document).ready ( function () {
 $(document).on ("click", ".delete-playlist-button", function () {
 	var pid = $(this).closest('tr').children('td:eq(0)').text();
 	console.log("pid is : " + pid);
+	$(this).closest('tr').remove();
 	 $.ajax({
 	        url: "{cp}/../deleteSelectedPlaylist",
 	        data: {"playlistID" : pid},
@@ -335,7 +352,7 @@ $(document).on ("click", ".approveSongButton", function () {
 	        success : function(response)
 	        {
 	          console.log(response);
-						
+	          $(this).closest('tr').children('td:eq(4)').text(response);			
 	        },
 	        error: function(e)
 	        {
@@ -343,7 +360,7 @@ $(document).on ("click", ".approveSongButton", function () {
 	          console.log(e);
 	        }
 	      });
-					$(this).closest('tr').children('td:eq(4)').text(response);
+	
 });
 
 $(document).on ("click", ".removeSongButton", function () {

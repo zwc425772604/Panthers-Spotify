@@ -1,4 +1,3 @@
-
 package com.dao;
 
 import java.util.ArrayList;
@@ -174,7 +173,7 @@ public class SongDAOImpl implements SongDAO {
 	@Transactional(readOnly = true)
 	public List<Song> getHistorySongs(String userEmail) {
 
-		String queryString = "SELECT s FROM Song s where s.sid in (SELECT f.songhistoryPK.sid from Songhistory f where f.songhistoryPK.uemail=:uemail order by f.createDay) ";
+		String queryString = "SELECT s FROM Song s where s.sid in (SELECT f.songhistoryPK.sid from Songhistory f where f.songhistoryPK.uemail=:uemail order by createdDay desc)";
 		Query query = entityManager.createQuery(queryString);
 		query.setParameter("uemail", userEmail);
 		List<Song> list = (List<Song>) query.getResultList();
@@ -274,6 +273,5 @@ public class SongDAOImpl implements SongDAO {
 		newHistory.setCreateDay(now);
 		entityManager.merge(newHistory);
 	}
-
 }
 

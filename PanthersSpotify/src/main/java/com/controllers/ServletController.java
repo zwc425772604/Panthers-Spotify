@@ -1,3 +1,4 @@
+
 package com.controllers;
 
 import java.io.IOException;
@@ -816,6 +817,25 @@ public class ServletController {
 		return mav;
 	}
 
+	@RequestMapping(value = "/addUserToDatabase", method = RequestMethod.POST)
+	public ModelAndView addUserToDatabase(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		String name = request.getParameter("username");
+		String email = request.getParameter("email");
+		String artistPassword = request.getParameter("password");
+		String encPwd = Security.encryptPassword(artistPassword);
+		String firstName = request.getParameter("firstName");
+		String middleName = request.getParameter("middleName");
+		String lastName = request.getParameter("lastName");		
+		String DOB = request.getParameter("DOB");
+		char gender = request.getParameter("gender").charAt(0);
+		int userType = request.getParameter("userType").equals("Basic")?0:1;
+		userService.addUser(name, email, encPwd, userType, gender, firstName, middleName,
+				lastName, DOB, null);
+		mav.setViewName("admin");
+		System.out.println("adding user successfully");
+		return mav;
+	}
+	
 	@RequestMapping(value = "/submitSongForUploading", method = RequestMethod.POST)
 	public ModelAndView submitSongForUploading(ModelAndView mav,
 			@RequestParam(value = "file") CommonsMultipartFile file, HttpServletRequest request, HttpSession session)
@@ -1470,7 +1490,7 @@ public class ServletController {
 		String cname = request.getParameter("cname");
 		String ctimeTmp = request.getParameter("ctime") + " 00:00:00";
 		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 		
 		Date ctime = null;
 		try {
@@ -1592,5 +1612,5 @@ public class ServletController {
 		}
 		return null;
 	}
-	
+
 }

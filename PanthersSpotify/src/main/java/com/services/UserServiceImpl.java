@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
 		user.setMiddleName(middleName);
 		user.setLastName(lastName);
 		user.setIsPublic(true);
-		SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM dd yyyy hh:mm:ss", Locale.US);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 		Date parsedBirthday = null;
 		try {
 			parsedBirthday = dateFormat.parse(dob);

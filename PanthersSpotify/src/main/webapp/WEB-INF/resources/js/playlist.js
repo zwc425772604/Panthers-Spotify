@@ -1,53 +1,47 @@
 var hoverEnabled = true;
 $(document).ready(function(){
 	$(".more_action_list").css('visibility','hidden'); //hide the ... button when page is loaded
-	   $(".playbar-play-button").css('visibility','hidden'); //hide the play button when page is loaded
-  $("#remove_playlist_button").click(function(){
-
-	 	
-	 	$("#remove_playlist_modal").show();
-	});
-  $("#edit_playlist_button").click(function(){
-
-	 	
-	 	$("#edit_playlist_modal").show();
-	});
-  $("#delete_playlist_confirm_button").click(function(){
-	 
-	  $("#remove_playlist_modal").hide();
-	  var pid = $("#playlistID").text();
-	  $.ajax({
-          url: "${cp}/../removeSpecificPlaylist",
-          type: "POST",
-          data : {"playlistID" : pid },
-          asyn: true,
-          cache: false,
-          success : function(response)
-          {
-            console.log(response);
-           // $("#main-changing-content").load("jsp/playlist.jsp");
-            window.location.replace("http://localhost:8080/PanthersSpotify/main");
-          },
-          error: function(e)
-          {
-            console.log(e);
-         
-          }
-        });
-  });
-  $("#cancel_delete_button").click(function(){
-	  $("#remove_playlist_modal").hide();
-  });
-  $("#cancel_edit_button").click(function(){
-	
-	  event.preventDefault(); document.getElementById('edit_playlist_modal').style.display='none';
-  });
-  
-  
+	$(".playbar-play-button").css('visibility','hidden'); //hide the play button when page is loaded
 });
 
-
-
+$(document).on("click","#remove_playlist_button",function(){
+	console.log("daddy love u!!!!!!");
+ 	$("#remove_playlist_modal").show();
+});
+$(document).on("click","#edit_playlist_button", function(){
+	
+ 	
+ 	$("#edit_playlist_modal").show();
+});
+$(document).on("click","#delete_playlist_confirm_button",function(){
+	
+  $("#remove_playlist_modal").hide();
+  var pid = $("#playlistID").text();
+  $.ajax({
+      url: "${cp}/../removeSpecificPlaylist",
+      type: "POST",
+      data : {"playlistID" : pid },
+      asyn: true,
+      cache: false,
+      success : function(response)
+      {
+        console.log(response);
+       // $("#main-changing-content").load("jsp/playlist.jsp");
+        window.location.replace("http://localhost:8080/PanthersSpotify/main");
+      },
+      error: function(e)
+      {
+        console.log(e);
+     
+      }
+    });
+});
+$(document).on("click","#cancel_delete_button", function(){
+  $("#remove_playlist_modal").hide();
+});
+$(document).on("click","#cancel_edit_button", function(){
+  event.preventDefault(); document.getElementById('edit_playlist_modal').style.display='none';
+});
 
 //style for the filter container
 $( "#filter_container" )

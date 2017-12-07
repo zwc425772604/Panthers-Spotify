@@ -107,7 +107,7 @@ $( ".song_info" ).bind({
 
 
 
-$(".remove-song-item").click(function(){
+$(document).on("click",".remove-song-item", function(){
 	var songID = $(".song-id", this).text();
 	var playlistID = $(".playlist-id", this).text();
 	console.log("song id to remove is " + songID);
@@ -120,7 +120,10 @@ $(".remove-song-item").click(function(){
          cache: false,
          success : function(response)
          {
-           console.log(response);
+        	 var songDiv = "#songID"+songID;
+             console.log("song id: "+ songDiv);
+             $(songDiv).remove();
+             console.log(response);
          },
          error: function(e)
          {
@@ -129,7 +132,7 @@ $(".remove-song-item").click(function(){
 	  });
 });
 
-$(".add-to-playlist-item").click(function(){
+$(document).on("click",".add-to-playlist-item",function(){
   	var songID = $(".song-id", this).text();
   	var playlistID = $(".add-song-to-playlist-id",this).text();
   	  $.ajax({
@@ -140,6 +143,7 @@ $(".add-to-playlist-item").click(function(){
             cache: false,
             success : function(response)
             {
+              $(".song_action_list").removeClass("w3-show");
               console.log(response);
   
             },

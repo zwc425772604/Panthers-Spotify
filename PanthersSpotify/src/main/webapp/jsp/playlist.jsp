@@ -228,7 +228,7 @@
             	JSONObject obj = data.getJSONObject(i);
             	
            %>
-           	<tr class= "song_info">
+           	<tr class= "song_info" id = "songID<%=obj.get("songID")%>">  
               <td><button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">
                 <i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i>
                   <span class="song-id-in-playlist" style="display:none"><%= obj.get("songID") %></span>

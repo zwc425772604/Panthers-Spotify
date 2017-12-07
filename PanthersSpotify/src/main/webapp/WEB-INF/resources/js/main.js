@@ -279,7 +279,7 @@ $(document).on("submit","#downgradeForm",function(){
 });
 
 
-$(document).on("click","#psSelected",function(){
+function startPrivateSession(){
 	$.ajax({
         url: "${cp}/../privateSession",
         type: "POST",
@@ -287,14 +287,21 @@ $(document).on("click","#psSelected",function(){
         cache: false,
         success : function(response)
         {
-         	
+         	console.log("Starting Private Session");
+         	$(".private-button").empty();
+         	if(response.localeCompare('true') == 0){
+         		$(".private-button").append("Private Session  <i class=\"fa fa-check\" aria-hidden=\"true\"></i>");
+         	}
+         	else{
+         		$(".private-button").append("Private Session " );
+         	}       	
         },
         error: function(e)
         {
           console.log(e);
         }
 	  });
-});
+}
 
 
 function displayLeftNavbarContent(nav_name)

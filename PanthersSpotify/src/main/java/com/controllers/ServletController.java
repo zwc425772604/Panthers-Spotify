@@ -511,7 +511,8 @@ public class ServletController {
 		}		
 		userService.updateSpecificUser(user);
 		System.out.println(user.getPrivateSession());
-		return "ok";
+		String status = user.getPrivateSession()?"true":"false";
+		return status;
 	}
 	
 	@RequestMapping(value = "/editUserSetting", method = RequestMethod.POST)
@@ -1569,4 +1570,6 @@ public class ServletController {
 		mav.setViewName("admin");
 		return mav;
 	}
+	
+	
 }

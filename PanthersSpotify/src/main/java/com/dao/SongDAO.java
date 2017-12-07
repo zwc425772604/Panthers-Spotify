@@ -33,4 +33,5 @@ public interface SongDAO {
 	public List<Song> getSongByArtist(String artistEmail, String status);
 	public Releasesong getSongInRelease(int sid, String uemail);
 	public List<Song> getRemoveRequestSongs(String status);
+	public void addToHistory(String email, int sid);
 }

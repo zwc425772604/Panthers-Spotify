@@ -42,4 +42,6 @@ public interface SongService {
 	public Song updateMontlySong(int monthlyPlayed, Song song);
 	public void uploadRemoveSong(User user, int songId);
 	public List<Song> getStatusSongs(String status);
+	public void addToHistory(String email, int sid);
 }
+

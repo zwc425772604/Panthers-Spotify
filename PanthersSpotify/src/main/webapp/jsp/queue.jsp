@@ -14,17 +14,8 @@
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-dark-grey.css">
 <script src="${cp}/resources/js/queue.js"></script>
 <div>
-  <h1>Play Queue</h1>
+  <h1 style="color:white;">Play Queue</h1> 
 </div>
-<nav class="navbar navbar-expand-md bg-dark navbar-dark"
-  id="bootstrap-overrides-navbar">
-  <ul class="navbar-nav mr-auto tab" id="navbar-ul">
-    <li class="nav-item"><a class="nav-link tablinks"
-      href="javascript:displayContent('queueDiv')">QUEUE </a></li>
-    <li class="nav-item"><a class="nav-link tablinks"
-      href="javascript:displayContent('historyDiv')">HISTORY</a></li>
-  </ul>
-</nav>
 
 <div id="queueDiv" class="w3-container info-table">
 <% if (queue.length()==0)
@@ -43,7 +34,7 @@
 			JSONObject nowSong = nowPlay.getJSONObject("song");
 	%>
  <div id = "nowPlayingSongDiv">
-  <h3>Now Playing</h3>
+  <h3 style="color:white;">Now Playing</h3>
   <table class="w3-table-all w3-hoverable" id="now-playing-table">
     <thead>
       <tr class="w3-light-grey">
@@ -109,7 +100,7 @@
 	<% JSONArray nextUp = (JSONArray)queue.getJSONArray("nextUp");
 		if (nextUp.length()>0){
 	%>
-  <h3>Next Up</h3>
+  <h3 style ="color:white;">Next Up</h3>
   <table class="w3-table-all w3-hoverable" id="next-playing-table">
     <thead>
       <tr class="w3-light-grey">

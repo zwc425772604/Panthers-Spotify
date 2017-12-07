@@ -439,4 +439,3 @@ $(document).on ("click", "#add-new-playlist-button", function () {
 	  //     window.open("browse.jsp","_blank");
 	});
 
-

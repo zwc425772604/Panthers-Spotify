@@ -341,4 +341,8 @@ public class SongServiceImpl implements SongService {
 	{
 		return songDAO.getSongByArtist(artistEmail, status);
 	}
+	@Override
+	public void addToHistory(String  email, int sid) {
+		songDAO.addToHistory(email, sid);
+	}
 }

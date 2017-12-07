@@ -1,3 +1,4 @@
+
 package com.controllers;
 
 import java.io.IOException;
@@ -248,7 +249,8 @@ public class ServletController {
 		String genre = request.getParameter("genre");
 		User user = (User) session.getAttribute("user");
 		java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTimeInMillis());
-				
+		
+		
 		List<Album> userAlbum = albumService.addAlbum(albumName, user, description, file, date);
 		mav.addObject("user_album", userAlbum);
 		session.setAttribute("user_album", userAlbum);
@@ -417,7 +419,7 @@ public class ServletController {
 
 	@RequestMapping(value = "/loadAlbum", method = RequestMethod.POST)
 	public @ResponseBody String loadAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {
-		List<Album> albums = albumService.getAllAlbums();		
+		List<Album> albums = albumService.getAllAlbums();
 		session.setAttribute("album_list", albums);
 		return "ok";
 	}
@@ -814,7 +816,7 @@ public class ServletController {
 		System.out.println("adding artist successfully");
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/addUserToDatabase", method = RequestMethod.POST)
 	public ModelAndView addUserToDatabase(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		String name = request.getParameter("username");
@@ -834,7 +836,6 @@ public class ServletController {
 		return mav;
 	}
 	
-
 	@RequestMapping(value = "/submitSongForUploading", method = RequestMethod.POST)
 	public ModelAndView submitSongForUploading(ModelAndView mav,
 			@RequestParam(value = "file") CommonsMultipartFile file, HttpServletRequest request, HttpSession session)
@@ -845,7 +846,7 @@ public class ServletController {
 		String releaseDay = request.getParameter("release_day");
 		String songGenre = request.getParameter("song_genre");
 		String songType = request.getParameter("song_type");
-		
+
 		songService.uploadSong(user, songTitle, songTime, releaseDay, songGenre, songType, file);
 
 		mav.setViewName("artistMainPage");
@@ -918,6 +919,7 @@ public class ServletController {
 		User user = (User)session.getAttribute("user");
 		Collection<SongQueue> que = user.getSongQueueCollection();
 		Song song = songService.preSongInQueue(que);
+		songService.addToHistory(user.getEmail(), song.getSid());
 		user.setSongQueueCollection(que);
 		session.setAttribute("user", user);
 		/*
@@ -949,6 +951,7 @@ public class ServletController {
 			que = user.getSongQueueCollection();
 		}
 		Song song = songService.nextSongInQueue(que);
+		songService.addToHistory(user.getEmail(), song.getSid());
 		if(isShuffle)
 			session.setAttribute("preQueue", que);
 		else {
@@ -1487,7 +1490,7 @@ public class ServletController {
 		String cname = request.getParameter("cname");
 		String ctimeTmp = request.getParameter("ctime") + " 00:00:00";
 		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.US);
 		
 		Date ctime = null;
 		try {
@@ -1592,6 +1595,22 @@ public class ServletController {
 		mav.setViewName("admin");
 		return mav;
 	}
-	
-	
+	@RequestMapping(value = "/addToHistory", method = RequestMethod.POST)
+	public String addToHistory(ModelAndView mav, HttpServletRequest request, HttpSession session) {
+		JSONObject json = (JSONObject) session.getAttribute("queueJSON");
+		User user  = (User) session.getAttribute("user");
+		if(json.length()>0) {
+			JSONObject nowPlay = json.getJSONObject("nowPlay");
+			System.out.println("nowPlay: "+nowPlay.toString());
+			if(nowPlay!=null && nowPlay.length()>0) {
+				JSONObject nowSong = nowPlay.getJSONObject("song");
+				System.out.println("nowSong123: "+nowSong.toString());
+				int sid = nowSong.getInt("sid");
+				songService.addToHistory(user.getEmail(),sid);
+				return "ok";
+			}
+		}
+		return null;
+	}
+
 }

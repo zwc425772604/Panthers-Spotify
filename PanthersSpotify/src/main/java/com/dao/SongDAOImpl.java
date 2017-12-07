@@ -267,6 +267,13 @@ public class SongDAOImpl implements SongDAO {
 		List<Song> songs = (ArrayList<Song>)query.getResultList();
 		return songs;
 	}
+	@Transactional(readOnly = true)
+	public void addToHistory(String email, int sid) {
+		Songhistory newHistory = new Songhistory(email,sid);
+		java.util.Date now = new java.util.Date();
+		newHistory.setCreateDay(now);
+		entityManager.merge(newHistory);
+	}
 
 }
 

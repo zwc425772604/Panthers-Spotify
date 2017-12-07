@@ -23,7 +23,7 @@ public class UploadFile {
 		catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();
-			System.out.println("file not found");
+			System.out.println("file not found" + url);
 			return null;
 		} 
 		catch (IOException e) {

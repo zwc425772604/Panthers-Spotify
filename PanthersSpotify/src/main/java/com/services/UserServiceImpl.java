@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
 	@Transactional
 	public User addUser(String userName, String email, String encPassword, int userType, char gender, String firstName,
-			String middleName, String lastName, String dob) {
+			String middleName, String lastName, String dob,String bio) {
 		System.out.println("User Service create invoked:" + userName);
 		User user = new User();
 		user.setEmail(email);
@@ -74,6 +74,8 @@ public class UserServiceImpl implements UserService {
 		File userDir = new File(f1, email);
 		userDir.mkdirs();
 		user = userDAO.addUser(user);
+		if(bio!=null)
+			userDAO.addArtist(user, bio);
 		return user;
 	}
 

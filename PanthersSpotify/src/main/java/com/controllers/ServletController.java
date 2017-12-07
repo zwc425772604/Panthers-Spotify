@@ -214,7 +214,7 @@ public class ServletController {
 		String lastName = request.getParameter("lastName");
 		String dob = request.getParameter("dob");
 		int userType = Integer.parseInt(environment.getProperty("user.basic"));
-		userService.addUser(username, email, encPassword, userType, gender, firstName, middleName, lastName, dob);
+		userService.addUser(username, email, encPassword, userType, gender, firstName, middleName, lastName, dob,null);
 		String message = "Congratulation, sign up successfully. Please return to homepage for login.";
 		return message; // handle in SignUp.jsp
 	}
@@ -518,11 +518,17 @@ public class ServletController {
 	public ModelAndView deleteUserAccount(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		System.out.println("deleting user account");
 		User user = (User) session.getAttribute("user");
-		if (session.getAttribute("user") != null) {
+		if (session.getAttribute("user") != null&&user.getUserType()!=3) {
 			session.removeAttribute("user");
 		}
-		userService.removeUser(user);
-		mav.setViewName("index");
+		
+		if(user.getUserType()!=3)
+		{
+			userService.removeUser(user);
+			mav.setViewName("index");
+		}
+		else
+			mav.setViewName("admin");
 		return mav;
 	}
 
@@ -780,7 +786,7 @@ public class ServletController {
 		char gender = request.getParameter("gender").charAt(0);
 		int userType = 2;
 		userService.addUser(artistName, artistEmail, encPwd, userType, gender, artistFirstName, artistMiddleName,
-				artistLastName, artistDOB);
+				artistLastName, artistDOB,artistBiography);
 		mav.setViewName("admin");
 		System.out.println("adding artist successfully");
 		return mav;

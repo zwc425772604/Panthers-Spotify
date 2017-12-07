@@ -1014,7 +1014,9 @@ public class ServletController {
 		User user = (User)session.getAttribute("user");
 		Collection<SongQueue> que = user.getSongQueueCollection();
 		Song song = songService.preSongInQueue(que);
-		songService.addToHistory(user.getEmail(), song.getSid());
+		if(user.getPrivateSession() == false) {
+			songService.addToHistory(user.getEmail(), song.getSid());
+		}
 		user.setSongQueueCollection(que);
 		session.setAttribute("user", user);
 		/*
@@ -1046,7 +1048,9 @@ public class ServletController {
 			que = user.getSongQueueCollection();
 		}
 		Song song = songService.nextSongInQueue(que);
-		songService.addToHistory(user.getEmail(), song.getSid());
+		if(user.getPrivateSession() == false) {
+			songService.addToHistory(user.getEmail(), song.getSid());
+		}
 		if(isShuffle)
 			session.setAttribute("preQueue", que);
 		else {
@@ -1701,7 +1705,11 @@ public class ServletController {
 				JSONObject nowSong = nowPlay.getJSONObject("song");
 				System.out.println("nowSong123: "+nowSong.toString());
 				int sid = nowSong.getInt("sid");
-				songService.addToHistory(user.getEmail(),sid);
+				
+				if(user.getPrivateSession() == false) {
+					songService.addToHistory(user.getEmail(), sid);
+				}
+				
 				return nowSong.toString();
 			}
 		}

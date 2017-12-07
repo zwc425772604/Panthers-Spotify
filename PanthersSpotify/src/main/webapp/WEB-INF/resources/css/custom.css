@@ -161,7 +161,7 @@ p.color-nav-header:hover{
 #top-tool-search{
     margin-left: 3%;
     position: relative;
-    height: auto;
+    height: 3em;
     width: 100%;
     
 }

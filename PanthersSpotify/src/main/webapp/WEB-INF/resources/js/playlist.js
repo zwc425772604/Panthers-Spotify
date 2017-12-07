@@ -134,6 +134,7 @@ $(document).on("click",".remove-song-item", function(){
 
 $(document).on("click",".add-to-playlist-item",function(){
   	var songID = $(".song-id", this).text();
+  	$(".song_action_list").removeClass("w3-show");
   	var playlistID = $(".add-song-to-playlist-id",this).text();
   	  $.ajax({
             url: "${cp}/../addSongToPlaylist",
@@ -143,9 +144,7 @@ $(document).on("click",".add-to-playlist-item",function(){
             cache: false,
             success : function(response)
             {
-              $(".song_action_list").removeClass("w3-show");
               console.log(response);
-  
             },
             error: function(e)
             {

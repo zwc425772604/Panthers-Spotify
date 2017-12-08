@@ -172,12 +172,21 @@ public class SongDAOImpl implements SongDAO {
 
 	@Transactional(readOnly = true)
 	public List<Song> getHistorySongs(String userEmail) {
-
+		/*
 		String queryString = "SELECT s FROM Song s where s.sid in (SELECT f.songhistoryPK.sid from Songhistory f where f.songhistoryPK.uemail=:uemail order by createDay desc)";
 		Query query = entityManager.createQuery(queryString);
 		query.setParameter("uemail", userEmail);
 		List<Song> list = (List<Song>) query.getResultList();
 		return list;
+		*/
+		Query query = entityManager.createNamedQuery("Songhistory.findByUemail");
+		query.setParameter("uemail", userEmail);
+		ArrayList<Songhistory> list = (ArrayList<Songhistory>)query.getResultList();
+		ArrayList<Song> songs = new ArrayList<Song>();
+		for(Songhistory sh : list) {
+			songs.add(sh.getSong());
+		}
+		return songs;
 	}
 	
 	

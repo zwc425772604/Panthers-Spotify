@@ -49,7 +49,7 @@
     </li>
   </ul>
 </nav>
-<div id="siteStatDiv" class="w3-container info-table">
+<div id="siteStatDiv" class="w3-container info-table" style="color: white; display:none; font-size: 1.5em;">
 </div>
 <div id="basicUsersTableDiv" class="w3-container info-table">
   <h1 style="color: white;"><span id="num-of-basic-user"></span> basic users registered</h1>

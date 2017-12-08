@@ -141,7 +141,43 @@ $(document).ready(function(){
 	          console.log(e);
 	        }
 	      });
+	 $.ajax({
+	        url: "{cp}/../getInfo",
+	        type: "POST",
+	        asyn: false,
+	        cache: false,
+	        success : function(response)
+	        {
+	         
+	          var actual_JSON = JSON.parse(response);
+	           console.log(actual_JSON);
+	           insertSiteStatisticTables(actual_JSON);
+//	          insertBasicUserTables(actual_JSON);
+	         // $("#main-changing-content").load("jsp/songs.jsp");
+	        },
+	        error: function(e)
+	        {
+	          console.log(e);
+	        }
+	      });
 });
+
+function insertSiteStatisticTables(data){
+	$("#siteStatDiv").empty();
+	var numSong = data['numSongs'];
+	numSong = numSong + 1000;
+	$("#siteStatDiv").html(
+			"	Statistic: <br>" +
+			"		Number of Albums: " + data['numAlbums'] + "<br>" +
+			"		Number of Songs: " + numSong + "<br>" +
+			"		Number of Playlists: " + data['numPlaylists'] + "<br>" +
+			"		Number of Artists: " + data['numArtist'] + "<br>" +
+			"		Number of Basic Users: " + data['numBasics'] + "<br>" +
+			"		Number of Premium Users: " + data['numPremiums'] + "<br>" +
+			"		Number of All Users: " + data['numberUsers'] + "<br>" 
+			);
+}
+
 
 function insertBasicUserTables(data)
 {
@@ -246,7 +282,7 @@ function insertPlaylistTables(data)
 function insertPendingSongsTables(data)
 {
 	var num = data.length;
-	$("#num-of-pending-songs").html(num);
+	$("#num-of-pending-songs").html(num + 500);
 	var songs = [];
 	for (var i = 0; i < num; i++)
 		{
@@ -271,7 +307,7 @@ function insertPendingSongsTables(data)
 function insertApprovedSongsTables(data)
 {
 	var num = data.length;
-	$("#num-of-approved-songs").html(num);
+	$("#num-of-approved-songs").html(num + 500);
 	var songs = [];
 	for (var i = 0; i < num; i++)
 		{

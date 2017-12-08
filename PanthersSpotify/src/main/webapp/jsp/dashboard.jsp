@@ -41,6 +41,9 @@
     <li class="nav-item">
       <a class="nav-link" href="javascript:displayContent('playlistsTableDiv')">PLAYLISTS</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="javascript:displayContent('revenueTableDiv')">Revenue</a>
+    </li>
   </ul>
 </nav>
 <div id="basicUsersTableDiv" class="w3-container info-table">
@@ -177,6 +180,56 @@
     <tbody>
     </tbody>
   </table>
+</div>
+<div id="revenueTableDiv" class="w3-container info-table" style="display:none">
+  <h1 style="color: white; text-align: center;"> Revenue Details</h1>
+  <div style="margin-top: 5%;">
+    <h3 style="color: white;">Expenditure</h3>
+    <table class="w3-table-all w3-hoverable" id = "royalty-table">
+
+      <thead>
+        <tr class="w3-light-grey">
+          <th>Artist</th>
+          <th>Royalty</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+    <button id ="show-all-rows"  class="w3-button w3-round-xxlarge w3-green"><span id="show-hide-all-text">Show All</span></button>
+  </div>
+  
+  <div style="margin-top: 5%;">
+    <h3 style="color: white;">Income</h3>
+    <table class="w3-table-all w3-hoverable" id = "premium-income-table">
+
+      <thead>
+        <tr class="w3-light-grey">
+          <th>Number of Premium User</th>
+          <th>Income</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>
+  
+   <div style="margin-top: 5%;">
+    <h3 style="color: white;">Net Income</h3>
+    <table class="w3-table-all w3-hoverable" id = "net-income-table">
+        <thead>
+            <tr class="w3-light-grey">
+          <th>Revenue</th>
+          <th id="net-income"></th>
+        </tr>
+            
+        </thead>
+        
+    </table>
+
+  </div>
+  
+  
 </div>
 <div id="edit-user-profile-modal" class="w3-modal w3-animate-opacity">
   <div class="w3-modal-content w3-card-4" style="height:440px; overflow:scroll;">

@@ -3,7 +3,25 @@ function displayPage()
 	$("#main-changing-content").load("jsp/dashboard.jsp");
 }
 $(document).ready(function(){
-
+        $.ajax({
+        url: "{cp}/../displayCheckRoyalty",
+        type: "POST",
+        asyn: false,
+        cache: false,
+        success : function(response)
+        {
+         
+          var actual_JSON = JSON.parse(response);
+           console.log(actual_JSON);
+           insertRevenueDetailTable(actual_JSON);
+//          insertBasicUserTables(actual_JSON);
+         // $("#main-changing-content").load("jsp/songs.jsp");
+        },
+        error: function(e)
+        {
+          console.log(e);
+        }
+      });
 
 	$.ajax({
         url: "{cp}/../loadUserTables/0",
@@ -62,7 +80,7 @@ $(document).ready(function(){
 		cache: false,
 		success : function(response)
 			{
-				console.log(response);
+//				console.log(response);
 				var actual_JSON = JSON.parse(response);
 				insertPendingSongsTables(actual_JSON);
 			},
@@ -79,7 +97,7 @@ $(document).ready(function(){
 		cache: false,
 		success : function(response)
 			{
-				console.log(response);
+//				console.log(response);
 				var actual_JSON = JSON.parse(response);
 				insertApprovedSongsTables(actual_JSON);
 			},
@@ -294,6 +312,43 @@ function insertAlbumTable(data)
             ].join(''));
 	}
 }
+
+function insertRevenueDetailTable(data){
+    var artist_length = data['allArtistRoyalty'].length;
+    console.log("first artist royalty is " + data['allArtistRoyalty'][0]['artistRoyalty']);
+    console.log("number of artist is " + artist_length);
+    for (var i = 0; i < artist_length; i++)
+    {
+        $("#royalty-table").find('tbody').append([
+        '<tr>',
+            '<td>' + data['allArtistRoyalty'][i]['artistName'] + '</td>',
+            '<td>' + data['allArtistRoyalty'][i]['artistRoyalty'] + '</td>',
+        '</tr>'
+        ].join(''));
+    }
+    $('#royalty-table tr:gt(9)').hide();// :gt selector has 0 based index
+    $("#premium-income-table").find('tbody').append([
+        '<tr>',
+            '<td>' + data['numPremium'] + '</td>',
+            '<td>' + data['premiumBenefit'] + '</td>',
+        '</tr>'
+        ].join(''));
+    $("#net-income").text(data['revenue']);
+}
+
+$(document).on("click", "#show-all-rows", function(){
+    var text = $("#show-hide-all-text").text();
+    if(text.localeCompare("Show All") == 0)
+    {
+        $("#show-hide-all-text").text("Hide")
+        $('#royalty-table tr').show();
+    }
+    else{
+        $("#show-hide-all-text").text("Show All")
+        $('#royalty-table tr:gt(9)').hide();
+    }
+    
+});
 
 $(document).on ("click", ".delete-playlist-button", function () {
 	var pid = $(this).closest('tr').children('td:eq(0)').text();

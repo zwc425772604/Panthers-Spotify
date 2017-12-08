@@ -94,5 +94,33 @@
 		    </c:if>
   </section>
 	  </div>
+	  <div >
+      <h6 class="suggestion-topic" style="font-size: 1.5em;" >
+      Artists
+      </h6>
+      <section class="row placeholders">
+       <c:choose>
+		  <c:when test="${not empty artist_list}">
+			<c:forEach var="artist" items="${artist_list}">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-3 placeholder medium-boxes">
+					<div class="hover-control artist-item">
+						<img src="${cp}/resources/data${artist.photoUrl}"
+							width=100% height=width class="img-rounded info-image"
+							alt="Generic placeholder thumbnail" style="border-radius: 100px;"> <span class="artist-email"
+							style="display: none;">${artist.email}</span>
+					</div>
+					<div class="artist-item medium-boxes-description">
+						<h6 style="text-align: center;">
+							<a href="#"><span id="album-name">${artist.userName}</span></a> <span
+								class="artist-email" style="display: none;">${artist.email}</span>
+						</h6>
+					</div>
+				</div>
+			</c:forEach>
+		  </c:when>
+		</c:choose>
+	  </section>
+    </div>
+  </div>
   	
 </div>

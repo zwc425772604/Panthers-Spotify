@@ -130,7 +130,9 @@
                       </div>
                     </div>
                     <button class="w3-bar-item w3-button playlist_action_dropdown" disabled>Report</button> <!-- w3css hover dropdown -->
+                    <c:if test="${selectedPlaylist.powner == user}">
                     <button id="remove_playlist_button" type="button" class="w3-bar-item w3-button playlist_action_dropdown">Delete</button>
+                    </c:if>
                     <div id="remove_playlist_modal" class="w3-modal">
                       <div class="w3-modal-content">
                         <div class="w3-container w3-grey" >

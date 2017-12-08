@@ -70,7 +70,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 		String path = dir+"/src/main/webapp/WEB-INF/resources/data/";
 		Playlist playlist=playlistDAO.getPlaylist(pid);
 		userPlaylist.remove(playlist);
-	  	String photoUrl=playlist.getPhotoUrl();
+	  	String photoUrl= playlist.getPhotoUrl() != null? playlist.getPhotoUrl().substring(1,playlist.getPhotoUrl().length()):playlist.getPhotoUrl();
 	  	File playlistFile = null;
 	  	if(des!=null)
 	  	{

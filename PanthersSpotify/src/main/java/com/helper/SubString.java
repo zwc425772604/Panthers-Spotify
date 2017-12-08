@@ -12,7 +12,7 @@ public class SubString {
 	{
 		System.out.println(input);
 		input.substring(input.indexOf("data")+5,input.length());
-		String ret =input.substring(input.indexOf("data")+5,input.length());
+		String ret = "/" + input.substring(input.indexOf("data")+5,input.length());
 		
 		return ret;
 	}

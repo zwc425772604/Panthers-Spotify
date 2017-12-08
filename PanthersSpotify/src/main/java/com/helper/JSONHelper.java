@@ -20,6 +20,7 @@ import com.model.Song;
 import com.model.SongQueue;
 import com.model.User;
 import com.services.AlbumService;
+import com.services.PlaylistService;
 import com.services.SongService;
 import com.services.UserService;
 
@@ -445,6 +446,48 @@ public class JSONHelper {
 		jsonObject.put("premiumBenefit", numPremium*10);
 		jsonObject.put("revenue", numPremium*10-subtractSum);
 		
+		return jsonObject.toString();
+	}
+	
+	public static String statisticsToJSON(List ret,UserService userService,PlaylistService playlistService,SongService songService,AlbumService albumService){
+		JSONObject jsonObject = new JSONObject();
+		List<User> users1 = userService.getAllUsers();
+  		int numUsers = users1.size();
+  		List<User> users2 = userService.getAllPremium();
+  		int numPremiums = users2.size();
+  		List<User> users3 = userService.getAllArtist();
+  		int numArtists = users3.size();
+  		int numBasics = numUsers-numPremiums-numArtists-1;
+  		List<Playlist> p = playlistService.getAllPlaylists();
+  		int numPlaylists = p.size();
+  		List<Song> s = songService.getAllSongs();
+  		int numSongs = s.size();
+  		List<Album> a = albumService.getAllAlbums();
+  		int numAlbums = a.size();
+  		jsonObject.put("numberUsers", numUsers);
+		jsonObject.put("numPremiums", numPremiums);
+		jsonObject.put("numArtist", numArtists);
+		jsonObject.put("numBasics",numBasics);
+		jsonObject.put("numPlaylists",numPlaylists);
+		jsonObject.put("numSongs",numSongs);
+		jsonObject.put("numAlbums",numAlbums);
+		
+		JSONArray artistsInfo = new JSONArray();
+		for(int i=0;i<ret.size();i++)
+		{
+			JSONObject ob = new JSONObject();
+			Object[] artistInfo = (Object[])ret.get(i);
+			String genre = artistInfo[0].toString();
+			String numGenres = artistInfo[1].toString();
+			
+			ob.put("genre", genre);
+			ob.put("numGenres", numGenres);
+			artistsInfo.put(ob);
+			//userDAO.setRoyalty(a, royalties);
+		}
+		jsonObject.put("genreInfo", artistsInfo);
+		
+  		
 		return jsonObject.toString();
 	}
 	

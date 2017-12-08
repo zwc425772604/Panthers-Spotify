@@ -1819,4 +1819,14 @@ public class ServletController {
 
    		return jsonRet;
      }
+    
+    @RequestMapping(value = "/getInfo", method = RequestMethod.POST)
+  	public  @ResponseBody String getInfo( ModelAndView mav,HttpServletRequest request, HttpSession session) {
+   		User user = (User) session.getAttribute("user");
+  		List<User> users = userService.getArtistFollowers(user.getEmail());
+  		List ret = songService.getGenreSongs();
+   		String jsonRet = JSONHelper.statisticsToJSON(ret, userService, playlistService, songService, albumService);
+
+   		return jsonRet;
+     }
 }

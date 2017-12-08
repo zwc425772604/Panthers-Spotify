@@ -336,7 +336,7 @@ public class SongServiceImpl implements SongService {
 	public List<User> getArtistsCollection(int sid) {
 		return (List<User>)songDAO.getSongArtists(sid);
 	}
-	
+	@Transactional
 	public List<Song> getSongByArtist(String artistEmail, String status)
 	{
 		return songDAO.getSongByArtist(artistEmail, status);
@@ -344,5 +344,10 @@ public class SongServiceImpl implements SongService {
 	@Override
 	public void addToHistory(String  email, int sid) {
 		songDAO.addToHistory(email, sid);
+	}
+	@Transactional
+	public List getGenreSongs()
+	{
+		return songDAO.getGenreSongs();
 	}
 }

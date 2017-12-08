@@ -199,6 +199,17 @@ public class SongDAOImpl implements SongDAO {
 		List<Song> list = (List<Song>) query.getResultList();
 		return list;
 	}
+	
+	@Transactional(readOnly = true)
+	public List getGenreSongs() {
+
+		String queryString = "SELECT s.gener,count(s.gener) FROM Song s group by s.gener;";
+		Query query = entityManager.createQuery(queryString);
+		List list = query.getResultList();
+		return list;
+	}
+	
+	
 
 	@Transactional(readOnly = false)
 	public SongQueue addSongToQueue(int sid, String email) {

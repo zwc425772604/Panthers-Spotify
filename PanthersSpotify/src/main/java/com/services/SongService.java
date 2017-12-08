@@ -43,5 +43,6 @@ public interface SongService {
 	public void uploadRemoveSong(User user, int songId);
 	public List<Song> getStatusSongs(String status);
 	public void addToHistory(String email, int sid);
+	public List getGenreSongs();
 }
 

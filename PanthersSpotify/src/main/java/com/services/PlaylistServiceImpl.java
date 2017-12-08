@@ -25,6 +25,7 @@ import com.model.Playlist;
 import com.model.Playlistsong;
 import com.model.Song;
 import com.model.User;
+import com.helper.SubString;
 import com.helper.UploadFile;
 
 @Service("playlistService")
@@ -49,6 +50,10 @@ public class PlaylistServiceImpl implements PlaylistService {
 	    	{
 	    		playlistFile.delete();
 	    	}
+	    	else
+	    	{
+	    		photoUrl = SubString.getSubstring(photoUrl);
+	    	}
 		Playlist playlist = new Playlist(playlistName,description,photoUrl,0,0,date,user);
 		playlist = playlistDAO.addPlaylist(playlist);
 		userPlaylists.add(playlist);
@@ -60,7 +65,8 @@ public class PlaylistServiceImpl implements PlaylistService {
 	public List<Playlist> updatePlaylist(int pid, String des,CommonsMultipartFile file, String pname, User user) {
 		
 		List<Playlist> userPlaylist = (List<Playlist>)(user.getUserPlaylistCollection());
-		
+		String dir = System.getProperty("user.dir");
+		String path = dir+"/src/main/webapp/WEB-INF/resources/data/";
 		Playlist playlist=playlistDAO.getPlaylist(pid);
 		userPlaylist.remove(playlist);
 	  	String photoUrl=playlist.getPhotoUrl();
@@ -71,12 +77,12 @@ public class PlaylistServiceImpl implements PlaylistService {
 	  	}
 	  	if(photoUrl!=null)
 	  	{
-	  		File deleteFile = new File(photoUrl);
+	  		File deleteFile = new File(path+photoUrl);
 	  		if(deleteFile.exists())
 	  		{
 	  			deleteFile.delete();
 	  		}
-	  		File photo = new File(photoUrl);
+	  		File photo = new File(path+photoUrl);
 		  	playlistFile = photo.getParentFile();
 	  	}
 	  	
@@ -86,7 +92,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 			String filename = file.getOriginalFilename();
 		  	System.out.println("it should be + "+playlistFile.getAbsolutePath());
 		  	photoUrl = UploadFile.upload(playlistFile.getAbsolutePath(),filename,file);
-		  	
+		  	photoUrl = SubString.getSubstring(photoUrl);
 		  	playlist.setPhotoUrl(photoUrl);
 		}
 		else if(file!=null&&playlistFile==null)
@@ -98,7 +104,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 	    		String filename = file.getOriginalFilename();
 	    		
 	    		photoUrl = UploadFile.upload(playlistF.getAbsolutePath(),filename,file);
-			  	
+	    		photoUrl = SubString.getSubstring(photoUrl);
 			playlist.setPhotoUrl(photoUrl);
 		}
 		
@@ -115,7 +121,9 @@ public class PlaylistServiceImpl implements PlaylistService {
 		playlistDAO.deletePlaylist(playlist);
 		if(playlist.getPhotoUrl()!=null)
 		{
-			File deleteFile = new File(playlist.getPhotoUrl());
+			String dir = System.getProperty("user.dir");
+			String path = dir+"/src/main/webapp/WEB-INF/resources/data/";
+			File deleteFile = new File(path+playlist.getPhotoUrl());
 			File deleteFileParent = deleteFile.getParentFile();
 	  		if(deleteFile.exists())
 	  		{

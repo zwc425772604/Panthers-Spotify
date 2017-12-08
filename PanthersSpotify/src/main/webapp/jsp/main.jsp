@@ -144,6 +144,29 @@
           <div id="openTicketArea" style="text-algin:center;">
             <div class="line" style="margin-left:0.5vw;"></div>
             <button id="openTicketButton" class="w3-button" style="margin-left: 2.5vw;">Contact Support</button>
+            
+            <div id="open_ticket_dialog" title="Submit a support ticket" style="display:none;">
+            <!-- create playlist -->
+            <form:form  method = "POST" action="supportTicket" enctype="multipart/form-data" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">                
+              <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Anything you want to tell us:</span></div>
+                <div class="w3-rest">
+                  <textarea cols="70" rows="5" name="sendInfo" placeholder="What do you want to tell us?"></textarea>              
+                </div>
+              </div>                                                  
+              <div class="w3-row w3-section">
+                <div class="w3-third w3-container">
+                  <button onclick="event.preventDefault(); $('#open_ticket_dialog').dialog('close');" class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>
+                </div>
+                <div class="w3-third w3-container">
+                </div>
+                <div class="w3-third w3-container">
+                  <button type="submit" class="w3-button w3-block w3-section w3-blue w3-ripple">Send</button>
+                </div>
+              </div>
+	            </form:form>
+	          </div>
+	            
         </div>
         </div>
       </div>

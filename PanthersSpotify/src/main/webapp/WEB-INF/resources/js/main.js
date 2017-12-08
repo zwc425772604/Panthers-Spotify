@@ -90,6 +90,17 @@ $(document).ready(function(){
 		console.log("changed adv height");
 	})
 	
+
+	$(document).on ("click", "#openTicketButton", function () {
+	    $('#open_ticket_dialog').dialog({
+	     height: 400,
+	     width: 550,
+	     modal: true,
+	     resizable: true,
+	     dialogClass: 'no-close'
+	  	});
+	    });
+	
 });
 
 

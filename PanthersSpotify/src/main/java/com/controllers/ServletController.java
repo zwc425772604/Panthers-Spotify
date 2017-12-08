@@ -1739,11 +1739,10 @@ public class ServletController {
 	}
     
     @RequestMapping(value = "/supportTicket", method = RequestMethod.POST)
-   	public @ResponseBody String supportTicket( ModelAndView mav,HttpServletRequest request, HttpSession session) {
+   	public ModelAndView supportTicket( ModelAndView mav,HttpServletRequest request, HttpSession session) {
    		String sendInfo = request.getParameter("sendInfo");
-   		
    		userService.sendSupportEmail("panthersSpotify@gmail.com", sendInfo);
-   		
-   		return "ok";
+   		mav.setViewName("main");
+   		return mav;
    	}
 }

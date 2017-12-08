@@ -90,4 +90,6 @@ public interface UserService {
 	public void sendSupportEmail(String sentToEmail,String content);
 	
 	public List<User> findRelative(String input);
+	
+	public List<User> getArtistFollowers(String userEmail);
 }

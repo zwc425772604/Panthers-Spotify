@@ -425,4 +425,11 @@ public class UserServiceImpl implements UserService {
 	{
 		return userDAO.findRelative(input);
 	}
+	
+	@Transactional
+	public List<User> getArtistFollowers(String userEmail)
+	{
+		return userDAO.getArtistFollowers(userEmail);
+	}
+	
 }

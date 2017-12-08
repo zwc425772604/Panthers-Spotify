@@ -147,6 +147,7 @@ public class UserDAOImpl implements UserDAO {
 		List<User> results = query.getResultList();
 		return results;
 	}
+	
 
 	@Transactional(readOnly = true)
 	public List<User> getAllArtist() {
@@ -226,6 +227,15 @@ public class UserDAOImpl implements UserDAO {
 		Query query = entityManager.createQuery(queryString);
 		query.setParameter("uemail", userEmail);
 		List<Artist> list = (List<Artist>) query.getResultList();
+		return list;
+	}
+	
+	@Transactional(readOnly = true)
+	public List<User> getArtistFollowers(String userEmail) {
+		String queryString = "SELECT a FROM User a where a.email in (SELECT f.followartistPK.uemail from Followartist f where f.followartistPK.aemail=:aemail)";
+		Query query = entityManager.createQuery(queryString);
+		query.setParameter("aemail", userEmail);
+		List<User> list = (List<User>) query.getResultList();
 		return list;
 	}
 

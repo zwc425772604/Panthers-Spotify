@@ -1637,7 +1637,7 @@ public class ServletController {
 		User user = (User) session.getAttribute("user");//normal user page only
 		Payment userPayment = userService.findPayment(user.getEmail());
 				
-		return JSONHelper.getPayment(userPayment);
+		return JSONHelper.getPayment(userPayment,user);
 	}
 	
 	@RequestMapping(value = "/sortAlbum", method = RequestMethod.POST)

@@ -96,6 +96,22 @@
                         <a href="javascript:displayUpgradeForm()" class="w3-bar-item w3-button" id="dropdown-item">Upgrade Your Account</a>
                       </c:when>
                       <c:when test="${user.userType == 1}">
+                        <a href="javascript:displayPayment()" class="w3-bar-item w3-button" id="dropdown-item">View Payment</a>
+                        <div id="paymentDialog" title="View Payment" style="display:none;">
+						 	<form id="paymentForm">
+						 	  <div style="width: 100%; text-algin:center; color: white;">
+						 	    <div id="payment-holdername"></div>
+						 	    <div  id="payment-ccn"></div> 		
+						 	    <div  id="payment-expDate"></div> 
+						 	    <div  id="payment-paymentInfo"></div>
+						 	  </div>		  
+							  <div class="w3-row w3-section">
+							    <div class="w3-third w3-container">
+							      <button onclick="event.preventDefault(); $('#paymentDialog').dialog('close');" class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>
+							    </div>							  						   
+							  </div>
+							 </form>
+						</div>
                         <a href="javascript:displayDowngradeForm()" class="w3-bar-item w3-button" id="dropdown-item">Downgrade Your Account</a>                     
 						<div id="downgradeDialog" title="Downgrade" style="display:none;">
 						 	<form id="downgradeForm">

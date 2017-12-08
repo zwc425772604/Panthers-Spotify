@@ -400,6 +400,65 @@ function displayUpgradeForm()
 	$("#main-changing-content").load("jsp/pay.jsp");
 }
 
+function displayPayment(){
+	console.log("HI");
+	$.ajax({
+		url: "${cp}/../findPayment",
+        type: "POST",
+        asyn: false,
+        cache: true,
+        success : function(response)
+        {
+          var actual_JSON = JSON.parse(response);
+          console.log(response);
+          // Return today's date and time
+          var currentTime = new Date()
+          // returns the month (from 0 to 11)
+          var month = currentTime.getMonth() + 1
+          var year = currentTime.getFullYear()
+          var payYear;
+          var payMonth;  
+          console.log(actual_JSON['upgradeDate'].substring(0,4));
+          if (year > actual_JSON['upgradeDate'].substring(0,4)){
+        	  payYear = year -  actual_JSON['upgradeDate'].substring(0,4) ;
+        	  
+        	  payMonth = month + 12 - actual_JSON['upgradeDate'].substring(5,7) + 1;
+          }
+          else{
+        	  payYear = "0";
+        	  if(payYear == year){
+        		  payMonth = month - actual_JSON['upgradeDate'].substring(5,7) + 1;
+        	  }       	  
+          }
+          
+          
+          var payAmount = 10 * (payMonth + 12*payYear);
+          payMonth = payMonth + " months";
+          payYear = payYear + " years";
+          $("#payment-holdername").empty();
+          $("#payment-ccn").empty();
+          $("#payment-expDate").empty();
+          $("#payment-paymentInfo").empty();
+          $("#payment-holdername").append("Card Owner: " + actual_JSON['holdName']);
+          $("#payment-ccn").append("CCN: ****-****-****-"  + actual_JSON['cardNumber'].substring(12,17));
+          $("#payment-expDate").append("Expiration date: " + actual_JSON['expDate'].substring(0,10));
+          $("#payment-paymentInfo").append("Payment Details: You have subscribed for " + payYear + " "+ payMonth + "<br>" +
+        		  "Total Payment: $" + payAmount );
+          $('#paymentDialog').dialog({
+     	     height: 300,
+     	     width: 450,
+     	     modal: true,
+     	     resizable: true,
+     	     dialogClass: 'no-close'
+     	  	});
+        },
+        error: function(e)
+        {
+
+          console.log(e);
+        }
+      });
+}
 function displayDowngradeForm()
 {
 	$('#downgradeDialog').dialog({

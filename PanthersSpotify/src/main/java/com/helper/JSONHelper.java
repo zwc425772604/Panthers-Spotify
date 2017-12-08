@@ -365,15 +365,16 @@ public class JSONHelper {
 		return jsonObject.toString();
 	}
 	
-	public static String getPayment(Payment payment)
+	public static String getPayment(Payment payment, User user)
 	{
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.put("holdName", payment.getHoldName());
 		jsonObject.put("cardNumber", payment.getCardNum());
 		jsonObject.put("cvv", payment.getCvv());
-		jsonObject.put("cardNumber", payment.getExpirationDate());
+		jsonObject.put("expDate", payment.getExpirationDate());
 		jsonObject.put("userEmail", payment.getUemail());
 		jsonObject.put("balance", payment.getBalance());
+		jsonObject.put("upgradeDate",user.getUpgradeDate());
 		return jsonObject.toString();
 	}
     

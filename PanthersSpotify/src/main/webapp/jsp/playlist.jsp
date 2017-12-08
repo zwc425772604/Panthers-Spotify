@@ -87,8 +87,8 @@
                     <hr>
                     <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Collaborative Playlist</button>
                      -->
-                    <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Make Secret</button>
-                    <hr>
+                    <!-- <button onclick="" class="w3-bar-item w3-button playlist_action_dropdown">Make Secret</button>-->
+                    <!-- <hr>-->
                      <c:if test="${selectedPlaylist.powner == user}">
                       <button id = "edit_playlist_button" class="w3-bar-item w3-button playlist_action_dropdown">Edit Details</button>
                      </c:if>
@@ -109,7 +109,7 @@
                               <div class="col-md-4" style="margin-left:2%">
                                 <label>Image</label>
                                 <div class="content">
-                                  <img src = "https://www.fuse.tv/image/56fe73a1e05e186b2000009b/768/512/the-boxer-rebellion-ocean-by-ocean-album-cover-full-size.jpg" width="100%" height=width>
+                                  <!--  <img src = "https://www.fuse.tv/image/56fe73a1e05e186b2000009b/768/512/the-boxer-rebellion-ocean-by-ocean-album-cover-full-size.jpg" width="100%" height=width>-->
                                   <input class="w3-input w3-border" type="file" name="file" accept="image/*">
                                 </div>
                               </div>
@@ -129,7 +129,6 @@
                         </div>
                       </div>
                     </div>
-                    <button class="w3-bar-item w3-button playlist_action_dropdown" disabled>Report</button> <!-- w3css hover dropdown -->
                     <c:if test="${selectedPlaylist.powner == user}">
                     <button id="remove_playlist_button" type="button" class="w3-bar-item w3-button playlist_action_dropdown">Delete</button>
                     </c:if>

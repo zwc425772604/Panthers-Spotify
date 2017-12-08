@@ -61,7 +61,7 @@
         </div>
         <!-- end of form -->
         <a href="javascript:deleteAccountForm()" class="w3-bar-item w3-button" id="delete-button">Delete Your Account</a>                     
-			<div id="deleteAccountDialog" title="Downgrade" style="display:none;">
+			<div id="deleteAccountDialog" title="Delete your account" style="display:none;">
 			 	<form id="deleteAccountForm">
 			 	  <div style="margin-left:25%; text-algin:center; color: white;">Are you sure you want to delete?</div> 				  
 				  <div class="w3-row w3-section" style="margin-left:25%;">

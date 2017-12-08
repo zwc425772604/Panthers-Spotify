@@ -186,8 +186,9 @@ public class ServletController {
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public ModelAndView userLogout(ModelAndView mav, HttpSession session) {
 		User user = (User)session.getAttribute("user");
-		user.setIsLogin(false);
-		userService.updateSpecificUser(user);
+		//user.setIsLogin(false);
+		
+		//userService.updateSpecificUser(user);
 		if (session.getAttribute("user") != null) {
 			session.removeAttribute("user");
 		}

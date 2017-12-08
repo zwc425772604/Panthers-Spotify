@@ -477,9 +477,12 @@ public class JSONHelper {
 		{
 			JSONObject ob = new JSONObject();
 			Object[] artistInfo = (Object[])ret.get(i);
-			String genre = artistInfo[0].toString();
-			String numGenres = artistInfo[1].toString();
-			
+			String genre = null;
+			String numGenres = null;
+			if (artistsInfo.length()>0) {
+				genre = artistInfo[0].toString();
+				numGenres = artistInfo[1].toString();
+			}
 			ob.put("genre", genre);
 			ob.put("numGenres", numGenres);
 			artistsInfo.put(ob);

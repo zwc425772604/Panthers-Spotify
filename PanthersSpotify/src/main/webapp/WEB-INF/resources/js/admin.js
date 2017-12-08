@@ -413,9 +413,11 @@ $(document).ready ( function () {
     $(document).on ("click", ".delete-album-button", function () {
         $("#confirmDeleteModal").show();
     	var albumID = $(this).closest('tr').children('td:eq(0)').text().trim();
+	    	 $(this).closest('tr').remove();
     	console.log("albumId is : " + albumID);
         $(document).on('click', "#confirmDeleteButton", function(){
             $("#confirmDeleteModal").hide();
+           
             	$.ajax({
  	        url: "{cp}/../removeAlbum",
  	        data: {"albumID" : albumID},

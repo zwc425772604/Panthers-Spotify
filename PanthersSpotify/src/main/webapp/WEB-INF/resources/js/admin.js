@@ -543,6 +543,8 @@ $(document).on ("click", ".approveSongButton", function () {
 
 $(document).on ("click", ".removeSongButton", function () {
 	var songID = $(this).closest('tr').children('td:eq(0)').text();
+	console.log("remove sid: "+ songID);
+	$(this).closest('tr').remove();
 	 $.ajax({
 	        url: "{cp}/../removeSongByAdmin",
 	        data: {"songID" : songID},

@@ -107,11 +107,13 @@ public class AlbumServiceImpl implements AlbumService {
 		{
 			File deleteFile = new File(album.getPhotoUrl());
 			File deleteFileParent = deleteFile.getParentFile();
+			
 	  		if(deleteFile.exists())
 	  		{
 	  			deleteFile.delete();
 	  		}
-	  		deleteFileParent.delete();
+	  		if(deleteFileParent!=null&&deleteFileParent.exists())
+	  			deleteFileParent.delete();
 		}
 		return albumDAO.getAlbums();
 	}

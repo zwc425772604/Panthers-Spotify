@@ -403,6 +403,7 @@ public class JSONHelper {
 //			artistsInfo.put(ob);
 //		}
 		double subtractSum = 0;
+		List<User> users = userService.getAllUsers();
 		for(int i=0;i<ret.size();i++)
 		{
 			JSONObject ob = new JSONObject();
@@ -415,11 +416,18 @@ public class JSONHelper {
 				continue;
 			}
 			String artistEmail = (String)artistInfo[0];
-			User u = userService.getUser(artistEmail);
+			for(int j=0;j<users.size();j++)
+			{
+				if(users.get(j).getEmail().equals(artistEmail))
+				{
+					ob.put("artistName", users.get(j).getUserName());
+					break;
+				}
+			}
 			//Artist a = userService.getArtistInfo(u);
 			
 			
-			ob.put("artistName", u.getUserName());
+			
 			subtractSum = subtractSum + royalty;
 			ob.put("artistRoyalty", royalty);
 			artistsInfo.put(ob);

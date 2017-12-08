@@ -1812,11 +1812,11 @@ public class ServletController {
    	}
     
     @RequestMapping(value = "/getArtistFollowers", method = RequestMethod.POST)
-      	public  @ResponseBody String getArtistFollowers( ModelAndView mav,HttpServletRequest request, HttpSession session) {
-       		String userEmail = request.getParameter("userEmail");
-      		List<User> users = userService.getArtistFollowers(userEmail);
-       		String jsonRet = JSONHelper.userListToJSON(users);
-    
-       		return jsonRet;
-       	}
+  	public  @ResponseBody String getArtistFollowers( ModelAndView mav,HttpServletRequest request, HttpSession session) {
+   		User user = (User) session.getAttribute("user");
+  		List<User> users = userService.getArtistFollowers(user.getEmail());
+   		String jsonRet = JSONHelper.userListToJSON(users);
+
+   		return jsonRet;
+     }
 }

@@ -88,4 +88,6 @@ public interface UserService {
 	public List<User> getAllPremium();
 	
 	public void sendSupportEmail(String sentToEmail,String content);
+	
+	public List<User> findRelative(String input);
 }

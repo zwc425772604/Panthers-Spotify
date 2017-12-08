@@ -44,4 +44,5 @@ public interface UserDAO {
 	public List getMonthlyPlay();
 	public Object[] getArtistMonthlyPlay(String artistEmail);
 	public List<User> getAllPremium();
+	public List<User> findRelative(String input);
 }

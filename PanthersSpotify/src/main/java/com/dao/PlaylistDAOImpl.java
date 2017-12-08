@@ -167,7 +167,7 @@ public class PlaylistDAOImpl implements PlaylistDAO{
 	public List<Playlist> findRelative(String input)
 	  {
 	  	  
-		TypedQuery<Playlist> query1 = entityManager.createQuery("SELECT p from Playlist p WHERE p.pname LIKE LOWER(CONCAT(:searchTerm, '%'))", Playlist.class)
+		TypedQuery<Playlist> query1 = entityManager.createQuery("SELECT p from Playlist p WHERE p.pname LIKE CONCAT('%',:searchTerm,'%')", Playlist.class)
 	       		.setParameter("searchTerm", input);
 	  	List<Playlist> result = query1.getResultList();
 	  	return result;

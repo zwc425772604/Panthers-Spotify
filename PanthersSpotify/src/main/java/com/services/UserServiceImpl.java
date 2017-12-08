@@ -420,5 +420,9 @@ public class UserServiceImpl implements UserService {
 		return userDAO.getAllPremium();
 	}
 	
-	
+	@Transactional
+	public List<User> findRelative(String input)
+	{
+		return userDAO.findRelative(input);
+	}
 }

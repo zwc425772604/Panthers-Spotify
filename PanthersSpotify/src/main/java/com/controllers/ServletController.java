@@ -820,7 +820,9 @@ public class ServletController {
 		String input = request.getParameter("input");
 		List<Album> retAlbum = albumService.findRelative(input);
 		List<Playlist> retPlaylist = playlistService.findRelative(input);
+		List<User> retArtist = userService.findRelative(input);
 		session.setAttribute("album_list", retAlbum);
+		session.setAttribute("artist_list", retArtist);
 		session.setAttribute("SearchingPlaylist", retPlaylist);
 
 		return "ok";

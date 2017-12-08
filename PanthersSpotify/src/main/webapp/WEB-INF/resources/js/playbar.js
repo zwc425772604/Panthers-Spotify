@@ -1,12 +1,11 @@
 var player;
-var result;
+
 var isShuffle = false;
 var isRepeat = 0;
 var currentTime = 0;
 var songDuration = 0;
 $(document).ready(function(){
-    
-	 $.ajax({
+              $.ajax({
             url: "${cp}/../getSongQueue",
             type: "POST",
             asyn: false,
@@ -17,6 +16,8 @@ $(document).ready(function(){
             	 var actual_json = JSON.parse(response);
                  result = actual_json;
                  updateSongInfo(actual_json.nowPlay);
+//                 updateLyricPage(result.nowPlay);
+                // updateLyricPage(actual_json.nowPlay);
 //            	 addToPlaybarPlaylist(actual_json);
 //            	 player.jPlayer("pause");
             	 updatePlayerButton(actual_json);
@@ -25,7 +26,9 @@ $(document).ready(function(){
             {
               console.log(e);
             }
-    	}); 
+    	});
+
+	 
 	player = $("#jquery_jplayer_1").jPlayer({
 		ready: function (event) {
 			$(this).jPlayer("setMedia", {
@@ -70,8 +73,9 @@ $(document).ready(function(){
 				  // playNextSong();
                                   console.log(result);
 				  var container = document.getElementById("recentlyPlayed-container");
-                             
+                                  
                                        updateRecentlyPlayTable(nowPlay);
+//                                       updateLyricPage(nowPlay);
 //                                  hahaha();
 //                                  $("#"+songRow).remove();
 //                 document.getElementById(songRow).remove
@@ -236,7 +240,9 @@ function playPreviousSong(){
 	          console.log("pre song in js response : "+ response);
 	          result = JSON.parse(response);
 	          addToPlaybarPlaylist(result);
+                   updateLyricPage(result.nowPlay);
 	          updateSongInfo(result.nowPlay);
+                 
 	          updatePlayerButton(result);
 	          //player.jPlayer("play");
 	          var queueJSP = document.getElementById("queueDiv");
@@ -282,7 +288,9 @@ function playNextSong(){
     	  }
           console.log("next song js response " + result);
           addToPlaybarPlaylist(result);
+          updateLyricPage(result.nowPlay);
           updateSongInfo(result.nowPlay);
+        
           //player.jPlayer("play");
           updatePlayerButton(result);
           var queueJSP = document.getElementById("queueDiv");
@@ -305,10 +313,6 @@ function playNextSong(){
   }
 }
     
-	
-
-
-
 
 $(document).on("click", "#playbar-prev-button", function () {
 	playPreviousSong();
@@ -316,15 +320,6 @@ $(document).on("click", "#playbar-prev-button", function () {
 	
 
 $(document).on("click", "#playbar-next-button", function () {
-//	if (isShuffle)
-//   {
-//        console.log("need to shuffle song");
-//        shuffleSongs();
-//   }
-//   else
-//   {
-//        playNextSong();
-//   }
     playNextSong();
 });
 
@@ -421,4 +416,34 @@ function unrepeatAll(){
 	      console.log(e);
 	    }
 	  } );
+}
+
+$(document).on("click", "#song-lyric-button", function () {
+    console.log("song-lyric button clicked");
+     $.ajax({
+            url : "${cp}/../" + result.nowPlay.song['lyricPath'],
+            dataType: "text",
+            asyn: false,
+            success : function (data) {
+                $("#song-lyric-div").html(data);
+              // insertLyric(data);
+            }
+        });
+$("#main-changing-content").load("jsp/lyrics.jsp");
+        	  
+});
+
+function updateLyricPage(nowPlay){
+     console.log("nowPlay is " + nowPlay.song['lyricPath']);
+     var lyricPath = nowPlay.song['lyricPath'];
+     console.log("lyric Path for song is " + lyricPath);
+     $.ajax({
+            url : "${cp}/../" + result.nowPlay.song['lyricPath'],
+            dataType: "text",
+            asyn: false,
+            success : function (data) {
+                $("#song-lyric-div").html(data);
+           
+            }
+        });
 }

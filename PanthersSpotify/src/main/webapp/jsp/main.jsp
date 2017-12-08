@@ -243,6 +243,7 @@
                   <li>
                     
                   </li>
+             <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Song Lyric" id="song-lyric-button"> <i class="material-icons">description</i></button></li>        
             <li><button class="unstyle-buttons" data-toggle="tooltip-queue" title="Queue" id="playbar-queue-button"> <i class="material-icons">add_to_queue</i></button></li>
 <!--            <li><button class="unstyle-buttons" data-toggle="tooltip-mute" title="Mute"  id="playbar-mute-anchor-tag" onclick="volumeMute(this)"><i id="volume-up" class="material-icons">volume_up</i></li>-->
            

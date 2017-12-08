@@ -83,5 +83,6 @@ public interface UserService {
 	
 	public List getMonthlyPlay();
 	
-	public void setArtistsRoylties(double factor);
+	public List setArtistsRoylties(double factor);
+	public List<User> getAllPremium();
 }

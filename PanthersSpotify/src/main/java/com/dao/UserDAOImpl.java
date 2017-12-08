@@ -156,6 +156,15 @@ public class UserDAOImpl implements UserDAO {
 		list = (List<User>) query.getResultList();
 		return list;
 	}
+	
+	@Transactional(readOnly = true)
+	public List<User> getAllPremium() {
+		List<User> list = new ArrayList<User>();
+		Query query = entityManager.createNamedQuery("User.findByUserType")
+				.setParameter("userType", 1);
+		list = (List<User>) query.getResultList();
+		return list;
+	}
 
 	@Transactional(readOnly = true)
 	public void addFriend(String userEmail, String friendEmail) {

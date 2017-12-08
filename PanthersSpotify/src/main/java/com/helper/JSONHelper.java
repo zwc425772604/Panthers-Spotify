@@ -391,4 +391,46 @@ public class JSONHelper {
 		
 	}
 	
+	public static String getAllArtistsRoyalty(List ret,UserService userService)
+	{
+		JSONObject jsonObject = new JSONObject();
+		JSONArray artistsInfo = new JSONArray();
+//		for (User artist : artists) {
+//			JSONObject ob = new JSONObject();
+//			ob.put("artistName", artist.getFullName());
+//			ob.put("artistRoyalty", userService.getArtistInfo(artist).getRoyalty());
+//			artistsInfo.put(ob);
+//		}
+		double subtractSum = 0;
+		for(int i=0;i<ret.size();i++)
+		{
+			JSONObject ob = new JSONObject();
+			Object[] artistInfo = (Object[])ret.get(i);
+			
+			String monthlyPlayedString = artistInfo[1].toString();
+			double royalty = Double.parseDouble(monthlyPlayedString);
+			if(royalty==0)
+			{
+				continue;
+			}
+			String artistEmail = (String)artistInfo[0];
+			User u = userService.getUser(artistEmail);
+			//Artist a = userService.getArtistInfo(u);
+			
+			
+			ob.put("artistName", u.getUserName());
+			subtractSum = subtractSum + royalty;
+			ob.put("artistRoyalty", royalty);
+			artistsInfo.put(ob);
+			//userDAO.setRoyalty(a, royalties);
+		}
+		jsonObject.put("allArtistRoyalty", artistsInfo);
+		int numPremium = userService.getAllPremium().size();
+		jsonObject.put("numPremium", numPremium);
+		jsonObject.put("premiumBenefit", numPremium*10);
+		jsonObject.put("revenue", numPremium*10-subtractSum);
+		
+		return jsonObject.toString();
+	}
+	
 }

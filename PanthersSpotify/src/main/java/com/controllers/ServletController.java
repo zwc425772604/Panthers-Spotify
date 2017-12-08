@@ -1329,17 +1329,9 @@ public class ServletController {
 		
 		List<User> artists = userService.getAllArtist();
 		double factor = Double.parseDouble(environment.getProperty("artist.royalty.factor"));
-		for(int i=0;i<artists.size();i++)
-		{
-			userService.setArtistRoylties(userService.getArtistInfo(artists.get(i)), factor);
-			List<Song> songs = userService.getReleaseSong(userService.getArtistInfo(artists.get(i)));
-			for(int j=0;j<songs.size();j++)
-			{
-				songService.updateMontlySong(0, songs.get(j));
-			}
-		}
 		
-		String artistRoyaltyInfo = JSONHelper.getAllArtistRoyalty(artists,userService);
+		List ret = userService.setArtistsRoylties(factor);
+		String artistRoyaltyInfo = JSONHelper.getAllArtistsRoyalty(ret,userService);
 		return artistRoyaltyInfo;
 	}
 	
@@ -1738,6 +1730,8 @@ public class ServletController {
         @RequestMapping(value = "/removeAlbum", method = RequestMethod.POST)
 	public @ResponseBody String removeAlbum( ModelAndView mav,HttpServletRequest request, HttpSession session) {
 		int albumID = Integer.parseInt(request.getParameter("albumID"));
+		Album album = albumService.getAlbum(albumID);
+		albumService.removeAlbum(album);
 		
 		return "ok";
 	}

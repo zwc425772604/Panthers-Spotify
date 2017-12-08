@@ -44,8 +44,13 @@
     <li class="nav-item">
       <a class="nav-link" href="javascript:displayContent('revenueTableDiv')">Revenue</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" href="javascript:displayContent('siteStatDiv')">Site Statistic</a>
+    </li>
   </ul>
 </nav>
+<div id="siteStatDiv" class="w3-container info-table">
+</div>
 <div id="basicUsersTableDiv" class="w3-container info-table">
   <h1 style="color: white;"><span id="num-of-basic-user"></span> basic users registered</h1>
   <table class="w3-table-all w3-hoverable" id = "basic-users-table">

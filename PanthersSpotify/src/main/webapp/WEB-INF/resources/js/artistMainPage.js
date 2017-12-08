@@ -116,7 +116,7 @@ function insertArtistPendingSongsTables(data)
 					'<td>' + data[i]['songGenre'] + '</td>',
 					'<td>' + data[i]['songMonthlyPlayed'] + '</td>',
 				    '<td>Pending</td>',
- 					'<td><button class="unstyle-buttons requestSongToRemoveButton" title="Request to remove this song"> <i class="material-icons">close</i></button></td>',
+ 					'<td><button class="unstyle-buttons requestSongToRemoveButton" title="Request to remove this song"> <i class="material-icons" style="color:black;">close</i></button></td>',
 					'</tr>'
 				].join(''));
 				songs.push(data[i]['songID']);
@@ -138,7 +138,7 @@ function insertArtistApprovedSongsTables(data)
 					'<td>' + data[i]['songGenre'] + '</td>',
 					'<td>' + data[i]['songMonthlyPlayed'] + '</td>',
 				    '<td>Approved</td>',
- 					'<td><button class="unstyle-buttons requestSongToRemoveButton" title="Request to remove this song"> <i class="material-icons">close</i></button></td>',
+ 					'<td><button class="unstyle-buttons requestSongToRemoveButton" title="Request to remove this song"> <i class="material-icons" style="color:black;">close</i></button></td>',
 					'</tr>'
 				].join(''));
 

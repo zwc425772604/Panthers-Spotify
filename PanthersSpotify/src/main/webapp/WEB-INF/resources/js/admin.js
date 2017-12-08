@@ -164,9 +164,9 @@ function insertBasicUserTables(data)
 				  '<td>' + data[i]['userLastName'] + '</td>',
 				  '<td>' + data[i]['userType'] + '</td>',
 				  '<td>' + data[i]['username'] + '</td>',
-				  '<td><button class="unstyle-buttons edit_user_button"  data-toggle="tooltip-play" title="Edit This User Profiles"> <i class="material-icons">mode_edit</i></button></td>',
-				  '<td><button class="unstyle-buttons delete-user-button"  data-toggle="tooltip-play" title="Delete This User"> <i class="material-icons">delete_forever</i></button></td>',
-				  '<td><button class="unstyle-buttons ban-user-button"  data-toggle="tooltip-play" title="Ban This User"> <i class="material-icons">not_interested</i></button></td>',
+				  '<td><button class="unstyle-buttons edit_user_button"  data-toggle="tooltip-play" title="Edit This User Profiles"> <i class="material-icons" style="color:black;">mode_edit</i></button></td>',
+				  '<td><button class="unstyle-buttons delete-user-button"  data-toggle="tooltip-play" title="Delete This User"> <i class="material-icons" style="color:black;">delete_forever</i></button></td>',
+				  '<td><button class="unstyle-buttons ban-user-button"  data-toggle="tooltip-play" title="Ban This User"> <i class="material-icons" style="color:black;">not_interested</i></button></td>',
 				 '</tr>'
 			].join(''));
 		}
@@ -195,9 +195,9 @@ function insertPremiumUserTables(data)
 				  '<td>' + data[i]['userLastName'] + '</td>',
 				  '<td>' + data[i]['userType'] + '</td>',
 				  '<td>' + data[i]['username'] + '</td>',
-				  '<td><button class="unstyle-buttons edit_user_button"  data-toggle="tooltip-play" title="Edit This User Profiles"> <i class="material-icons">mode_edit</i></button></td>',
-				  '<td><button class="unstyle-buttons delete-user-button"  data-toggle="tooltip-play" title="Delete This User"> <i class="material-icons">delete_forever</i></button></td>',
-				  '<td><button class="unstyle-buttons ban-user-button"  data-toggle="tooltip-play" title="Ban This User"> <i class="material-icons">not_interested</i></button></td>',
+				  '<td><button class="unstyle-buttons edit_user_button"  data-toggle="tooltip-play" title="Edit This User Profiles"> <i class="material-icons" style="color:black;">mode_edit</i></button></td>',
+				  '<td><button class="unstyle-buttons delete-user-button"  data-toggle="tooltip-play" title="Delete This User"> <i class="material-icons" style="color:black;">delete_forever</i></button></td>',
+				  '<td><button class="unstyle-buttons ban-user-button"  data-toggle="tooltip-play" title="Ban This User"> <i class="material-icons" style="color:black;">not_interested</i></button></td>',
 				 '</tr>'
 			].join(''));
 		}
@@ -215,9 +215,9 @@ function insertArtistTables(data)
 				  '<td>' + data[i]['artistName'] + '</td>',
 				  '<td>' + data[i]['artistFirstName'] + '</td>',
 				  '<td>' + data[i]['artistLastName'] + '</td>',
-				  '<td><button class="unstyle-buttons edit_user_button"  data-toggle="tooltip-play" title="Edit This User Profiles"> <i class="material-icons">mode_edit</i></button></td>',
-				  '<td><button class="unstyle-buttons delete-user-button"  data-toggle="tooltip-play" title="Delete This User"> <i class="material-icons">delete_forever</i></button></td>',
-					'<td><button class="unstyle-buttons send-single-royalty-check"  data-toggle="tooltip-play" title="Send Royalty Check to this Artist"> <i class="material-icons">payment</i></button></td>',
+				  '<td><button class="unstyle-buttons edit_user_button"  data-toggle="tooltip-play" title="Edit This User Profiles"> <i class="material-icons" style="color:black;">mode_edit</i></button></td>',
+				  '<td><button class="unstyle-buttons delete-user-button"  data-toggle="tooltip-play" title="Delete This User"> <i class="material-icons" style="color:black;">delete_forever</i></button></td>',
+					'<td><button class="unstyle-buttons send-single-royalty-check"  data-toggle="tooltip-play" title="Send Royalty Check to this Artist" style="color:black;"> <i class="material-icons">payment</i></button></td>',
 				 '</tr>'
 			].join(''));
 		}
@@ -237,7 +237,7 @@ function insertPlaylistTables(data)
 		'<td>' + data[i]['playlistNumSongs'] + '</td>',
 		'<td>' + data[i]['playlistNumFollowers'] + '</td>',
 		'<td>' + data[i]['playlistCreateDate'] + '</td>',
-		'<td><button class="unstyle-buttons delete-playlist-button"  data-toggle="tooltip-play" title="Remove this playlist"> <i class="material-icons">delete_forever</i></button></td>',
+		'<td><button class="unstyle-buttons delete-playlist-button"  data-toggle="tooltip-play" title="Remove this playlist"> <i class="material-icons" style="color:black;">delete_forever</i></button></td>',
             '</tr>'
             ].join(''));
 	}
@@ -259,8 +259,8 @@ function insertPendingSongsTables(data)
 					  '<td>' + data[i]['songArtist'].join() + '</td>',
 					  '<td>' + data[i]['songGenre'] + '</td>',
 						'<td>Pending</td>',
- 					  '<td><button class="unstyle-buttons approveSongButton"  data-toggle="tooltip-play" title="Approve this song"> <i class="material-icons">check</i></button></td>',
- 					  '<td><button class="unstyle-buttons removeSongButton"  data-toggle="tooltip-play" title="Remove this song"> <i class="material-icons">close</i></button></td>',
+ 					  '<td><button class="unstyle-buttons approveSongButton"  data-toggle="tooltip-play" title="Approve this song"> <i class="material-icons" style="color:black;">check</i></button></td>',
+ 					  '<td><button class="unstyle-buttons removeSongButton"  data-toggle="tooltip-play" title="Remove this song"> <i class="material-icons" style="color:black;">close</i></button></td>',
 					 '</tr>'
 				].join(''));
 				songs.push(data[i]['songID']);
@@ -284,7 +284,7 @@ function insertApprovedSongsTables(data)
 					  '<td>' + data[i]['songArtist'].join() + '</td>',
 					  '<td>' + data[i]['songGenre'] + '</td>',
 						'<td>Approved</td>',					  
- 					  '<td><button class="unstyle-buttons removeSongButton"  data-toggle="tooltip-play" title="Remove this song"> <i class="material-icons">close</i></button></td>',
+ 					  '<td><button class="unstyle-buttons removeSongButton"  data-toggle="tooltip-play" title="Remove this song"> <i class="material-icons" style="color:black;">close</i></button></td>',
 					 '</tr>'
 				].join(''));
 				songs.push(data[i]['songID']);
@@ -307,7 +307,7 @@ function insertAlbumTable(data)
                     '<td>' + data[i]['albumNumberSongs'] + '</td>',
                     '<td>' + data[i]['albumNumFollowers'] + '</td>',
                     '<td>' + data[i]['albumReleaseDate'] + '</td>',
-                    '<td><button class="unstyle-buttons delete-album-button"  data-toggle="tooltip-play" title="Remove this album"> <i class="material-icons">delete_forever</i></button></td>',
+                    '<td><button class="unstyle-buttons delete-album-button"  data-toggle="tooltip-play" title="Remove this album"> <i class="material-icons" style="color:black;">delete_forever</i></button></td>',
 		'</tr>'
             ].join(''));
 	}
@@ -528,7 +528,7 @@ $(document).on ("click", ".approveSongButton", function () {
 					  '<td>' + songArtist + '</td>',
 					  '<td>' + songGenre + '</td>',
 						'<td>Approved</td>',					  
-					  '<td><button class="unstyle-buttons removeSongButton"  data-toggle="tooltip-play" title="Remove this song"> <i class="material-icons">close</i></button></td>',
+					  '<td><button class="unstyle-buttons removeSongButton"  data-toggle="tooltip-play" title="Remove this song"> <i class="material-icons" style="color:black;">close</i></button></td>',
 					 '</tr>'
 				].join(''));
 	        },

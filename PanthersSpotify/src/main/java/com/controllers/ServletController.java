@@ -972,8 +972,10 @@ public class ServletController {
 	public ModelAndView editArtistBio(ModelAndView mav, HttpServletRequest request, HttpSession session) throws JSONException {
 		User user = (User) session.getAttribute("user");
 		String bio = request.getParameter("bio");
-		System.out.println(bio);
+		String username = request.getParameter("username");
 		userService.editArtist(user, bio);
+		user = userService.getUser(user.getEmail());
+		userService.updateUser(user, username,user.getUserType(),'M',null,null,user.getIsPublic(),user.getPhotoUrl());
 		user = userService.getUser(user.getEmail());
 		session.setAttribute("user", user);
 		mav.setViewName("artistMainPage");

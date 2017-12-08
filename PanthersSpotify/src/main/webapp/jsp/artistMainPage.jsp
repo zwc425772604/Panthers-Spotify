@@ -183,7 +183,12 @@
             <div id="edit_info_dialog" title="Edit your information" style="display:none;">
             <!-- create playlist -->
             <form:form  method = "POST" action="editArtistBio" enctype="multipart/form-data" class="w3-container w3-card-4 w3-light-grey w3-text-blue w3-margin">
-       
+               <div class="w3-row w3-section">
+                <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Your Artist Name</span></div>
+                <div class="w3-rest">
+                  <input class="w3-input w3-border" name="username" value="${user.userName}">             
+                </div>
+              </div>     
               <div class="w3-row w3-section">
                 <div class="w3-col" style="width:50px"><span style="font-size: 0.8em">Bio</span></div>
                 <div class="w3-rest">

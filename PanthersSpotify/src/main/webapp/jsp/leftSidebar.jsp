@@ -35,7 +35,7 @@
     <button  class="unstyle-buttons btn btn-info btn-lg " id="new_playlist_button" style="width: auto;" >
     <i class="fa fa-plus" aria-hidden="true" style="margin-right: 10%;"></i>New Playlist</button>
   </li>
-  <div id="dialog" title="Create Playlist" style="display:none; background: #2f2f2f">
+  <div id="dialog" title="Create Playlist" style="display:none; background: #2f2f2f; height: 550px; overflow-y: scroll;" >
     <!-- create playlist -->
     <form:form action="createPlaylist" method="POST" enctype="multipart/form-data">
       <div class="w3-row w3-section">

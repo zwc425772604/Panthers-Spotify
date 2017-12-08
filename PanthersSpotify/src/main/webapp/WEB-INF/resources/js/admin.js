@@ -96,8 +96,8 @@ $(document).ready(function(){
 	        cache: false,
 	        success : function(response)
 	        {
-
-	        //  $("#main-changing-content").load("jsp/album.jsp");
+                    var actual_JSON = JSON.parse(response);
+                    insertAlbumTable(actual_JSON);
 	        },
 	        error: function(e)
 	        {
@@ -133,14 +133,14 @@ function insertBasicUserTables(data)
 		{
 		    var ban = data[i]['userBan'];
 		    var color;
-		    if(ban == 0){
-		    	color= '#f1f1f1';
+		   if(ban == 0){
+		    	color= '';
 		    }
 		    else{
-		    	color='red';
+		    	color='class="w3-red"';
 		    }
 			$("#basic-users-table").find('tbody').append([
-				'<tr style="background:' + color + '">',
+				'<tr ' + color + '>',
 				  '<td>' + data[i]['userID'] + '</td>',
 				  '<td>' + data[i]['userFirstName'] + '</td>',
 				  '<td>' + data[i]['userLastName'] + '</td>',
@@ -165,13 +165,13 @@ function insertPremiumUserTables(data)
 			var ban = data[i]['userBan'];
 		    var color;
 		    if(ban == 0){
-		    	color= '#f1f1f1';
+		    	color= '';
 		    }
 		    else{
-		    	color='red';
+		    	color='class="w3-red"';
 		    }
 			$("#premium-users-table").find('tbody').append([
-				'<tr style="background:' + color + '">',
+				'<tr ' + color + '>',
 				  '<td>' + data[i]['userID'] + '</td>',
 				  '<td>' + data[i]['userFirstName'] + '</td>',
 				  '<td>' + data[i]['userLastName'] + '</td>',
@@ -210,25 +210,25 @@ function insertPlaylistTables(data)
 	var num = data.length;
 	$("#num-of-playlist").html(num);
 	for (var i = 0; i < num; i++)
-		{
-			$("#playlists-table").find('tbody').append([
-				'<tr>',
-				  '<td>' + data[i]['playlistID'] + '</td>',
-				  '<td>' + data[i]['playlistName'] + '</td>',
-				  '<td>' + data[i]['playlistOwner'] + '</td>',
-				  '<td>' + data[i]['playlistNumSongs'] + '</td>',
-				  '<td>' + data[i]['playlistNumFollowers'] + '</td>',
-				  '<td>' + data[i]['playlistCreateDate'] + '</td>',
-				  '<td><button class="unstyle-buttons delete-playlist-button"  data-toggle="tooltip-play" title="Remove this playlist"> <i class="material-icons">delete_forever</i></button></td>',
-				 '</tr>'
-			].join(''));
-		}
+	{
+            $("#playlists-table").find('tbody').append([
+            '<tr>',
+		'<td>' + data[i]['playlistID'] + '</td>',
+		'<td>' + data[i]['playlistName'] + '</td>',
+		'<td>' + data[i]['playlistOwner'] + '</td>',
+		'<td>' + data[i]['playlistNumSongs'] + '</td>',
+		'<td>' + data[i]['playlistNumFollowers'] + '</td>',
+		'<td>' + data[i]['playlistCreateDate'] + '</td>',
+		'<td><button class="unstyle-buttons delete-playlist-button"  data-toggle="tooltip-play" title="Remove this playlist"> <i class="material-icons">delete_forever</i></button></td>',
+            '</tr>'
+            ].join(''));
+	}
 }
 
 function insertPendingSongsTables(data)
 {
 	var num = data.length;
-	$("#num-of-playlist").html(num);
+	$("#num-of-pending-songs").html(num);
 	var songs = [];
 	for (var i = 0; i < num; i++)
 		{
@@ -253,7 +253,7 @@ function insertPendingSongsTables(data)
 function insertApprovedSongsTables(data)
 {
 	var num = data.length;
-	$("#num-of-playlist").html(num);
+	$("#num-of-approved-songs").html(num);
 	var songs = [];
 	for (var i = 0; i < num; i++)
 		{
@@ -275,14 +275,59 @@ function insertApprovedSongsTables(data)
 		}
 }
 
+function insertAlbumTable(data)
+{
+	var num = data.length;
+	$("#num-of-album").html(num);
+	for (var i = 0; i < num; i++)
+	{
+            $("#albums-table").find('tbody').append([
+		'<tr>',
+                    '<td>' + data[i]['albumID'] + '</td>',
+                    '<td>' + data[i]['albumName'] + '</td>',
+		    '<td><div class="tooltip1">' + data[i]['albumDescription'].substring(0,30) + '<span class="tooltiptext1">' + data[i]['albumDescription'] + '</span></div></td>',
+                    '<td>' + data[i]['albumNumberSongs'] + '</td>',
+                    '<td>' + data[i]['albumNumFollowers'] + '</td>',
+                    '<td>' + data[i]['albumReleaseDate'] + '</td>',
+                    '<td><button class="unstyle-buttons delete-album-button"  data-toggle="tooltip-play" title="Remove this album"> <i class="material-icons">delete_forever</i></button></td>',
+		'</tr>'
+            ].join(''));
+	}
+}
+
+$(document).on ("click", ".delete-playlist-button", function () {
+	var pid = $(this).closest('tr').children('td:eq(0)').text();
+	console.log("pid is : " + pid);
+	$(this).closest('tr').remove();
+	 $.ajax({
+	        url: "{cp}/../deleteSelectedPlaylist",
+	        data: {"playlistID" : pid},
+	        type: "POST",
+	        asyn: false,
+	        cache: false,
+	        success : function(response)
+	        {
+	          console.log(response);
+
+	        },
+	        error: function(e)
+	        {
+
+	          console.log(e);
+	        }
+	      });
+});
+
 $(document).ready ( function () {
-    $(document).on ("click", ".ban-user-button", function () {
-    	var userID = $(this).closest('tr').children('td:eq(0)').text();
-    	console.log("userId is : " + userID);
-    	$(this).closest('tr').css("background","red");
-   	 	$.ajax({
- 	        url: "{cp}/../banUser",
- 	        data: {"userID" : userID},
+    $(document).on ("click", ".delete-album-button", function () {
+        $("#confirmDeleteModal").show();
+    	var albumID = $(this).closest('tr').children('td:eq(0)').text().trim();
+    	console.log("albumId is : " + albumID);
+        $(document).on('click', "#confirmDeleteButton", function(){
+            $("#confirmDeleteModal").hide();
+            	$.ajax({
+ 	        url: "{cp}/../removeAlbum",
+ 	        data: {"albumID" : albumID},
  	        type: "POST",
  	        asyn: false,
  	        cache: false,
@@ -295,7 +340,10 @@ $(document).ready ( function () {
  	        {
  	          console.log(e);
  	        }
- 	      });
+ 	      });   
+        });
+    	
+   
     });
 });
 

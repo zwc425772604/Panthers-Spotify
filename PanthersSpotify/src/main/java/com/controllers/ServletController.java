@@ -428,8 +428,10 @@ public class ServletController {
 	@RequestMapping(value = "/loadAlbum", method = RequestMethod.POST)
 	public @ResponseBody String loadAlbum(ModelAndView mav, HttpServletRequest request, HttpSession session) {
 		List<Album> albums = albumService.getAllAlbums();
+                String albumsJSON = JSONHelper.albumListToJSON(albums);
 		session.setAttribute("album_list", albums);
-		return "ok";
+                System.out.println("albumsJSON " + albumsJSON);
+		return albumsJSON;
 	}
 
 	@RequestMapping(value = "/editUserAccount", method = RequestMethod.POST)
@@ -1730,5 +1732,13 @@ public class ServletController {
 		JSONArray obj = JSONHelper.new_pendingSongsToJSON1(sortedSong, songService);
 		session.setAttribute("jsonList", obj);
 		return obj.toString();
+	}
+        
+          //TODO
+        @RequestMapping(value = "/removeAlbum", method = RequestMethod.POST)
+	public @ResponseBody String removeAlbum( ModelAndView mav,HttpServletRequest request, HttpSession session) {
+		int albumID = Integer.parseInt(request.getParameter("albumID"));
+		
+		return "ok";
 	}
 }

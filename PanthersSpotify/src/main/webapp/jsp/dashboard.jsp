@@ -143,7 +143,22 @@
   </table>
 </div>
 <div id="albumsTableDiv" class="w3-container info-table" style="display:none">
-  <h1>Album Table</h1>
+  <h1 style="color: white;"><span id="num-of-album"></span> albums on our site</h1>
+  <table class="w3-table-all w3-hoverable" id = "albums-table">
+    <thead>
+      <tr class="w3-light-grey">
+        <th>ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Number of Songs</th>
+        <th>Number of Followers</th>
+        <th>Release Date</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
 </div>
 <div id="playlistsTableDiv" class="w3-container info-table" style="display:none">
   <h1 style="color: white;"><span id="num-of-playlist"></span> playlist(s) created</h1>
@@ -221,6 +236,22 @@
       </form>
     </div>
   </div>
+</div>
+       <div id="confirmDeleteModal" class="w3-modal w3-animate-opacity">
+  <div class="w3-modal-content w3-card-4" style="height:180px; overflow:scroll;">
+    <header class="w3-container w3-theme-d3">
+      <span onclick="document.getElementById('confirmDeleteModal').style.display='none'"
+        class="w3-button w3-large w3-display-topright">&times;</span>
+        <h3>Confirm Deletion</h3>
+    </header>
+
+        <div style="text-align:center;margin-top: 5%;">
+          <button onclick="event.preventDefault(); $('#confirmDeleteModal').hide();" class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>
+          <button id="confirmDeleteButton" class="w3-button w3-block w3-section w3-blue w3-ripple">Confirm</button>
+        </div>
+      
+    </div>
+  
 </div>
 <script>
   function displayContent(table) {

@@ -114,14 +114,16 @@ public class SongServiceImpl implements SongService {
 
 	@Transactional
 	public Song uploadSong(User user, String songTitle, String songTime, String releaseDay, String songGenre,
-			String songType, CommonsMultipartFile file) {
+			String songType, CommonsMultipartFile file,Album album) {
 
 		final String dir = System.getProperty("user.dir");
 		char first = Character.toUpperCase(file.getOriginalFilename().charAt(0));
 		File f1 = new File(dir + "/src/main/webapp/WEB-INF/resources/data/songs/"+first);
 		String songUrl = f1.getAbsolutePath()+"/"+file.getOriginalFilename();
+		
 		Song song = new Song(songTitle, null, null, 0, songGenre, songType, songUrl);
-
+		song.setAlbumId(album);
+		System.out.println("uploading "+album.getAid());
 		songUrl = UploadFile.upload(f1.getAbsolutePath(), file.getOriginalFilename(), file);
 
 		songDAO.addSong(song);

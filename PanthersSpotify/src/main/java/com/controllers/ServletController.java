@@ -951,8 +951,11 @@ public class ServletController {
 		String releaseDay = request.getParameter("release_day");
 		String songGenre = request.getParameter("song_genre");
 		String songType = request.getParameter("song_type");
-
-		songService.uploadSong(user, songTitle, songTime, releaseDay, songGenre, songType, file);
+		//String albumIdtmp = request.getParameter("song_album_id");
+		//int albumId = Integer.parseInt(albumIdtmp);
+		Album album = albumService.getAlbum(0);
+		
+		songService.uploadSong(user, songTitle, songTime, releaseDay, songGenre, songType, file,album);
 
 		mav.setViewName("artistMainPage");
 		return mav;
@@ -1586,6 +1589,7 @@ public class ServletController {
 		User user = (User) session.getAttribute("user");//admin page only
 		
 		List<Song> songs = songService.getSongByArtist(user.getEmail(), status);
+		
 		String JSON = JSONHelper.new_pendingSongsToJSON(songs, songService);
 		
 		

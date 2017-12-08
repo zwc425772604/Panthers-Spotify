@@ -20,7 +20,7 @@ public interface SongService {
 	public Song getSong(int sid);
 	public List<Song> getAllSongs();
 	public List<Song> findRelative(String input);
-	public Song uploadSong(User user, String songTitle, String songTime, String releaseDay, String songGenre, String songType, CommonsMultipartFile file);
+	public Song uploadSong(User user, String songTitle, String songTime, String releaseDay, String songGenre, String songType, CommonsMultipartFile file,Album album);
 	public List<Releasesong> getAllSongsByStatus(String status);
 	public List<Song> getHistorySongs(String userEmail);
 	public List<Song> addHistorySong(Song song,User user,Date date);

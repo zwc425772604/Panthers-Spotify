@@ -72,6 +72,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 		userPlaylist.remove(playlist);
 	  	String photoUrl= playlist.getPhotoUrl() != null? playlist.getPhotoUrl().substring(1,playlist.getPhotoUrl().length()):playlist.getPhotoUrl();
 	  	File playlistFile = null;
+	  	System.out.println(photoUrl);
 	  	if(des!=null)
 	  	{
 	  		playlist.setDes(des);

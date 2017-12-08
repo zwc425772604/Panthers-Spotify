@@ -450,6 +450,22 @@ public class ServletController {
 			bio = request.getParameter("artistBio");
 			userService.editArtist(user, bio);
 			boolean isPublic = true;
+			if(user.getPhotoUrl()!=null)
+			{
+				String photoUrl1= user.getPhotoUrl() != null? user.getPhotoUrl().substring(1,user.getPhotoUrl().length()):user.getPhotoUrl();
+				String dir1 = System.getProperty("user.dir");
+				String userPath1 = dir1+"/src/main/webapp/WEB-INF/resources/data/Users/"+photoUrl1;
+				File userFile1 = new File(userPath1);
+				if(userFile1.exists())
+				{
+					userFile1.delete();
+				}
+				else
+				{
+					System.out.println("error in delete photo");
+				}
+			}
+			
 			
 			String filename = file.getOriginalFilename();
 			String dir = System.getProperty("user.dir");
@@ -474,9 +490,25 @@ public class ServletController {
 			userService.editArtist(selectedUser, bio);
 			boolean isPublic = true;
 			
+			if(user.getPhotoUrl()!=null)
+			{
+				String photoUrl1= selectedUser.getPhotoUrl() != null? selectedUser.getPhotoUrl().substring(1,selectedUser.getPhotoUrl().length()):selectedUser.getPhotoUrl();
+				String dir1 = System.getProperty("user.dir");
+				String userPath1 = dir1+"/src/main/webapp/WEB-INF/resources/data/"+photoUrl1;
+				File userFile1 = new File(userPath1);
+				if(userFile1.exists())
+				{
+					userFile1.delete();
+				}
+				else
+				{
+					System.out.println("error in delete photo");
+				}
+			}
+			
 			String filename = file.getOriginalFilename();
 			String dir = System.getProperty("user.dir");
-		    	String userPath = dir+"/src/main/webapp/WEB-INF/resources/data/Users/"+user.getEmail();
+		    	String userPath = dir+"/src/main/webapp/WEB-INF/resources/data/"+user.getEmail();
 		    	File userFile = new File(userPath);
 		    	String photoUrl = UploadFile.upload(userPath,filename,file);
 		    	if(photoUrl==null)
@@ -491,6 +523,25 @@ public class ServletController {
 		else
 		{
 			boolean isPublic = true;
+			System.out.println("edit here");
+			if(user.getPhotoUrl()!=null)
+			{
+				String photoUrl1= user.getPhotoUrl() != null? user.getPhotoUrl().substring(1,user.getPhotoUrl().length()):user.getPhotoUrl();
+				String dir1 = System.getProperty("user.dir");
+				String userPath1 = dir1+"/src/main/webapp/WEB-INF/resources/data/"+photoUrl1;
+				System.out.println(userPath1);
+				File userFile1 = new File(userPath1);
+				if(userFile1.exists())
+				{
+					userFile1.delete();
+					System.out.println("delete it");
+				}
+				else
+				{
+					System.out.println("error in delete photo");
+				}
+			}
+			
 			String filename = file.getOriginalFilename();
 			String dir = System.getProperty("user.dir");
 		    	String userPath = dir+"/src/main/webapp/WEB-INF/resources/data/Users/"+user.getEmail();
@@ -500,8 +551,10 @@ public class ServletController {
 		    	{
 		    		userFile.delete();
 		    	}
-		    	
-		    	photoUrl = "/Users/"+user.getEmail()+"/"+filename;
+		    	else
+		    	{
+		    		photoUrl = "/Users/"+user.getEmail()+"/"+filename;
+		    	}
 			user = userService.updateUser(user, user.getUserName(), user.getUserType(), gender, firstName, lastName,
 				isPublic,photoUrl);
 

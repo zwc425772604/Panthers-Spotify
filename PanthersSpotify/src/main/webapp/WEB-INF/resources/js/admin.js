@@ -405,7 +405,7 @@ $(document).ready ( function () {
 $(document).ready ( function () {
 	    $(document).on ("click", ".ban-user-button", function () {
 	    	var userID = $(this).closest('tr').children('td:eq(0)').text();
-	    	console.log("userId is : " + userID);
+	    	console.log("userId  is : " + userID);
 	    	$(this).closest('tr').css("background","red");
 	   	 	$.ajax({
 	 	        url: "{cp}/../banUser",

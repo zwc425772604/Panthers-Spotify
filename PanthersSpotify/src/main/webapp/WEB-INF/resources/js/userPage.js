@@ -25,6 +25,26 @@ $(document).ready(function(){
           console.log(e);
         }
       });
+      
+      $.ajax({
+        url: "${cp}/../getFriendPlaylist",
+        type: "POST",
+        asyn: false,
+        data: {"email" : email},
+        cache: false,
+        success : function(response)
+        {
+        	console.log(response);
+                var actual_JSON = JSON.parse(response);
+        	insertFriendPlaylist(actual_JSON);
+        },
+        error: function(e)
+        {
+          console.log(e);
+        }
+      });
+      
+      
 });
 
 
@@ -45,6 +65,30 @@ function insertSongsTable(data)
 			  '<td>' + songTitle + '</td>',
 			  '<td class="album-item"> ' +albumName+ '<span class="album-ID" style="display: none;">' +albumID + '</span></td>',
 			  '<td class="artist-item">' + songArtist + '<span style="display:none;" class="artist-email">'+  data[i]['songArtist'][0]['aemail'] +'</span>',
+			  '</td>',
+			  '<td>' + date +' </td>',	
+			 '</tr>'
+		].join(''));
+	}
+}
+function insertFriendPlaylist(data)
+{   
+        console.log("insert playlist table called");
+	var num = data.length;
+	for(i = 0; i < num; i++){
+		var playlistName = data[i]['playlistName'];
+		var numSongs = data[i]['playlistNumSongs'];
+		var numFollowers = data[i]['playlistNumFollowers'];
+		var playlistID = data[i]['playlistID'];
+		var date = data[i]['playlistCreateDate'];
+		$("#playlist-table").find('tbody').append([
+			'<tr>',	
+				'<td style="padding-bottom:0; padding-top:0.8em; padding-left:1em;"> <button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">',
+	            '<i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i></button>',
+	           '</td>',
+			  '<td><div class="playlist-item"><a href="#">' + playlistName + '</a><span style="display:none;" class="playlist_id">' + playlistID + '</span></div></td>',
+			  '<td class="album-item"> ' +numSongs+ '</td>',
+			  '<td class="artist-item">' + numFollowers +'</span>',
 			  '</td>',
 			  '<td>' + date +' </td>',	
 			 '</tr>'

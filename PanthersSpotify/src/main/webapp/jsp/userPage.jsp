@@ -59,6 +59,7 @@
   </div>
  
   <div id="song-collection">
+      <h2>Recently Play Songs</h2>
       <div class="table-responsive">
         <table class="table" id="song-table">
           <thead>
@@ -82,3 +83,53 @@
         </table>
       </div>
     </div>
+          
+<!--    <div id="friend-playlist-collection">
+      <h2>User's Playlist</h2>
+      <div class="table-responsive">
+        <table class="table" id="playlist-table">
+          <thead>
+            <tr>
+                  
+              <th id="th-play-button"></th>
+              <th id="th-song-title">Name </th>
+              <th id="th-album"># of Songs</th>
+              <th id="th-artist"># of Followers</th>
+              <th id="th-date">
+                <p> <i class="fa fa-calendar" aria-hidden="true"></i> </p>
+              </th>       
+            </tr>
+          </thead>
+          <tbody>
+          
+          </tbody>
+        </table>
+      </div>
+    </div>-->
+          
+    <div id="playlist-collection">
+      <h2>User's Playlist</h2>
+      <div class="table-responsive">
+        <table class="table" id="playlist-table">
+          <thead>
+            <tr>
+              <th id="th-play-button"></th>
+              <!-- play/pause button -->
+              <th id="th-song-title">
+                <p> Name </p>
+              </th>
+              <th id="th-album"># of Songs</th>
+              <th id="th-artist"># of Followers</th>
+              <th id="th-date">
+                <p> <i class="fa fa-calendar" aria-hidden="true"></i> </p>
+              </th>
+              
+            </tr>
+          </thead>
+          <tbody>
+          
+          </tbody>
+        </table>
+      </div>
+    </div>
+    

@@ -1517,6 +1517,16 @@ public class ServletController {
 		String JSON = JSONHelper.new_pendingSongsToJSON(history, songService);	
 		return JSON;
 	}
+        
+        @RequestMapping(value = "/getFriendPlaylist", method = RequestMethod.POST)
+	public @ResponseBody String getFriendPlaylist(HttpServletRequest request, HttpSession session) {		
+		String email = (String)((User)session.getAttribute("selectedFriend")).getEmail();
+                User user = userService.getUser(email);
+                System.out.println("user is " + user);
+                List<Playlist> playlist = (List<Playlist>)user.getUserPlaylistCollection();
+		String playlistJSON = JSONHelper.playlistListToJSON(playlist);	
+		return playlistJSON;
+	}
 	
 	@RequestMapping(value = "/getAllSongsForArtist/{status}", method = RequestMethod.POST)
 	public @ResponseBody String getAllSongsForArtist(@PathVariable String status, HttpServletRequest request, HttpSession session) {
@@ -1746,13 +1756,5 @@ public class ServletController {
    		userService.sendSupportEmail("panthersSpotify@gmail.com", sendInfo);
    		mav.setViewName("main");
    		return mav;
-   	}
-    
-    @RequestMapping(value = "/getArtistFollowers", method = RequestMethod.POST)
-   	public  @ResponseBody String getArtistFollowers( ModelAndView mav,HttpServletRequest request, HttpSession session) {
-   		String userEmail = request.getParameter("userEmail");
-   		List<User> users = userService.getArtistFollowers(userEmail);
-   		String jsonRet = JSONHelper.userListToJSON(users);
-   		return jsonRet;
    	}
 }

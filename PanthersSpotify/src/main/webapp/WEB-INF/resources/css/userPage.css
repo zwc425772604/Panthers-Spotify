@@ -71,7 +71,14 @@ input[type="search"]::-webkit-search-cancel-button
 } 
 
 
-#song-collection{
+#song-collection {
+	margin-top: 3%;
+	margin-left: 5%;
+	width: 90%;
+	color: white;
+}
+
+#playlist-collection {
 	margin-top: 3%;
 	margin-left: 5%;
 	width: 90%;

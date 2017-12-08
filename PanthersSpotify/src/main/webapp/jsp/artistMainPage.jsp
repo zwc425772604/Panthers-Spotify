@@ -157,9 +157,6 @@
                   <input class="w3-input w3-border" name="address" type="location"  placeholder="Location">
                 </div>
               </div>
-             
-              
-              
               <div class="w3-row w3-section">
                 <div class="w3-third w3-container">
                   <button onclick="event.preventDefault(); $('#new_song_dialog').dialog('close');" class="w3-button w3-block w3-section w3-blue w3-ripple">Cancel</button>

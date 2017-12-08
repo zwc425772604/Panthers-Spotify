@@ -52,6 +52,7 @@ public class PlaylistServiceImpl implements PlaylistService {
 	    	}
 	    	else
 	    	{
+	    		System.out.println(photoUrl);
 	    		photoUrl = SubString.getSubstring(photoUrl);
 	    	}
 		Playlist playlist = new Playlist(playlistName,description,photoUrl,0,0,date,user);
@@ -78,9 +79,14 @@ public class PlaylistServiceImpl implements PlaylistService {
 	  	if(photoUrl!=null)
 	  	{
 	  		File deleteFile = new File(path+photoUrl);
+	  		System.out.println("edit inside is "+path+photoUrl);
 	  		if(deleteFile.exists())
 	  		{
 	  			deleteFile.delete();
+	  		}
+	  		else
+	  		{
+	  			System.out.println("edit is wrong");
 	  		}
 	  		File photo = new File(path+photoUrl);
 		  	playlistFile = photo.getParentFile();
@@ -91,7 +97,9 @@ public class PlaylistServiceImpl implements PlaylistService {
 			
 			String filename = file.getOriginalFilename();
 		  	System.out.println("it should be + "+playlistFile.getAbsolutePath());
+		  	System.out.println("file name is "+filename);
 		  	photoUrl = UploadFile.upload(playlistFile.getAbsolutePath(),filename,file);
+		  	
 		  	photoUrl = SubString.getSubstring(photoUrl);
 		  	playlist.setPhotoUrl(photoUrl);
 		}

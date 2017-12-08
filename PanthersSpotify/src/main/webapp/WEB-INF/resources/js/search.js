@@ -87,14 +87,10 @@ function songTable(jsonString)
 			{
 				$("#song-table").find('tbody').append([
 					'<tr>',
-					  '<td>' + '</td>',
-					  '<td>' + '</td>',
-					  '<td>' + jsonString[i]['songTitle'] + '</td>',
-					  '<td>' +  '</td>',
-					  '<td>' + '</td>',
-					  '<td>' + '</td>',
-					  '<td>' + '</td>',
-					  '<td>' + '</td>',					  
+					'<td style="padding-bottom:0; padding-top:0.8em; padding-left:1em;"> <button class="unstyle-buttons playbar-play-button" data-toggle="tooltip-play" title="Play">',
+	                    '<i class="material-icons"><span class="song-page-play-pause-button">play_circle_filled</span></i></button>',
+	                 '</td>',
+					  '<td>' + jsonString[i]['songTitle'] + '</td>',		  
 					 '</tr>'
 				].join(''));
 				songs.push(jsonString[i]['songID']);

@@ -15,21 +15,10 @@
 	        <table class="table" id="song-table">
 	          <thead>
 	            <tr>
-	              <th></th>
+	              <th class="th-play-button"></th>
 	              <!-- play/pause button -->
-	              <th></th>
-	              <!-- add/remove button -->
-	              <th>TITLE</th>
-	              <th>ALBUM</th>
-	              <th>ARTIST</th>
-	              <th>
-	                <p> <i class="fa fa-calendar" aria-hidden="true"></i> </p>
-	              </th>
-	              <th> </th>
-	              <!-- more button -->
-	              <th>
-	                <p> <i class="fa fa-clock-o" aria-hidden="true"></i> </p>
-	              </th>
+	              <th class="th-song-title">TITLE</th> 
+	                         
 	            </tr>
 	          </thead>
 	          <tbody>
@@ -96,13 +85,14 @@
 	  </div>
 	  <div >
       <h6 class="suggestion-topic" style="font-size: 1.5em;" >
-      Artists
+      Artists:
       </h6>
+       <div class="line"></div>
       <section class="row placeholders">
        <c:choose>
 		  <c:when test="${not empty artist_list}">
 			<c:forEach var="artist" items="${artist_list}">
-				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-4 col-xl-3 placeholder medium-boxes">
+				<div class="col-xs-6 col-sm-4 col-md-2 col-sm-2 placeholder medium-boxes">
 					<div class="hover-control artist-item">
 						<img src="${cp}/resources/data${artist.photoUrl}"
 							width=100% height=width class="img-rounded info-image"

@@ -387,7 +387,7 @@ public class UserDAOImpl implements UserDAO {
 	public List<User> findRelative(String input)
 	  {
 	  	  
-		TypedQuery<User> query1 = entityManager.createQuery("SELECT p from User p WHERE p.userType=2 p.userName LIKE CONCAT('%',:searchTerm,'%')", User.class)
+		TypedQuery<User> query1 = entityManager.createQuery("SELECT p from User p WHERE p.userType=2 and p.userName LIKE CONCAT('%',:searchTerm,'%')", User.class)
 	       		.setParameter("searchTerm", input);
 	  	List<User> result = query1.getResultList();
 	  	return result;

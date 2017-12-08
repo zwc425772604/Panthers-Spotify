@@ -126,6 +126,7 @@ public class JSONHelper {
 			int sid = s.getSid();
 			jsonObject.put("songID", sid);
 			jsonObject.put("songTitle", s.getStitle());
+			jsonObject.put("songAlbum",s.getAlbumId().getAname());
 			songArr.put(jsonObject);
 		}
 		arr.put(songArr);

@@ -424,11 +424,14 @@ function displayPayment(){
         	  
         	  payMonth = month + 12 - actual_JSON['upgradeDate'].substring(5,7) + 1;
           }
-          else{
-        	  payYear = "0";
-        	  if(payYear == year){
+          else{        	  
+        	  payYear = 0;
+        	  if(actual_JSON['upgradeDate'].substring(0,4) == year){
         		  payMonth = month - actual_JSON['upgradeDate'].substring(5,7) + 1;
         	  }       	  
+        	  else{
+        		  payMonth = 0;
+        	  }
           }
           
           
@@ -441,7 +444,6 @@ function displayPayment(){
           $("#payment-paymentInfo").empty();
           $("#payment-holdername").append("Card Owner: " + actual_JSON['holdName']);
           $("#payment-ccn").append("CCN: ****-****-****-"  + actual_JSON['cardNumber'].substring(12,17));
-          $("#payment-expDate").append("Expiration date: " + actual_JSON['expDate'].substring(0,10));
           $("#payment-paymentInfo").append("Payment Details: You have subscribed for " + payYear + " "+ payMonth + "<br>" +
         		  "Total Payment: $" + payAmount );
           $('#paymentDialog').dialog({

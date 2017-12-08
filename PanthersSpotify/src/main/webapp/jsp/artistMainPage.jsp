@@ -249,6 +249,9 @@
             <li class="nav-item">
               <a class="nav-link tablinks" href="javascript:displayContent('royaltyTableDiv')">Royalty</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link tablinks" href="javascript:displayContent('followerTableDiv')">Followers</a>
+            </li>          
           </ul>
         </nav>
         <div id="approvedSongsTableDiv" class="w3-container info-table">

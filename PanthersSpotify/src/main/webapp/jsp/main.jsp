@@ -55,8 +55,8 @@
                   <div class="row" >
                     <input type="text" class="w3-input" style="width: 70%; border-bottom-left-radius: 50px; border-top-left-radius:50px;" placeholder="   Search" name="search" id="search">
                     <span class="input-group-addon" style="border-bottom-right-radius: 50px; border-top-right-radius:50px;background:white;border: none;">
-                    <button type="submit" id="search-button" style="border:none;">
-                    <i class="fa fa-search" aria-hidden="true" ></i>
+                    <button type="submit" id="search-button" style="border:none;background:white;">
+                    <i class="fa fa-search" aria-hidden="true" style="background:white;"></i>
                     </button>
                     </span>
                   </div>

@@ -1,5 +1,6 @@
 package com.helper;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -374,7 +375,9 @@ public class JSONHelper {
 		jsonObject.put("expDate", payment.getExpirationDate());
 		jsonObject.put("userEmail", payment.getUemail());
 		jsonObject.put("balance", payment.getBalance());
-		jsonObject.put("upgradeDate",user.getUpgradeDate());
+		SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+		String strDate = sdfDate.format(user.getUpgradeDate());
+		jsonObject.put("upgradeDate",strDate);
 		return jsonObject.toString();
 	}
     

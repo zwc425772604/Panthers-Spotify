@@ -54,6 +54,23 @@ $(document).ready(function(){
 			console.log(e);
 		}
 	});
+	
+	$.ajax({
+		url: "{cp}/../getArtistFollowers",
+		type: "POST",
+		asyn: false,
+		cache: false,
+		success : function(response)
+			{
+				console.log(response);
+				var actual_JSON = JSON.parse(response);
+				insertFollowerSongsTables(actual_JSON);
+			},
+		error: function(e)
+		{
+			console.log(e);
+		}
+	});
 	 
 });
 
@@ -65,6 +82,11 @@ function myFunction() {
         x.className = x.className.replace(" w3-show", "");
     }
    }
+
+
+function insertFollowerSongsTables(data){
+	var num = data.length;
+}
 
 
 function insertArtistPendingSongsTables(data)

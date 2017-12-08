@@ -260,6 +260,7 @@
 			        <th>Song Title</th>
 			        <th>Artist</th>
 			        <th>Genre</th>
+			        <th>Clicks</th>
 			        <th>Status</th>
 			        <%-- <th>Created Date</th> --%>
 			        <th></th>
@@ -278,6 +279,7 @@
 			        <th>Song Title</th>
 			        <th>Artist</th>
 			        <th>Genre</th>
+			        <th>Clicks</th>
 			        <th>Status</th>
 			        <%-- <th>Created Date</th> --%>
 			        <th></th>

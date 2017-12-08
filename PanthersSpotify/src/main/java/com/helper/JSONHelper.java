@@ -161,6 +161,7 @@ public class JSONHelper {
 			jsonObject.put("songGenre", s.getGener());
 			jsonObject.put("songPath", s.getSurl());
 			jsonObject.put("songReleaseDate", s.getReleaseDay()); 
+			jsonObject.put("songMonthlyPlayed", s.getMonthlyPlayed());
 			jsonObject.put("albumId", s.getAlbumId().getAid());  
 			jsonObject.put("albumName", s.getAlbumId().getAname());
 			

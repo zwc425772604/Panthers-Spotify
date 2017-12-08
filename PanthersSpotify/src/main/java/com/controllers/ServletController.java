@@ -1313,11 +1313,11 @@ public class ServletController {
 		double factor = Double.parseDouble(environment.getProperty("artist.royalty.factor"));
 		
 			userService.setArtistRoylties(userService.getArtistInfo(user), factor);
-			List<Song> songs = userService.getReleaseSong(userService.getArtistInfo(user));
-			for(int j=0;j<songs.size();j++)
-			{
-				songService.updateMontlySong(0, songs.get(j));
-			}
+//			List<Song> songs = userService.getReleaseSong(userService.getArtistInfo(user));
+//			for(int j=0;j<songs.size();j++)
+//			{
+//				songService.updateMontlySong(0, songs.get(j));
+//			}
 		
 		
 		String artistRoyaltyInfo = JSONHelper.getOneArtistRoyalty(user,userService);

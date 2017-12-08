@@ -159,9 +159,10 @@ p.color-nav-header:hover{
 }
 
 #top-tool-search{
-    margin-left: 3%;
+    margin-left: 1.5%;
     position: relative;
-    height: 3em;
+    height: 2.5em;
+    margin-top: 0.125em;
     width: 100%;
     
 }
@@ -351,10 +352,18 @@ p.color-nav-header:hover{
     position: fixed;
     width:15%;
     margin-left: 85%;
-    height: 91vh;
     background-color: #2E2E2E;
     color: white;
 }
+
+#right-col-friend{
+	height: 80vh;
+}
+
+#openTicketArea{	
+	height:11vh;
+}
+
 
 .right-col-top{
     margin: 0.75vw 0 0.1vw 1vw;

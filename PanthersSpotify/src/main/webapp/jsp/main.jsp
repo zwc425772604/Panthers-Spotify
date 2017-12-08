@@ -53,9 +53,9 @@
               <div class="col-sm-3 col-sm-offset-3" id="top-tool-search">
                 <div class="input-group stylish-input-group"  id="top-tool-search">
                   <div class="row" >
-                    <input type="text" class="w3-input" style="width: 70%;" placeholder="Search" name="search" id="search">
-                    <span class="input-group-addon">
-                    <button type="submit" id="search-button">
+                    <input type="text" class="w3-input" style="width: 70%; border-bottom-left-radius: 50px; border-top-left-radius:50px;" placeholder="   Search" name="search" id="search">
+                    <span class="input-group-addon" style="border-bottom-right-radius: 50px; border-top-right-radius:50px;background:white;border: none;">
+                    <button type="submit" id="search-button" style="border:none;">
                     <i class="fa fa-search" aria-hidden="true" ></i>
                     </button>
                     </span>
@@ -138,7 +138,13 @@
         </main>
         <!--Right Most Column-->
         <div id="right-col">
-          <%@ include file = "rightSidebar.jsp" %>
+          <div id="right-col-friend">
+            <%@ include file = "rightSidebar.jsp" %>
+          </div>
+          <div id="openTicketArea" style="text-algin:center;">
+            <div class="line" style="margin-left:0.5vw;"></div>
+            <button id="openTicketButton" class="w3-button" style="margin-left: 2.5vw;">Contact Support</button>
+        </div>
         </div>
       </div>
     </div>

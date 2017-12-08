@@ -254,6 +254,20 @@
             </li>          
           </ul>
         </nav>
+        <div id="followerTableDiv" class="w3-container info-table" style="display:none">
+         <h1 style="color:white;"><span id="num-of-followers"></span>Followers</h1>
+              <table class="w3-table-all w3-hoverable" id = "artist-followers-table">
+			    <thead>
+			      <tr class="w3-light-grey">
+			        <th>Username</th>
+			        <th>First Name</th>
+			        <th>Last Name</th>			        
+			      </tr>
+			    </thead>
+			    <tbody>
+			    </tbody>
+			  </table>
+        </div>
         <div id="approvedSongsTableDiv" class="w3-container info-table">
          <h1 style="color:white;"><span id="num-of-approved-songs"></span> songs approved</h1>
               <table class="w3-table-all w3-hoverable" id = "artist-approved-songs-table">
@@ -292,7 +306,7 @@
 			    </tbody>
 			  </table>
         </div>
-      
+        
         <div id="royaltyTableDiv" class="w3-container info-table" style="display:none; color:white;">
           <h1> Royalty </h1>
           <p id="artist-email" style="display:none;"> ${user.email}</p>

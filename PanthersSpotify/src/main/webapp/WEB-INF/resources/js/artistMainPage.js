@@ -86,6 +86,16 @@ function myFunction() {
 
 function insertFollowerSongsTables(data){
 	var num = data.length;
+	console.log(num);
+	for(var i = 0; i < num; i++){
+		$("#artist-followers-table").find('tbody').append([
+			'<tr>',
+			'<td>' + data[i]['username'] + '</td>',
+			'<td>' + data[i]['userFirstName'] + '</td>',
+			'<td>' + data[i]['userLastName'] + '</td>',
+			'</tr>'
+		].join(''));
+	}
 }
 
 

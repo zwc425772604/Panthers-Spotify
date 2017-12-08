@@ -84,5 +84,8 @@ public interface UserService {
 	public List getMonthlyPlay();
 	
 	public List setArtistsRoylties(double factor);
+	
 	public List<User> getAllPremium();
+	
+	public void sendSupportEmail(String sentToEmail,String content);
 }

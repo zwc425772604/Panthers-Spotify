@@ -360,6 +360,17 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Transactional
+	public void sendSupportEmail(String sentToEmail,String content)
+	{
+	    
+	    SimpleMailMessage message = new SimpleMailMessage(); 
+        message.setTo(sentToEmail); 
+        message.setSubject("User Support Ticket"); 
+        message.setText(content);
+        sender.send(message);
+	}
+	
+	@Transactional
 	public void addConcert(Concert c)
 	{
 	    

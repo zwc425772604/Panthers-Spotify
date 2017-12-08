@@ -1727,7 +1727,7 @@ public class ServletController {
 	}
         
           //TODO
-        @RequestMapping(value = "/removeAlbum", method = RequestMethod.POST)
+    @RequestMapping(value = "/removeAlbum", method = RequestMethod.POST)
 	public @ResponseBody String removeAlbum( ModelAndView mav,HttpServletRequest request, HttpSession session) {
 		int albumID = Integer.parseInt(request.getParameter("albumID"));
 		Album album = albumService.getAlbum(albumID);
@@ -1735,4 +1735,13 @@ public class ServletController {
 		
 		return "ok";
 	}
+    
+    @RequestMapping(value = "/supportTicket", method = RequestMethod.POST)
+   	public @ResponseBody String supportTicket( ModelAndView mav,HttpServletRequest request, HttpSession session) {
+   		String sendInfo = request.getParameter("sendInfo");
+   		
+   		userService.sendSupportEmail("panthersSpotify@gmail.com", sendInfo);
+   		
+   		return "ok";
+   	}
 }
